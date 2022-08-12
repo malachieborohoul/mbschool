@@ -103,7 +103,7 @@ class _AlertDialogAddLeconState extends State<AlertDialogAddLecon> {
                         // }),
                         onChanged: (value) {
                           setState(() {
-                            type_lecon_value = value;
+                            type_lecon_value = value!;
                           });
                         },
                       ),

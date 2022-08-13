@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/arguments/select_file_arguments.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
@@ -7,6 +8,7 @@ import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/explore/screens/explore_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/main.dart';
 import 'package:mbschool/models/cours.dart';
@@ -46,6 +48,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       var cours = routeSettings.arguments as Cours;
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) =>  PlanScreen(cours: cours));
+
+
+    case SelectFile.routeName:
+      var codeFile = routeSettings.arguments as SelectFileArguments;
+      var cours = routeSettings.arguments as SelectFileArguments;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) =>  SelectFile(codeFile: codeFile.codeFile, cours: cours.cours,));
 
     default:
       return MaterialPageRoute(

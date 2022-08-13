@@ -4,10 +4,13 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/alert_dialog_add_lecon.dart';
 import 'package:mbschool/common/widgets/alert_dialog_add_section.dart';
+import 'package:mbschool/common/widgets/alert_dialog_error.dart';
 import 'package:mbschool/common/widgets/custom_animated_button.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/floating_button_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -37,11 +40,20 @@ class _CustomAnimatedFloatingButtonsState
   double height = 50;
   late AnimationController _controller;
 
+  List<Section> sections = [];
+  CourseManagerService courseManagerService = CourseManagerService();
+
   @override
   void initState() {
     super.initState();
+    getAllSections();
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
+  }
+
+  void getAllSections() async {
+    sections = await courseManagerService.getAllSections(context, widget.cours);
+    setState(() {});
   }
 
   @override
@@ -81,9 +93,12 @@ class _CustomAnimatedFloatingButtonsState
             onTap: () {
               showDialog(
                   context: context,
-                  builder: (context) => AlertDialogAddLecon(
-                        cours: widget.cours,
-                      ));
+                  builder: (context) => sections == null || sections.isEmpty
+                      ? AlertDialogError(
+                          texte: "Veuillez d'abord créer une section! ")
+                      : AlertDialogAddLecon(
+                          cours: widget.cours,
+                        ));
             },
           ),
           CustomAnimatedButton(

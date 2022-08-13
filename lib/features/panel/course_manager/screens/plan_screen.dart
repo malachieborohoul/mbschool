@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_animated_floating_buttons.dart';
 import 'package:mbschool/common/widgets/custom_course_section.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -47,7 +48,7 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           foregroundColor: textBlack,
           backgroundColor: textWhite,
@@ -68,7 +69,7 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        body: Container(
+        body: sections == null ? Loader(): sections.isEmpty? Center(child: Text("Aucune information"),): Container(
           decoration: BoxDecoration(
             color: selected == false ? Colors.white24 : Colors.grey,
           ),

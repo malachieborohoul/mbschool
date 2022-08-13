@@ -53,6 +53,7 @@ class _AlertDialogAddSectionState extends State<AlertDialogAddSection> {
       child: Form(
         key: _addSectionFormKey,
         child: AlertDialog(
+          backgroundColor: Colors.grey.shade100,
           title: Row(
             children: [
               Flexible(

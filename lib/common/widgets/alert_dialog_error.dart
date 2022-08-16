@@ -47,7 +47,8 @@ class _AlertDialogErrorState extends State<AlertDialogError> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Attention", style: TextStyle(color: Colors.red),),
+              const Icon(Icons.warning, color: Colors.red,),
+              const Text("Attention", style: TextStyle(color: Colors.red),),
               
               IconButton(
                   onPressed: () {

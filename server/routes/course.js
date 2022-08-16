@@ -57,8 +57,8 @@ courseRouter.get("/getAllCategorieData",auth,  async (req, res) => {
 // create course
 
 courseRouter.post("/createCourse", auth, (req, res)=>{
-  const {titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users}= req.body;
-  pool.query(queries.addCourseWithoutPrice, [titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users] , (error, results)=>{
+  const {titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette}= req.body;
+  pool.query(queries.addCourseWithoutPrice, [titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette] , (error, results)=>{
     const cours = results.rows[0];
     if (error) throw error;
     return res.json(cours)
@@ -77,7 +77,7 @@ courseRouter.get("/getAllCourses",auth,  (req, res)=>{
 })
 
 // get all sections
-courseRouter.get("/getAllSections/:id_section",  (req, res)=>{
+courseRouter.get("/getAllSections/:id_section",auth,  (req, res)=>{
   pool.query(queries.getAllSections,[req.params.id_section], (error, results)=>{
     if (error) throw error;
 
@@ -88,7 +88,7 @@ courseRouter.get("/getAllSections/:id_section",  (req, res)=>{
 
 // add course section
 
-courseRouter.post('/addSection',  (req, res)=>{
+courseRouter.post('/addSection',auth,  (req, res)=>{
   const {titre, id_cours}= req.body;
 
   pool.query(queries.addSection, [titre, id_cours], (error, results)=>{
@@ -96,6 +96,51 @@ courseRouter.post('/addSection',  (req, res)=>{
     return res.json(results.rows[0])
   })
 })
+
+
+// add course lesson
+
+courseRouter.post('/createLesson',auth,  (req, res)=>{
+  const {titre,resume, id_cours,id_section, id_type_lecon, url}= req.body;
+
+  pool.query(queries.addLesson, [titre,resume, id_cours,id_section,id_type_lecon, url], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+
+// get all lessons
+courseRouter.get("/getAllLecons/:id_cours/:id_section", auth,  (req, res)=>{
+  pool.query(queries.getAllLecons,[req.params.id_cours,req.params.id_section], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+// modify course
+
+courseRouter.post("/modifyCourse",  (req, res)=>{
+  const {titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette, id_cours}= req.body;
+  pool.query(queries.modifyCourse, [titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette, id_cours] , (error, results)=>{
+    if (error) throw error;
+    return res.json(true)
+  })
+});
+
+// add course exigence
+
+courseRouter.post('/addExigence',auth,  (req, res)=>{
+  const {exi,resume, id_cours,id_section, id_type_lecon, url}= req.body;
+
+  pool.query(queries.addLesson, [titre,resume, id_cours,id_section,id_type_lecon, url], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
 
 
 

@@ -7,6 +7,8 @@ import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/explore/screens/explore_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
@@ -47,14 +49,29 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case PlanScreen.routeName:
       var cours = routeSettings.arguments as Cours;
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) =>  PlanScreen(cours: cours));
-
+          settings: routeSettings, builder: (_) => PlanScreen(cours: cours));
 
     case SelectFile.routeName:
       var codeFile = routeSettings.arguments as SelectFileArguments;
       var cours = routeSettings.arguments as SelectFileArguments;
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) =>  SelectFile(codeFile: codeFile.codeFile, cours: cours.cours,));
+          settings: routeSettings,
+          builder: (_) => SelectFile(
+                codeFile: codeFile.codeFile,
+                cours: cours.cours,
+              ));
+
+    case ModifyCourseScreen.routeName:
+      var cours = routeSettings.arguments as Cours;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ModifyCourseScreen(cours: cours));
+
+    case ExigenceScreen.routeName:
+      var cours = routeSettings.arguments as Cours;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ExigenceScreen(cours: cours));
 
     default:
       return MaterialPageRoute(

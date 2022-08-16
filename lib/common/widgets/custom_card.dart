@@ -4,6 +4,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/models/cours.dart';
 
@@ -68,6 +70,12 @@ class _CustomCardState extends State<CustomCard> {
                 if (value == 1) {
                   Navigator.pushNamed(context, PlanScreen.routeName,
                       arguments: widget.cours);
+                }else if (value == 2) {
+                  Navigator.pushNamed(context, ModifyCourseScreen.routeName,
+                      arguments: widget.cours);
+                }else if (value == 3) {
+                  Navigator.pushNamed(context, ExigenceScreen.routeName,
+                      arguments: widget.cours);
                 }
               }, itemBuilder: (context) {
                 return [
@@ -77,12 +85,12 @@ class _CustomCardState extends State<CustomCard> {
                     onTap: () {},
                   ),
                   PopupMenuItem(
-                    value: 1,
+                    value: 2,
                     child: Text("Modifier cours"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
-                    value: 1,
+                    value: 3,
                     child: Text("Exigences"),
                     onTap: () {},
                   ),

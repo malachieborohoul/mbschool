@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -124,35 +126,44 @@ class CreateCourseService {
       String titre,
       String description,
       String description_courte,
-      String categorie,
-      String niveau,
-      String langue,
+      int categorie,
+      int niveau,
+      int langue,
       String prix,
-      bool isChecked) async {
+      bool isChecked,
+      PlatformFile vignette,
+      VoidCallback onnSuccess) async {
     if (isChecked == true) {
       try {
         final userProvider = Provider.of<UserProvider>(context, listen: false);
-        http.Response res = await http.post(Uri.parse('$uri/createCourse'),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-              'x-auth-token': userProvider.user.token,
-            },
-            body: jsonEncode({
-              'titre': titre,
-              'description': description,
-              'description_courte': description_courte,
-              'id_categorie': int.parse(categorie),
-              'id_niveau': int.parse(niveau),
-              'id_langue': int.parse(langue),
-              'id_users': int.parse(userProvider.user.id)
-            }));
+        final cloudinary = CloudinaryPublic('dshli1qgh', 'lffwqjlm');
+        String url;
+        CloudinaryResponse res = await cloudinary.uploadFile(
+            CloudinaryFile.fromFile(vignette.path!,
+                folder: titre.toLowerCase()));
+        url = res.secureUrl;
+        http.Response resCreateCourse =
+            await http.post(Uri.parse('$uri/createCourse'),
+                headers: <String, String>{
+                  'Content-Type': 'application/json; charset=UTF-8',
+                  'x-auth-token': userProvider.user.token,
+                },
+                body: jsonEncode({
+                  'titre': titre,
+                  'description': description,
+                  'description_courte': description_courte,
+                  'id_categorie': categorie,
+                  'id_niveau': niveau,
+                  'id_langue': langue,
+                  'id_users': int.parse(userProvider.user.id),
+                  'vignette': url
+                }));
 
         httpErrorHandle(
-            response: res,
+            response: resCreateCourse,
             context: context,
             onSuccess: () {
-              showSnackBar(context, "Le cours a été avec succès");
-              Navigator.pushNamed(context, CourseManagerScreen.routeName);
+              onnSuccess();
             },
             onFailed: () {});
       } catch (e) {

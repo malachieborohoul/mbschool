@@ -8,6 +8,7 @@ import 'package:mbschool/constants/error_handling.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -78,4 +79,40 @@ class CourseManagerService {
     }
     return sectionList;
   }
+
+
+   Future<List<Lecon>> getAllLecons(BuildContext context, Section section) async {
+    List<Lecon> leconList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response leconRes = await http.get(
+        Uri.parse('$uri/getAllLecons/${section.id_cours}/${section.id_section}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: leconRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(leconRes.body).length; i++) {
+              leconList.add(
+                Lecon.fromJson(
+                  jsonEncode(
+                    jsonDecode(leconRes.body)[i],
+                  ),
+                ),
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return leconList;
+  }
+
+
 }

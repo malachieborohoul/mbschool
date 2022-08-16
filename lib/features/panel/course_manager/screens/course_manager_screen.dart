@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_card.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/cours.dart';
@@ -56,7 +57,10 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
                   child: ListView.builder(
                       itemCount: cours.length,
                       itemBuilder: (context, i) {
-                        return CustomCard(cours: cours[i]);
+                        return GestureDetector(
+                          onTap: () => Navigator.pushNamed(context, PlanScreen.routeName,
+                      arguments:cours[i]),
+                          child: CustomCard(cours: cours[i]));
                       }),
 
                   // child: Column(

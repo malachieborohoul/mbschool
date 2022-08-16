@@ -15,8 +15,7 @@ class CustomTextFieldPanel extends StatelessWidget {
       required this.prefixIcon,
       required this.controller,
       this.keyboardType,
-      this.maxLines =1
-      })
+      this.maxLines = 1})
       : super(key: key);
 
   @override

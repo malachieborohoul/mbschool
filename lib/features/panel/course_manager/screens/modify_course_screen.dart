@@ -15,23 +15,27 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
+import 'package:mbschool/features/panel/course_manager/services/modify_course_service.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/categorie.dart';
+import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
 import 'package:provider/provider.dart';
 
-class CreateCourseScreen extends StatefulWidget {
-  static const routeName = '/create_course';
-  const CreateCourseScreen({Key? key}) : super(key: key);
+class ModifyCourseScreen extends StatefulWidget {
+  static const routeName = '/modify-course';
+  final Cours cours;
+  const ModifyCourseScreen({Key? key, required this.cours}) : super(key: key);
 
   @override
-  State<CreateCourseScreen> createState() => _CreateCourseScreenState();
+  State<ModifyCourseScreen> createState() => _ModifyCourseScreenState();
 }
 
-class _CreateCourseScreenState extends State<CreateCourseScreen> {
-  final _createCourseFormKey = GlobalKey<FormState>();
+class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
+  final _modifyCourseFormKey = GlobalKey<FormState>();
+  ModifyCourseService modifyCourseService = ModifyCourseService();
   TextEditingController titreCoursController = TextEditingController();
   TextEditingController prixCoursController = TextEditingController();
   TextEditingController descriptionCoursController = TextEditingController();
@@ -48,8 +52,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   List<Categorie>? categories;
   List<Niveau>? niveaux;
 
-  bool isChecked = false;
-
   @override
   void initState() {
     super.initState();
@@ -57,6 +59,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
     getAllLangueData();
     getAllCategorieData();
+
+     titreCoursController.text = widget.cours.titre;
+    descriptionCoursController.text = widget.cours.description;
+    descriptionCourteCoursController.text = widget.cours.description_courte;
+
+
   }
 
   getAllLangueData() async {
@@ -106,19 +114,40 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     //     itemBuilder: (BuildContext context, int i) {
     //       return Text("data");
     //     });
-    String dropdownvalue_niveau = niveaux != null ? niveaux![0].id_niveau : "";
 
-    String dropdownvalue_langue = langues != null ? langues![0].id_langue : "";
-    String dropdownvalue_categorie =
-        categories != null ? categories![0].id_categorie : "";
+    String dropdownvalue_niveau = widget.cours.id_niveau;
+
+    String dropdownvalue_langue = widget.cours.id_langue;
+    String dropdownvalue_categorie = widget.cours.id_categorie;
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie); 
-    if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau); 
-    if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue); 
+    if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie);
+    if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau);
+    if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue);
+    String urlVignette = widget.cours.vignette;
+    bool isVignetteNull= false;
+   
+    
+    if(widget.cours.titre == titreCoursController.text ) {
+      titreCoursController.text = widget.cours.titre;
+    } else {
+      titreCoursController.text = titreCoursController.text;
+    }
+    if (descriptionCoursController.text == widget.cours.description) {
+      descriptionCoursController.text = widget.cours.description;
+    } else {
+      descriptionCoursController.text = descriptionCoursController.text;
+    }
 
-    createCourse() {
-      createCourseService.createCourse(
+    if (descriptionCourteCoursController.text ==
+        widget.cours.description_courte) {
+      descriptionCourteCoursController.text = widget.cours.description_courte;
+    } else {
+      descriptionCourteCoursController.text =
+          descriptionCourteCoursController.text;
+    }
+    modifyCourse() {
+      modifyCourseService.modifyCourse(
           context,
           titreCoursController.text,
           descriptionCoursController.text,
@@ -127,11 +156,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           id_niveau,
           id_langue,
           prixCoursController.text,
-          isChecked,
-          vignette!, () {
+          vignette!,
+          widget.cours,
+          vignette != null? isVignetteNull = false :isVignetteNull= true,
+          urlVignette,
+           () {
         setState(() {
           isCharging = false;
-          showSnackBar(context, "Le cours a été avec succès");
+          showSnackBar(context, "Le cours a été modifié avec succès");
           Navigator.pushNamed(context, CourseManagerScreen.routeName);
         });
       });
@@ -140,9 +172,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        drawer: NavigationDrawer(),
         appBar: AppBar(
-          title: const Text("Créer un nouveau cours"),
+          title: const Text("Modifier cours"),
           elevation: 0,
           backgroundColor: primary,
         ),
@@ -152,7 +183,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(24.0),
                   child: Form(
-                    key: _createCourseFormKey,
+                    key: _modifyCourseFormKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -230,6 +261,13 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 dropdownvalue_categorie = val!;
                                 id_categorie =
                                     int.parse(dropdownvalue_categorie);
+
+                                titreCoursController.text =
+                                    titreCoursController.text;
+                                descriptionCoursController.text =
+                                    descriptionCoursController.text;
+                                descriptionCourteCoursController.text =
+                                    descriptionCourteCoursController.text;
                               });
                             }),
                         SizedBox(
@@ -344,7 +382,16 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                           width: 100,
                                           height: 100,
                                         )
-                                      : Text(""),
+                                      : urlVignette.isNotEmpty
+                                          ? Container(
+                                              width: 150,
+                                              height: 150,
+                                              child: Image.network(
+                                                urlVignette,
+                                                width: 20,
+                                                height: 20,
+                                              ))
+                                          : Text(""),
                                   Container(
                                     height: 30,
                                     width: 150,
@@ -368,37 +415,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         SizedBox(
                           height: 15,
                         ),
-                        Row(
-                          children: [
-                            Checkbox(
-                                fillColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                        (states) {
-                                  if (states.contains(MaterialState.disabled)) {
-                                    return primary;
-                                  }
-                                  return primary;
-                                }),
-                                value: isChecked,
-                                onChanged: (val) {
-                                  setState(() {
-                                    isChecked = val!;
-                                  });
-                                }),
-                            Text("Cocher si le cours est gratuit")
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        isChecked == false
-                            ? CustomTextFieldPanel(
-                                hintText: "Prix du cours",
-                                prefixIcon: Icons.price_change,
-                                controller: prixCoursController,
-                                keyboardType: TextInputType.number,
-                              )
-                            : Text(""),
+
                         const SizedBox(
                           height: 15,
                         ),
@@ -406,22 +423,22 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             splashColor: textBlack,
                             borderRadius: BorderRadius.circular(17.5),
                             onTap: () {
-                              if (_createCourseFormKey.currentState!
+                              if (_modifyCourseFormKey.currentState!
                                   .validate()) {
-                                if (vignette == null) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialogError(
-                                          texte: "Veuillez choisir une image"));
-                                } else {
+                                // if (vignette == null) {
+                                //   showDialog(
+                                //       context: context,
+                                //       builder: (context) => AlertDialogError(
+                                //           texte: "Veuillez choisir une image"));
+                                // } else {
                                   setState(() {
                                     isCharging = true;
                                   });
-                                  createCourse();
-                                }
+                                  modifyCourse();
+                                // }
                               }
                             },
-                            child: CustomButtonBox(title: "Créer")),
+                            child: CustomButtonBox(title: "Modifier")),
                       ],
                     ),
                   ),

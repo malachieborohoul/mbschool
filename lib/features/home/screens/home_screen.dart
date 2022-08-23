@@ -8,6 +8,7 @@ import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_promotion_card.dart';
 import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -16,6 +17,9 @@ import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
+import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +33,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  CourseManagerService courseManagerService = CourseManagerService();
+  List<Cours> cours = [];
+  @override
+  void initState() {
+    getAllCourses();
+
+    super.initState();
+  }
+
+  void getAllCourses() async {
+    cours = await courseManagerService.getAllCourses(context);
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -71,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomHeading(
-                              title: "Bienvenue ${user.nom } ",
+                              title: "Bienvenue ${user.nom} ",
                               subTitle: "Que voulez vous apprendre?",
                               color: textWhite),
                           Container(
@@ -130,15 +147,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Wrap(
                               spacing: 10,
                               children:
-                                  List.generate(CoursesJson.length, (index) {
-                                return CustomCourseCardExpand(
-                                  thumbNail: CoursesJson[index]['image'],
-                                  videoAmount: CoursesJson[index]['video'],
-                                  title: CoursesJson[index]['title'],
-                                  userProfile: CoursesJson[index]
-                                      ['user_profile'],
-                                  userName: CoursesJson[index]['user_name'],
-                                  price: CoursesJson[index]['price'],
+                                  List.generate(cours.length, (index) {
+                                return GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, DetailCourseScreen.routeName, arguments: cours[index]),
+                                  child: cours==null? Loader():  CustomCourseCardExpand(
+                                    thumbNail:  cours[index].vignette,
+                                    videoAmount: CoursesJson[index]['video'],
+                                    title: cours[index].titre,
+                                    userProfile: cours[index].photo,
+                                    userName: cours[index].nom,
+                                    price: cours[index].prix.isEmpty? "Gratuit"  : cours[index].prix,
+                                  ),
                                 );
                               })),
                         ),

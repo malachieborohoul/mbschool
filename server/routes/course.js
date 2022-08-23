@@ -133,11 +133,22 @@ courseRouter.post("/modifyCourse",  (req, res)=>{
 // add course exigence
 
 courseRouter.post('/addExigence',auth,  (req, res)=>{
-  const {exi,resume, id_cours,id_section, id_type_lecon, url}= req.body;
+  const {nom, id_cours}= req.body;
 
-  pool.query(queries.addLesson, [titre,resume, id_cours,id_section,id_type_lecon, url], (error, results)=>{
+  pool.query(queries.addExigence, [nom, id_cours,], (error, results)=>{
     if (error) throw error;
-    return res.json(results.rows[0])
+    return res.json(results.rows)
+  })
+})
+
+
+// get all exigences
+courseRouter.get("/getAllExigences/:id_exigence",auth,  (req, res)=>{
+  pool.query(queries.getAllExigences,[req.params.id_exigence], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
   })
 })
 

@@ -8,12 +8,16 @@ class Cours {
   final String description;
   final String description_courte;
   final String id_users;
+  final String nom;
+  final String prenom;
+  final String photo;
   final String prix;
   final String id_categorie;
   final String id_langue;
   final String id_niveau;
+  
 
-  Cours({
+  Cours( {
     required this.id_cours,
     required this.titre,
     required this.vignette,
@@ -25,6 +29,9 @@ class Cours {
     required this.id_categorie,
     required this.id_langue,
     required this.id_niveau,
+    required this.nom, 
+    required this.prenom, 
+    required this.photo,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,6 +43,9 @@ class Cours {
       'description': description,
       'description_courte': description_courte,
       'id_users': id_users,
+      'nom': nom,
+      'prenom': prenom,
+      'photo': photo,
       'prix': prix,
       'id_categorie': id_categorie,
       'id_langue': id_langue,
@@ -52,6 +62,9 @@ class Cours {
       description: map['description'] ?? '',
       description_courte: map['description_courte'] ?? '',
       id_users: map['id_users'] ?? '',
+      nom: map['nom'] ?? '',
+      prenom: map['prenom'] ?? '',
+      photo: map['photo'] ?? '',
       prix: map['prix'] ?? '',
       id_categorie: map['id_categorie'] ?? '',
       id_langue: map['id_langue'] ?? '',

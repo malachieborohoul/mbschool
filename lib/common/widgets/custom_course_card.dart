@@ -131,7 +131,7 @@ class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
                   ),
                 ),
                 Text(
-                  '\$${widget.price}',
+                  '${widget.price}',
                   style: TextStyle(
                     color: primary,
                     fontSize: 15.0,

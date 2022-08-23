@@ -5,6 +5,7 @@ import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
+import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/explore/screens/explore_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
@@ -73,6 +74,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => ExigenceScreen(cours: cours));
 
+    case DetailCourseScreen.routeName:
+      var cours = routeSettings.arguments as Cours;
+
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => DetailCourseScreen(cours: cours,));
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

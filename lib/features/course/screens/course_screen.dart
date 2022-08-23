@@ -41,7 +41,7 @@ class _CourseScreenState extends State<CourseScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 const CustomHeading(
                     title: "Mes Cours",
                     subTitle: "Reprenons",

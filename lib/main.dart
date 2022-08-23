@@ -62,14 +62,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       //ERROR HANDLED BY FLUTTER
-      builder: (context, widget) {
-        Widget error =  Image.asset(assetImg+"error_handle.png");
-        if (widget is Scaffold || widget is Navigator) {
-          error = Scaffold(body: Center(child: error));
-        }
-        ErrorWidget.builder = (errorDetails) => error;
-        if (widget != null) return widget;
-        throw ('widget is null');},
+      // builder: (context, widget) {
+      //   Widget error =  Image.asset(assetImg+"error_handle.png");
+      //   if (widget is Scaffold || widget is Navigator) {
+      //     error = Scaffold(body: Center(child: error));
+      //   }
+      //   ErrorWidget.builder = (errorDetails) => error;
+      //   if (widget != null) return widget;
+      //   throw ('widget is null');
+      //   },
       //
       theme: ThemeData(fontFamily: "WorkSans"),
       debugShowCheckedModeBanner: false,

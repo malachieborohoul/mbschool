@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/utils.dart';
 
-
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     Key? key,
@@ -26,7 +25,6 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      brightness: brightness,
       backgroundColor: backgroundColor,
       elevation: 0.0,
       automaticallyImplyLeading: false,

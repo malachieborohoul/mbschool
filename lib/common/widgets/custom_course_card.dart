@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
+import 'package:mbschool/models/cours.dart';
 
 class CustomCourseCardExpand extends StatefulWidget {
   const CustomCourseCardExpand({
@@ -9,7 +11,7 @@ class CustomCourseCardExpand extends StatefulWidget {
     required this.title,
     required this.userProfile,
     required this.userName,
-    required this.price,
+    required this.price, required this.cours,
   }) : super(key: key);
 
   final String thumbNail;
@@ -18,6 +20,7 @@ class CustomCourseCardExpand extends StatefulWidget {
   final String userProfile;
   final String userName;
   final String price;
+  final Cours cours;
 
   @override
   _CustomCourseCardExpandState createState() => _CustomCourseCardExpandState();
@@ -110,9 +113,13 @@ class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
                   width: 30.0,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100.0),
-                    child: Image.network(
-                      widget.userProfile,
-                      fit: BoxFit.cover,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(
+                          context, DetailTeacherCourseScreen.routeName, arguments: widget.cours),
+                      child: Image.network(
+                        widget.userProfile,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -153,13 +160,15 @@ class CustomCourseCardShrink extends StatefulWidget {
     Key? key,
     required this.thumbNail,
     required this.title,
-    required this.userName,
+    required this.nom,
+    required this.prenom,
     required this.price,
   }) : super(key: key);
 
   final String thumbNail;
   final String title;
-  final String userName;
+  final String nom;
+  final String prenom;
   final String price;
 
   @override
@@ -172,7 +181,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      height: size.width * .2,
+      height: size.width * .25,
       padding: const EdgeInsets.all(15.0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -212,14 +221,14 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Instructor: ' + widget.userName,
+                      'Instructor: ' + widget.nom + ' '+ widget.prenom,
                       style: TextStyle(
                         fontSize: 12.0,
                         color: grey,
                       ),
                     ),
                     Text(
-                      '\$' + widget.price,
+                      '' + widget.price,
                       style: TextStyle(
                         fontSize: 14.0,
                         color: primary,
@@ -228,6 +237,39 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                     ),
                   ],
                 ),
+                Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    size: 15,
+                    color: third,
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 15,
+                    color: third,
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 15,
+                    color: third,
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 15,
+                    color: third,
+                  ),
+                  Icon(
+                    Icons.star,
+                    size: 15,
+                    color: third,
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Text("(4.0)"),
+                ],
+              ),
               ],
             ),
           ),

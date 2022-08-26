@@ -14,6 +14,8 @@ const getAllLecons = "SELECT * FROM lecon WHERE id_cours = $1 AND id_section = $
 const modifyCourse = "UPDATE cours SET titre = $1, description = $2, description_courte= $3, id_categorie = $4, id_niveau=$5, id_langue=$6, id_users=$7, vignette=$8 WHERE id_cours = $9;";
 const addExigence = "INSERT INTO exigence (nom,  id_cours) VALUES ($1, $2) RETURNING *;"
 const getAllExigences = "SELECT * FROM exigence WHERE id_cours = $1;";
+const getAllCoursesByCategory = "SELECT * FROM cours JOIN users ON cours.id_users = users.id WHERE id_categorie = $1;";
+const getAllEnseignantPopulaire = "SELECT cours.id_users, users.nom, users.prenom,users.photo, COUNT(*) AS nombre_cours FROM cours JOIN users ON cours.id_users = users.id GROUP BY cours.id_users, users.nom,users.prenom, users.photo ;";
 
 module.exports = {
     checkEmailExist,
@@ -32,4 +34,6 @@ module.exports = {
     modifyCourse,
     addExigence,
     getAllExigences,
+    getAllCoursesByCategory,
+    getAllEnseignantPopulaire,
 }

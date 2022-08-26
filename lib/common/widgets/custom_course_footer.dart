@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/models/cours.dart';
 
 import 'custom_button_box.dart';
 
@@ -10,11 +9,12 @@ class CustomCourseFooter extends StatelessWidget {
   const CustomCourseFooter({
     Key? key,
     this.coursePrice = '',
-    this.enrolled = false,
+    this.enrolled = false, required this.cours,
   }) : super(key: key);
 
   final String coursePrice;
   final bool enrolled;
+  final Cours cours;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class CustomCourseFooter extends StatelessWidget {
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: CustomButtonBox(title: 'Continue Class'),
+            child: CustomButtonBox(title: 'Continuer le cours'),
           )
         : Container(
             width: size.width,
@@ -56,15 +56,15 @@ class CustomCourseFooter extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Course Price',
+                        'Prix',
                         style: TextStyle(fontSize: 12.0, color: grey),
                       ),
                       SizedBox(height: 5),
                       Text(
-                        coursePrice,
+                        cours.prix.isEmpty? "Gratuit" : cours.prix,
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: primary,
+                          color: third,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -72,7 +72,7 @@ class CustomCourseFooter extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: miniSpacer + 5),
-                Flexible(child: CustomButtonBox(title: 'Enroll Now')),
+                Flexible(child: CustomButtonBox(title: "S'enrôler maintenant")),
               ],
             ),
           );

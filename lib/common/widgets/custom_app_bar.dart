@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -55,7 +54,8 @@ class CustomAppBar extends StatelessWidget {
                       ],
                     ),
                     alignment: Alignment.center,
-                    child: GestureDetector(
+                    child: InkWell(
+                      splashColor: textWhite,
                       onTap: () {
                         Navigator.pop(context);
                       },
@@ -68,9 +68,10 @@ class CustomAppBar extends StatelessWidget {
                   Spacer(),
                   Text(
                     title,
-                    style: TextStyle(fontSize: 17, color: secondary),
+                    style: TextStyle(fontSize: 17, color: secondary, fontWeight: FontWeight.w300),
                   ),
                   Spacer(),
+
                   (action)
                       ? Container(
                           width: 40.0,
@@ -86,6 +87,7 @@ class CustomAppBar extends StatelessWidget {
                           width: 40.0,
                           height: 40.0,
                         ),
+                  
                 ],
               )
             ],

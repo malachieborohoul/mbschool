@@ -17,8 +17,11 @@ import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
+import 'package:mbschool/features/course/screens/all_course_screen.dart';
+import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -35,9 +38,11 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   CourseManagerService courseManagerService = CourseManagerService();
   List<Cours> cours = [];
+  List<Categorie> categories = [];
   @override
   void initState() {
     getAllCourses();
+    getAllCategorieData();
 
     super.initState();
   }
@@ -46,6 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
     cours = await courseManagerService.getAllCourses(context);
     setState(() {});
   }
+
+  getAllCategorieData() async {
+    categories = await createCourseService.getAllCategorieData(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
@@ -97,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, EditProfileScreen.routeName);
+                                    context, AccountScreen.routeName);
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
@@ -134,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                         padding: EdgeInsets.only(
                             left: appPadding - 20, right: appPadding - 20),
-                        child: CustomTitle(title: "Cours populaires"),
+                        child: CustomTitle(title: "Cours populaires", titreLien: "Voir plus", route: AllCourseScreen.routeName,),
                       ),
                       const SizedBox(
                         height: smallSpacer,
@@ -146,19 +157,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               left: appPadding - 20, right: appPadding - 10),
                           child: Wrap(
                               spacing: 10,
-                              children:
-                                  List.generate(cours.length, (index) {
+                              children: List.generate(cours.length, (index) {
                                 return GestureDetector(
                                   onTap: () => Navigator.pushNamed(
-                                      context, DetailCourseScreen.routeName, arguments: cours[index]),
-                                  child: cours==null? Loader():  CustomCourseCardExpand(
-                                    thumbNail:  cours[index].vignette,
-                                    videoAmount: CoursesJson[index]['video'],
-                                    title: cours[index].titre,
-                                    userProfile: cours[index].photo,
-                                    userName: cours[index].nom,
-                                    price: cours[index].prix.isEmpty? "Gratuit"  : cours[index].prix,
-                                  ),
+                                      context, DetailCourseScreen.routeName,
+                                      arguments: cours[index]),
+                                  child: cours == null
+                                      ? Loader()
+                                      : CustomCourseCardExpand(
+                                          thumbNail: cours[index].vignette,
+                                          videoAmount: CoursesJson[index]
+                                              ['video'],
+                                          title: cours[index].titre,
+                                          userProfile: cours[index].photo,
+                                          userName: cours[index].nom,
+                                          price: cours[index].prix.isEmpty
+                                              ? "Gratuit"
+                                              : cours[index].prix,
+                                          cours: cours[index],
+                                        ),
                                 );
                               })),
                         ),
@@ -169,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                         padding: EdgeInsets.only(left: appPadding - 20),
                         child: CustomTitle(title: "Categories"),
+                        
                       ),
                       const SizedBox(
                         height: smallSpacer,
@@ -181,25 +199,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                  children: List.generate(CategoryJson.length,
-                                      (index) {
+                                  children:
+                                      List.generate(categories.length, (index) {
                                 return Padding(
                                   padding: const EdgeInsets.only(
                                       left: 10, right: 10, top: 10, bottom: 5),
-                                  child: CustomCategoriesButton(
-                                      title: CategoryJson[index]['title']),
+                                  child: InkWell(
+                                    splashColor: Colors.grey,
+                                    onTap: ()=>Navigator.pushNamed(context, CoursesByCategoryScreen.routeName, arguments: categories[index]),
+                                    child: CustomCategoriesButton(
+                                        title: categories[index].nom.toUpperCase()),
+                                  ),
                                 );
                               })),
-                              Row(
-                                  children: List.generate(CategoryJson2.length,
-                                      (index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 5, right: 10, top: 10, bottom: 5),
-                                  child: CustomCategoriesButton(
-                                      title: CategoryJson2[index]['title']),
-                                );
-                              })),
+                              // Row(
+                              //     children: List.generate(CategoryJson2.length,
+                              //         (index) {
+                              //   return Padding(
+                              //     padding: const EdgeInsets.only(
+                              //         left: 5, right: 10, top: 10, bottom: 5),
+                              //     child: CustomCategoriesButton(
+                              //         title: CategoryJson2[index]['title']),
+                              //   );
+                              // })),
                             ],
                           ),
                         ),
@@ -214,27 +236,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(
                         height: smallSpacer,
-                      ),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: appPadding - 20, right: appPadding - 10),
-                          child: Wrap(
-                              spacing: 10,
-                              children:
-                                  List.generate(CoursesJson.length, (index) {
-                                return CustomCourseCardExpand(
-                                  thumbNail: CoursesJson[index]['image'],
-                                  videoAmount: CoursesJson[index]['video'],
-                                  title: CoursesJson[index]['title'],
-                                  userProfile: CoursesJson[index]
-                                      ['user_profile'],
-                                  userName: CoursesJson[index]['user_name'],
-                                  price: CoursesJson[index]['price'],
-                                );
-                              })),
-                        ),
                       ),
                     ],
                   ),

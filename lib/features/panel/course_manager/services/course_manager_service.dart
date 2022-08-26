@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:mbschool/constants/error_handling.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/enseignant_cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -47,7 +49,8 @@ class CourseManagerService {
     return coursList;
   }
 
-   Future<List<Section>> getAllSections(BuildContext context, Cours cours) async {
+  Future<List<Section>> getAllSections(
+      BuildContext context, Cours cours) async {
     List<Section> sectionList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -80,13 +83,14 @@ class CourseManagerService {
     return sectionList;
   }
 
-
-   Future<List<Lecon>> getAllLecons(BuildContext context, Section section) async {
+  Future<List<Lecon>> getAllLecons(
+      BuildContext context, Section section) async {
     List<Lecon> leconList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response leconRes = await http.get(
-        Uri.parse('$uri/getAllLecons/${section.id_cours}/${section.id_section}'),
+        Uri.parse(
+            '$uri/getAllLecons/${section.id_cours}/${section.id_section}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -114,5 +118,68 @@ class CourseManagerService {
     return leconList;
   }
 
+  Future<List<Cours>> getAllCoursesByCategory(
+      BuildContext context, Categorie categorie) async {
+    List<Cours> coursList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response coursRes = await http.get(
+        Uri.parse('$uri/getAllCoursesByCategory/${categorie.id_categorie}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
 
+      httpErrorHandle(
+          response: coursRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(coursRes.body).length; i++) {
+              coursList.add(
+                Cours.fromJson(
+                  jsonEncode(
+                    jsonDecode(coursRes.body)[i],
+                  ),
+                ),
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return coursList;
+  }
+
+  Future<List<EnseignantCours>> getAllEnseignantPopulaire(BuildContext context) async {
+    List<EnseignantCours> enseignantPopList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response enseignantPopRes = await http.get(
+        Uri.parse('$uri/getAllEnseignantPopulaire'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: enseignantPopRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(enseignantPopRes.body).length; i++) {
+              enseignantPopList.add(
+                EnseignantCours.fromJson(jsonEncode(
+                  jsonDecode(enseignantPopRes.body)[i],
+                ),)
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return enseignantPopList;
+  }
 }

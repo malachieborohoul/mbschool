@@ -152,6 +152,27 @@ courseRouter.get("/getAllExigences/:id_exigence",auth,  (req, res)=>{
   })
 })
 
+// get all courses by categorie
+courseRouter.get("/getAllCoursesByCategory/:id_categorie",auth,  (req, res)=>{
+  pool.query(queries.getAllCoursesByCategory,[req.params.id_categorie], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+// get all enseignants populaires
+courseRouter.get("/getAllEnseignantPopulaire",  (req, res)=>{
+  pool.query(queries.getAllEnseignantPopulaire, (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
 
 
 

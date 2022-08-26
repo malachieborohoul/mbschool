@@ -24,8 +24,8 @@ class CustomCategoryCard extends StatelessWidget {
             
             },
             child: Container(
-              height: size.width * .25,
-              width: size.width * .25,
+              height: size.width * .26,
+              width: size.width * .26,
               padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 color: textWhite,

@@ -4,8 +4,11 @@ import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
+import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
+import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
 import 'package:mbschool/features/explore/screens/explore_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
@@ -14,6 +17,7 @@ import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart'
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/main.dart';
+import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -24,6 +28,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case CourseScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const CourseScreen());
+    case AllCourseScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const AllCourseScreen());
     case ExploreScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ExploreScreen());
@@ -79,7 +86,27 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
       return MaterialPageRoute(
           settings: routeSettings,
-          builder: (_) => DetailCourseScreen(cours: cours,));
+          builder: (_) => DetailCourseScreen(
+                cours: cours,
+              ));
+
+    case DetailTeacherCourseScreen.routeName:
+      var cours = routeSettings.arguments as Cours;
+
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => DetailTeacherCourseScreen(
+                cours: cours,
+              ));
+
+    case CoursesByCategoryScreen.routeName:
+      var categorie = routeSettings.arguments as Categorie;
+
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => CoursesByCategoryScreen(
+                categorie: categorie,
+              ));
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

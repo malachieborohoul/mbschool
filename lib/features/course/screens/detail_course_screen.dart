@@ -5,12 +5,17 @@ import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
 import 'package:mbschool/common/widgets/custom_course_footer.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
+import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/exigence.dart';
+import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 
 class DetailCourseScreen extends StatefulWidget {
@@ -26,17 +31,34 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     with TickerProviderStateMixin {
   List<Section> sections = [];
   CourseManagerService courseManagerService = CourseManagerService();
+  ExigenceService exigenceService = ExigenceService();
+  List<Exigence> exigences = [];
+  List<Lecon> lecons = [];
 
   @override
   void initState() {
     super.initState();
     getAllSections();
+    getAllExigences();
+    getAllLecons();
+  }
+
+  void getAllExigences() async {
+    exigences = await exigenceService.getAllExigences(context, widget.cours);
+    print(exigences.length);
   }
 
   void getAllSections() async {
     sections = await courseManagerService.getAllSections(context, widget.cours);
     setState(() {
       // print(sections.length);
+    });
+  }
+
+  void getAllLecons() async {
+    lecons = await courseManagerService.getAllLecons(context, sections[0]);
+    setState(() {
+      print(lecons.length);
     });
   }
 
@@ -63,7 +85,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                   color: Colors.transparent,
                   child: ClipRRect(
                     child: Image.network(
-                      'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=987&q=80',
+                      widget.cours.vignette,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -75,39 +97,47 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                     color: textWhite,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Icon(Icons.play_arrow),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.8,
-                    top: MediaQuery.of(context).size.height * 0.4,
+                  child: InkWell(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                backgroundColor: textBlack,
+                                content: VideoDisplay(
+                                    videoUrl:
+                                        'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
+                              ));
+                    },
+                    splashColor: Colors.grey,
+                    child: Icon(Icons.play_arrow),
                   ),
-                  child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: third,
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Icon(
-                        Icons.favorite_outline_rounded,
-                      )),
                 ),
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     left: MediaQuery.of(context).size.width * 0.8,
+                //     top: MediaQuery.of(context).size.height * 0.4,
+                //   ),
+                //   child:  Icon(
+                //     color: Color.fromARGB(255, 255, 0, 0),
+                //     Icons.favorite_outline_rounded,
+                //   ),
+                // ),
               ],
             ),
-            CustomDetailCourseInfoHeader(),
+            CustomDetailCourseInfoHeader(cours: widget.cours),
             Padding(
-              padding: const EdgeInsets.all(appPadding),
-              child: Container(
+              padding: const EdgeInsets.only(
+                  left: appPadding, right: appPadding, bottom: appPadding),
+              child:  Container(
                 width: double.infinity,
                 height: 50,
                 child: TabBar(
                     labelColor: Colors.black,
                     indicatorColor: primary,
                     controller: _tabController,
-                    tabs: [
-                      Tab(
-                        text: "Informations",
+                    tabs: const[
+                       Tab(
+                        text: "Infos",
                       ),
                       Tab(
                         text: "Resultats",
@@ -119,26 +149,108 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(appPadding),
+              padding: const EdgeInsets.only(
+                  left: appPadding, right: appPadding, bottom: appPadding),
               child: Container(
                 width: double.infinity,
-                height: 50,
-                color: third,
-                child: TabBarView(controller: _tabController, children: [
-                  Text("Hi"),
-                  Text("Hello"),
-                  Text("OK"),
-                ]),
+                height: 250,
+                decoration: BoxDecoration(
+                  color: third,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(appPadding),
+                  child: TabBarView(controller: _tabController, children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Ce cours contient",
+                          style: TextStyle(color: textWhite, fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "15 leçons",
+                          style: TextStyle(color: textWhite),
+                        ),
+                        Divider(
+                          thickness: 0.5,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "15 leçons",
+                          style: TextStyle(color: textWhite),
+                        ),
+                        Divider(
+                          thickness: 0.5,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Ce que vous allez apprendre ",
+                          style: TextStyle(color: textWhite, fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "15 leçons",
+                          style: TextStyle(color: textWhite),
+                        ),
+                        Divider(
+                          thickness: 0.5,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "15 leçons",
+                          style: TextStyle(color: textWhite),
+                        ),
+                        Divider(
+                          thickness: 0.5,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Les exigences du cours",
+                          style: TextStyle(color: textWhite, fontSize: 20),
+                        ),
+                        for (int i = 0; i < exigences.length; i++)
+                          CustomExigenceCours(exigence: exigences[i])
+                      ],
+                    ),
+                  ]),
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(appPadding),
-              child: CustomCourseCurriculum(),
-            )
+            for (int i = 0; i < sections.length; i++)
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: appPadding,
+                  right: appPadding,
+                  bottom: appPadding,
+                ),
+                child: CustomCourseCurriculum(
+                  section: sections[i],
+                ),
+              )
           ],
         ),
       ),
-      bottomSheet: CustomCourseFooter(),
+      bottomNavigationBar: CustomCourseFooter(
+        cours: widget.cours,
+      ),
     );
   }
 }

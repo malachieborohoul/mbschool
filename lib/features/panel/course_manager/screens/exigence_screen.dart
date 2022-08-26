@@ -30,8 +30,9 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
   ExigenceService exigenceService = ExigenceService();
-  final _addExigenceFormKey = GlobalKey<FormState>();
   List<Exigence> exigences = [];
+  final _addExigenceFormKey = GlobalKey<FormState>();
+
 
   void addExigence() {
     for (int i = 0; i < _listExigences.length; i++)
@@ -124,10 +125,9 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
       final control = TextEditingController();
       control.text = exigences[i].nom;
       setState(() {
-        
         _listExigences.add(
-          CustomTextFieldExigence(hintText: "Exigence", controller: control));
-      controllers.add(control);
+            CustomTextFieldExigence(hintText: "Exigence", controller: control));
+        controllers.add(control);
       });
     }
     return GestureDetector(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 
@@ -11,8 +12,13 @@ class Panel extends StatefulWidget {
   @override
   State<Panel> createState() => _PanelState();
 }
+void logOut(BuildContext context) {
+    accountService.logOut(context);
+  }
+
 
 class _PanelState extends State<Panel> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,6 +108,13 @@ class NavigationDrawer extends StatelessWidget {
               leading: const Icon(Icons.person),
               title: const Text('Profil'),
               onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Se déconnecter'),
+              onTap: () {
+                logOut(context);
+              },
             ),
           ],
         ),

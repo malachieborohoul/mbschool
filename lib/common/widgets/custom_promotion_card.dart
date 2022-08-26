@@ -19,7 +19,7 @@ class CustomPromotionCard extends StatelessWidget {
         children: [
           Container(
             width: size.width,
-            height: size.width * .425,
+            height: size.width * .55,
             padding: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               color: secondary,
@@ -67,7 +67,7 @@ class CustomPromotionCard extends StatelessWidget {
                     ],
                   ),
                   child: Text(
-                    'Enroll Now',
+                    "S'enrôler ",
                     style: TextStyle(
                       fontSize: 15.0,
                       color: textWhite,
@@ -79,8 +79,8 @@ class CustomPromotionCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: -20.0,
-            right: 20.0,
+            top: 25.0,
+            left: 125.0,
             child: Container(
               height: size.width * .4,
               child: SvgPicture.asset(

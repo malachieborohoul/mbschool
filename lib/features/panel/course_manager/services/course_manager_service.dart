@@ -12,6 +12,7 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/enseignant_cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -152,7 +153,8 @@ class CourseManagerService {
     return coursList;
   }
 
-  Future<List<EnseignantCours>> getAllEnseignantPopulaire(BuildContext context) async {
+  Future<List<EnseignantCours>> getAllEnseignantPopulaire(
+      BuildContext context) async {
     List<EnseignantCours> enseignantPopList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -169,11 +171,11 @@ class CourseManagerService {
           context: context,
           onSuccess: () {
             for (int i = 0; i < jsonDecode(enseignantPopRes.body).length; i++) {
-              enseignantPopList.add(
-                EnseignantCours.fromJson(jsonEncode(
+              enseignantPopList.add(EnseignantCours.fromJson(
+                jsonEncode(
                   jsonDecode(enseignantPopRes.body)[i],
-                ),)
-              );
+                ),
+              ));
             }
           },
           onFailed: () {});
@@ -181,5 +183,104 @@ class CourseManagerService {
       showSnackBar(context, e.toString());
     }
     return enseignantPopList;
+  }
+
+  void addCourseToFavorite(
+      BuildContext context, Cours cours, VoidCallback success) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resFavorite = await http.post(
+        Uri.parse(
+          '$uri/addCourseToFavorite',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            "id_users": int.parse(userProvider.user.id),
+            "id_cours": int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resFavorite,
+          context: context,
+          onSuccess: () {
+            success();
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+   void removeCoursToFavorite(
+      BuildContext context, Cours cours, VoidCallback success) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resFavorite = await http.post(
+        Uri.parse(
+          '$uri/removeCoursToFavorite',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            "id_users": int.parse(userProvider.user.id),
+            "id_cours": int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resFavorite,
+          context: context,
+          onSuccess: () {
+            success();
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<bool> isCourseInFavorite(BuildContext context, Cours cours) async {
+     final userProvider = Provider.of<UserProvider>(context, listen: false);
+     late bool isCourseInFavorite;
+
+    try {
+     
+      http.Response resIsFav =
+          await http.post(Uri.parse("$uri/isCourseInFavorite"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                "id_users": int.parse(userProvider.user.id),
+                "id_cours": int.parse(cours.id_cours)
+              }));
+
+      httpErrorHandle(
+        response: resIsFav,
+        context: context,
+        onSuccess: () {
+          isCourseInFavorite = jsonDecode(resIsFav.body);
+        },
+        onFailed: () {},
+      );
+
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+      return isCourseInFavorite;
+
   }
 }

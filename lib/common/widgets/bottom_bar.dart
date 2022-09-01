@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
-import 'package:mbschool/features/explore/screens/explore_screen.dart';
+import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/home/screens/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -31,7 +31,7 @@ class _BottomBarState extends State<BottomBar> {
     List items = [
       "assets/images/home_icon.svg",
       "assets/images/play_icon.svg",
-      "assets/images/rocket_icon.svg",
+      "assets/images/favorite_icon.svg",
       "assets/images/user_icon.svg",
     ];
     var size = MediaQuery.of(context).size;
@@ -92,7 +92,7 @@ class _BottomBarState extends State<BottomBar> {
       children: const [
         HomeScreen(),
         CourseScreen(),
-        ExploreScreen(),
+        FavoriteScreen(),
         AccountScreen()
       ],
     );

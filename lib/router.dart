@@ -8,8 +8,8 @@ import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
-import 'package:mbschool/features/explore/screens/explore_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
@@ -31,9 +31,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case AllCourseScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AllCourseScreen());
-    case ExploreScreen.routeName:
+    case FavoriteScreen.routeName:
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const ExploreScreen());
+          settings: routeSettings, builder: (_) => const FavoriteScreen());
     case AuthScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AuthScreen());

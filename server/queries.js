@@ -16,6 +16,9 @@ const addExigence = "INSERT INTO exigence (nom,  id_cours) VALUES ($1, $2) RETUR
 const getAllExigences = "SELECT * FROM exigence WHERE id_cours = $1;";
 const getAllCoursesByCategory = "SELECT * FROM cours JOIN users ON cours.id_users = users.id WHERE id_categorie = $1;";
 const getAllEnseignantPopulaire = "SELECT cours.id_users, users.nom, users.prenom,users.photo, COUNT(*) AS nombre_cours FROM cours JOIN users ON cours.id_users = users.id GROUP BY cours.id_users, users.nom,users.prenom, users.photo ;";
+const addCourseToFavorite = "INSERT INTO favoris (id_users, id_cours) VALUES ($1, $2) RETURNING *;";
+const isCourseInFavorite = "SELECT * FROM favoris WHERE id_users = $1 AND id_cours=$2;";
+const removeCoursToFavorite = "DELETE FROM favoris WHERE id_users=$1 AND id_cours=$2;";
 
 module.exports = {
     checkEmailExist,
@@ -36,4 +39,7 @@ module.exports = {
     getAllExigences,
     getAllCoursesByCategory,
     getAllEnseignantPopulaire,
+    addCourseToFavorite,
+    isCourseInFavorite,
+    removeCoursToFavorite,
 }

@@ -7,6 +7,7 @@ import 'package:mbschool/common/widgets/custom_course_footer.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
@@ -34,6 +35,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   ExigenceService exigenceService = ExigenceService();
   List<Exigence> exigences = [];
   List<Lecon> lecons = [];
+  bool? isCourseInFav;
 
   @override
   void initState() {
@@ -41,6 +43,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     getAllSections();
     getAllExigences();
     getAllLecons();
+    isCoursInFavorite();
+  }
+
+  void isCoursInFavorite() async {
+    isCourseInFav =
+        await courseManagerService.isCourseInFavorite(context, widget.cours);
+    setState(() {});
   }
 
   void getAllExigences() async {
@@ -73,7 +82,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
             backgroundColor: Colors.transparent,
           ),
           preferredSize: Size.fromHeight(40)),
-      body: SingleChildScrollView(
+      body: exigences == null || sections == null || lecons == null || isCourseInFav == null ? Loader(): SingleChildScrollView(
         child: Column(
           children: [
             Stack(
@@ -124,19 +133,19 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                 // ),
               ],
             ),
-            CustomDetailCourseInfoHeader(cours: widget.cours),
+            CustomDetailCourseInfoHeader(cours: widget.cours, isCourseInFav: isCourseInFav!,),
             Padding(
               padding: const EdgeInsets.only(
                   left: appPadding, right: appPadding, bottom: appPadding),
-              child:  Container(
+              child: Container(
                 width: double.infinity,
                 height: 50,
                 child: TabBar(
                     labelColor: Colors.black,
                     indicatorColor: primary,
                     controller: _tabController,
-                    tabs: const[
-                       Tab(
+                    tabs: const [
+                      Tab(
                         text: "Infos",
                       ),
                       Tab(

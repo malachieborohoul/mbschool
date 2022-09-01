@@ -173,6 +173,46 @@ courseRouter.get("/getAllEnseignantPopulaire",  (req, res)=>{
   })
 })
 
+// add course to favorite
+
+courseRouter.post("/addCourseToFavorite", (req, res)=>{
+  const {id_users, id_cours} = req.body;
+  pool.query(queries.addCourseToFavorite,[id_users, id_cours], (error, results)=>{
+    if(error) throw error;
+
+    return res.json(results.rows[0])
+  })
+})
+
+// remove course to favorite
+
+courseRouter.post("/removeCoursToFavorite", (req, res)=>{
+  const {id_users, id_cours} = req.body;
+  pool.query(queries.removeCoursToFavorite,[id_users, id_cours], (error, results)=>{
+    if(error) throw error;
+
+    return res.json(true)
+  })
+})
+
+// fetch if a course is the favorite table
+
+courseRouter.post("/isCourseInFavorite", (req, res)=>{
+  const {id_users, id_cours} = req.body;
+  pool.query(queries.isCourseInFavorite,[id_users, id_cours], (error, results)=>{
+    if(error) throw error;
+    if(results.rowCount > 0 ){
+      return res.json(true)
+    }
+    return res.json(false)
+
+
+   
+    
+  })
+})
+
+
 
 
 

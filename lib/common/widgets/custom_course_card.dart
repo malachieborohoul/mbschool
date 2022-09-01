@@ -278,3 +278,74 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
     );
   }
 }
+
+
+
+
+class CustomFavoriteCourseCard extends StatefulWidget {
+  const CustomFavoriteCourseCard({
+    Key? key,
+    required this.thumbNail,
+    required this.title,
+    
+  }) : super(key: key);
+
+  final String thumbNail;
+  final String title;
+  
+
+  @override
+  _CustomFavoriteCourseCardState createState() => _CustomFavoriteCourseCardState();
+}
+
+class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Container(
+      width: size.width,
+      height: size.width * .25,
+      padding: const EdgeInsets.all(15.0),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: textWhite,
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: size.width * .125,
+            width: size.width * .125,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.0),
+              child: Image.network(
+                widget.thumbNail,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          SizedBox(width: 15.0),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: secondary,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

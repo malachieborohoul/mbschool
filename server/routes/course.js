@@ -206,9 +206,18 @@ courseRouter.post("/isCourseInFavorite", (req, res)=>{
     }
     return res.json(false)
 
-
-   
     
+  })
+})
+
+
+// get all favorite courses
+courseRouter.get("/getAllFavoriteCourses",auth,  (req, res)=>{
+  pool.query(queries.getAllFavoriteCourses, (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
   })
 })
 

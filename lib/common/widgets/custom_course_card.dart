@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
+import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 
 class CustomCourseCardExpand extends StatefulWidget {
@@ -11,7 +14,8 @@ class CustomCourseCardExpand extends StatefulWidget {
     required this.title,
     required this.userProfile,
     required this.userName,
-    required this.price, required this.cours,
+    required this.price,
+    required this.cours,
   }) : super(key: key);
 
   final String thumbNail;
@@ -24,11 +28,19 @@ class CustomCourseCardExpand extends StatefulWidget {
 
   @override
   _CustomCourseCardExpandState createState() => _CustomCourseCardExpandState();
+
+  
 }
+ 
 
 class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
+  
+
+ 
   @override
   Widget build(BuildContext context) {
+   
+
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * .6,
@@ -115,7 +127,8 @@ class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
                     borderRadius: BorderRadius.circular(100.0),
                     child: GestureDetector(
                       onTap: () => Navigator.pushNamed(
-                          context, DetailTeacherCourseScreen.routeName, arguments: widget.cours),
+                          context, DetailTeacherCourseScreen.routeName,
+                          arguments: widget.cours),
                       child: Image.network(
                         widget.userProfile,
                         fit: BoxFit.cover,
@@ -221,7 +234,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Instructor: ' + widget.nom + ' '+ widget.prenom,
+                      'Instructor: ' + widget.nom + ' ' + widget.prenom,
                       style: TextStyle(
                         fontSize: 12.0,
                         color: grey,
@@ -238,38 +251,38 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   ],
                 ),
                 Row(
-                children: [
-                  Icon(
-                    Icons.star,
-                    size: 15,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 15,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 15,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 15,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 15,
-                    color: third,
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Text("(4.0)"),
-                ],
-              ),
+                  children: [
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: third,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: third,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: third,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: third,
+                    ),
+                    Icon(
+                      Icons.star,
+                      size: 15,
+                      color: third,
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Text("(4.0)"),
+                  ],
+                ),
               ],
             ),
           ),
@@ -279,73 +292,152 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
   }
 }
 
-
-
-
 class CustomFavoriteCourseCard extends StatefulWidget {
   const CustomFavoriteCourseCard({
     Key? key,
-    required this.thumbNail,
-    required this.title,
+    required this.cours
     
   }) : super(key: key);
 
-  final String thumbNail;
-  final String title;
+  final Cours cours;
   
 
   @override
-  _CustomFavoriteCourseCardState createState() => _CustomFavoriteCourseCardState();
+  _CustomFavoriteCourseCardState createState() =>
+      _CustomFavoriteCourseCardState();
 }
 
 class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
+   CourseManagerService _courseManagerService = CourseManagerService();
+   void removeCoursToFavorite(Cours cours) {
+      _courseManagerService.removeCoursToFavorite(context, cours, () {
+        setState(() {
+        });
+        showSnackBar(context, "Cours retiré des favoris");
+      });
+    }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width,
-      height: size.width * .25,
-      padding: const EdgeInsets.all(15.0),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: textWhite,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Row(
-        children: [
-          Container(
-            height: size.width * .125,
-            width: size.width * .125,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Image.network(
-                widget.thumbNail,
-                fit: BoxFit.cover,
-              ),
-            ),
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: size.width * 0.32),
+          width: size.width * 0.8,
+          height: size.height * .19,
+          padding: const EdgeInsets.all(15.0),
+          alignment: Alignment.centerRight,
+          decoration: BoxDecoration(
+            color: textWhite,
+            borderRadius: BorderRadius.circular(12.0),
           ),
-          SizedBox(width: 15.0),
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    color: secondary,
-                    fontWeight: FontWeight.w700,
-                  ),
+          child: Row(
+            children: [
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.cours.titre,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: secondary,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Container(
+                      width: size.width * 0.5,
+                      height: size.height * 0.05,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          borderRadius: BorderRadius.all(Radius.circular(25))),
+                      child: InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text("Notification"),
+                                    content: Container(
+                                      height: 90,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "Voulez vous le retirer des favoris ?",
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                          const SizedBox(
+                                            height: appPadding,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              InkWell(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    removeCoursToFavorite(widget.cours);
+                                                  },
+                                                  splashColor:
+                                                      Colors.grey.shade200,
+                                                  child: Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: Colors.green),
+                                                  )),
+                                              InkWell(
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  splashColor:
+                                                      Colors.grey.shade200,
+                                                  child: Text(
+                                                    "Non",
+                                                    style: TextStyle(
+                                                        color: Colors.red),
+                                                  )),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.close,
+                              size: 15,
+                            ),
+                            Text(
+                              "Rétirer des favoris",
+                              style: TextStyle(fontWeight: FontWeight.w300),
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                
-              ],
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: size.height * 0.190,
+          width: size.width * 0.35,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: Image.network(
+              widget.cours.vignette,
+              fit: BoxFit.fill,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

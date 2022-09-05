@@ -19,6 +19,7 @@ const getAllEnseignantPopulaire = "SELECT cours.id_users, users.nom, users.preno
 const addCourseToFavorite = "INSERT INTO favoris (id_users, id_cours) VALUES ($1, $2) RETURNING *;";
 const isCourseInFavorite = "SELECT * FROM favoris WHERE id_users = $1 AND id_cours=$2;";
 const removeCoursToFavorite = "DELETE FROM favoris WHERE id_users=$1 AND id_cours=$2;";
+const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cours=favoris.id_cours;";
 
 module.exports = {
     checkEmailExist,
@@ -42,4 +43,5 @@ module.exports = {
     addCourseToFavorite,
     isCourseInFavorite,
     removeCoursToFavorite,
+    getAllFavoriteCourses,
 }

@@ -7,9 +7,13 @@ import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_place_holder.dart';
 import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/category_json.dart';
+import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/favorite/services/favorite_service.dart';
+import 'package:mbschool/models/cours.dart';
 
 class FavoriteScreen extends StatefulWidget {
   static const routeName = '/favorite';
@@ -20,8 +24,22 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  List<Cours>? cours;
+  FavoriteService _favoriteService = FavoriteService();
+  @override
+  void initState() {
+    getAllFavoriteCourses();
+    super.initState();
+  }
+
+  void getAllFavoriteCourses() async {
+    cours = await _favoriteService.getAllFavoriteCourses(context);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    getAllFavoriteCourses();
     return Scaffold(
       backgroundColor: background,
       extendBodyBehindAppBar: true,
@@ -29,7 +47,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: getBody(),
+      body: cours == null ? Loader() : getBody(),
     );
   }
 
@@ -44,36 +62,23 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               height: spacer,
             ),
             const CustomHeading(
-                title: "Mes favoris",
-                subTitle: "",
-                color: secondary),
+                title: "Mes favoris", subTitle: "", color: secondary),
             const SizedBox(
-              height: spacer,
+              height: spacer -50,
             ),
-
-            // Column(
-            //   children: List.generate(cours.length, (index) {
-            //     return Padding(
-            //         padding: const EdgeInsets.only(bottom: 25),
-            //         child: InkWell(
-            //             onTap: () {
-            //               Navigator.pushNamed(
-            //                   context, DetailCourseScreen.routeName,
-            //                   arguments: cours[index]);
-            //             },
-            //             child: CustomFavoriteCourseCard(
-            //                 thumbNail: cours[index].vignette,
-            //                 title: cours[index].titre,
-            //                 nom: cours[index].nom,
-            //                 prenom: cours[index].prenom,
-            //                 price: cours[index].prix.isEmpty
-            //                     ? "Gratuit"
-            //                     : cours[index].prix)));
-            //   }),
-            // )
-           
-
-             
+            Column(
+              children: List.generate(cours!.length, (index) {
+                return Padding(
+                    padding: const EdgeInsets.only(bottom: 25),
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, DetailCourseScreen.routeName,
+                              arguments: cours![index]);
+                        },
+                        child: CustomFavoriteCourseCard(cours: cours![index])));
+              }),
+            )
           ],
         ),
       ),

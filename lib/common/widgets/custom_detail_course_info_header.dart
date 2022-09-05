@@ -186,6 +186,7 @@ class _CustomDetailCourseInfoHeaderState
                                 ),
                               ),
                             ));
+                  
                   }
                 },
                 icon: Icon(

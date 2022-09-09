@@ -73,16 +73,18 @@ class CustomAppBar extends StatelessWidget {
                   Spacer(),
 
                   (action)
-                      ? Container(
-                          width: 40.0,
-                          child: Container(
-                            child: SvgPicture.asset(
-                              assetImg + actionIcon,
-                              color: iconColor,
-                              height: 15.0,
+                      ? GestureDetector(
+                        child: Container(
+                            width: 40.0,
+                            child: Container(
+                              child: SvgPicture.asset(
+                                assetImg + actionIcon,
+                                color: iconColor,
+                                height: 20.0,
+                              ),
                             ),
                           ),
-                        )
+                      )
                       : Container(
                           width: 40.0,
                           height: 40.0,

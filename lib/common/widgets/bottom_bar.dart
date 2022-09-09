@@ -5,6 +5,7 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
+import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -18,12 +19,18 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int pageIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: getFooter(),
       body: getBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, FilterCourseScreen.routeName);
+        },
+        backgroundColor: secondary,
+        child: Icon(Icons.filter_list_outlined),
+      ),
     );
   }
 

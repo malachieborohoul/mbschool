@@ -9,6 +9,7 @@ import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
+import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
@@ -19,6 +20,7 @@ import 'package:mbschool/features/panel/create_course/screens/create_course_scre
 import 'package:mbschool/main.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:page_transition/page_transition.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -84,11 +86,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case DetailCourseScreen.routeName:
       var cours = routeSettings.arguments as Cours;
 
-      return MaterialPageRoute(
+      return PageTransition(
           settings: routeSettings,
-          builder: (_) => DetailCourseScreen(
-                cours: cours,
-              ));
+          child: DetailCourseScreen(
+            cours: cours,
+          ),
+          type: PageTransitionType.fade);
 
     case DetailTeacherCourseScreen.routeName:
       var cours = routeSettings.arguments as Cours;
@@ -107,6 +110,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => CoursesByCategoryScreen(
                 categorie: categorie,
               ));
+
+    case FilterCourseScreen.routeName:
+      return PageTransition(
+          settings: routeSettings,
+          child: const FilterCourseScreen(),
+          curve: Curves.easeOut,
+          type: PageTransitionType.bottomToTop);
+
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

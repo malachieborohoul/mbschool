@@ -88,7 +88,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
 
     // String dropdownvalue_langue = langues != null ? langues![0].id_langue : "";
     String dropdownvalue_categorie =
-        categories != null ? categories![0].id_categorie : "";
+        categories != null ? categories![0].id_categorie : "0";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
     if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie); 
@@ -110,7 +110,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Filtrer les cours", style: TextStyle(fontSize: 20),),
+                    Text("Filtrer les cours", style: TextStyle(fontSize: 20, fontWeight:FontWeight.w500),),
                     IconButton(onPressed: (){}, icon: FaIcon(FontAwesomeIcons.circleXmark))
                   ],
                 ),
@@ -119,7 +119,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
         preferredSize: Size.fromHeight(55),
       ),
 
-      body: categories == null || isCharging == true
+      body: categories == null && dropdownvalue_categorie=="0"
             ? const Loader()
             : SingleChildScrollView(
                 child: Padding(

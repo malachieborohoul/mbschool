@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/clipper.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_categories_button.dart';
@@ -79,14 +80,16 @@ class _HomeScreenState extends State<HomeScreen> {
             Stack(
               alignment: Alignment.topCenter,
               children: [
-                ClipPath(
-                  clipper: BottomClipper(),
-                  child: Container(
-                    width: size.width,
-                    height: 300,
-                    decoration: BoxDecoration(color: secondary),
-                  ),
-                ),
+                // SlideDownTween(
+                //   child: ClipPath(
+                //     clipper: BottomClipper(),
+                //     child: Container(
+                //       width: size.width,
+                //       height: 300,
+                //       decoration: BoxDecoration(color: secondary),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(
                       left: appPadding, right: appPadding),
@@ -101,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           CustomHeading(
                               title: "Bienvenue ${user.nom} ",
                               subTitle: "Que voulez vous apprendre?",
-                              color: textWhite),
+                              color: secondary),
                           Container(
                             height: spacer,
                             width: spacer,
@@ -129,12 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const CustomSearchField(
                         hintField: "Essayez le Developpement mobile",
-                        backgroundColor: background,
+                        backgroundColor: textWhite,
                       ),
                       const SizedBox(
                         height: spacer - 30,
                       ),
-                      const CustomCategoryCard(),
+                      CustomCategoryCard(),
                       const SizedBox(
                         height: spacer,
                       ),
@@ -145,12 +148,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                         padding: EdgeInsets.only(
                             left: appPadding - 20, right: appPadding - 20),
-                        child: CustomTitle(title: "Cours populaires", titreLien: "Voir plus", route: AllCourseScreen.routeName,),
+                        child: CustomTitle(
+                          title: "Cours populaires",
+                          titreLien: "Voir plus",
+                          route: AllCourseScreen.routeName,
+                        ),
                       ),
                       const SizedBox(
                         height: smallSpacer,
                       ),
                       SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Padding(
                           padding: const EdgeInsets.only(
@@ -165,7 +173,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: cours == null
                                       ? Loader()
                                       : CustomCourseCardExpand(
-                                          thumbNail: cours[index].vignette,
+                                          thumbNail: Hero(
+                                            tag: cours[index].vignette,
+                                            child: Image.network(
+                                              cours[index].vignette,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                           videoAmount: CoursesJson[index]
                                               ['video'],
                                           title: cours[index].titre,
@@ -186,7 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                         padding: EdgeInsets.only(left: appPadding - 20),
                         child: CustomTitle(title: "Categories"),
-                        
                       ),
                       const SizedBox(
                         height: smallSpacer,
@@ -206,9 +219,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       left: 10, right: 10, top: 10, bottom: 5),
                                   child: InkWell(
                                     splashColor: Colors.grey,
-                                    onTap: ()=>Navigator.pushNamed(context, CoursesByCategoryScreen.routeName, arguments: categories[index]),
+                                    onTap: () => Navigator.pushNamed(context,
+                                        CoursesByCategoryScreen.routeName,
+                                        arguments: categories[index]),
                                     child: CustomCategoriesButton(
-                                        title: categories[index].nom.toUpperCase()),
+                                        title: categories[index]
+                                            .nom
+                                            .toUpperCase()),
                                   ),
                                 );
                               })),

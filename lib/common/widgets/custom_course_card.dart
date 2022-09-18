@@ -18,7 +18,7 @@ class CustomCourseCardExpand extends StatefulWidget {
     required this.cours,
   }) : super(key: key);
 
-  final String thumbNail;
+  final Widget thumbNail;
   final String videoAmount;
   final String title;
   final String userProfile;
@@ -28,19 +28,11 @@ class CustomCourseCardExpand extends StatefulWidget {
 
   @override
   _CustomCourseCardExpandState createState() => _CustomCourseCardExpandState();
-
-  
 }
- 
 
 class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
-  
-
- 
   @override
   Widget build(BuildContext context) {
-   
-
     var size = MediaQuery.of(context).size;
     return Container(
       width: size.width * .6,
@@ -67,10 +59,7 @@ class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
                 width: size.width * .6,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
-                  child: Image.network(
-                    widget.thumbNail,
-                    fit: BoxFit.cover,
-                  ),
+                  child: widget.thumbNail,
                 ),
               ),
               Positioned(
@@ -293,14 +282,10 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
 }
 
 class CustomFavoriteCourseCard extends StatefulWidget {
-  const CustomFavoriteCourseCard({
-    Key? key,
-    required this.cours
-    
-  }) : super(key: key);
+  const CustomFavoriteCourseCard({Key? key, required this.cours})
+      : super(key: key);
 
   final Cours cours;
-  
 
   @override
   _CustomFavoriteCourseCardState createState() =>
@@ -308,14 +293,14 @@ class CustomFavoriteCourseCard extends StatefulWidget {
 }
 
 class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
-   CourseManagerService _courseManagerService = CourseManagerService();
-   void removeCoursToFavorite(Cours cours) {
-      _courseManagerService.removeCoursToFavorite(context, cours, () {
-        setState(() {
-        });
-        showSnackBar(context, "Cours retiré des favoris");
-      });
-    }
+  CourseManagerService _courseManagerService = CourseManagerService();
+  void removeCoursToFavorite(Cours cours) {
+    _courseManagerService.removeCoursToFavorite(context, cours, () {
+      setState(() {});
+      showSnackBar(context, "Cours retiré des favoris");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -378,7 +363,8 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                               InkWell(
                                                   onTap: () {
                                                     Navigator.pop(context);
-                                                    removeCoursToFavorite(widget.cours);
+                                                    removeCoursToFavorite(
+                                                        widget.cours);
                                                   },
                                                   splashColor:
                                                       Colors.grey.shade200,

@@ -26,7 +26,32 @@ class _BottomBarState extends State<BottomBar> {
       body: getBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, FilterCourseScreen.routeName);
+          // Navigator.pushNamed(context, FilterCourseScreen.routeName);
+          showModalBottomSheet(
+           useRootNavigator: true,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              context: context,
+              builder: (context) {
+                return DraggableScrollableSheet(
+                  initialChildSize: 0.9,
+                  builder: (_, controller)=>
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    color: Colors.white,
+                    
+                    ),
+                    child: FilterCourseScreen(controller: controller,),
+                    
+                  ),
+                );
+              });
         },
         backgroundColor: secondary,
         child: Icon(Icons.filter_list_outlined),

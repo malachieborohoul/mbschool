@@ -222,6 +222,18 @@ courseRouter.get("/getAllFavoriteCourses",auth,  (req, res)=>{
 })
 
 
+// filter all the  courses
+courseRouter.get("/filterCourses/:id_categorie/:id_niveau/:id_langue",auth, (req, res)=>{
+  pool.query(queries.filterCourses,[req.params.id_categorie, req.params.id_niveau, req.params.id_langue], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+
 
 
 

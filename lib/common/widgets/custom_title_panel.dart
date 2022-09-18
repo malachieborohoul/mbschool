@@ -9,7 +9,7 @@ class CustomTitlePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(title),
+      child: Text(title, style: TextStyle(fontWeight: FontWeight.bold),),
     );
   }
 }

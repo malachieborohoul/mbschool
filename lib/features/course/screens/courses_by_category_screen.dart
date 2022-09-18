@@ -128,7 +128,10 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                           child: cours == null
                               ? Loader()
                               : CustomCourseCardExpand(
-                                  thumbNail: cours[index].vignette,
+                                  thumbNail: Image.network(
+                                    cours[index].vignette,
+                                    fit: BoxFit.cover,
+                                  ),
                                   videoAmount: CoursesJson[index]['video'],
                                   title: cours[index].titre,
                                   userProfile: cours[index].photo,
@@ -180,11 +183,12 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                   enseignantPop.length,
                   (index) {
                     return Builder(builder: (context) {
-                      String fullName = enseignantPop[index].nom +" "+ enseignantPop[index].prenom;
+                      String fullName = enseignantPop[index].nom +
+                          " " +
+                          enseignantPop[index].prenom;
                       return CustomPersonCard(
                           image: enseignantPop[index].photo,
                           name: fullName,
-                              
                           totalCourses: enseignantPop[index].nombre_cours,
                           totalStudents: "4");
                     });

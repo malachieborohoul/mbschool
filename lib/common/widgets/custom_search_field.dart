@@ -29,7 +29,7 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
       padding: const EdgeInsets.all(5.0),
       decoration: BoxDecoration(
           color: widget.backgroundColor,
-          borderRadius: BorderRadius.circular(7.0)),
+          borderRadius: BorderRadius.circular(15.0)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,

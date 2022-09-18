@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mbschool/common/animations/opacity_tween.dart';
+import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
 import 'package:mbschool/common/widgets/custom_course_footer.dart';
@@ -92,10 +94,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                   height: MediaQuery.of(context).size.height * .4,
                   width: MediaQuery.of(context).size.width,
                   color: Colors.transparent,
-                  child: ClipRRect(
-                    child: Image.network(
-                      widget.cours.vignette,
-                      fit: BoxFit.cover,
+                  child: Hero(
+                    tag: widget.cours.vignette,
+                    child: ClipRRect(
+                      child: Image.network(
+                        widget.cours.vignette,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -133,7 +138,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                 // ),
               ],
             ),
-            CustomDetailCourseInfoHeader(cours: widget.cours, isCourseInFav: isCourseInFav!,),
+            SlideDownTween(offset: 25,child: OpacityTween(begin: 0,
+            child: CustomDetailCourseInfoHeader(cours: widget.cours, isCourseInFav: isCourseInFav!,))),
             Padding(
               padding: const EdgeInsets.only(
                   left: appPadding, right: appPadding, bottom: appPadding),
@@ -145,14 +151,23 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                     indicatorColor: primary,
                     controller: _tabController,
                     tabs: const [
-                      Tab(
-                        text: "Infos",
+                      OpacityTween(
+                        begin: 0,
+                        child: Tab(
+                          text: "Infos",
+                        ),
                       ),
-                      Tab(
-                        text: "Resultats",
+                      OpacityTween(
+                        begin: 0,
+                        child: Tab(
+                          text: "Resultats",
+                        ),
                       ),
-                      Tab(
-                        text: "Exigences",
+                      OpacityTween(
+                        begin: 0,
+                        child: Tab(
+                          text: "Exigences",
+                        ),
                       ),
                     ]),
               ),
@@ -167,79 +182,82 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                   color: third,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(appPadding),
-                  child: TabBarView(controller: _tabController, children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ce cours contient",
-                          style: TextStyle(color: textWhite, fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "15 leçons",
-                          style: TextStyle(color: textWhite),
-                        ),
-                        Divider(
-                          thickness: 0.5,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "15 leçons",
-                          style: TextStyle(color: textWhite),
-                        ),
-                        Divider(
-                          thickness: 0.5,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Ce que vous allez apprendre ",
-                          style: TextStyle(color: textWhite, fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "15 leçons",
-                          style: TextStyle(color: textWhite),
-                        ),
-                        Divider(
-                          thickness: 0.5,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "15 leçons",
-                          style: TextStyle(color: textWhite),
-                        ),
-                        Divider(
-                          thickness: 0.5,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Les exigences du cours",
-                          style: TextStyle(color: textWhite, fontSize: 20),
-                        ),
-                        for (int i = 0; i < exigences.length; i++)
-                          CustomExigenceCours(exigence: exigences[i])
-                      ],
-                    ),
-                  ]),
+                child: OpacityTween(
+                  begin:0.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(appPadding),
+                    child: TabBarView(controller: _tabController, children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Ce cours contient",
+                            style: TextStyle(color: textWhite, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "15 leçons",
+                            style: TextStyle(color: textWhite),
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            "15 leçons",
+                            style: TextStyle(color: textWhite),
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Ce que vous allez apprendre ",
+                            style: TextStyle(color: textWhite, fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "15 leçons",
+                            style: TextStyle(color: textWhite),
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            "15 leçons",
+                            style: TextStyle(color: textWhite),
+                          ),
+                          Divider(
+                            thickness: 0.5,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Les exigences du cours",
+                            style: TextStyle(color: textWhite, fontSize: 20),
+                          ),
+                          for (int i = 0; i < exigences.length; i++)
+                            CustomExigenceCours(exigence: exigences[i])
+                        ],
+                      ),
+                    ]),
+                  ),
                 ),
               ),
             ),

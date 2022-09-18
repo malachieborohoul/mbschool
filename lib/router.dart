@@ -112,9 +112,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
               ));
 
     case FilterCourseScreen.routeName:
+      var controller = routeSettings.arguments as ScrollController?;
+
       return PageTransition(
           settings: routeSettings,
-          child: const FilterCourseScreen(),
+          child:  FilterCourseScreen(controller: controller,),
           curve: Curves.easeOut,
           type: PageTransitionType.bottomToTop);
 

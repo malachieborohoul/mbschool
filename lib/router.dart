@@ -31,8 +31,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const CourseScreen());
     case AllCourseScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const AllCourseScreen());
+      var cours = routeSettings.arguments as List<Cours>;
+
+      return PageTransition(
+          settings: routeSettings, child: AllCourseScreen(cours: cours,), type: PageTransitionType.bottomToTop,);
     case FavoriteScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FavoriteScreen());

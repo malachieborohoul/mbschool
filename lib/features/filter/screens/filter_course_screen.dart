@@ -11,6 +11,7 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/filter/services/filter_service.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
@@ -73,7 +74,11 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
     cours = await _filterService.filterCourses(
         context, id_categorie, id_niveau, id_langue);
     setState(() {
-      // Navigator.pop(context);
+      Navigator.pop(context);
+      Future.delayed(Duration(milliseconds: 200), () {
+        Navigator.pushNamed(context, AllCourseScreen.routeName,
+            arguments: cours);
+      });
     });
   }
 

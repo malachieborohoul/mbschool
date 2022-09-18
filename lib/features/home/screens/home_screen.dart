@@ -36,16 +36,32 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   CourseManagerService courseManagerService = CourseManagerService();
   List<Cours> cours = [];
   List<Categorie> categories = [];
+
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
   @override
   void initState() {
     getAllCourses();
     getAllCategorieData();
 
+    _animationController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 750));
+
+    _animation =
+        Tween<double>(begin: 1.0, end: 5.0).animate(_animationController);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   void getAllCourses() async {
@@ -96,32 +112,38 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: spacer + 24,
+                        height: spacer + 5,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomHeading(
-                              title: "Bienvenue ${user.nom} ",
-                              subTitle: "Que voulez vous apprendre?",
-                              color: secondary),
-                          Container(
-                            height: spacer,
-                            width: spacer,
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, AccountScreen.routeName);
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: user.photo.isNotEmpty
-                                    ? Image.network(
-                                        user.photo,
-                                      )
-                                    : Image.asset(
-                                        UserProfile['image'].toString(),
-                                      ),
+                          SlideDownTween(
+                            offset: 70,
+                            child: CustomHeading(
+                                title: "Bienvenue ${user.nom} ",
+                                subTitle: "Que voulez vous apprendre?",
+                                color: secondary),
+                          ),
+                          SlideDownTween(
+                            offset: 70,
+                            child: Container(
+                              height: spacer,
+                              width: spacer,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AccountScreen.routeName);
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: user.photo.isNotEmpty
+                                      ? Image.network(
+                                          user.photo,
+                                        )
+                                      : Image.asset(
+                                          UserProfile['image'].toString(),
+                                        ),
+                                ),
                               ),
                             ),
                           )
@@ -130,28 +152,38 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: spacer,
                       ),
-                      const CustomSearchField(
-                        hintField: "Essayez le Developpement mobile",
-                        backgroundColor: textWhite,
+                      SlideDownTween(
+                        offset: 70,
+                        child: GestureDetector(
+                          onTap: () {
+                            _animationController.forward();
+                          },
+                          child: const CustomSearchField(
+                            hintField: "Essayez le Developpement mobile",
+                            backgroundColor: textWhite,
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: spacer - 30,
                       ),
-                      CustomCategoryCard(),
+                      SlideDownTween(offset: 70, child: CustomCategoryCard()),
                       const SizedBox(
                         height: spacer,
                       ),
-                      const CustomPromotionCard(),
+                      SlideDownTween(
+                          offset: 70, child: const CustomPromotionCard()),
                       const SizedBox(
                         height: spacer,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(
                             left: appPadding - 20, right: appPadding - 20),
                         child: CustomTitle(
                           title: "Cours populaires",
                           titreLien: "Voir plus",
                           route: AllCourseScreen.routeName,
+                          arg: cours,
                         ),
                       ),
                       const SizedBox(

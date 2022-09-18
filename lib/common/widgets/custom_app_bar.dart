@@ -38,12 +38,13 @@ class CustomAppBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  GestureDetector(
                     // splashColor: textWhite,
                       onTap: () {
                         Navigator.pop(context);
                       },
                     child: Container(
+                      clipBehavior: Clip.antiAlias,
                       height: 40.0,
                       width: 40.0,
                       decoration: BoxDecoration(

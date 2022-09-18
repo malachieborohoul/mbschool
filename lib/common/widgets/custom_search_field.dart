@@ -38,11 +38,16 @@ class _CustomSearchFieldState extends State<CustomSearchField> {
             height: 40.0,
             width: 40.0,
             alignment: Alignment.center,
-            child: Container(
-              child: SvgPicture.asset(
-                assetImg + 'search_icon.svg',
-                color: secondary.withOpacity(0.5),
-                height: 15.0,
+            child: InkWell(
+              onTap: (){
+                
+              },
+              child: Container(
+                child: SvgPicture.asset(
+                  assetImg + 'search_icon.svg',
+                  color: secondary.withOpacity(0.5),
+                  height: 15.0,
+                ),
               ),
             ),
           ),

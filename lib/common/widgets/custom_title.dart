@@ -38,7 +38,7 @@ class CustomTitle extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, AllCourseScreen.routeName);
+            Navigator.pushNamed(context, AllCourseScreen.routeName, arguments: arg);
           },
           child: Text(
             titreLien,

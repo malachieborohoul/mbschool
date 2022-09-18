@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/animations/opacity_tween.dart';
+import 'package:mbschool/common/animations/slide_right_tween.dart';
+import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
@@ -13,26 +16,27 @@ import 'package:mbschool/models/cours.dart';
 
 class AllCourseScreen extends StatefulWidget {
   static const routeName = '/all-course-screen';
-  const AllCourseScreen({Key? key}) : super(key: key);
+   AllCourseScreen({Key? key,  required this.cours}) : super(key: key);
+   List<Cours> cours =[];
 
   @override
   State<AllCourseScreen> createState() => _AllCourseScreenState();
 }
 
 class _AllCourseScreenState extends State<AllCourseScreen> {
-  CourseManagerService courseManagerService = CourseManagerService();
-  List<Cours> cours = [];
-  @override
-  void initState() {
-    getAllCourses();
+  // CourseManagerService courseManagerService = CourseManagerService();
+  // List<Cours> cours = [];
+  // @override
+  // void initState() {
+  //   getAllCourses();
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
-  void getAllCourses() async {
-    cours = await courseManagerService.getAllCourses(context);
-    setState(() {});
-  }
+  // void getAllCourses() async {
+  //   cours = await courseManagerService.getAllCourses(context);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +50,9 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
             actionIcon: 'search_icon.svg',
           ),
           preferredSize: Size.fromHeight(40)),
-      body: cours == null
+      body: widget.cours == null
           ? Loader()
-          : cours.isNotEmpty
+          : widget.cours.isNotEmpty
               ? getBody()
               : Center(child: Text("Pas d'informations")),
     );
@@ -73,11 +77,15 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
                 //     title: "Tous les cours",
                 //     subTitle: "Reprenons",
                 //     color: textBlack),
-                Text(
-                  "${cours.length} Cours",
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: secondary,
+                SlideUpTween(
+                  offset: 40,
+                  child: Text(
+                    "${widget.cours.length} Cours",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: secondary,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
                 )
               ],
@@ -86,23 +94,31 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
               height: spacer,
             ),
             Column(
-              children: List.generate(cours.length, (index) {
-                return Padding(
-                    padding: const EdgeInsets.only(bottom: 25),
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, DetailCourseScreen.routeName,
-                              arguments: cours[index]);
-                        },
-                        child: CustomCourseCardShrink(
-                            thumbNail: cours[index].vignette,
-                            title: cours[index].titre,
-                            nom: cours[index].nom,
-                            prenom: cours[index].prenom,
-                            price: cours[index].prix.isEmpty
-                                ? "Gratuit"
-                                : cours[index].prix)));
+              children: List.generate(widget.cours.length, (index) {
+                return SlideRightTween(
+                  duration: Duration(milliseconds: index* 500),
+                  curve: Curves.easeInOutCubic,
+                  offset: 80,
+                  child: OpacityTween(
+                    begin: 0,
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 25),
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, DetailCourseScreen.routeName,
+                                  arguments: widget.cours[index]);
+                            },
+                            child: CustomCourseCardShrink(
+                                thumbNail: widget.cours[index].vignette,
+                                title: widget.cours[index].titre,
+                                nom: widget.cours[index].nom,
+                                prenom: widget.cours[index].prenom,
+                                price: widget.cours[index].prix.isEmpty
+                                    ? "Gratuit"
+                                    : widget.cours[index].prix))),
+                  ),
+                );
               }),
             )
           ],

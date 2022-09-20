@@ -84,197 +84,192 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
             backgroundColor: Colors.transparent,
           ),
           preferredSize: Size.fromHeight(40)),
-      body: exigences == null || sections == null || lecons == null || isCourseInFav == null ? Loader(): SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .4,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.transparent,
-                  child: Hero(
-                    tag: widget.cours.vignette,
-                    child: ClipRRect(
-                      child: Image.network(
-                        widget.cours.vignette,
-                        fit: BoxFit.cover,
+      body: exigences == null ||
+              sections == null ||
+              lecons == null ||
+              isCourseInFav == null
+          ? Loader()
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * .4,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.transparent,
+                        child: Hero(
+                          tag: widget.cours.vignette,
+                          child: ClipRRect(
+                            child: Image.network(
+                              widget.cours.vignette,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: textWhite,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      backgroundColor: textBlack,
+                                      content: VideoDisplay(
+                                          videoUrl:
+                                              'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
+                                    ));
+                          },
+                          splashColor: Colors.grey,
+                          child: Icon(Icons.play_arrow),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //     left: MediaQuery.of(context).size.width * 0.8,
+                      //     top: MediaQuery.of(context).size.height * 0.4,
+                      //   ),
+                      //   child:  Icon(
+                      //     color: Color.fromARGB(255, 255, 0, 0),
+                      //     Icons.favorite_outline_rounded,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  SlideDownTween(
+                      offset: 25,
+                      child: OpacityTween(
+                          begin: 0,
+                          child: CustomDetailCourseInfoHeader(
+                            cours: widget.cours,
+                            isCourseInFav: isCourseInFav!,
+                          ))),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: appPadding,
+                        right: appPadding,
+                        bottom: appPadding),
+                    child: Container(
+                      width: double.infinity,
+                      height: 50,
+                      child: TabBar(
+                          labelColor: Colors.black,
+                          indicatorColor: primary,
+                          controller: _tabController,
+                          tabs: const [
+                            OpacityTween(
+                              begin: 0,
+                              child: Tab(
+                                text: "Apropos",
+                              ),
+                            ),
+                            OpacityTween(
+                              begin: 0,
+                              child: Tab(
+                                text: "Lecons",
+                              ),
+                            ),
+                            OpacityTween(
+                              begin: 0,
+                              child: Tab(
+                                text: "Avis",
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: appPadding,
+                        right: appPadding,
+                        bottom: appPadding),
+                    child: Container(
+                      width: double.infinity,
+                      height: 250,
+                      decoration: BoxDecoration(
+                        color: third,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: OpacityTween(
+                        begin: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(appPadding),
+                          child:
+                              TabBarView(controller: _tabController, children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Ce cours contient",
+                                  style:
+                                      TextStyle(color: textWhite, fontSize: 20),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  "15 leçons",
+                                  style: TextStyle(color: textWhite),
+                                ),
+                                Divider(
+                                  thickness: 0.5,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  "15 leçons",
+                                  style: TextStyle(color: textWhite),
+                                ),
+                                Divider(
+                                  thickness: 0.5,
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                for (int i = 0; i < sections.length; i++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: appPadding,
+                                      right: appPadding,
+                                      bottom: appPadding,
+                                    ),
+                                    child: CustomCourseCurriculum(
+                                      section: sections[i],
+                                      cours: widget.cours,
+                                    ),
+                                  )
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Les exigences du cours",
+                                  style:
+                                      TextStyle(color: textWhite, fontSize: 20),
+                                ),
+                                for (int i = 0; i < exigences.length; i++)
+                                  CustomExigenceCours(exigence: exigences[i])
+                              ],
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: textWhite,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                backgroundColor: textBlack,
-                                content: VideoDisplay(
-                                    videoUrl:
-                                        'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
-                              ));
-                    },
-                    splashColor: Colors.grey,
-                    child: Icon(Icons.play_arrow),
-                  ),
-                ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     left: MediaQuery.of(context).size.width * 0.8,
-                //     top: MediaQuery.of(context).size.height * 0.4,
-                //   ),
-                //   child:  Icon(
-                //     color: Color.fromARGB(255, 255, 0, 0),
-                //     Icons.favorite_outline_rounded,
-                //   ),
-                // ),
-              ],
-            ),
-            SlideDownTween(offset: 25,child: OpacityTween(begin: 0,
-            child: CustomDetailCourseInfoHeader(cours: widget.cours, isCourseInFav: isCourseInFav!,))),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: appPadding, right: appPadding, bottom: appPadding),
-              child: Container(
-                width: double.infinity,
-                height: 50,
-                child: TabBar(
-                    labelColor: Colors.black,
-                    indicatorColor: primary,
-                    controller: _tabController,
-                    tabs: const [
-                      OpacityTween(
-                        begin: 0,
-                        child: Tab(
-                          text: "Infos",
-                        ),
-                      ),
-                      OpacityTween(
-                        begin: 0,
-                        child: Tab(
-                          text: "Resultats",
-                        ),
-                      ),
-                      OpacityTween(
-                        begin: 0,
-                        child: Tab(
-                          text: "Exigences",
-                        ),
-                      ),
-                    ]),
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: appPadding, right: appPadding, bottom: appPadding),
-              child: Container(
-                width: double.infinity,
-                height: 250,
-                decoration: BoxDecoration(
-                  color: third,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: OpacityTween(
-                  begin:0.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(appPadding),
-                    child: TabBarView(controller: _tabController, children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Ce cours contient",
-                            style: TextStyle(color: textWhite, fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "15 leçons",
-                            style: TextStyle(color: textWhite),
-                          ),
-                          Divider(
-                            thickness: 0.5,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "15 leçons",
-                            style: TextStyle(color: textWhite),
-                          ),
-                          Divider(
-                            thickness: 0.5,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Ce que vous allez apprendre ",
-                            style: TextStyle(color: textWhite, fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "15 leçons",
-                            style: TextStyle(color: textWhite),
-                          ),
-                          Divider(
-                            thickness: 0.5,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            "15 leçons",
-                            style: TextStyle(color: textWhite),
-                          ),
-                          Divider(
-                            thickness: 0.5,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Les exigences du cours",
-                            style: TextStyle(color: textWhite, fontSize: 20),
-                          ),
-                          for (int i = 0; i < exigences.length; i++)
-                            CustomExigenceCours(exigence: exigences[i])
-                        ],
-                      ),
-                    ]),
-                  ),
-                ),
-              ),
-            ),
-            for (int i = 0; i < sections.length; i++)
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: appPadding,
-                  right: appPadding,
-                  bottom: appPadding,
-                ),
-                child: CustomCourseCurriculum(
-                  section: sections[i],
-                ),
-              )
-          ],
-        ),
-      ),
       bottomNavigationBar: CustomCourseFooter(
         cours: widget.cours,
       ),

@@ -21,6 +21,7 @@ const isCourseInFavorite = "SELECT * FROM favoris WHERE id_users = $1 AND id_cou
 const removeCoursToFavorite = "DELETE FROM favoris WHERE id_users=$1 AND id_cours=$2;";
 const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cours=favoris.id_cours;";
 const filterCourses = "SELECT * FROM cours WHERE id_categorie=$1 OR id_niveau=$2 OR id_langue=$3;";
+const searchCourses = "SELECT * FROM cours WHERE titre ILIKE '%' || $1 || '%'"
 module.exports = {
     checkEmailExist,
     addUser,
@@ -45,4 +46,5 @@ module.exports = {
     removeCoursToFavorite,
     getAllFavoriteCourses,
     filterCourses,
+    searchCourses,
 }

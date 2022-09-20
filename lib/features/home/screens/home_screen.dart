@@ -22,6 +22,7 @@ import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -154,14 +155,10 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                       SlideDownTween(
                         offset: 70,
-                        child: GestureDetector(
-                          onTap: () {
-                            _animationController.forward();
-                          },
-                          child: const CustomSearchField(
-                            hintField: "Essayez le Developpement mobile",
-                            backgroundColor: textWhite,
-                          ),
+                        child: CustomSearchField(
+                          onTap: true,
+                          hintField: "Essayez le Developpement mobile",
+                          backgroundColor: textWhite,
                         ),
                       ),
                       const SizedBox(

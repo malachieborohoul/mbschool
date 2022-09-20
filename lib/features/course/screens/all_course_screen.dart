@@ -125,5 +125,6 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
         ),
       ),
     );
+
   }
 }

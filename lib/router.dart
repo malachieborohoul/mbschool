@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/arguments/course_lesson_arguments.dart';
 import 'package:mbschool/common/arguments/select_file_arguments.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
@@ -8,6 +9,7 @@ import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/course/screens/detail_lesson_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
@@ -17,9 +19,11 @@ import 'package:mbschool/features/panel/course_manager/screens/modify_course_scr
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
+import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/main.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/lecon.dart';
 import 'package:page_transition/page_transition.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -122,6 +126,28 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           curve: Curves.easeOut,
           type: PageTransitionType.bottomToTop);
 
+     case SearchScreen.routeName:
+
+      return PageTransition(
+          settings: routeSettings,
+          child:  SearchScreen(),
+          curve: Curves.easeOut,
+          type: PageTransitionType.fade);
+
+     case DetailLessonScreen.routeName:
+      var cours = routeSettings.arguments as CourseLessonArguments;
+      var lecon = routeSettings.arguments as CourseLessonArguments;
+
+      //  var codeFile = routeSettings.arguments as SelectFileArguments;
+      // var cours = routeSettings.arguments as SelectFileArguments;
+
+      return PageTransition(
+          settings: routeSettings,
+          child: DetailLessonScreen(
+            cours: cours.cours,
+            lecon: lecon.lecon ,
+          ),
+          type: PageTransitionType.fade);
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

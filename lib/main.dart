@@ -4,6 +4,8 @@ import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:mbschool/router.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,9 @@ void main() {
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
+        ChangeNotifierProvider(create: (context) => CoursProvider()),
+        ChangeNotifierProvider(create: (context) => TabBarProvider()),
+        
         ],
       child: const MyApp(),
       

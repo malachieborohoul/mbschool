@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
@@ -12,6 +13,7 @@ import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -20,6 +22,9 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:mbschool/providers/tabbar_provider.dart';
+import 'package:provider/provider.dart';
 
 class DetailCourseScreen extends StatefulWidget {
   static const routeName = 'detail-course-screen';
@@ -29,6 +34,8 @@ class DetailCourseScreen extends StatefulWidget {
   @override
   State<DetailCourseScreen> createState() => _DetailCourseScreenState();
 }
+
+CourseManagerService courseManagerService = CourseManagerService();
 
 class _DetailCourseScreenState extends State<DetailCourseScreen>
     with TickerProviderStateMixin {
@@ -46,6 +53,11 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     getAllExigences();
     getAllLecons();
     isCoursInFavorite();
+
+    // TabController _tabController = TabController(length: 3, vsync: this);
+
+    // Provider.of<TabBarProvider>(context, listen: false)
+    //     .setTabController(_tabController);
   }
 
   void isCoursInFavorite() async {
@@ -75,204 +87,213 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
 
   @override
   Widget build(BuildContext context) {
+    final coursProvider =
+        Provider.of<CoursProvider>(context, listen: false).cours;
+
+    // final tabController = Provider.of<TabBarProvider>(context).controller;
     TabController _tabController = TabController(length: 3, vsync: this);
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-          child: CustomAppBar(
-            backgroundColor: Colors.transparent,
-          ),
-          preferredSize: Size.fromHeight(40)),
-      body: exigences == null ||
-              sections == null ||
-              lecons == null ||
-              isCourseInFav == null
+      body: sections == null || isCourseInFav == null
           ? Loader()
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * .4,
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.transparent,
-                        child: Hero(
-                          tag: widget.cours.vignette,
-                          child: ClipRRect(
-                            child: Image.network(
-                              widget.cours.vignette,
-                              fit: BoxFit.cover,
+          : DefaultTabController(
+              length: 3,
+              child: NestedScrollView(
+                headerSliverBuilder: (context, value) {
+                  return [
+                    SliverAppBar(
+                      // pinned: true,
+                      leading: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          // splashColor: textWhite,
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            // clipBehavior: Clip.antiAlias,
+                            height: 40.0,
+                            width: 40.0,
+                            decoration: BoxDecoration(
+                              color: primary.withOpacity(0.7),
+                              borderRadius: BorderRadius.circular(100.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: primary.withOpacity(0.5),
+                                  spreadRadius: 0.0,
+                                  blurRadius: 6.0,
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                            ),
+                            alignment: Alignment.center,
+                            child: SvgPicture.asset(
+                              assetImg + 'arrow_left_icon.svg',
+                              color: textWhite,
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: textWhite,
-                          borderRadius: BorderRadius.circular(50),
+
+                      backgroundColor: Colors.transparent,
+                      expandedHeight: 170,
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Column(
+                          children: [
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * .3,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.transparent,
+                                  child: Hero(
+                                    tag: coursProvider.vignette,
+                                    child: ClipRRect(
+                                      child: Image.network(
+                                        coursProvider.vignette,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 50,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: textWhite,
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                                backgroundColor: textBlack,
+                                                content: VideoDisplay(
+                                                    videoUrl:
+                                                        'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
+                                              ));
+                                    },
+                                    splashColor: Colors.grey,
+                                    child: Icon(Icons.play_arrow),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        child: InkWell(
-                          onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      backgroundColor: textBlack,
-                                      content: VideoDisplay(
-                                          videoUrl:
-                                              'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
-                                    ));
-                          },
-                          splashColor: Colors.grey,
-                          child: Icon(Icons.play_arrow),
-                        ),
+                        // preferredSize: Size.fromHeight(400),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //     left: MediaQuery.of(context).size.width * 0.8,
-                      //     top: MediaQuery.of(context).size.height * 0.4,
-                      //   ),
-                      //   child:  Icon(
-                      //     color: Color.fromARGB(255, 255, 0, 0),
-                      //     Icons.favorite_outline_rounded,
-                      //   ),
-                      // ),
-                    ],
-                  ),
-                  SlideDownTween(
-                      offset: 25,
-                      child: OpacityTween(
-                          begin: 0,
-                          child: CustomDetailCourseInfoHeader(
-                            cours: widget.cours,
-                            isCourseInFav: isCourseInFav!,
-                          ))),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                    )
+                  ];
+                },
+                body: Column(
+                  children: [
+                    SlideDownTween(
+                        offset: 25,
+                        child: OpacityTween(
+                            begin: 0,
+                            child: CustomDetailCourseInfoHeader(
+                              cours: coursProvider,
+                              isCourseInFav: isCourseInFav!,
+                            ))),
+                    Padding(
+                      padding: const EdgeInsets.only(
                         left: appPadding,
                         right: appPadding,
-                        bottom: appPadding),
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: TabBar(
-                          labelColor: Colors.black,
-                          indicatorColor: primary,
-                          controller: _tabController,
-                          tabs: const [
-                            OpacityTween(
-                              begin: 0,
-                              child: Tab(
-                                text: "Apropos",
-                              ),
-                            ),
-                            OpacityTween(
-                              begin: 0,
-                              child: Tab(
-                                text: "Lecons",
-                              ),
-                            ),
-                            OpacityTween(
-                              begin: 0,
-                              child: Tab(
-                                text: "Avis",
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: appPadding,
-                        right: appPadding,
-                        bottom: appPadding),
-                    child: Container(
-                      width: double.infinity,
-                      height: 250,
-                      decoration: BoxDecoration(
-                        color: third,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
-                      child: OpacityTween(
-                        begin: 0.0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(appPadding),
-                          child:
-                              TabBarView(controller: _tabController, children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Ce cours contient",
-                                  style:
-                                      TextStyle(color: textWhite, fontSize: 20),
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        child: TabBar(
+                            labelColor: textBlack,
+                            indicatorColor: primary,
+                            tabs: const [
+                              OpacityTween(
+                                begin: 0,
+                                child: Tab(
+                                  text: "A propos",
                                 ),
-                                SizedBox(
-                                  height: 20,
+                              ),
+                              OpacityTween(
+                                begin: 0,
+                                child: Tab(
+                                  text: "Leçons",
                                 ),
-                                Text(
-                                  "15 leçons",
-                                  style: TextStyle(color: textWhite),
+                              ),
+                              OpacityTween(
+                                begin: 0,
+                                child: Tab(
+                                  text: "Avis",
                                 ),
-                                Divider(
-                                  thickness: 0.5,
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "15 leçons",
-                                  style: TextStyle(color: textWhite),
-                                ),
-                                Divider(
-                                  thickness: 0.5,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                for (int i = 0; i < sections.length; i++)
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      left: appPadding,
-                                      right: appPadding,
-                                      bottom: appPadding,
-                                    ),
-                                    child: CustomCourseCurriculum(
-                                      section: sections[i],
-                                      cours: widget.cours,
-                                    ),
-                                  )
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Les exigences du cours",
-                                  style:
-                                      TextStyle(color: textWhite, fontSize: 20),
-                                ),
-                                for (int i = 0; i < exigences.length; i++)
-                                  CustomExigenceCours(exigence: exigences[i])
-                              ],
-                            ),
-                          ]),
-                        ),
+                              ),
+                            ]),
                       ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          ListView.builder(
+                              itemCount: 50,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text("Ok $index"),
+                                );
+                              }),
+
+                          LeconTabBarView(sections: sections),
+                          ListView.builder(
+                              itemCount: 50,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  title: Text("Ok $index"),
+                                );
+                              }),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-      bottomNavigationBar: CustomCourseFooter(
-        cours: widget.cours,
-      ),
     );
+  }
+}
+
+class LeconTabBarView extends StatefulWidget {
+  const LeconTabBarView({
+    Key? key,
+    required this.sections,
+  }) : super(key: key);
+  final List<Section> sections;
+
+  @override
+  State<LeconTabBarView> createState() => _LeconTabBarViewState();
+}
+
+class _LeconTabBarViewState extends State<LeconTabBarView> {
+  @override
+  Widget build(BuildContext context) {
+    final coursProvider =
+        Provider.of<CoursProvider>(context, listen: false).cours;
+
+    return ListView.builder(
+        itemCount: widget.sections.length,
+        itemBuilder: (context, i) {
+          return Padding(
+            padding: const EdgeInsets.only(
+              left: appPadding,
+              right: appPadding,
+              bottom: 0,
+            ),
+            child: CustomCourseCurriculum(
+              section: widget.sections[i],
+              cours: coursProvider,
+            ),
+          );
+        });
   }
 }

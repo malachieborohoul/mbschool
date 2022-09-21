@@ -44,7 +44,7 @@ class CustomAppBar extends StatelessWidget {
                         Navigator.pop(context);
                       },
                     child: Container(
-                      clipBehavior: Clip.antiAlias,
+                      // clipBehavior: Clip.antiAlias,
                       height: 40.0,
                       width: 40.0,
                       decoration: BoxDecoration(
@@ -66,6 +66,7 @@ class CustomAppBar extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
                   Spacer(),
                   Text(
                     title,

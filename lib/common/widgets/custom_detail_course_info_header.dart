@@ -48,7 +48,7 @@ class _CustomDetailCourseInfoHeaderState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(appPadding),
+      padding: const EdgeInsets.only(right:appPadding, left:appPadding, top: appPadding/2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

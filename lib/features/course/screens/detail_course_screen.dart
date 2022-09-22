@@ -7,6 +7,7 @@ import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
 import 'package:mbschool/common/widgets/custom_course_footer.dart';
+import 'package:mbschool/common/widgets/custom_course_reviews.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
@@ -235,23 +236,9 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                     Expanded(
                       child: TabBarView(
                         children: [
-                          ListView.builder(
-                              itemCount: 50,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text("Ok $index"),
-                                );
-                              }),
-
+                          InfosTabBarView(exigences: exigences),
                           LeconTabBarView(sections: sections),
-                          ListView.builder(
-                              itemCount: 50,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  title: Text("Ok $index"),
-                                );
-                              }),
-
+                          ReviewsTabBarView(sections: sections)
                         ],
                       ),
                     ),
@@ -259,6 +246,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                 ),
               ),
             ),
+    
+      bottomNavigationBar: CustomCourseFooter(cours: coursProvider),
     );
   }
 }
@@ -281,6 +270,7 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     return ListView.builder(
+      physics: BouncingScrollPhysics(),
         itemCount: widget.sections.length,
         itemBuilder: (context, i) {
           return Padding(
@@ -293,6 +283,128 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
               section: widget.sections[i],
               cours: coursProvider,
             ),
+          );
+        });
+  }
+}
+
+class InfosTabBarView extends StatefulWidget {
+  const InfosTabBarView({Key? key, required this.exigences}) : super(key: key);
+  final List<Exigence> exigences;
+
+  @override
+  State<InfosTabBarView> createState() => _InfosTabBarViewState();
+}
+
+class _InfosTabBarViewState extends State<InfosTabBarView> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(appPadding),
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: appPadding),
+              child: Column(
+                children: [
+                  Text(
+                    "Exigences",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  for (var i = 0; i < widget.exigences.length; i++)
+                    Text('${widget.exigences[i].nom}'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: appPadding),
+              child: Column(
+                children: [
+                  Text(
+                    "Objectifs",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  for (var i = 0; i < widget.exigences.length; i++)
+                    Text('${widget.exigences[i].nom}'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: appPadding),
+              child: Column(
+                children: [
+                  Text(
+                    "Résultats",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  for (var i = 0; i < widget.exigences.length; i++)
+                    Text('${widget.exigences[i].nom}'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    // Column(
+    //   children: [
+    //     Expanded(
+    //       child: Text(
+    //         "Exigences",
+    //         style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+    //       ),
+    //     ),
+    //     ListView.builder(
+    //         itemCount: widget.exigences.length,
+    //         itemBuilder: (context, index) {
+    //           return Padding(
+    //             padding: const EdgeInsets.all(appPadding),
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: [
+    //                 Text('${widget.exigences[index].nom}'),
+    //               ],
+    //             ),
+    //           );
+    //         }),
+    //   ],
+    // );
+  }
+}
+
+class ReviewsTabBarView extends StatefulWidget {
+  const ReviewsTabBarView({
+    Key? key,
+    required this.sections,
+  }) : super(key: key);
+  final List<Section> sections;
+
+  @override
+  State<ReviewsTabBarView> createState() => _ReviewsTabBarViewState();
+}
+
+class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
+  @override
+  Widget build(BuildContext context) {
+    final coursProvider =
+        Provider.of<CoursProvider>(context, listen: false).cours;
+
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+        itemCount: widget.sections.length,
+        itemBuilder: (context, i) {
+          return Padding(
+            padding: const EdgeInsets.only(
+              left: appPadding,
+              right: appPadding,
+              bottom: 10,
+            ),
+            child: CustomCourseReviews()
           );
         });
   }

@@ -10,6 +10,7 @@ import 'package:mbschool/common/widgets/custom_course_footer.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
+import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -21,6 +22,7 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class DetailLessonScreen extends StatefulWidget {
   static const routeName = 'detail-lesson-screen';
@@ -75,6 +77,8 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
       print(lecons.length);
     });
   }
+
+  void markLessonAsDone() {}
 
   @override
   Widget build(BuildContext context) {
@@ -151,67 +155,122 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
             //     ),
             //   ),
             // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //       left: appPadding, right: appPadding, bottom: appPadding),
+            //   child: Container(
+            //     width: double.infinity,
+            //     height: 50,
+            //     child:
+            //     TabBar(
+            //         labelColor: Colors.black,
+            //         indicatorColor: primary,
+            //         controller: _tabController,
+            //         tabs: const [
+            //           OpacityTween(
+            //             begin: 0,
+            //             child: Tab(
+            //               text: "Infos",
+            //             ),
+            //           ),
+            //           OpacityTween(
+            //             begin: 0,
+            //             child: Tab(
+            //               text: "Commentaires",
+            //             ),
+            //           ),
+
+            //         ]),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(
                   left: appPadding, right: appPadding, bottom: appPadding),
               child: Container(
                 width: double.infinity,
-                height: 50,
-                child: TabBar(
-                    labelColor: Colors.black,
-                    indicatorColor: primary,
-                    controller: _tabController,
-                    tabs: const [
-                      OpacityTween(
-                        begin: 0,
-                        child: Tab(
-                          text: "Infos",
-                        ),
-                      ),
-                      OpacityTween(
-                        begin: 0,
-                        child: Tab(
-                          text: "Commentaires",
-                        ),
-                      ),
-                     
-                    ]),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: appPadding, right: appPadding, bottom: appPadding),
-              child: Container(
-                width: double.infinity,
-                height: 250,
+                height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                   // color: third,
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 child: OpacityTween(
-                  begin:0.0,
+                  begin: 0.0,
                   child: Padding(
-                    padding: const EdgeInsets.all(appPadding),
-                    child: TabBarView(controller: _tabController, children: [
-                      
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomButtonBox(title: "Marqué comme déjà suivie")
-                        ],
-                      ),
-                     
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Les exigences du cours",
-                            style: TextStyle(color: textWhite, fontSize: 20),
+                    padding: const EdgeInsets.all(appPadding / 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(widget.lecon.resume),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Télécharger fichier",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.file_download_outlined,
+                                  color: primary,
+                                )),
+                          ],
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: CustomButtonBox(
+                              title: "Marqué comme déjà suivie"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: appPadding),
+                          child: GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet(
+           useRootNavigator: true,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              context: context,
+              builder: (context) {
+                return DraggableScrollableSheet(
+                  initialChildSize: 0.9,
+                  builder: (_, controller)=>
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    color: Colors.white,
+                    
+                    ),
+                    child: Container(),
+                    
+                  ),
+                );
+              });
+                            },
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("Commentaires 4k"),
+                                      Icon(Icons.unfold_more_outlined)
+                                    ],
+                                  ),
+                                  CustomLessonCommentaires()
+                                ],
+                              ),
+                            ),
                           ),
-
-                        ],
-                      ),
-                    ]),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -219,11 +278,11 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
           ],
         ),
       ),
-      bottomNavigationBar: TextFormField(
-        decoration: InputDecoration(
-          
-        ),
-      )
+      // bottomNavigationBar: TextFormField(
+      //   decoration: InputDecoration(
+
+      //   ),
+      // )
     );
   }
 }

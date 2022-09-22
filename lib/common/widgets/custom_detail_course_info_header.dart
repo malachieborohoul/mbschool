@@ -95,6 +95,7 @@ class _CustomDetailCourseInfoHeaderState
                   Text("(4.0)"),
                 ],
               ),
+              
               IconButton(
                 onPressed: () {
                   if (widget.isCourseInFav == false) {

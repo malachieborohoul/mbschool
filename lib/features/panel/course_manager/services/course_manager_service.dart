@@ -283,4 +283,38 @@ class CourseManagerService {
       return isCourseInFavorite;
 
   }
+
+
+  void markLessonAsDone(
+      BuildContext context, Cours cours, VoidCallback success) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resFavorite = await http.post(
+        Uri.parse(
+          '$uri/addCourseToFavorite',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            "id_users": int.parse(userProvider.user.id),
+            "id_cours": int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resFavorite,
+          context: context,
+          onSuccess: () {
+            success();
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

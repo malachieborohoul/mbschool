@@ -15,9 +15,12 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/features/commentaire/screens/course_commentaire_screen.dart';
+import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
+import 'package:mbschool/models/commentaire.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/lecon.dart';
@@ -44,6 +47,10 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   List<Lecon> lecons = [];
   bool? isCourseInFav;
 
+  List<Commentaire> lessonCommentaires = [];
+  CourseCommentaireService _courseCommentaireService =
+      CourseCommentaireService();
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +58,13 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
     // getAllExigences();
     getAllLecons();
     isCoursInFavorite();
+    getAllLessonCommentaires();
+  }
+
+  void getAllLessonCommentaires() async {
+    lessonCommentaires =
+        await _courseCommentaireService.getAllLessonCommentaires(context);
+    setState(() {});
   }
 
   void isCoursInFavorite() async {
@@ -91,7 +105,7 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
             backgroundColor: Colors.transparent,
           ),
           preferredSize: Size.fromHeight(40)),
-      body: SingleChildScrollView(
+      body: lessonCommentaires == null? Loader(): SingleChildScrollView(
         child: Column(
           children: [
             Stack(
@@ -222,48 +236,54 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
                           child: CustomButtonBox(
                               title: "Marqué comme déjà suivie"),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: appPadding),
-                          child: GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-           useRootNavigator: true,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-              ),
-              context: context,
-              builder: (context) {
-                return DraggableScrollableSheet(
-                  initialChildSize: 0.9,
-                  builder: (_, controller)=>
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                    color: Colors.white,
-                    
-                    ),
-                    child: Container(),
-                    
-                  ),
-                );
-              });
-                            },
+                        InkWell(
+                          splashColor: Colors.grey,
+                          onTap: () {
+                            showModalBottomSheet(
+                                useRootNavigator: true,
+                                isScrollControlled: true,
+                                isDismissible: true,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                context: context,
+                                builder: (context) {
+                                  return DraggableScrollableSheet(
+                                    expand: false,
+                                    initialChildSize: 0.7,
+                                    builder: (_, controller) => Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20)),
+                                        color: Colors.white,
+                                      ),
+                                      child: CourseCommentaireScreen(
+                                          controller: controller,
+                                          lecon: widget.lecon),
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: appPadding),
                             child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text("Commentaires 4k"),
                                       Icon(Icons.unfold_more_outlined)
                                     ],
                                   ),
-                                  CustomLessonCommentaires()
+                                    CustomLessonCommentaires(
+                                      commentaire: lessonCommentaires[lessonCommentaires.length -1],
+                                    )
                                 ],
                               ),
                             ),

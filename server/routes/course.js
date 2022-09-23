@@ -164,7 +164,7 @@ courseRouter.get("/getAllCoursesByCategory/:id_categorie",auth,  (req, res)=>{
 
 
 // get all enseignants populaires
-courseRouter.get("/getAllEnseignantPopulaire",  (req, res)=>{
+courseRouter.get("/getAllEnseignantPopulaire",auth,  (req, res)=>{
   pool.query(queries.getAllEnseignantPopulaire, (error, results)=>{
     if (error) throw error;
 
@@ -175,7 +175,7 @@ courseRouter.get("/getAllEnseignantPopulaire",  (req, res)=>{
 
 // add course to favorite
 
-courseRouter.post("/addCourseToFavorite", (req, res)=>{
+courseRouter.post("/addCourseToFavorite",auth, (req, res)=>{
   const {id_users, id_cours} = req.body;
   pool.query(queries.addCourseToFavorite,[id_users, id_cours], (error, results)=>{
     if(error) throw error;
@@ -186,7 +186,7 @@ courseRouter.post("/addCourseToFavorite", (req, res)=>{
 
 // remove course to favorite
 
-courseRouter.post("/removeCoursToFavorite", (req, res)=>{
+courseRouter.post("/removeCoursToFavorite",auth, (req, res)=>{
   const {id_users, id_cours} = req.body;
   pool.query(queries.removeCoursToFavorite,[id_users, id_cours], (error, results)=>{
     if(error) throw error;
@@ -197,7 +197,7 @@ courseRouter.post("/removeCoursToFavorite", (req, res)=>{
 
 // fetch if a course is the favorite table
 
-courseRouter.post("/isCourseInFavorite", (req, res)=>{
+courseRouter.post("/isCourseInFavorite",auth, (req, res)=>{
   const {id_users, id_cours} = req.body;
   pool.query(queries.isCourseInFavorite,[id_users, id_cours], (error, results)=>{
     if(error) throw error;
@@ -223,7 +223,7 @@ courseRouter.get("/getAllFavoriteCourses",auth,  (req, res)=>{
 
 
 // filter all the  courses
-courseRouter.get("/filterCourses/:id_categorie/:id_niveau/:id_langue", (req, res)=>{
+courseRouter.get("/filterCourses/:id_categorie/:id_niveau/:id_langue",auth, (req, res)=>{
   pool.query(queries.filterCourses,[req.params.id_categorie, req.params.id_niveau, req.params.id_langue], (error, results)=>{
     if (error) throw error;
 
@@ -235,7 +235,7 @@ courseRouter.get("/filterCourses/:id_categorie/:id_niveau/:id_langue", (req, res
 
 
 // search all the  courses
-courseRouter.get("/searchCourses/:titre", (req, res)=>{
+courseRouter.get("/searchCourses/:titre", auth, (req, res)=>{
   pool.query(queries.searchCourses,[req.params.titre], (error, results)=>{
     if (error) throw error;
 
@@ -243,8 +243,28 @@ courseRouter.get("/searchCourses/:titre", (req, res)=>{
 
   })
 
+})
 
-  
+// add commentaire to lesson
+
+courseRouter.post("/addLeconCommentaire", (req, res)=>{
+  const {intitule,users_id, lecon_id} = req.body;
+  pool.query(queries.addLeconCommentaire,[intitule,users_id, lecon_id], (error, results)=>{
+    if(error) throw error;
+
+    return res.json(results.rows[0])
+  })
+})
+
+
+// get all lesson commentaires
+courseRouter.get("/getAllLessonCommentaires",auth,  (req, res)=>{
+  pool.query(queries.getAllLessonCommentaires, (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
 })
 
 

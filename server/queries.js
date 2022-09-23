@@ -22,6 +22,8 @@ const removeCoursToFavorite = "DELETE FROM favoris WHERE id_users=$1 AND id_cour
 const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cours=favoris.id_cours;";
 const filterCourses = "SELECT * FROM cours WHERE id_categorie=$1 OR id_niveau=$2 OR id_langue=$3;";
 const searchCourses = "SELECT * FROM cours WHERE titre ILIKE '%' || $1 || '%'"
+const addLeconCommentaire = "INSERT INTO commentaire (intitule,users_id, lecon_id) VALUES ($1, $2, $3) RETURNING *;";
+const getAllLessonCommentaires ="SELECT users.nom, users.prenom, users.photo, commentaire.intitule FROM commentaire JOIN users ON users.id=commentaire.users_id;";
 module.exports = {
     checkEmailExist,
     addUser,
@@ -47,4 +49,6 @@ module.exports = {
     getAllFavoriteCourses,
     filterCourses,
     searchCourses,
+    addLeconCommentaire,
+    getAllLessonCommentaires,
 }

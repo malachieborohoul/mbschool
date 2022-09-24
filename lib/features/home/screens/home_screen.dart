@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen>
             brightness: Brightness.light,
           ),
         ),
-        body: SingleChildScrollView(
+        body: cours == null || categories==null? Loader(): SingleChildScrollView(
           child: Column(
             children: [
               Stack(

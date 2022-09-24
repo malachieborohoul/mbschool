@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/features/commentaire/screens/course_reponse_commentaire_screen.dart';
 import 'package:mbschool/models/commentaire.dart';
 
 class CustomLessonCommentaires extends StatefulWidget {
   const CustomLessonCommentaires(
-      {Key? key, this.icon = false, required this.commentaire})
+      {Key? key,
+      this.icon = false,
+      required this.commentaire,
+      this.reponse = false})
       : super(key: key);
   final bool icon;
+  final bool reponse;
   final Commentaire? commentaire;
 
   @override
@@ -25,49 +31,121 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
       // color: primary,
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(widget.commentaire!.photo),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                CircleAvatar(
+                  backgroundImage: NetworkImage(widget.commentaire!.photo),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text("${widget.commentaire!.intitule}")),
+                      Row(
                         children: [
-                          Text(
-                            "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                          widget.icon == true
+                              ? IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        useRootNavigator: true,
+                                        isScrollControlled: true,
+                                        isDismissible: true,
+                                        backgroundColor: Colors.transparent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20),
+                                          ),
+                                        ),
+                                        context: context,
+                                        builder: (context) {
+                                          return DraggableScrollableSheet(
+                                            expand: false,
+                                            initialChildSize: 0.8,
+                                            builder: (_, controller) =>
+                                                Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            20)),
+                                                color: Colors.white,
+                                              ),
+                                              child:
+                                                  CourseReponseCommentaireScreen(
+                                                      controller: controller,
+                                                      commentaire:
+                                                          widget.commentaire!),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  icon: Icon(
+                                    Icons.message_outlined,
+                                    size: 17,
+                                  ))
+                              : Container(),
+                          widget.reponse == true
+                              ? InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                        useRootNavigator: true,
+                                        isScrollControlled: true,
+                                        isDismissible: true,
+                                        backgroundColor: Colors.transparent,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(20),
+                                          ),
+                                        ),
+                                        context: context,
+                                        builder: (context) {
+                                          return DraggableScrollableSheet(
+                                            expand: false,
+                                            initialChildSize: 0.8,
+                                            builder: (_, controller) =>
+                                                Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            20)),
+                                                color: Colors.white,
+                                              ),
+                                              child:
+                                                  CourseReponseCommentaireScreen(
+                                                      controller: controller,
+                                                      commentaire:
+                                                          widget.commentaire!),
+                                            ),
+                                          );
+                                        });
+                                  },
+                                  child: Text(
+                                      "${widget.commentaire!.number_reponses} Reponse(s)",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                      )),
+                                )
+                              : Container()
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Text("1 mois")
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                  "${widget.commentaire!.intitule}"),
-            ),
-            widget.icon == true
-                ? IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.message_outlined,
-                      size: 17,
-                    ))
-                : Container()
           ],
         ),
       ),

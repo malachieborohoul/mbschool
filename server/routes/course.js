@@ -247,7 +247,7 @@ courseRouter.get("/searchCourses/:titre", auth, (req, res)=>{
 
 // add commentaire to lesson
 
-courseRouter.post("/addLeconCommentaire", (req, res)=>{
+courseRouter.post("/addLeconCommentaire",auth, (req, res)=>{
   const {intitule,users_id, lecon_id} = req.body;
   pool.query(queries.addLeconCommentaire,[intitule,users_id, lecon_id], (error, results)=>{
     if(error) throw error;
@@ -258,14 +258,47 @@ courseRouter.post("/addLeconCommentaire", (req, res)=>{
 
 
 // get all lesson commentaires
-courseRouter.get("/getAllLessonCommentaires",auth,  (req, res)=>{
-  pool.query(queries.getAllLessonCommentaires, (error, results)=>{
+courseRouter.get("/getAllLessonCommentaires/:id_lecon",auth,  (req, res)=>{
+  pool.query(queries.getAllLessonCommentaires,[req.params.id_lecon], (error, results)=>{
     if (error) throw error;
 
     return res.json(results.rows);
 
   })
 })
+
+// add response to commentaire about a lesson
+
+courseRouter.post("/addLeconReponseCommentaire",auth, (req, res)=>{
+  const {intitule,users_id, commentaire_id} = req.body;
+  pool.query(queries.addLeconReponseCommentaire,[intitule,users_id, commentaire_id], (error, results)=>{
+    if(error) throw error;
+
+    return res.json(results.rows[0])
+  })
+})
+
+// get all lesson reponse commentaires
+courseRouter.get("/getAllLessonReponseCommentaires/:id_commentaire",auth, (req, res)=>{
+  pool.query(queries.getAllLessonReponseCommentaires,[req.params.id_commentaire], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+// count all lesson reponse and commentaires
+courseRouter.get("/countAllLessonReponseAndCommentaires/:id_lecon",auth, (req, res)=>{
+  pool.query(queries.countAllLessonReponseAndCommentaires,[req.params.id_lecon], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
 
 
 

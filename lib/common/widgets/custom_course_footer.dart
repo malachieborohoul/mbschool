@@ -9,7 +9,8 @@ class CustomCourseFooter extends StatelessWidget {
   const CustomCourseFooter({
     Key? key,
     this.coursePrice = '',
-    this.enrolled = false, required this.cours,
+    this.enrolled = false,
+    required this.cours,
   }) : super(key: key);
 
   final String coursePrice;
@@ -61,7 +62,7 @@ class CustomCourseFooter extends StatelessWidget {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        cours.prix.isEmpty? "Gratuit" : cours.prix,
+                        cours.prix.isEmpty ? "Gratuit" : cours.prix,
                         style: TextStyle(
                           fontSize: 20.0,
                           color: third,
@@ -72,7 +73,14 @@ class CustomCourseFooter extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: miniSpacer + 5),
-                Flexible(child: CustomButtonBox(title: "S'enrôler maintenant")),
+                Flexible(
+                  child: GestureDetector(
+                    onTap: (){
+                      
+                    },
+                    child: CustomButtonBox(title: "S'enrôler maintenant"),
+                  ),
+                ),
               ],
             ),
           );

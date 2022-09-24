@@ -4,20 +4,25 @@ class Commentaire {
   final String id_commentaire;
 
   final String intitule;
+  final String number_discussions;
+  final String number_reponses;
 
   // final String created_at
   final String nom;
   final String prenom;
   final String photo;
 
-  Commentaire({
+  Commentaire(  {
     required this.id_commentaire,
     required this.intitule,
+
 
     // required this.created_at,
     required this.nom,
     required this.prenom,
     required this.photo,
+    required this.number_discussions,
+    required this.number_reponses,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +34,8 @@ class Commentaire {
       'nom': nom,
       'prenom': prenom,
       'photo': photo,
+      'number_discussions': number_discussions,
+      'number_reponses': number_reponses,
     };
   }
 
@@ -41,6 +48,8 @@ class Commentaire {
       nom: map['nom'] ?? '',
       prenom: map['prenom'] ?? '',
       photo: map['photo'] ?? '',
+      number_discussions: map['number_discussions'] ?? '',
+      number_reponses: map['number_reponses'] ?? '',
     );
   }
 

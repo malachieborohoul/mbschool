@@ -56,7 +56,7 @@ class _AlertNotificationState extends State<AlertNotification> {
               ),
             ),
           ),
-          offset: 150),
+          offset: 300),
     );
   }
 }

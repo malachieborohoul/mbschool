@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
+import 'package:mbschool/common/widgets/custom_lesson_reponse_commentaires.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -22,6 +23,7 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/niveau.dart';
+import 'package:mbschool/models/reponse_commentaire.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
@@ -29,62 +31,63 @@ import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:provider/provider.dart';
 
-class CourseCommentaireScreen extends StatefulWidget {
-  const CourseCommentaireScreen(
-      {Key? key, required this.controller, required this.lecon})
+class CourseReponseCommentaireScreen extends StatefulWidget {
+  const CourseReponseCommentaireScreen(
+      {Key? key, required this.controller,  required this.commentaire})
       : super(key: key);
 
   final ScrollController? controller;
-  final Lecon lecon;
+  final Commentaire commentaire;
   // static const routeName = '/filter-course-screen';
 
   @override
-  State<CourseCommentaireScreen> createState() =>
-      _CourseCommentaireScreenState();
+  State<CourseReponseCommentaireScreen> createState() =>
+      _CourseReponseCommentaireScreenState();
 }
 
-class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
+class _CourseReponseCommentaireScreenState
+    extends State<CourseReponseCommentaireScreen> {
   CourseCommentaireService _courseCommentaireService =
       CourseCommentaireService();
 
-  final _addCourseCommentaire = GlobalKey<FormState>();
+  final _addCourseReponseCommentaire = GlobalKey<FormState>();
 
-  TextEditingController _commentaireController = TextEditingController();
+  TextEditingController _reponseCommentaireController = TextEditingController();
   bool _isFieldEmpty = true;
   bool _isloading = false;
 
-  List<Commentaire> lessonCommentaires = [];
+  List<ReponseCommentaire> lessonReponseCommentaires = [];
 
   @override
   void initState() {
     super.initState();
-    getAllLessonCommentaires();
+    getAllLessonReponseCommentaires();
   }
 
-  void getAllLessonCommentaires() async {
-    lessonCommentaires =
-        await _courseCommentaireService.getAllLessonCommentaires(context, widget.lecon);
+  void getAllLessonReponseCommentaires() async {
+    lessonReponseCommentaires = await _courseCommentaireService
+        .getAllLessonReponseCommentaires(context, widget.commentaire);
     setState(() {});
   }
 
   @override
   void dispose() {
     super.dispose();
-    _commentaireController.dispose();
+    _reponseCommentaireController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     void addLeconCommentaire() {
-      _courseCommentaireService.addLeconCommentaire(
-          context, _commentaireController.text, widget.lecon, () {
+      _courseCommentaireService.addLeconReponseCommentaire(context,
+          _reponseCommentaireController.text, widget.commentaire, () {
         setState(() {
           _isloading = false;
         });
         FocusScope.of(context).unfocus();
-        _commentaireController.clear();
-        getAllLessonCommentaires();
-        showSnackBar(context, "Discussion ajoutée");
+        _reponseCommentaireController.clear();
+        getAllLessonReponseCommentaires();
+        showSnackBar(context, "Reponse ajoutée");
       });
     }
 
@@ -93,12 +96,12 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: lessonCommentaires == null
+        body: lessonReponseCommentaires == null
             ? Loader()
             : SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
-                  padding: const EdgeInsets.all(appPadding ),
+                  padding: const EdgeInsets.all(appPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -117,10 +120,19 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "Discussions",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.arrow_back_outlined)),
+                              Text(
+                                "Reponses",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                            ],
                           ),
                           IconButton(
                               onPressed: () {
@@ -132,6 +144,12 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       SizedBox(
                         height: 15,
                       ),
+                      CustomLessonCommentaires(
+                        icon: false,
+                        commentaire: widget.commentaire,
+                      ),
+
+                      Divider(thickness: 0.7),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -143,9 +161,9 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Form(
-                                key: _addCourseCommentaire,
+                                key: _addCourseReponseCommentaire,
                                 child: TextFormField(
-                                  controller: _commentaireController,
+                                  controller: _reponseCommentaireController,
                                   onChanged: (val) {
                                     setState(() {
                                       val.isNotEmpty
@@ -154,7 +172,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                                     });
                                   },
                                   decoration: InputDecoration(
-                                    hintText: "Ajouter une discussion",
+                                    hintText: "Ajouter une reponse",
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: primary,
@@ -165,11 +183,11 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                                             onPressed: _isFieldEmpty == true
                                                 ? null
                                                 : () {
-                                                    if (_addCourseCommentaire
+                                                    if (_addCourseReponseCommentaire
                                                         .currentState!
                                                         .validate()) {
                                                       setState(() {
-                                                        _isloading = true;
+                                                        // _isloading = true;
                                                         addLeconCommentaire();
                                                       });
                                                     }
@@ -198,12 +216,19 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       //       focusedBorder: UnderlineInputBorder(
                       //           borderSide: BorderSide(color: primary))),
                       // ),
-                    for (var i = 0; i <  lessonCommentaires.length; i++)
-                      lessonCommentaires.isNotEmpty?  CustomLessonCommentaires(
-                          icon: true,
-                          reponse: true,
-                          commentaire: lessonCommentaires[i],
-                        ): Container()
+                      // for (var i = 0; i < lessonReponseCommentaires.length; i++)
+                      //   CustomLessonCommentaires(
+                      //     icon: true,
+                      //     commentaire: lessonReponseCommentaires[i],
+                      //   )
+
+                      for (var i = 0; i < lessonReponseCommentaires.length; i++)
+                        lessonReponseCommentaires.isNotEmpty
+                            ? CustomLessonReponseCommentaires(
+                                icon: true,
+                                reponseCommentaire: lessonReponseCommentaires[i],
+                              )
+                            : Container()
                     ],
                   ),
                 ),

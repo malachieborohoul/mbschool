@@ -48,6 +48,7 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   bool? isCourseInFav;
 
   List<Commentaire> lessonCommentaires = [];
+  var number_discussions;
   CourseCommentaireService _courseCommentaireService =
       CourseCommentaireService();
 
@@ -58,12 +59,12 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
     // getAllExigences();
     getAllLecons();
     isCoursInFavorite();
-    getAllLessonCommentaires();
+    countAllLessonReponseAndCommentaires();
   }
 
-  void getAllLessonCommentaires() async {
-    lessonCommentaires =
-        await _courseCommentaireService.getAllLessonCommentaires(context);
+  void countAllLessonReponseAndCommentaires() async {
+    number_discussions = await _courseCommentaireService
+        .countAllLessonReponseAndCommentaires(context, widget.lecon);
     setState(() {});
   }
 
@@ -92,7 +93,9 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
     });
   }
 
-  void markLessonAsDone() {}
+  void markLessonAsDone() {
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,199 +108,206 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
             backgroundColor: Colors.transparent,
           ),
           preferredSize: Size.fromHeight(40)),
-      body: lessonCommentaires == null? Loader(): SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .3,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.transparent,
-                  child: Hero(
-                    tag: widget.cours.vignette,
-                    child: ClipRRect(
-                      child: Image.network(
-                        widget.cours.vignette,
-                        fit: BoxFit.cover,
+      body: number_discussions == null
+          ? Loader()
+          : SingleChildScrollView(
+               child: Column(
+                children: [
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height * .3,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.transparent,
+                        child: Hero(
+                          tag: widget.cours.vignette,
+                          child: ClipRRect(
+                            child: Image.network(
+                              widget.cours.vignette,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: textWhite,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      backgroundColor: textBlack,
+                                      content: VideoDisplay(
+                                          videoUrl:
+                                              'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
+                                    ));
+                          },
+                          splashColor: Colors.grey,
+                          child: Icon(Icons.play_arrow),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //     left: MediaQuery.of(context).size.width * 0.8,
+                      //     top: MediaQuery.of(context).size.height * 0.4,
+                      //   ),
+                      //   child:  Icon(
+                      //     color: Color.fromARGB(255, 255, 0, 0),
+                      //     Icons.favorite_outline_rounded,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  // SlideDownTween(
+                  //   offset: 25,
+                  //   child: OpacityTween(
+                  //     begin: 0,
+                  //     child: CustomDetailCourseInfoHeader(
+                  //       cours: widget.cours,
+                  //       isCourseInFav: isCourseInFav!,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(
+                  //       left: appPadding, right: appPadding, bottom: appPadding),
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 50,
+                  //     child:
+                  //     TabBar(
+                  //         labelColor: Colors.black,
+                  //         indicatorColor: primary,
+                  //         controller: _tabController,
+                  //         tabs: const [
+                  //           OpacityTween(
+                  //             begin: 0,
+                  //             child: Tab(
+                  //               text: "Infos",
+                  //             ),
+                  //           ),
+                  //           OpacityTween(
+                  //             begin: 0,
+                  //             child: Tab(
+                  //               text: "Commentaires",
+                  //             ),
+                  //           ),
+
+                  //         ]),
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(appPadding),
+                    child: Container(
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height,
+                      decoration: BoxDecoration(
+                        // color: third,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: OpacityTween(
+                        begin: 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.lecon.resume),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Télécharger fichier",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.file_download_outlined,
+                                        color: primary,
+                                      )),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: CustomButtonBox(
+                                    title: "Marqué comme déjà suivie"),
+                              ),
+                              InkWell(
+                                splashColor: Colors.grey,
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      useRootNavigator: true,
+                                      isScrollControlled: true,
+                                      isDismissible: true,
+                                      backgroundColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20),
+                                        ),
+                                      ),
+                                      context: context,
+                                      builder: (context) {
+                                        return DraggableScrollableSheet(
+                                          expand: false,
+                                          initialChildSize: 0.7,
+                                          builder: (_, controller) => Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(20)),
+                                              color: Colors.white,
+                                            ),
+                                            child: CourseCommentaireScreen(
+                                                controller: controller,
+                                                lecon: widget.lecon),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: appPadding),
+                                  child: Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                                "Discussions ${number_discussions}"),
+                                            Icon(Icons.unfold_more_outlined)
+                                          ],
+                                        ),
+                                        // CustomLessonCommentaires(
+                                        //   commentaire: lessonCommentaires[lessonCommentaires.length -1],
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: textWhite,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                backgroundColor: textBlack,
-                                content: VideoDisplay(
-                                    videoUrl:
-                                        'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
-                              ));
-                    },
-                    splashColor: Colors.grey,
-                    child: Icon(Icons.play_arrow),
-                  ),
-                ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     left: MediaQuery.of(context).size.width * 0.8,
-                //     top: MediaQuery.of(context).size.height * 0.4,
-                //   ),
-                //   child:  Icon(
-                //     color: Color.fromARGB(255, 255, 0, 0),
-                //     Icons.favorite_outline_rounded,
-                //   ),
-                // ),
-              ],
-            ),
-            // SlideDownTween(
-            //   offset: 25,
-            //   child: OpacityTween(
-            //     begin: 0,
-            //     child: CustomDetailCourseInfoHeader(
-            //       cours: widget.cours,
-            //       isCourseInFav: isCourseInFav!,
-            //     ),
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //       left: appPadding, right: appPadding, bottom: appPadding),
-            //   child: Container(
-            //     width: double.infinity,
-            //     height: 50,
-            //     child:
-            //     TabBar(
-            //         labelColor: Colors.black,
-            //         indicatorColor: primary,
-            //         controller: _tabController,
-            //         tabs: const [
-            //           OpacityTween(
-            //             begin: 0,
-            //             child: Tab(
-            //               text: "Infos",
-            //             ),
-            //           ),
-            //           OpacityTween(
-            //             begin: 0,
-            //             child: Tab(
-            //               text: "Commentaires",
-            //             ),
-            //           ),
-
-            //         ]),
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: appPadding, right: appPadding, bottom: appPadding),
-              child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  // color: third,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: OpacityTween(
-                  begin: 0.0,
-                  child: Padding(
-                    padding: const EdgeInsets.all(appPadding / 2),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(widget.lecon.resume),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Télécharger fichier",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.file_download_outlined,
-                                  color: primary,
-                                )),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: CustomButtonBox(
-                              title: "Marqué comme déjà suivie"),
-                        ),
-                        InkWell(
-                          splashColor: Colors.grey,
-                          onTap: () {
-                            showModalBottomSheet(
-                                useRootNavigator: true,
-                                isScrollControlled: true,
-                                isDismissible: true,
-                                backgroundColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(20),
-                                  ),
-                                ),
-                                context: context,
-                                builder: (context) {
-                                  return DraggableScrollableSheet(
-                                    expand: false,
-                                    initialChildSize: 0.7,
-                                    builder: (_, controller) => Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(20)),
-                                        color: Colors.white,
-                                      ),
-                                      child: CourseCommentaireScreen(
-                                          controller: controller,
-                                          lecon: widget.lecon),
-                                    ),
-                                  );
-                                });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: appPadding),
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text("Commentaires 4k"),
-                                      Icon(Icons.unfold_more_outlined)
-                                    ],
-                                  ),
-                                    CustomLessonCommentaires(
-                                      commentaire: lessonCommentaires[lessonCommentaires.length -1],
-                                    )
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
       // bottomNavigationBar: TextFormField(
       //   decoration: InputDecoration(
 

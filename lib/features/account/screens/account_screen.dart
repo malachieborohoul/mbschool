@@ -39,9 +39,9 @@ class _AccountScreenState extends State<AccountScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(appPadding),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(appPadding),
           child: Column(
             children: [
               const SizedBox(

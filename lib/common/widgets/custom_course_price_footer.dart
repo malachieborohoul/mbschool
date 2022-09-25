@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/features/course/services/course_enrollment_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'custom_button_box.dart';
 
-class CustomCourseFooter extends StatelessWidget {
-  const CustomCourseFooter({
+CourseEnrollmentService courseEnrollmentService = CourseEnrollmentService();
+
+class CustomCoursePriceFooter extends StatelessWidget {
+  const CustomCoursePriceFooter({
     Key? key,
     this.coursePrice = '',
     this.enrolled = false,
@@ -19,6 +25,8 @@ class CustomCourseFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
     var size = MediaQuery.of(context).size;
     return (enrolled)
         ? Container(
@@ -35,7 +43,7 @@ class CustomCourseFooter extends StatelessWidget {
             child: CustomButtonBox(title: 'Continuer le cours'),
           )
         : Container(
-            width: size.width,
+            width: size.width*0.4,
             height: 100.0,
             padding: const EdgeInsets.only(
               left: appPadding,
@@ -73,14 +81,7 @@ class CustomCourseFooter extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: miniSpacer + 5),
-                Flexible(
-                  child: GestureDetector(
-                    onTap: (){
-                      
-                    },
-                    child: CustomButtonBox(title: "S'enrôler maintenant"),
-                  ),
-                ),
+               
               ],
             ),
           );

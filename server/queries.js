@@ -28,6 +28,11 @@ const getAllLessonCommentaires ="SELECT intitule,nom,prenom,photo,id_commentaire
 const addLeconReponseCommentaire = "INSERT INTO reponse (intitule_reponse,users_id, commentaire_id) VALUES ($1, $2, $3) RETURNING *;";
 const getAllLessonReponseCommentaires ="SELECT users.nom, users.prenom, users.photo, reponse.intitule_reponse,reponse.id_reponse FROM reponse JOIN users ON users.id=reponse.users_id  WHERE commentaire_id=$1 ORDER BY created_at DESC;";
 const countAllLessonReponseAndCommentaires ="SELECT reponse.commentaire_id AS id_commentaire, COUNT(*)+1 AS number_discussions FROM reponse JOIN commentaire ON commentaire.id_commentaire = reponse.commentaire_id WHERE commentaire.lecon_id=$1 GROUP BY reponse.commentaire_id";
+const enrollToCourse = "INSERT INTO cours_suivis (users_id, cours_id) VALUES ($1, $2) RETURNING *;";
+const isCourseEnrolled = "SELECT * FROM cours_suivis WHERE users_id = $1 AND cours_id=$2;";
+
+const getAllEnrolledCourses = "SELECT * FROM cours_suivis JOIN users ON cours_suivis.users_id=users.id JOIN cours ON cours_suivis.cours_id=cours.id_cours WHERE users.id=$1;";
+
 
 module.exports = {
     checkEmailExist,
@@ -58,5 +63,8 @@ module.exports = {
     getAllLessonCommentaires,
     addLeconReponseCommentaire,
     getAllLessonReponseCommentaires,
-    countAllLessonReponseAndCommentaires
+    countAllLessonReponseAndCommentaires,
+    enrollToCourse,
+    isCourseEnrolled,
+    getAllEnrolledCourses
 }

@@ -218,7 +218,7 @@ class CourseManagerService {
     }
   }
 
-   void removeCoursToFavorite(
+  void removeCoursToFavorite(
       BuildContext context, Cours cours, VoidCallback success) async {
     try {
       final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -252,11 +252,10 @@ class CourseManagerService {
   }
 
   Future<bool> isCourseInFavorite(BuildContext context, Cours cours) async {
-     final userProvider = Provider.of<UserProvider>(context, listen: false);
-     late bool isCourseInFavorite;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    late bool isCourseInFavorite;
 
     try {
-     
       http.Response resIsFav =
           await http.post(Uri.parse("$uri/isCourseInFavorite"),
               headers: <String, String>{
@@ -276,14 +275,11 @@ class CourseManagerService {
         },
         onFailed: () {},
       );
-
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-      return isCourseInFavorite;
-
+    return isCourseInFavorite;
   }
-
 
   void markLessonAsDone(
       BuildContext context, Lecon lecon, VoidCallback success) async {

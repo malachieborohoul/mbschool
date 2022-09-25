@@ -23,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: getFooter(),
-      body: getBody(),
+      body: pageIndex ==0? HomeScreen(): pageIndex==1? CourseScreen():pageIndex==2? FavoriteScreen():pageIndex==3? AccountScreen():Container(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigator.pushNamed(context, FilterCourseScreen.routeName);

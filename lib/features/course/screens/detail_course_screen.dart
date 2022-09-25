@@ -4,9 +4,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
+import 'package:mbschool/common/widgets/alert_dialog_enroler.dart';
+import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
-import 'package:mbschool/common/widgets/custom_course_footer.dart';
+import 'package:mbschool/common/widgets/custom_course_price_footer.dart';
 import 'package:mbschool/common/widgets/custom_course_reviews.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
@@ -46,6 +49,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   List<Exigence> exigences = [];
   List<Lecon> lecons = [];
   bool? isCourseInFav;
+  bool? isCourseEnroll;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -54,11 +59,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     getAllExigences();
     getAllLecons();
     isCoursInFavorite();
+    isCourseEnrolled();
+  }
 
-    // TabController _tabController = TabController(length: 3, vsync: this);
-
-    // Provider.of<TabBarProvider>(context, listen: false)
-    //     .setTabController(_tabController);
+  void isCourseEnrolled() async {
+    isCourseEnroll =
+        await courseEnrollmentService.isCourseEnrolled(context, widget.cours);
+    setState(() {});
   }
 
   void isCoursInFavorite() async {
@@ -94,8 +101,29 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     // final tabController = Provider.of<TabBarProvider>(context).controller;
     TabController _tabController = TabController(length: 3, vsync: this);
 
+    final cours = Provider.of<CoursProvider>(context, listen: false).cours;
+
+    void enrollToCourse() {
+      courseEnrollmentService.enrollToCourse(context, cours, () {
+        setState(() {
+          isCourseEnrolled();
+          _isLoading = false;
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertNotification(
+                    error: false,
+                    message: "Votre enrôlement s'est effectué avec succès");
+              });
+        });
+      });
+    }
+
     return Scaffold(
-      body: sections == null || isCourseInFav == null
+      body: sections == null ||
+              isCourseInFav == null ||
+              _isLoading == true ||
+              isCourseEnroll == null
           ? Loader()
           : DefaultTabController(
               length: 3,
@@ -237,7 +265,10 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                       child: TabBarView(
                         children: [
                           InfosTabBarView(exigences: exigences),
-                          LeconTabBarView(sections: sections),
+                          LeconTabBarView(
+                            sections: sections,
+                            isCourseEnrolled: isCourseEnroll!,
+                          ),
                           ReviewsTabBarView(sections: sections)
                         ],
                       ),
@@ -246,8 +277,89 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                 ),
               ),
             ),
-    
-      bottomNavigationBar: CustomCourseFooter(cours: coursProvider),
+      bottomNavigationBar: _isLoading == true
+          ? Loader()
+          : isCourseEnroll == false
+              ? Row(
+                  children: [
+                    CustomCoursePriceFooter(cours: cours),
+                    Flexible(
+                      child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SlideDownTween(
+                                  offset: 140,
+                                  child: OpacityTween(
+                                    begin: 0.5,
+                                    child: AlertDialog(
+                                      content: Container(
+                                        height: 75,
+                                        child: Column(
+                                          children: [
+                                            Flexible(
+                                                child: Text(
+                                              "Voulez vous vous enrôlez?",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 25.0),
+                                                  child: InkWell(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text(
+                                                        "Non",
+                                                        style: TextStyle(
+                                                            color: Colors.red),
+                                                      )),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      Navigator.pop(context);
+
+                                                      _isLoading = true;
+                                                      enrollToCourse();
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: Colors.green),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                        child: CustomButtonBox(title: "S'enrôler maintenant"),
+                      ),
+                    ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(appPadding),
+                  child: CustomButtonBox(title: "Enrôlé(e)"),
+                ),
     );
   }
 }
@@ -256,8 +368,10 @@ class LeconTabBarView extends StatefulWidget {
   const LeconTabBarView({
     Key? key,
     required this.sections,
+    required this.isCourseEnrolled,
   }) : super(key: key);
   final List<Section> sections;
+  final bool isCourseEnrolled;
 
   @override
   State<LeconTabBarView> createState() => _LeconTabBarViewState();
@@ -270,7 +384,7 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         itemCount: widget.sections.length,
         itemBuilder: (context, i) {
           return Padding(
@@ -280,6 +394,7 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
               bottom: 0,
             ),
             child: CustomCourseCurriculum(
+              isCourseEnrolled: widget.isCourseEnrolled,
               section: widget.sections[i],
               cours: coursProvider,
             ),
@@ -395,17 +510,16 @@ class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         itemCount: widget.sections.length,
         itemBuilder: (context, i) {
           return Padding(
-            padding: const EdgeInsets.only(
-              left: appPadding,
-              right: appPadding,
-              bottom: 10,
-            ),
-            child: CustomCourseReviews()
-          );
+              padding: const EdgeInsets.only(
+                left: appPadding,
+                right: appPadding,
+                bottom: 10,
+              ),
+              child: CustomCourseReviews());
         });
   }
 }

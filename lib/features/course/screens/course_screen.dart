@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_my_courses_card.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/features/course/services/course_enrollment_service.dart';
+import 'package:mbschool/models/cours.dart';
 
 class CourseScreen extends StatefulWidget {
   static const routeName = '/course';
@@ -14,6 +18,22 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+  CourseEnrollmentService courseEnrollmentService = CourseEnrollmentService();
+  List<Cours> enrolledCours = [];
+  @override
+  void initState() {
+    super.initState();
+    getAllEnrolledCourses();
+  }
+
+  void getAllEnrolledCourses() async {
+    enrolledCours =
+        await courseEnrollmentService.getAllEnrolledCourses(context);
+        setState(() {
+          
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +43,7 @@ class _CourseScreenState extends State<CourseScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: getBody(),
+      body: enrolledCours == null ? Loader() : getBody(),
     );
   }
 
@@ -46,28 +66,33 @@ class _CourseScreenState extends State<CourseScreen> {
                     title: "Mes Cours",
                     subTitle: "Reprenons",
                     color: textBlack),
-                Text(
-                  "${MyCoursesJson.length} Cours",
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: secondary,
-                  ),
-                )
+                // Text(
+                //   "${MyCoursesJson.length} Cours",
+                //   style: const TextStyle(
+                //     fontSize: 15,
+                //     color: secondary,
+                //   ),
+                // )
               ],
             ),
             const SizedBox(
               height: spacer,
             ),
             Column(
-              children: List.generate(MyCoursesJson.length, (index) {
+              children: List.generate(enrolledCours.length, (index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 25),
-                  child: CustomMyCoursesCard(
-                    image: MyCoursesJson[index]['image'],
-                    title: MyCoursesJson[index]['title'],
-                    instructor: MyCoursesJson[index]['user_name'],
-                    videoAmount: MyCoursesJson[index]['video'],
-                    percentage: MyCoursesJson[index]['percentage'],
+                  child: SlideRightTween(
+                    duration: Duration(milliseconds: index * 500),
+                    curve: Curves.easeInOutCubic,
+                    offset: 80,
+                    child: CustomMyCoursesCard(
+                      image: enrolledCours[index].vignette,
+                      title: enrolledCours[index].titre,
+                      instructor: enrolledCours[index].nom,
+                      videoAmount: "20",
+                      percentage: 20,
+                    ),
                   ),
                 );
               }),

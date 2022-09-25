@@ -74,7 +74,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Intructor: ' + widget.instructor,
+                            'Enseignant: ' + widget.instructor,
                             style: TextStyle(
                               fontSize: 11.0,
                               color: grey,

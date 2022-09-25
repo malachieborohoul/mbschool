@@ -6,7 +6,7 @@ import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
-import 'package:mbschool/common/widgets/custom_course_footer.dart';
+import 'package:mbschool/common/widgets/custom_course_price_footer.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';

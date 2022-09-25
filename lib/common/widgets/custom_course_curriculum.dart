@@ -8,6 +8,7 @@ import 'package:mbschool/common/arguments/course_lesson_arguments.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum_lecon.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/course/screens/detail_lesson_screen.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -18,7 +19,12 @@ import 'package:mbschool/models/section.dart';
 class CustomCourseCurriculum extends StatefulWidget {
   final Section section;
   final Cours cours;
-  const CustomCourseCurriculum({Key? key, required this.section, required this.cours})
+  final bool isCourseEnrolled;
+  const CustomCourseCurriculum(
+      {Key? key,
+      required this.section,
+      required this.cours,
+      this.isCourseEnrolled = false})
       : super(key: key);
 
   @override
@@ -135,17 +141,38 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                 ],
               ),
               for (int i = 0; i < lecons.length; i++)
-                InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, DetailLessonScreen.routeName,
-                          arguments: CourseLessonArguments(widget.cours, lecons[i]));
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) {
-                      //   return VideoDisplay(videoUrl: lecons[i].url);
-                      // }));
-                    },
-                    splashColor: Colors.grey,
-                    child: CustomCourseCurriculumLecon(lecon: lecons[i]))
+                widget.isCourseEnrolled == true
+                    ? InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, DetailLessonScreen.routeName,
+                              arguments: CourseLessonArguments(
+                                  widget.cours, lecons[i]));
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return VideoDisplay(videoUrl: lecons[i].url);
+                          // }));
+                        },
+                        splashColor: Colors.grey,
+                        child: CustomCourseCurriculumLecon(
+                          lecon: lecons[i],
+                          isCourseEnrolled: widget.isCourseEnrolled,
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          showSnackBar(context, "Enrôlez vous!");
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return VideoDisplay(videoUrl: lecons[i].url);
+                          // }));
+                        },
+                        splashColor: Colors.grey,
+                        child: CustomCourseCurriculumLecon(
+                          lecon: lecons[i],
+                          isCourseEnrolled: widget.isCourseEnrolled,
+                        ),
+                      ),
             ],
           )),
     ));

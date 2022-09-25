@@ -300,6 +300,46 @@ courseRouter.get("/countAllLessonReponseAndCommentaires/:id_lecon",auth, (req, r
 })
 
 
+// enroll to course
+
+courseRouter.post('/enrollToCourse',auth,  (req, res)=>{
+  const {users_id, cours_id}= req.body;
+
+  pool.query(queries.enrollToCourse, [users_id, cours_id], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+
+// fetch if a course is already enrolled or not
+
+courseRouter.post("/isCourseEnrolled",auth, (req, res)=>{
+  const {users_id, cours_id} = req.body;
+  pool.query(queries.isCourseEnrolled,[users_id, cours_id], (error, results)=>{
+    if(error) throw error;
+    if(results.rowCount > 0 ){
+      return res.json(true)
+    }
+    return res.json(false)
+
+    
+  })
+})
+
+
+// get all enrolled courses
+courseRouter.get("/getAllEnrolledCourses/:id",  (req, res)=>{
+  pool.query(queries.getAllEnrolledCourses,[req.params.id], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+
 
 
 

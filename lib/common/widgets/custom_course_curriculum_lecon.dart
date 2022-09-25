@@ -12,15 +12,18 @@ import 'package:mbschool/models/section.dart';
 
 class CustomCourseCurriculumLecon extends StatefulWidget {
   final Lecon lecon;
-  const CustomCourseCurriculumLecon({Key? key, required this.lecon})
+  final bool isCourseEnrolled;
+  const CustomCourseCurriculumLecon(
+      {Key? key, required this.lecon, required this.isCourseEnrolled})
       : super(key: key);
 
   @override
-  State<CustomCourseCurriculumLecon> createState() => _CustomCourseCurriculumLeconState();
+  State<CustomCourseCurriculumLecon> createState() =>
+      _CustomCourseCurriculumLeconState();
 }
 
-class _CustomCourseCurriculumLeconState extends State<CustomCourseCurriculumLecon> {
-
+class _CustomCourseCurriculumLeconState
+    extends State<CustomCourseCurriculumLecon> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,15 +32,22 @@ class _CustomCourseCurriculumLeconState extends State<CustomCourseCurriculumLeco
           height: 20,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(
-              Icons.play_arrow,
-              size: 15,
+            
+            Row(
+              children: [
+                Icon(
+                  Icons.play_arrow,
+                  size: 15,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                Text(widget.lecon.titre),
+              ],
             ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(widget.lecon.titre),
+            widget.isCourseEnrolled==false? Icon(Icons.lock_outline, size: 15,): Container()
           ],
         ),
         SizedBox(

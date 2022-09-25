@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mbschool/common/animations/opacity_tween.dart';
+import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/clipper.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_button_social.dart';
@@ -11,6 +15,7 @@ import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/features/intro/screens/splash_screen.dart';
 
 enum Auth {
   sign_up,
@@ -31,7 +36,7 @@ class _AuthScreenState extends State<AuthScreen> {
   // bool isCharging = false;
 
   TextEditingController cPasswordController = TextEditingController();
-  Auth _auth = Auth.sign_up;
+  Auth _auth = Auth.login;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -70,6 +75,14 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   @override
+  void initState() {
+    Future.delayed(Duration(seconds: 3), () {
+      SplashScreen();
+    });
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();
@@ -83,7 +96,6 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-
       child: Scaffold(
           backgroundColor: background,
           extendBodyBehindAppBar: true,
@@ -105,47 +117,62 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer,
                           ),
-                          const CustomHeading(
-                              title: "Inscrivez vous",
-                              subTitle: "Bienvenue",
-                              color: secondary),
+                          OpacityTween(
+                            begin: 0.2,
+                            child: const CustomHeading(
+                                title: "Inscrivez vous",
+                                subTitle: "Bienvenue",
+                                color: secondary),
+                          ),
                           const SizedBox(
                             height: spacer,
                           ),
-                          CustomTextField(
-                            prefixIcon: "user_icon.svg",
-                            labelText: "Nom ",
-                            controller: nameController,
-                            iconColor: primary,
+                          OpacityTween(
+                            begin: 0.2,
+                            child: CustomTextField(
+                              prefixIcon: "user_icon.svg",
+                              labelText: "Nom ",
+                              controller: nameController,
+                              iconColor: primary,
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 40,
                           ),
-                          CustomTextField(
-                            prefixIcon: "user_icon.svg",
-                            labelText: "Prenom ",
-                            controller: prenomController,
-                            iconColor: primary,
+                          OpacityTween(
+                            begin: 0.2,
+                            child: CustomTextField(
+                              prefixIcon: "user_icon.svg",
+                              labelText: "Prenom ",
+                              controller: prenomController,
+                              iconColor: primary,
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 40,
                           ),
-                          CustomTextField(
-                            prefixIcon: "email_icon.svg",
-                            labelText: "Adresse email",
-                            controller: emailController,
-                            iconColor: primary,
-                            keyboardType: TextInputType.emailAddress,
+                          OpacityTween(
+                            begin: 0.2,
+                            child: CustomTextField(
+                              prefixIcon: "email_icon.svg",
+                              labelText: "Adresse email",
+                              controller: emailController,
+                              iconColor: primary,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 40,
                           ),
-                          CustomTextField(
-                            prefixIcon: "key_icon.svg",
-                            labelText: "Mot de passe",
-                            controller: passwordController,
-                            iconColor: primary,
-                            isPassword: true,
+                          OpacityTween(
+                            begin: 0.2,
+                            child: CustomTextField(
+                              prefixIcon: "key_icon.svg",
+                              labelText: "Mot de passe",
+                              controller: passwordController,
+                              iconColor: primary,
+                              isPassword: true,
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 40,
@@ -162,15 +189,18 @@ class _AuthScreenState extends State<AuthScreen> {
                                   signUpUser();
                                 }
                               },
-                              child: Column(
-                                children: [
-                                  const CustomButtonBox(title: "S'inscrire"),
-                                  isCharging == true
-                                      ? CircularProgressIndicator(
-                                          color: primary,
-                                        )
-                                      : Text("")
-                                ],
+                              child: OpacityTween(
+                                begin: 0.2,
+                                child: Column(
+                                  children: [
+                                    const CustomButtonBox(title: "S'inscrire"),
+                                    isCharging == true
+                                        ? CircularProgressIndicator(
+                                            color: primary,
+                                          )
+                                        : Text("")
+                                  ],
+                                ),
                               )),
                           const SizedBox(
                             height: spacer,
@@ -179,8 +209,8 @@ class _AuthScreenState extends State<AuthScreen> {
                             children: [
                               Text(
                                 "Vous avez déjà un compte ?",
-                                style:
-                                    TextStyle(color: secondary.withOpacity(0.5)),
+                                style: TextStyle(
+                                    color: secondary.withOpacity(0.5)),
                               ),
                               GestureDetector(
                                 onTap: () {
@@ -228,37 +258,65 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Center(
-                              child: SvgPicture.asset(
-                            assetImg + "login_image.svg",
-                            width: 250,
-                            height: 250,
-                          )),
-                          const SizedBox(
-                            height: spacer - 40,
-                          ),
-                          const CustomHeading(
-                              title: "Connectez-vous",
-                              subTitle: "Bienvenue",
-                              color: secondary),
-                          const SizedBox(
-                            height: spacer - 40,
-                          ),
-                          CustomTextField(
-                            prefixIcon: "email_icon.svg",
-                            labelText: "Adresse email",
-                            controller: emailController,
-                            iconColor: primary,
+                          SlideDownTween(
+                            offset: 40,
+                            delay: 1.0,
+                            child: OpacityTween(
+                              begin: 0,
+                              child: Center(
+                                  child: SvgPicture.asset(
+                                assetImg + "login_image.svg",
+                                width: 250,
+                                height: 250,
+                              )),
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 40,
                           ),
-                          CustomTextField(
-                            prefixIcon: "key_icon.svg",
-                            labelText: "Mot de passe",
-                            controller: passwordController,
-                            iconColor: primary,
-                            isPassword: true,
+                          SlideDownTween(
+                            delay: 1.4,
+                            offset: 40,
+                            child: OpacityTween(
+                              begin: 0.2,
+                              child: const CustomHeading(
+                                  title: "Connectez-vous",
+                                  subTitle: "Bienvenue",
+                                  color: secondary),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: spacer - 40,
+                          ),
+                          SlideDownTween(
+                            offset: 50,
+                            delay: 1.6,
+                            child: OpacityTween(
+                              begin: 0.4,
+                              child: CustomTextField(
+                                prefixIcon: "email_icon.svg",
+                                labelText: "Adresse email",
+                                controller: emailController,
+                                iconColor: primary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: spacer - 40,
+                          ),
+                          SlideDownTween(
+                            offset: 50,
+                            delay: 1.6,
+                            child: OpacityTween(
+                              begin: 0.4,
+                              child: CustomTextField(
+                                prefixIcon: "key_icon.svg",
+                                labelText: "Mot de passe",
+                                controller: passwordController,
+                                iconColor: primary,
+                                isPassword: true,
+                              ),
+                            ),
                           ),
                           const SizedBox(
                             height: spacer,
@@ -272,37 +330,52 @@ class _AuthScreenState extends State<AuthScreen> {
                                   signInUser();
                                 }
                               },
-                              child: Column(
-                                children: [
-                                  const CustomButtonBox(title: "Se connecter"),
-                                  isCharging == true
-                                      ? CircularProgressIndicator(
-                                          color: primary,
-                                        )
-                                      : Text("")
-                                ],
+                              child: SlideDownTween(
+                                offset: 40,
+                                delay: 2.0,
+                                child: OpacityTween(
+                                  begin: 0.5,
+                                  child: Column(
+                                    children: [
+                                      const CustomButtonBox(
+                                          title: "Se connecter"),
+                                      isCharging == true
+                                          ? CircularProgressIndicator(
+                                              color: primary,
+                                            )
+                                          : Text("")
+                                    ],
+                                  ),
+                                ),
                               )),
                           const SizedBox(
                             height: spacer - 30,
                           ),
-                          Row(
-                            children: [
-                              Text(
-                                "Vous n'avez pas de compte ?",
-                                style:
-                                    TextStyle(color: secondary.withOpacity(0.5)),
+                          SlideDownTween(
+                            offset: 40,
+                            delay: 2.0,
+                            child: OpacityTween(
+                              begin: 0.6,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Vous n'avez pas de compte ?",
+                                    style: TextStyle(
+                                        color: secondary.withOpacity(0.5)),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      _auth = Auth.sign_up;
+                                      setState(() {});
+                                    },
+                                    child: const Text(
+                                      "Inscrivez vous",
+                                      style: TextStyle(color: primary),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  _auth = Auth.sign_up;
-                                  setState(() {});
-                                },
-                                child: const Text(
-                                  "Inscrivez vous",
-                                  style: TextStyle(color: primary),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                           const SizedBox(
                             height: spacer - 30,

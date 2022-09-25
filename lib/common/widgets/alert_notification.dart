@@ -36,21 +36,25 @@ class _AlertNotificationState extends State<AlertNotification> {
                 ),
                 child: Center(
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
+                            margin: EdgeInsets.only(left: 15),
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
                               color: widget.error==true? Colors.red:Colors.green,
                               borderRadius: BorderRadius.all(Radius.circular(15))
                             ),
-                            child: Center(child: Icon(Icons.close, color: Colors.black)),
+                            child: Center(child:  Icon( widget.error==true?Icons.close:Icons.check, color: Colors.black)),
                           ),
-                      
-                      Text(
-                        widget.message,
-                        style: TextStyle(color: textBlack, fontSize: 12),
+
+                      SizedBox(width: 25,),
+                      Flexible(
+                        child: Text(
+                          widget.message,
+                          style: TextStyle(color: textBlack, fontSize: 12),
+                        ),
                       )
                     ])),
               ),

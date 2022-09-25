@@ -9,6 +9,7 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/features/panel/panel.dart';
+import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -30,9 +31,11 @@ class _SplashScreenState extends State<SplashScreen>
       .animate(CurvedAnimation(
           parent: _animationController, curve: Curves.decelerate));
 
+  List<User> userList = [];
+
   @override
   void initState() {
-    authService.getUserData(context);
+    // authService.getUserData(context);
 
     // _animationController.addStatusListener((status) {
     //   if (status == AnimationStatus.completed) {
@@ -41,14 +44,8 @@ class _SplashScreenState extends State<SplashScreen>
     //     _animationController.forward();
     //   }
     // });
+    // getUserData();
 
-    Timer(Duration(seconds: 3), () {
-      if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
-      } else {
-        Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-      }
-    });
-    
     _animationController.forward();
     _animationController.addStatusListener((status) {
       if (_animationController.status == AnimationStatus.completed) {
@@ -61,6 +58,8 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
   }
 
+
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -69,6 +68,27 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+      void getUserData() async {
+    
+    authService.getUserData(context);
+    setState(() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    print("token $userProvider");
+      Timer(Duration(seconds: 4), () {
+        // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
+        // } else {
+        //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+        // }
+        userProvider.user.token.isNotEmpty
+            ? Navigator.pushReplacementNamed(context, BottomBar.routeName)
+            : Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+      });
+    });
+  }
+    getUserData();
+
+    
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(

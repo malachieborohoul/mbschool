@@ -1,5 +1,5 @@
 const checkEmailExist = "SELECT * FROM users WHERE email = $1";
-const addUser = "INSERT INTO users (nom, prenom, email, password, role) VALUES ($1, $2, $3, $4, $5) RETURNING *";
+const addUser = "INSERT INTO users (nom, prenom, email, password, role, verify_code) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
 const editUserProfile = 'UPDATE users SET nom = $1, photo = $2, prenom = $3, telephone = $4, sexe = $5, localisation = $6 WHERE id = $7;';
 const checkIdExist = "SELECT * FROM users WHERE id = $1";
 const getAllLangueData = "SELECT * FROM langue;";
@@ -32,6 +32,9 @@ const enrollToCourse = "INSERT INTO cours_suivis (users_id, cours_id) VALUES ($1
 const isCourseEnrolled = "SELECT * FROM cours_suivis WHERE users_id = $1 AND cours_id=$2;";
 
 const getAllEnrolledCourses = "SELECT * FROM cours_suivis JOIN users ON cours_suivis.users_id=users.id JOIN cours ON cours_suivis.cours_id=cours.id_cours WHERE users.id=$1;";
+
+const codeVerification = "UPDATE users SET verify_code = '' WHERE id = $1;";
+
 
 
 module.exports = {
@@ -66,5 +69,6 @@ module.exports = {
     countAllLessonReponseAndCommentaires,
     enrollToCourse,
     isCourseEnrolled,
-    getAllEnrolledCourses
+    getAllEnrolledCourses,
+    codeVerification,
 }

@@ -3,11 +3,13 @@ import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
+import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/course_provider.dart';
+import 'package:mbschool/providers/number_entry_provider.dart';
 import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:mbschool/router.dart';
@@ -20,6 +22,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => UserProvider()),
       ChangeNotifierProvider(create: (context) => CoursProvider()),
       ChangeNotifierProvider(create: (context) => TabBarProvider()),
+      ChangeNotifierProvider(create: (context) => NumberEntryProvider()),
     ],
     child: const MyApp(),
   ));
@@ -83,7 +86,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(fontFamily: "WorkSans"),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: (setting) => generateRoute(setting),
-        home: IntroScreen());
+        home: SplashScreen());
   }
 }
 

@@ -19,7 +19,7 @@ class UserProvider extends ChangeNotifier {
           qualification: '',
           numCompte: '',
           cv: '',
-          token: '');
+          token: '', verify_code: '');
 
   User get user => _user;
 

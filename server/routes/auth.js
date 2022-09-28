@@ -1,4 +1,7 @@
 const express = require("express");
+const nodemailer = require("nodemailer");
+
+require("dotenv").config();
 const User = require("../models/user");
 const auth = require("../middlewares/auth")
 const authRouter = express.Router();
@@ -6,11 +9,31 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const pool = require("../db");
 const queries = require("../queries")
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth:{
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASS
+    }
+})
+
+transporter.verify((error, success)=>{
+    if(error){
+        console.log(error)
+    }else{
+        console.log("Ready for message")
+        console.log(success )
+    }
+})
+
+
 // SIGNUP
 authRouter.post('/api/signup', async (req, res)=> {
     try {
         const {nom, prenom, email, password} = req.body;
         const role = 1;
+        const verify_code=123457
         pool.query(queries.checkEmailExist,[email], async (error, results)=>{
             
             if(results.rows.length){
@@ -21,11 +44,19 @@ authRouter.post('/api/signup', async (req, res)=> {
             }
             const hashedPassword = await bcryptjs.hash(password, 8);
 
-            pool.query(queries.addUser, [nom, prenom, email, hashedPassword, role], (error, results)=>{
+            pool.query(queries.addUser, [nom, prenom, email, hashedPassword, role, verify_code], (error, results)=>{
                 const user = results.rows[0];
                 if (error) throw error;
-                
-                res.status(200).json(user);
+
+                const token = jwt.sign({id: user.id}, "passwordKey");
+                // const verify_code="123456"
+                user.token = token;
+                // user.verify_code = verify_code;
+
+                sendEmailVerification(user,res);
+                // return res.json(user);
+                    
+                // res.status(200).json(user);
             })
         } )
 
@@ -134,5 +165,44 @@ authRouter.get("/", auth, async (req, res) => {
     // return res.json({ ...user._doc, token: req.token });
     // print(user);
   });
+
+
+
+  // Code de vérification
+  authRouter.post("/codeVerification",  (req, res)=>{
+    const {id}= req.body;
+    pool.query(queries.codeVerification, [id, ] , (error, results)=>{
+      if (error) throw error;
+      return res.json(true)
+    })
+  });
+
+
+  const sendEmailVerification = ({email, verify_code}, res)=>{
+    // const {to, subject, message}=req.body;
+
+    const mailOptions={
+        from: process.env.AUTH_EMAIL,
+        to: email,
+        subject: "Code de vérification",
+        text: verify_code
+    }
+    transporter.sendMail(mailOptions)
+        .then(()=>{
+            res.json({
+                message: "SUCCESS",
+                message: "Message sent succesfully"
+            })
+        })
+        .catch((error)=>{
+            console.log(error);
+            res.json({status: "FAILED", message:"An error"})
+        })
+}
+
+
+
+  
+
 
 module.exports = authRouter;

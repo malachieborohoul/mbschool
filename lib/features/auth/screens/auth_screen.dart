@@ -16,6 +16,9 @@ import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
+import 'package:mbschool/features/intro/screens/verification_screen.dart';
+import 'package:mbschool/providers/number_entry_provider.dart';
+import 'package:provider/provider.dart';
 
 enum Auth {
   sign_up,
@@ -94,6 +97,9 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final numberEntry =Provider.of<NumberEntryProvider>(context, listen: false);
+
+    //   print(numberEntry.count);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

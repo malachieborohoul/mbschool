@@ -13,6 +13,8 @@ import 'package:mbschool/features/course/screens/detail_lesson_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
+import 'package:mbschool/features/intro/screens/intro_screen.dart';
+import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
@@ -38,7 +40,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       var cours = routeSettings.arguments as List<Cours>;
 
       return PageTransition(
-          settings: routeSettings, child: AllCourseScreen(cours: cours,), type: PageTransitionType.bottomToTop,);
+        settings: routeSettings,
+        child: AllCourseScreen(
+          cours: cours,
+        ),
+        type: PageTransitionType.bottomToTop,
+      );
     case FavoriteScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FavoriteScreen());
@@ -122,19 +129,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
       return PageTransition(
           settings: routeSettings,
-          child:  FilterCourseScreen(controller: controller,),
+          child: FilterCourseScreen(
+            controller: controller,
+          ),
           curve: Curves.easeOut,
           type: PageTransitionType.bottomToTop);
 
-     case SearchScreen.routeName:
-
+    case SearchScreen.routeName:
       return PageTransition(
           settings: routeSettings,
-          child:  SearchScreen(),
+          child: SearchScreen(),
           curve: Curves.easeOut,
           type: PageTransitionType.fade);
 
-     case DetailLessonScreen.routeName:
+    case DetailLessonScreen.routeName:
       var cours = routeSettings.arguments as CourseLessonArguments;
       var lecon = routeSettings.arguments as CourseLessonArguments;
 
@@ -145,9 +153,23 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           child: DetailLessonScreen(
             cours: cours.cours,
-            lecon: lecon.lecon ,
+            lecon: lecon.lecon,
           ),
           type: PageTransitionType.fade);
+
+    case IntroScreen.routeName:
+      return PageTransition(
+          settings: routeSettings,
+          child: IntroScreen(),
+          curve: Curves.easeOut,
+          type: PageTransitionType.rightToLeft);
+
+    case VerificationScreen.routeName:
+      return PageTransition(
+          settings: routeSettings,
+          child: VerificationScreen(),
+          curve: Curves.easeOut,
+          type: PageTransitionType.rightToLeft);
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

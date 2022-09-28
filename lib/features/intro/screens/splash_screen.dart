@@ -6,12 +6,17 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/features/intro/screens/intro_screen.dart';
+import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/user.dart';
+import 'package:mbschool/providers/number_entry_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -55,10 +60,9 @@ class _SplashScreenState extends State<SplashScreen>
       }
     });
 
+
     super.initState();
   }
-
-
 
   @override
   void dispose() {
@@ -68,27 +72,50 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-      void getUserData() async {
-    
-    authService.getUserData(context);
-    setState(() {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    void getUserData() async {
+      authService.getUserData(context);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
 
-    print("token $userProvider");
-      Timer(Duration(seconds: 4), () {
-        // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
-        // } else {
-        //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-        // }
-        userProvider.user.token.isNotEmpty
-            ? Navigator.pushReplacementNamed(context, BottomBar.routeName)
-            : Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+      setState(() {
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        
+        print("token ${token} ");
+        print("verify code: ${userProvider.user.verify_code} ");
+
+        // print(numberEntry.count);
+        // print(introApp.num);
+
+        // print("token $userProvider");
+        Timer(Duration(seconds: 4), () {
+          // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
+          // } else {
+          //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+          // }
+
+          if (token == null) {
+            Navigator.pushReplacementNamed(context, IntroScreen.routeName);
+          } else {
+            if (userProvider.user.token.isNotEmpty &&
+                userProvider.user.verify_code.isNotEmpty) {
+              Navigator.pushReplacementNamed(
+                  context, VerificationScreen.routeName);
+            } else if (userProvider.user.token.isEmpty &&
+                userProvider.user.verify_code.isEmpty) {
+              Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+            } else if (userProvider.user.token.isNotEmpty &&
+                userProvider.user.verify_code.isEmpty) {
+              Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            }else{
+
+            }
+          }
+        });
       });
-    });
-  }
+    }
+
     getUserData();
 
-    
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(

@@ -36,7 +36,7 @@ class _AlertNotificationState extends State<AlertNotification> {
                 ),
                 child: Center(
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
                             margin: EdgeInsets.only(left: 15),

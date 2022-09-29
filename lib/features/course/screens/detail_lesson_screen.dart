@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -17,6 +18,7 @@ import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/commentaire/screens/course_commentaire_screen.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
+import 'package:mbschool/features/course/screens/rate_course_screen.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
@@ -46,11 +48,17 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   List<Exigence> exigences = [];
   List<Lecon> lecons = [];
   bool? isCourseInFav;
+  bool? isLeconDone;
+
+  bool selected = false;
 
   List<Commentaire> lessonCommentaires = [];
   var number_discussions;
   CourseCommentaireService _courseCommentaireService =
       CourseCommentaireService();
+
+  String? numberLecon;
+  String? numberLeconDone;
 
   @override
   void initState() {
@@ -60,6 +68,21 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
     getAllLecons();
     isCoursInFavorite();
     countAllLessonReponseAndCommentaires();
+    isLeconMarkDone();
+    getNumberLeconCours();
+    getNumberLeconCoursDone();
+  }
+
+  void getNumberLeconCours() async {
+    numberLecon =
+        await courseManagerService.getNumberLeconCours(context, widget.cours);
+    setState(() {});
+  }
+
+  void getNumberLeconCoursDone() async {
+    numberLeconDone = await courseManagerService.getNumberLeconCoursDone(
+        context, widget.cours);
+    setState(() {});
   }
 
   void countAllLessonReponseAndCommentaires() async {
@@ -72,6 +95,13 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
     isCourseInFav =
         await courseManagerService.isCourseInFavorite(context, widget.cours);
     setState(() {});
+  }
+
+  void isLeconMarkDone() async {
+    isLeconDone = await courseManagerService.isLeconDone(context, widget.lecon);
+    setState(() {
+      selected = false;
+    });
   }
 
   // void getAllExigences() async {
@@ -94,12 +124,28 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   }
 
   void markLessonAsDone() {
-    
+    _courseCommentaireService.markLessonAsDone(context, widget.lecon, () {
+      setState(() {
+        isLeconMarkDone();
+        getNumberLeconCours();
+        getNumberLeconCoursDone();
+        if (int.parse(numberLeconDone!) + 1 == int.parse(numberLecon!)) {
+          print(
+              "${int.parse(numberLeconDone!) + 1} / ${int.parse(numberLecon!)}");
+
+          Navigator.pushNamed(context, RateCourseScreen.routeName);
+        } else {
+          print(
+              "${int.parse(numberLeconDone!) + 1} / ${int.parse(numberLecon!)}");
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 2, vsync: this);
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -108,10 +154,14 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
             backgroundColor: Colors.transparent,
           ),
           preferredSize: Size.fromHeight(40)),
-      body: number_discussions == null
+      body: number_discussions == null ||
+              isLeconDone == null ||
+              selected == true ||
+              numberLecon == null ||
+              numberLeconDone == null
           ? Loader()
           : SingleChildScrollView(
-               child: Column(
+              child: Column(
                 children: [
                   Stack(
                     alignment: Alignment.center,
@@ -237,11 +287,35 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
                                       )),
                                 ],
                               ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: CustomButtonBox(
-                                    title: "Marqué comme déjà suivie"),
-                              ),
+                              isLeconDone == true
+                                  ? Container(
+                                      width: size.width,
+                                      height: 45.0,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: textWhite,
+                                        border: Border.all(color: primary),
+                                        borderRadius:
+                                            BorderRadius.circular(17.5),
+                                      ),
+                                      child: Text(
+                                        "Déjà suivi",
+                                        style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w700,
+                                          color: primary,
+                                        ),
+                                      ))
+                                  : GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          selected = true;
+                                        });
+                                        markLessonAsDone();
+                                      },
+                                      child: CustomButtonBox(
+                                          title: "Marquer comme déjà suivie"),
+                                    ),
                               InkWell(
                                 splashColor: Colors.grey,
                                 onTap: () {

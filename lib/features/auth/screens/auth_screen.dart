@@ -39,7 +39,7 @@ class _AuthScreenState extends State<AuthScreen> {
   // bool isCharging = false;
 
   TextEditingController cPasswordController = TextEditingController();
-  Auth _auth = Auth.login;
+  Auth _auth = Auth.sign_up;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -124,7 +124,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             height: spacer,
                           ),
                           OpacityTween(
-                            begin: 0.2,
+                            begin: 0.0,
                             child: const CustomHeading(
                                 title: "Inscrivez vous",
                                 subTitle: "Bienvenue",

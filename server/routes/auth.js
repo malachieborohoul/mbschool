@@ -18,14 +18,14 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-transporter.verify((error, success)=>{
-    if(error){
-        console.log(error)
-    }else{
-        console.log("Ready for message")
-        console.log(success )
-    }
-})
+// transporter.verify((error, success)=>{
+//     if(error){
+//         console.log(error)
+//     }else{
+//         console.log("Ready for message")
+//         console.log(success )
+//     }
+// })
 
 
 // SIGNUP
@@ -53,7 +53,7 @@ authRouter.post('/api/signup', async (req, res)=> {
                 user.token = token;
                 // user.verify_code = verify_code;
 
-                sendEmailVerification(user,res);
+                // sendEmailVerification(user,res);
                 // return res.json(user);
                     
                 // res.status(200).json(user);

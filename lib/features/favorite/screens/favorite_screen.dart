@@ -14,6 +14,8 @@ import 'package:mbschool/datas/category_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/favorite/services/favorite_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
   static const routeName = '/favorite';
@@ -75,6 +77,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                           Navigator.pushNamed(
                               context, DetailCourseScreen.routeName,
                               arguments: cours![index]);
+
+                            
+    
+                                      Provider.of<CoursProvider>(context,
+                                              listen: false).set_cours(cours![index]);
                         },
                         child: CustomFavoriteCourseCard(cours: cours![index])));
               }),

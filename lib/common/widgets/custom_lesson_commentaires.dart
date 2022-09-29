@@ -5,14 +5,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/features/commentaire/screens/course_reponse_commentaire_screen.dart';
+import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 import 'package:mbschool/models/commentaire.dart';
+import 'package:mbschool/models/lecon.dart';
 
 class CustomLessonCommentaires extends StatefulWidget {
   const CustomLessonCommentaires(
       {Key? key,
       this.icon = false,
       required this.commentaire,
-      this.reponse = false})
+      this.reponse = false, })
       : super(key: key);
   final bool icon;
   final bool reponse;
@@ -24,6 +26,22 @@ class CustomLessonCommentaires extends StatefulWidget {
 }
 
 class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
+  CourseCommentaireService _courseCommentaireService =
+      CourseCommentaireService();
+  late String lessonNumberReponses;
+
+  @override
+  void initState() {
+    getAllLessonNumberReponses();
+    super.initState();
+  }
+
+  void getAllLessonNumberReponses() async {
+    lessonNumberReponses = await _courseCommentaireService
+        .getAllLessonNumberReponses(context, widget.commentaire!);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -133,7 +151,7 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                                         });
                                   },
                                   child: Text(
-                                      "${widget.commentaire!.number_reponses} Reponse(s)",
+                                      "${lessonNumberReponses} Reponse(s)",
                                       style: TextStyle(
                                         color: Colors.blueAccent,
                                       )),

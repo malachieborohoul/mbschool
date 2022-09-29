@@ -13,6 +13,8 @@ import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 class AllCourseScreen extends StatefulWidget {
   static const routeName = '/all-course-screen';
@@ -105,9 +107,14 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
                         padding: const EdgeInsets.only(bottom: 25),
                         child: InkWell(
                             onTap: () {
-                              Navigator.pushNamed(
-                                  context, DetailCourseScreen.routeName,
-                                  arguments: widget.cours[index]);
+                           
+
+                                   Navigator.pushNamed(
+                                          context, DetailCourseScreen.routeName,
+                                          arguments: widget.cours[index]);
+    
+                                      Provider.of<CoursProvider>(context,
+                                              listen: false).set_cours(widget.cours[index]);
                             },
                             child: CustomCourseCardShrink(
                                 thumbNail: widget.cours[index].vignette,

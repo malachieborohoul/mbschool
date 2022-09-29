@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/clipper.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
@@ -124,30 +125,36 @@ class _HomeScreenState extends State<HomeScreen>
                           children: [
                             SlideDownTween(
                               offset: 70,
-                              child: CustomHeading(
-                                  title: "Bienvenue ${user.nom} ",
-                                  subTitle: "Que voulez vous apprendre?",
-                                  color: secondary),
+                              child: OpacityTween(
+                                begin: 0.1,
+                                child: CustomHeading(
+                                    title: "Bienvenue ${user.nom} ",
+                                    subTitle: "Que voulez vous apprendre?",
+                                    color: secondary),
+                              ),
                             ),
                             SlideDownTween(
                               offset: 70,
-                              child: Container(
-                                height: spacer,
-                                width: spacer,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, AccountScreen.routeName);
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: user.photo.isNotEmpty
-                                        ? Image.network(
-                                            user.photo,
-                                          )
-                                        : Image.asset(
-                                            UserProfile['image'].toString(),
-                                          ),
+                              child: OpacityTween(
+                                begin: 0.0,
+                                child: Container(
+                                  height: spacer,
+                                  width: spacer,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, AccountScreen.routeName);
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: user.photo.isNotEmpty
+                                          ? Image.network(
+                                              user.photo,
+                                            )
+                                          : Image.asset(
+                                              UserProfile['image'].toString(),
+                                            ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -159,21 +166,26 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                         SlideDownTween(
                           offset: 70,
-                          child: CustomSearchField(
-                            onTap: true,
-                            hintField: "Essayez le Developpement mobile",
-                            backgroundColor: textWhite,
+                          child: OpacityTween(
+                            begin: 0.0,
+                            child: CustomSearchField(
+                              onTap: true,
+                              hintField: "Essayez le Developpement mobile",
+                              backgroundColor: textWhite,
+                            ),
                           ),
                         ),
                         const SizedBox(
                           height: spacer - 30,
                         ),
-                        SlideDownTween(offset: 70, child: CustomCategoryCard()),
+                        SlideDownTween(offset: 70, child: OpacityTween(begin: 0.0,
+                        child: CustomCategoryCard())),
                         const SizedBox(
                           height: spacer,
                         ),
                         SlideDownTween(
-                            offset: 70, child: const CustomPromotionCard()),
+                            offset: 70, child: OpacityTween(begin: 0.0,
+                            child: const CustomPromotionCard())),
                         const SizedBox(
                           height: spacer,
                         ),

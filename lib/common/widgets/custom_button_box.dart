@@ -12,7 +12,8 @@ class CustomButtonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
+    return 
+    Container(
       width: size.width,
       height: 45.0,
       alignment: Alignment.center,
@@ -37,5 +38,6 @@ class CustomButtonBox extends StatelessWidget {
         ),
       ),
     );
+  
   }
 }

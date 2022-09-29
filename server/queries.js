@@ -23,17 +23,27 @@ const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cour
 const filterCourses = "SELECT * FROM cours WHERE id_categorie=$1 OR id_niveau=$2 OR id_langue=$3;";
 const searchCourses = "SELECT * FROM cours WHERE titre ILIKE '%' || $1 || '%'"
 const addLeconCommentaire = "INSERT INTO commentaire (intitule,users_id, lecon_id) VALUES ($1, $2, $3) RETURNING *;";
-// const getAllLessonCommentaires ="SELECT users.nom, users.prenom, users.photo, commentaire.intitule,commentaire.id_commentaire FROM commentaire JOIN users ON users.id=commentaire.users_id WHERE commentaire.lecon_id=$1 ORDER BY created_at DESC;";
-const getAllLessonCommentaires ="SELECT intitule,nom,prenom,photo,id_commentaire, COUNT(*) AS number_reponses  FROM reponse JOIN commentaire ON reponse.commentaire_id=commentaire.id_commentaire  JOIN users ON commentaire.users_id =users.id WHERE lecon_id=$1 GROUP BY id_commentaire, users.nom, users.prenom, users.photo ORDER BY commentaire.created_at DESC;";
+const getAllLessonCommentaires ="SELECT users.nom, users.prenom, users.photo, commentaire.intitule,commentaire.id_commentaire FROM commentaire JOIN users ON users.id=commentaire.users_id WHERE commentaire.lecon_id=$1 ORDER BY created_at DESC;";
+const getAllLessonNumberReponses ="SELECT COUNT(*) FROM reponse where commentaire_id=$1;";
+// const getAllLessonNumberReponses ="SELECT intitule,nom,prenom,photo,id_commentaire, COUNT(*) AS number_reponses  FROM reponse JOIN commentaire ON reponse.commentaire_id=commentaire.id_commentaire  JOIN users ON commentaire.users_id =users.id WHERE lecon_id=$1 GROUP BY id_commentaire, users.nom, users.prenom, users.photo ORDER BY commentaire.created_at DESC;";
 const addLeconReponseCommentaire = "INSERT INTO reponse (intitule_reponse,users_id, commentaire_id) VALUES ($1, $2, $3) RETURNING *;";
 const getAllLessonReponseCommentaires ="SELECT users.nom, users.prenom, users.photo, reponse.intitule_reponse,reponse.id_reponse FROM reponse JOIN users ON users.id=reponse.users_id  WHERE commentaire_id=$1 ORDER BY created_at DESC;";
-const countAllLessonReponseAndCommentaires ="SELECT reponse.commentaire_id AS id_commentaire, COUNT(*)+1 AS number_discussions FROM reponse JOIN commentaire ON commentaire.id_commentaire = reponse.commentaire_id WHERE commentaire.lecon_id=$1 GROUP BY reponse.commentaire_id";
+const countAllLessonReponseAndCommentaires ="SELECT COUNT(*) FROM commentaire WHERE lecon_id=$1;";
 const enrollToCourse = "INSERT INTO cours_suivis (users_id, cours_id) VALUES ($1, $2) RETURNING *;";
 const isCourseEnrolled = "SELECT * FROM cours_suivis WHERE users_id = $1 AND cours_id=$2;";
 
-const getAllEnrolledCourses = "SELECT * FROM cours_suivis JOIN users ON cours_suivis.users_id=users.id JOIN cours ON cours_suivis.cours_id=cours.id_cours WHERE users.id=$1;";
+const getAllEnrolledCourses = "SELECT * FROM cours_suivis  JOIN cours ON cours_suivis.cours_id=cours.id_cours JOIN users ON cours.id_users=users.id WHERE cours_suivis.users_id=$1;";
 
 const codeVerification = "UPDATE users SET verify_code = '' WHERE id = $1;";
+
+const markLessonAsDone = "INSERT INTO lecon_suivi(users_id, lecon_id) VALUES ($1, $2) RETURNING *;";
+
+const isLeconDone = "SELECT * FROM lecon_suivi WHERE users_id = $1 AND lecon_id=$2;";
+
+const getNumberLeconCours= "SELECT COUNT(*) FROM lecon WHERE id_cours = $1;";
+
+const getNumberLeconCoursDone= "SELECT COUNT(*) FROM lecon_suivi JOIN lecon ON lecon.id_lecon=lecon_suivi.lecon_id JOIN cours ON lecon.id_cours=cours.id_cours WHERE cours.id_cours=$1;";
+
 
 
 
@@ -64,6 +74,7 @@ module.exports = {
     searchCourses,
     addLeconCommentaire,
     getAllLessonCommentaires,
+    getAllLessonNumberReponses,
     addLeconReponseCommentaire,
     getAllLessonReponseCommentaires,
     countAllLessonReponseAndCommentaires,
@@ -71,4 +82,8 @@ module.exports = {
     isCourseEnrolled,
     getAllEnrolledCourses,
     codeVerification,
+    markLessonAsDone,
+    isLeconDone,
+    getNumberLeconCours,
+    getNumberLeconCoursDone
 }

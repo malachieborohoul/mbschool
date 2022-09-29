@@ -111,7 +111,23 @@ class AuthService {
     }
   }
 
-  void getUserData(BuildContext context) async {
+  Future<User> getUserData(BuildContext context) async {
+    User user = new User(
+        id: "",
+        nom: "",
+        prenom: "",
+        email: "",
+        password: "",
+        role: "",
+        photo: "",
+        sexe: "",
+        localisation: "",
+        telephone: "",
+        qualification: "",
+        numCompte: "",
+        cv: "",
+        token: "",
+        verify_code: "");
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -131,14 +147,36 @@ class AuthService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': token
               });
+          await Future.delayed(Duration(seconds: 3));
 
           Provider.of<UserProvider>(context, listen: false)
               .setUser(userRes.body);
+          user = jsonDecode(userRes.body);
         }
       }
+     
+      await Future.delayed(Duration(seconds: 3));
+      //  Provider.of<UserProvider>(context, listen: false).setUser(jsonEncode({
+      //   "id": "",
+      //   "nom": "",
+      //   "prenom": "",
+      //   "email": "",
+      //   "password": "",
+      //   "role": "",
+      //   "photo": "",
+      //   "sexe": "",
+      //   "localisation": "",
+      //   "telephone": "",
+      //   "qualification": "",
+      //   "numCompte": "",
+      //   "cv": "",
+      //   "token": "",
+      //   "verify_code": ""
+      // }));
     } catch (e) {
-      showSnackBar(context, e.toString());
+      // showSnackBar(context, e.toString());
     }
+    return user;
   }
 
   // LOGOUT USER
@@ -182,9 +220,7 @@ class AuthService {
           Uri.parse(
             '$uri/codeVerification',
           ),
-          body: jsonEncode({
-            "id": userProvider.user.id
-          }),
+          body: jsonEncode({"id": userProvider.user.id}),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token

@@ -313,4 +313,97 @@ class CourseManagerService {
       showSnackBar(context, e.toString());
     }
   }
+
+
+   Future<bool> isLeconDone(BuildContext context, Lecon lecon) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    late bool isLeconDone;
+
+    try {
+      http.Response resIsDone =
+          await http.post(Uri.parse("$uri/isLeconDone"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                "users_id": int.parse(userProvider.user.id),
+                "lecon_id": int.parse(lecon.id_lecon)
+              }));
+
+      httpErrorHandle(
+        response: resIsDone,
+        context: context,
+        onSuccess: () {
+          isLeconDone = jsonDecode(resIsDone.body);
+        },
+        onFailed: () {},
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return isLeconDone;
+  }
+
+
+
+   Future<String> getNumberLeconCours(BuildContext context, Cours cours) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    late String numberLecon;
+
+    try {
+      http.Response numLeconRes =
+          await http.post(Uri.parse("$uri/getNumberLeconCours"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                "cours_id": int.parse(cours.id_cours)
+              }));
+
+      httpErrorHandle(
+        response: numLeconRes,
+        context: context,
+        onSuccess: () {
+          numberLecon = jsonDecode(numLeconRes.body);
+        },
+        onFailed: () {},
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return numberLecon;
+  }
+
+
+     Future<String> getNumberLeconCoursDone(BuildContext context, Cours cours) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    late String numberLeconDone;
+
+    try {
+      http.Response numLeconDoneRes =
+          await http.post(Uri.parse("$uri/getNumberLeconCoursDone"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                "cours_id": int.parse(cours.id_cours)
+              }));
+
+      httpErrorHandle(
+        response: numLeconDoneRes,
+        context: context,
+        onSuccess: () {
+          numberLeconDone = jsonDecode(numLeconDoneRes.body);
+        },
+        onFailed: () {},
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return numberLeconDone;
+  }
+
 }

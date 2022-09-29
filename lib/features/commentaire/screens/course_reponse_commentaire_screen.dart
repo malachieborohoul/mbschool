@@ -225,7 +225,7 @@ class _CourseReponseCommentaireScreenState
                       for (var i = 0; i < lessonReponseCommentaires.length; i++)
                         lessonReponseCommentaires.isNotEmpty
                             ? CustomLessonReponseCommentaires(
-                                icon: true,
+                                icon: false,
                                 reponseCommentaire: lessonReponseCommentaires[i],
                               )
                             : Container()

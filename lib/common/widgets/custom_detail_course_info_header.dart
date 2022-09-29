@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
@@ -48,7 +49,8 @@ class _CustomDetailCourseInfoHeaderState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right:appPadding, left:appPadding, top: appPadding/2),
+      padding: const EdgeInsets.only(
+          right: appPadding, left: appPadding, top: appPadding / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -64,38 +66,50 @@ class _CustomDetailCourseInfoHeaderState
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: third,
+                  RatingBarIndicator(
+                    direction: Axis.horizontal,
+                    itemCount: 5,
+                    rating: 5,
+                    itemSize: 15,
+                    itemBuilder: (BuildContext context, _) {
+                      return Icon(
+                        Icons.star,
+                        size: 20,
+                        color: third,
+                      );
+                    },
                   ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: third,
-                  ),
-                  Icon(
-                    Icons.star,
-                    size: 20,
-                    color: third,
-                  ),
+                  // Icon(
+                  //   Icons.star,
+                  //   size: 20,
+                  //   color: third,
+                  // ),
+                  // Icon(
+                  //   Icons.star,
+                  //   size: 20,
+                  //   color: third,
+                  // ),
+                  // Icon(
+                  //   Icons.star,
+                  //   size: 20,
+                  //   color: third,
+                  // ),
+                  // Icon(
+                  //   Icons.star,
+                  //   size: 20,
+                  //   color: third,
+                  // ),
+                  // Icon(
+                  //   Icons.star,
+                  //   size: 20,
+                  //   color: third,
+                  // ),
                   SizedBox(
                     width: 15,
                   ),
                   Text("(4.0)"),
                 ],
               ),
-              
               IconButton(
                 onPressed: () {
                   if (widget.isCourseInFav == false) {
@@ -107,7 +121,10 @@ class _CustomDetailCourseInfoHeaderState
                                 height: 90,
                                 child: Column(
                                   children: [
-                                    Text("Voulez vous l'ajouter aux favoris ?",style: TextStyle(fontSize: 15),),
+                                    Text(
+                                      "Voulez vous l'ajouter aux favoris ?",
+                                      style: TextStyle(fontSize: 15),
+                                    ),
                                     const SizedBox(
                                       height: appPadding,
                                     ),
@@ -121,20 +138,40 @@ class _CustomDetailCourseInfoHeaderState
                                               addCoursToFavorite();
                                             },
                                             splashColor: Colors.grey.shade200,
-                                            child: Text(
-                                              "Oui",
-                                              style: TextStyle(
-                                                  color: Colors.green),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: 40,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "Oui",
+                                                style:
+                                                    TextStyle(color: textWhite),
+                                              ),
                                             )),
                                         InkWell(
                                             onTap: () {
                                               Navigator.pop(context);
                                             },
                                             splashColor: Colors.grey.shade200,
-                                            child: Text(
-                                              "Non",
-                                              style:
-                                                  TextStyle(color: Colors.red),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: 40,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "Non",
+                                                style:
+                                                    TextStyle(color: textWhite),
+                                              ),
                                             )),
                                       ],
                                     )
@@ -152,7 +189,9 @@ class _CustomDetailCourseInfoHeaderState
                                 child: Column(
                                   children: [
                                     Text(
-                                        "Voulez vous le retirer des favoris ?", style: TextStyle(fontSize: 15),),
+                                      "Voulez vous le retirer des favoris ?",
+                                      style: TextStyle(fontSize: 15),
+                                    ),
                                     const SizedBox(
                                       height: appPadding,
                                     ),
@@ -166,20 +205,40 @@ class _CustomDetailCourseInfoHeaderState
                                               removeCoursToFavorite();
                                             },
                                             splashColor: Colors.grey.shade200,
-                                            child: Text(
-                                              "Oui",
-                                              style: TextStyle(
-                                                  color: Colors.green),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: 40,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "Oui",
+                                                style:
+                                                    TextStyle(color: textWhite),
+                                              ),
                                             )),
                                         InkWell(
                                             onTap: () {
                                               Navigator.pop(context);
                                             },
                                             splashColor: Colors.grey.shade200,
-                                            child: Text(
-                                              "Non",
-                                              style:
-                                                  TextStyle(color: Colors.red),
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              width: 40,
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.red,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              child: Text(
+                                                "Non",
+                                                style:
+                                                    TextStyle(color: textWhite),
+                                              ),
                                             )),
                                       ],
                                     )
@@ -187,7 +246,6 @@ class _CustomDetailCourseInfoHeaderState
                                 ),
                               ),
                             ));
-                  
                   }
                 },
                 icon: Icon(

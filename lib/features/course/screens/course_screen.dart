@@ -6,8 +6,11 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/course/services/course_enrollment_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 class CourseScreen extends StatefulWidget {
   static const routeName = '/course';
@@ -29,9 +32,7 @@ class _CourseScreenState extends State<CourseScreen> {
   void getAllEnrolledCourses() async {
     enrolledCours =
         await courseEnrollmentService.getAllEnrolledCourses(context);
-        setState(() {
-          
-        });
+    setState(() {});
   }
 
   @override
@@ -86,12 +87,23 @@ class _CourseScreenState extends State<CourseScreen> {
                     duration: Duration(milliseconds: index * 500),
                     curve: Curves.easeInOutCubic,
                     offset: 80,
-                    child: CustomMyCoursesCard(
-                      image: enrolledCours[index].vignette,
-                      title: enrolledCours[index].titre,
-                      instructor: enrolledCours[index].nom,
-                      videoAmount: "20",
-                      percentage: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, DetailCourseScreen.routeName,
+                            arguments: enrolledCours[index]);
+
+                        Provider.of<CoursProvider>(context, listen: false)
+                            .set_cours(enrolledCours[index]);
+                      },
+                      child: CustomMyCoursesCard(
+                        image: enrolledCours[index].vignette,
+                        title: enrolledCours[index].titre,
+                        instructor: enrolledCours[index].nom,
+                        videoAmount: "20",
+                        percentage: 20,
+                        cours: enrolledCours[index],
+                      ),
                     ),
                   ),
                 );

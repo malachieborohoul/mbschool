@@ -8,8 +8,6 @@ import 'package:mbschool/features/panel/create_course/services/create_course_ser
 // String uri = "http://192.168.43.144:3000";
 String uri = "http://192.168.100.39:3000";
 
-
-
 AuthService authService = AuthService();
 AccountService accountService = AccountService();
 CreateCourseService createCourseService = CreateCourseService();
@@ -17,7 +15,6 @@ bool isCharging = false;
 
 // POur le custom floating button
 
-
-class introApp{
+class introApp {
   static int num = 0;
 }

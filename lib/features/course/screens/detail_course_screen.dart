@@ -320,10 +320,20 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                       onTap: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
-                                                        "Non",
-                                                        style: TextStyle(
-                                                            color: Colors.red),
+                                                      child: Container(
+                                                        
+                                                        alignment: Alignment.center,
+                                                        width: 40,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.circular(15)
+                                                        ),
+                                                        child: Text(
+                                                          "Non",
+                                                          style: TextStyle(
+                                                              color: Colors.white),
+                                                        ),
                                                       )),
                                                 ),
                                                 InkWell(
@@ -335,10 +345,19 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                       enrollToCourse();
                                                     });
                                                   },
-                                                  child: Text(
-                                                    "Oui",
-                                                    style: TextStyle(
-                                                        color: Colors.green),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                        width: 40,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius: BorderRadius.circular(15)
+                                                        ),
+                                                    child: Text(
+                                                      "Oui",
+                                                      style: TextStyle(
+                                                          color: textWhite),
+                                                    ),
                                                   ),
                                                 ),
                                               ],

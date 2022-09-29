@@ -90,7 +90,8 @@ class CourseCommentaireService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response commentaireRes = await http.get(
-          Uri.parse("$uri/getAllLessonCommentaires/${int.parse(lecon.id_lecon)}"),
+          Uri.parse(
+              "$uri/getAllLessonCommentaires/${int.parse(lecon.id_lecon)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -117,6 +118,36 @@ class CourseCommentaireService {
       showSnackBar(context, e.toString());
     }
     return commentaireList;
+  }
+
+  //GEt all lesson commentaires
+  Future<String> getAllLessonNumberReponses(
+      BuildContext context, Commentaire commentaire) async {
+    List<Commentaire> commentaireList = [];
+    String? numberReponse;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response commentaireRes = await http.get(
+          Uri.parse(
+              "$uri/getAllLessonNumberReponses/${int.parse(commentaire.id_commentaire)}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': userProvider.user.token,
+          });
+
+      httpErrorHandle(
+          response: commentaireRes,
+          context: context,
+          onSuccess: () {
+            numberReponse = jsonDecode(commentaireRes.body);
+          },
+          onFailed: () {});
+
+      // Provider.of<LangueProvider>(context, listen: false).setLangue(langueRes.body);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return numberReponse!;
   }
 
   //GEt all lesson reponses commentaire
@@ -157,14 +188,15 @@ class CourseCommentaireService {
   }
 
   //GEt all lesson commentaires
-  Future<int> countAllLessonReponseAndCommentaires(
+  Future<String> countAllLessonReponseAndCommentaires(
       BuildContext context, Lecon lecon) async {
     List<Commentaire> commentaireList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    int number_discussions = 0;
+    String number_discussions = "";
     try {
       http.Response commentaireRes = await http.get(
-          Uri.parse("$uri/countAllLessonReponseAndCommentaires/${int.parse(lecon.id_lecon)}"),
+          Uri.parse(
+              "$uri/countAllLessonReponseAndCommentaires/${int.parse(lecon.id_lecon)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -174,19 +206,7 @@ class CourseCommentaireService {
           response: commentaireRes,
           context: context,
           onSuccess: () {
-            for (int i = 0; i < jsonDecode(commentaireRes.body).length; i++) {
-              commentaireList.add(
-                Commentaire.fromJson(
-                  jsonEncode(
-                    jsonDecode(commentaireRes.body)[i],
-                  ),
-                ),
-              );
-            }
-            for (int i = 0; i < commentaireList.length; i++) {
-              number_discussions +=
-                  int.parse(commentaireList[i].number_discussions);
-            }
+            number_discussions = jsonDecode(commentaireRes.body);
           },
           onFailed: () {});
 
@@ -196,4 +216,40 @@ class CourseCommentaireService {
     }
     return number_discussions;
   }
+
+
+  void markLessonAsDone(
+      BuildContext context, Lecon lecon, VoidCallback success) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resEnroll = await http.post(
+        Uri.parse(
+          '$uri/markLessonAsDone',
+        ),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            "users_id": int.parse(userProvider.user.id),
+            "lecon_id": int.parse(lecon.id_lecon),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resEnroll,
+          context: context,
+          onSuccess: () {
+            success();
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  
 }

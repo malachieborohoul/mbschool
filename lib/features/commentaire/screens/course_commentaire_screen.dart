@@ -54,11 +54,13 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
   bool _isloading = false;
 
   List<Commentaire> lessonCommentaires = [];
+  List<Commentaire> lessonNumberReponses = [];
 
   @override
   void initState() {
     super.initState();
     getAllLessonCommentaires();
+    // getAllLessonNumberReponses();
   }
 
   void getAllLessonCommentaires() async {
@@ -202,7 +204,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       lessonCommentaires.isNotEmpty?  CustomLessonCommentaires(
                           icon: true,
                           reponse: true,
-                          commentaire: lessonCommentaires[i],
+                          commentaire: lessonCommentaires[i], 
                         ): Container()
                     ],
                   ),

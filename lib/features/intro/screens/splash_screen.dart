@@ -37,6 +37,8 @@ class _SplashScreenState extends State<SplashScreen>
           parent: _animationController, curve: Curves.decelerate));
 
   List<User> userList = [];
+  late Future<User> userFuture;
+  late String? token;
 
   @override
   void initState() {
@@ -49,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
     //     _animationController.forward();
     //   }
     // });
-    // getUserData();
+    getUserData();
 
     _animationController.forward();
     _animationController.addStatusListener((status) {
@@ -60,8 +62,46 @@ class _SplashScreenState extends State<SplashScreen>
       }
     });
 
-
     super.initState();
+  }
+
+  void getUserData() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    userFuture = authService.getUserData(context);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('x-auth-token');
+
+    setState(() {
+      print("token ${token} ");
+      print("verify code: ${userProvider.user.verify_code} ");
+      // print("token pro: ${userProvider.user.token} ");
+
+      // print(numberEntry.count);
+      // print(introApp.num);
+
+      // print("token $userProvider");
+      // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
+      // } else {
+      //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+      // }
+
+      // if (token == null) {
+      //   Navigator.pushReplacementNamed(context, IntroScreen.routeName);
+      // } else {
+      //   if (userProvider.user.token.isNotEmpty &&
+      //       userProvider.user.verify_code.isNotEmpty) {
+      //     Navigator.pushReplacementNamed(
+      //         context, VerificationScreen.routeName);
+      //   } else if (userProvider.user.token.isEmpty &&
+      //       userProvider.user.verify_code.isEmpty) {
+      //     Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+      //   } else if (userProvider.user.token.isNotEmpty &&
+      //       userProvider.user.verify_code.isEmpty) {
+      //     Navigator.pushReplacementNamed(context, BottomBar.routeName);
+      //   } else {}
+      // }
+    });
   }
 
   @override
@@ -72,75 +112,111 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    void getUserData() async {
-      authService.getUserData(context);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('x-auth-token');
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   String? token = prefs.getString('x-auth-token');
 
-      setState(() {
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
-        
-        print("token ${token} ");
-        print("verify code: ${userProvider.user.verify_code} ");
+    // void getUserData() async {
+    //   authService.getUserData(context);
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   String? token = prefs.getString('x-auth-token');
 
-        // print(numberEntry.count);
-        // print(introApp.num);
+    //   setState(() {
+    //     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-        // print("token $userProvider");
-        Timer(Duration(seconds: 4), () {
-          // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
-          // } else {
-          //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-          // }
+    //     print("token ${token} ");
+    //     print("verify code: ${userProvider.user.verify_code} ");
 
-          if (token == null) {
-            Navigator.pushReplacementNamed(context, IntroScreen.routeName);
-          } else {
-            if (userProvider.user.token.isNotEmpty &&
-                userProvider.user.verify_code.isNotEmpty) {
-              Navigator.pushReplacementNamed(
-                  context, VerificationScreen.routeName);
-            } else if (userProvider.user.token.isEmpty &&
-                userProvider.user.verify_code.isEmpty) {
-              Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-            } else if (userProvider.user.token.isNotEmpty &&
-                userProvider.user.verify_code.isEmpty) {
-              Navigator.pushReplacementNamed(context, BottomBar.routeName);
-            }else{
+    //     // print(numberEntry.count);
+    //     // print(introApp.num);
 
-            }
-          }
-        });
-      });
-    }
+    //     // print("token $userProvider");
+    //     Timer(Duration(seconds: 4), () {
+    //       // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
+    //       // } else {
+    //       //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+    //       // }
 
-    getUserData();
+    //       if (token == null) {
+    //         Navigator.pushReplacementNamed(context, IntroScreen.routeName);
+    //       } else {
+    //         if (userProvider.user.token.isNotEmpty &&
+    //             userProvider.user.verify_code.isNotEmpty) {
+    //           Navigator.pushReplacementNamed(
+    //               context, VerificationScreen.routeName);
+    //         } else if (userProvider.user.token.isEmpty &&
+    //             userProvider.user.verify_code.isEmpty) {
+    //           Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+    //         } else if (userProvider.user.token.isNotEmpty &&
+    //             userProvider.user.verify_code.isEmpty) {
+    //           Navigator.pushReplacementNamed(context, BottomBar.routeName);
+    //         } else {}
+    //       }
+    //     });
+    //   });
+    // }
+
+    // getUserData();
 
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         child: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ScaleTransition(
-                scale: _animation,
-                child: const Text(
-                  "MbSchool",
-                  style: TextStyle(
-                      color: primary,
-                      fontSize: 50,
-                      fontWeight: FontWeight.w600),
-                ),
-              ),
-              // const Padding(
-              //   padding: EdgeInsets.only(top: 100.0),
-              //   child: Loader(),
-              // )
-            ],
-          ),
-        ),
+            child: FutureBuilder(
+                future: userFuture,
+                builder: (context, snapshot) {
+                  var text;
+                  if (snapshot.hasData) {
+                    if (token == null) {
+                      Future.delayed(Duration(milliseconds: 0), () {
+                        Navigator.pushReplacementNamed(
+                            context, IntroScreen.routeName);
+                      });
+                    } else {
+                      if (userProvider.user.token.isNotEmpty &&
+                          userProvider.user.verify_code.isNotEmpty) {
+                        Future.delayed(Duration(milliseconds: 0), () {
+                          Navigator.pushReplacementNamed(
+                              context, VerificationScreen.routeName);
+                        });
+                      } else if (userProvider.user.token.isEmpty &&
+                          userProvider.user.verify_code.isEmpty) {
+                        Future.delayed(Duration(milliseconds: 0), () {
+                          Navigator.pushReplacementNamed(
+                              context, AuthScreen.routeName);
+                        });
+                      } else if (userProvider.user.token.isNotEmpty &&
+                          userProvider.user.verify_code.isEmpty) {
+                        Future.delayed(Duration(milliseconds: 0), () {
+                          Navigator.pushReplacementNamed(
+                              context, BottomBar.routeName);
+                        });
+                      }
+                    }
+                    return Container();
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ScaleTransition(
+                          scale: _animation,
+                          child: const Text(
+                            "MbSchool",
+                            style: TextStyle(
+                                color: primary,
+                                fontSize: 50,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        // const Padding(
+                        //   padding: EdgeInsets.only(top: 100.0),
+                        //   child: Loader(),
+                        // )
+                      ],
+                    );
+                  }
+                })),
       ),
     );
   }

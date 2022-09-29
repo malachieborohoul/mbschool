@@ -368,10 +368,19 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                   },
                                                   splashColor:
                                                       Colors.grey.shade200,
-                                                  child: Text(
-                                                    "Oui",
-                                                    style: TextStyle(
-                                                        color: Colors.green),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                        width: 40,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius: BorderRadius.circular(15)
+                                                        ),
+                                                    child: Text(
+                                                      "Oui",
+                                                      style: TextStyle(
+                                                          color: textWhite),
+                                                    ),
                                                   )),
                                               InkWell(
                                                   onTap: () {
@@ -379,10 +388,19 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                   },
                                                   splashColor:
                                                       Colors.grey.shade200,
-                                                  child: Text(
-                                                    "Non",
-                                                    style: TextStyle(
-                                                        color: Colors.red),
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                        width: 40,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.circular(15)
+                                                        ),
+                                                    child: Text(
+                                                      "Non",
+                                                      style: TextStyle(
+                                                          color: textWhite),
+                                                    ),
                                                   )),
                                             ],
                                           )

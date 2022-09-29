@@ -10,6 +10,7 @@ import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/course/screens/detail_lesson_screen.dart';
+import 'package:mbschool/features/course/screens/rate_course_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
@@ -50,8 +51,8 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FavoriteScreen());
     case AuthScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const AuthScreen());
+      return PageTransition(
+          settings: routeSettings, child:  const AuthScreen(), type: PageTransitionType.leftToRight);
 
     case EditProfileScreen.routeName:
       return MaterialPageRoute(
@@ -170,6 +171,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           child: VerificationScreen(),
           curve: Curves.easeOut,
           type: PageTransitionType.rightToLeft);
+
+     case RateCourseScreen.routeName:
+      return PageTransition(
+          settings: routeSettings, child:  const RateCourseScreen(), type: PageTransitionType.leftToRight);
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

@@ -258,11 +258,21 @@ courseRouter.post("/addLeconCommentaire",auth, (req, res)=>{
 
 
 // get all lesson commentaires
-courseRouter.get("/getAllLessonCommentaires/:id_lecon",auth,  (req, res)=>{
+courseRouter.get("/getAllLessonCommentaires/:id_lecon", (req, res)=>{
   pool.query(queries.getAllLessonCommentaires,[req.params.id_lecon], (error, results)=>{
     if (error) throw error;
 
     return res.json(results.rows);
+
+  })
+})
+
+// get all lesson number reponses
+courseRouter.get("/getAllLessonNumberReponses/:id_commentaire", (req, res)=>{
+  pool.query(queries.getAllLessonNumberReponses,[req.params.id_commentaire], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows[0]['count']);
 
   })
 })
@@ -294,7 +304,7 @@ courseRouter.get("/countAllLessonReponseAndCommentaires/:id_lecon",auth, (req, r
   pool.query(queries.countAllLessonReponseAndCommentaires,[req.params.id_lecon], (error, results)=>{
     if (error) throw error;
 
-    return res.json(results.rows);
+    return res.json(results.rows[0]['count']);
 
   })
 })
@@ -329,7 +339,7 @@ courseRouter.post("/isCourseEnrolled",auth, (req, res)=>{
 
 
 // get all enrolled courses
-courseRouter.get("/getAllEnrolledCourses/:id",  (req, res)=>{
+courseRouter.get("/getAllEnrolledCourses/:id", auth, (req, res)=>{
   pool.query(queries.getAllEnrolledCourses,[req.params.id], (error, results)=>{
     if (error) throw error;
 
@@ -337,6 +347,62 @@ courseRouter.get("/getAllEnrolledCourses/:id",  (req, res)=>{
 
   })
 })
+
+
+// mark course as done
+
+courseRouter.post('/markLessonAsDone',auth,  (req, res)=>{
+  const {users_id, lecon_id}= req.body;
+
+  pool.query(queries.markLessonAsDone, [users_id, lecon_id], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+// fetch if a lecon has already been marked as done
+
+courseRouter.post("/isLeconDone",auth, (req, res)=>{
+  const {users_id, lecon_id} = req.body;
+  pool.query(queries.isLeconDone,[users_id, lecon_id], (error, results)=>{
+    if(error) throw error;
+    if(results.rowCount > 0 ){
+      return res.json(true)
+    }
+    return res.json(false)
+
+    
+  })
+})
+
+
+// fetch the number of lessons for a particular course
+
+courseRouter.post("/getNumberLeconCours",auth, (req, res)=>{
+  const {cours_id, } = req.body;
+  pool.query(queries.getNumberLeconCours,[cours_id,], (error, results)=>{
+    if(error) throw error;
+    return res.json(results.rows[0]['count']);
+
+
+    
+  })
+})
+
+
+// fetch the number of lessons done by a student for a particular course
+
+courseRouter.post("/getNumberLeconCoursDone",auth, (req, res)=>{
+  const {cours_id, } = req.body;
+  pool.query(queries.getNumberLeconCoursDone,[cours_id,], (error, results)=>{
+    if(error) throw error;
+    return res.json(results.rows[0]['count']);
+
+
+    
+  })
+})
+
 
 
 

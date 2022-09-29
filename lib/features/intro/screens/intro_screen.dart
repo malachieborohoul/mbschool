@@ -32,7 +32,7 @@ class _IntroScreenState extends State<IntroScreen> {
   }
 
   void pref() async {
-     prefs = await SharedPreferences.getInstance();
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -51,10 +51,21 @@ class _IntroScreenState extends State<IntroScreen> {
         actions: [
           Padding(
             padding: EdgeInsets.only(right: 20, top: 20),
-            child: Text(
-              "Sauter",
-              style: TextStyle(
-                  color: primary, fontSize: 15, fontWeight: FontWeight.w600),
+            child: GestureDetector(
+              onTap: () {
+                prefs!.setString('x-auth-token', '');
+
+                Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+              },
+              child: Container(
+                child: Text(
+                  "Sauter",
+                  style: TextStyle(
+                      color: primary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
             ),
           ),
         ],

@@ -174,7 +174,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
      case RateCourseScreen.routeName:
       return PageTransition(
-          settings: routeSettings, child:  const RateCourseScreen(), type: PageTransitionType.leftToRight);
+          settings: routeSettings, child:  const RateCourseScreen(), type: PageTransitionType.rightToLeft);
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

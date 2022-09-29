@@ -141,7 +141,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                             ),
                           ),
                           Container(
-                            width:  numberLecon == "0"? 0: (((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()).toDouble(),
+                            width:  numberLecon == "0"? 0: (((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()).toDouble()*2.1,
                             height: 7.0,
                             decoration: BoxDecoration(
                               color: primary,

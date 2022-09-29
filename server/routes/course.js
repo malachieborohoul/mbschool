@@ -403,6 +403,28 @@ courseRouter.post("/getNumberLeconCoursDone",auth, (req, res)=>{
   })
 })
 
+// rate a course
+
+courseRouter.post('/rateCourse',auth,  (req, res)=>{
+  const {id_users,id_cours, rating, testimonial}= req.body;
+
+  pool.query(queries.rateCourse, [id_users,id_cours, rating, testimonial], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+
+// get all notation cours
+courseRouter.get("/getAllNotationCours/:id_cours", (req, res)=>{
+  pool.query(queries.getAllNotationCours,[req.params.id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
 
 
 

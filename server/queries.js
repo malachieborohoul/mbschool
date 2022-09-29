@@ -44,8 +44,10 @@ const getNumberLeconCours= "SELECT COUNT(*) FROM lecon WHERE id_cours = $1;";
 
 const getNumberLeconCoursDone= "SELECT COUNT(*) FROM lecon_suivi JOIN lecon ON lecon.id_lecon=lecon_suivi.lecon_id JOIN cours ON lecon.id_cours=cours.id_cours WHERE cours.id_cours=$1;";
 
+const rateCourse= "INSERT INTO notation_cours (id_users, id_cours, note, testimonial) VALUES($1,$2,$3,$4) RETURNING *;";
 
 
+const getAllNotationCours = "SELECT * FROM notation_cours JOIN users ON notation_cours.id_users=users.id WHERE id_cours=$1;";
 
 module.exports = {
     checkEmailExist,
@@ -85,5 +87,7 @@ module.exports = {
     markLessonAsDone,
     isLeconDone,
     getNumberLeconCours,
-    getNumberLeconCoursDone
+    getNumberLeconCoursDone,
+    rateCourse,
+    getAllNotationCours,
 }

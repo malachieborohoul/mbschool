@@ -19,12 +19,14 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/lecon.dart';
+import 'package:mbschool/models/notation_cours.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/tabbar_provider.dart';
@@ -41,6 +43,8 @@ class DetailCourseScreen extends StatefulWidget {
 
 CourseManagerService courseManagerService = CourseManagerService();
 
+RateCourseService rateCourseService = RateCourseService();
+
 class _DetailCourseScreenState extends State<DetailCourseScreen>
     with TickerProviderStateMixin {
   List<Section> sections = [];
@@ -51,6 +55,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   bool? isCourseInFav;
   bool? isCourseEnroll;
   bool _isLoading = false;
+  List<NotationCours> notationCours = [];
 
   @override
   void initState() {
@@ -60,6 +65,11 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     getAllLecons();
     isCoursInFavorite();
     isCourseEnrolled();
+    getAllNotationCours();
+  }
+
+  void getAllNotationCours() async {
+    notationCours = await rateCourseService.getAllNotationCours(context, widget.cours);
   }
 
   void isCourseEnrolled() async {
@@ -123,7 +133,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
       body: sections == null ||
               isCourseInFav == null ||
               _isLoading == true ||
-              isCourseEnroll == null
+              isCourseEnroll == null ||
+              notationCours == null
           ? Loader()
           : DefaultTabController(
               length: 3,
@@ -269,7 +280,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                             sections: sections,
                             isCourseEnrolled: isCourseEnroll!,
                           ),
-                          ReviewsTabBarView(sections: sections)
+                          ReviewsTabBarView(notationCours: notationCours)
                         ],
                       ),
                     ),
@@ -321,18 +332,21 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                         Navigator.pop(context);
                                                       },
                                                       child: Container(
-                                                        
-                                                        alignment: Alignment.center,
+                                                        alignment:
+                                                            Alignment.center,
                                                         width: 40,
                                                         height: 30,
                                                         decoration: BoxDecoration(
-                                                          color: Colors.red,
-                                                          borderRadius: BorderRadius.circular(15)
-                                                        ),
+                                                            color: Colors.red,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15)),
                                                         child: Text(
                                                           "Non",
                                                           style: TextStyle(
-                                                              color: Colors.white),
+                                                              color:
+                                                                  Colors.white),
                                                         ),
                                                       )),
                                                 ),
@@ -347,12 +361,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                   },
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                        width: 40,
-                                                        height: 30,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.green,
-                                                          borderRadius: BorderRadius.circular(15)
-                                                        ),
+                                                    width: 40,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.green,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
                                                     child: Text(
                                                       "Oui",
                                                       style: TextStyle(
@@ -514,9 +529,9 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
 class ReviewsTabBarView extends StatefulWidget {
   const ReviewsTabBarView({
     Key? key,
-    required this.sections,
+    required this.notationCours,
   }) : super(key: key);
-  final List<Section> sections;
+  final List<NotationCours> notationCours;
 
   @override
   State<ReviewsTabBarView> createState() => _ReviewsTabBarViewState();
@@ -528,17 +543,18 @@ class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
     final coursProvider =
         Provider.of<CoursProvider>(context, listen: false).cours;
 
-    return ListView.builder(
+       return ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: widget.sections.length,
+        itemCount: widget.notationCours.length,
         itemBuilder: (context, i) {
           return Padding(
-              padding: const EdgeInsets.only(
-                left: appPadding,
-                right: appPadding,
-                bottom: 10,
-              ),
-              child: CustomCourseReviews());
+            padding: const EdgeInsets.only(
+              left: appPadding,
+              right: appPadding,
+              bottom: 0,
+            ),
+            child: CustomCourseReviews(notationCours: widget.notationCours[i])
+          );
         });
   }
 }

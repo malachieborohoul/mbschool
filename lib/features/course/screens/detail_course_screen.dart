@@ -147,7 +147,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               isCourseInFav == null ||
               _isLoading == true ||
               isCourseEnroll == null ||
-              notationCours == null 
+              notationCours == null ||
+              averageRate == null
               
           ? Loader()
           : DefaultTabController(

@@ -49,14 +49,33 @@ authRouter.post('/api/signup', async (req, res)=> {
                 if (error) throw error;
 
                 const token = jwt.sign({id: user.id}, "passwordKey");
-                // const verify_code="123456"
+                const verify_code="123456"
                 user.token = token;
-                // user.verify_code = verify_code;
+                user.verify_code = verify_code;
 
                 // sendEmailVerification(user,res);
-                // return res.json(user);
+                // return res.json();
                     
                 // res.status(200).json(user);
+
+                const mailOptions={
+                    from: process.env.AUTH_EMAIL,
+                    to: email,
+                    subject: "Code de vérification",
+                    text: verify_code
+                }
+                transporter.sendMail(mailOptions)
+                    .then(()=>{
+                        // return res.json({
+                        //     message: "SUCCESS",
+                        //     message: "Message sent succesfully"
+                        // })
+                        res.status(200).json(user);
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                         res.status(400).json("Message non envoyé")
+                    })
             })
         } )
 
@@ -189,14 +208,14 @@ authRouter.get("/", auth, async (req, res) => {
     }
     transporter.sendMail(mailOptions)
         .then(()=>{
-            res.json({
+            return res.json({
                 message: "SUCCESS",
                 message: "Message sent succesfully"
             })
         })
         .catch((error)=>{
             console.log(error);
-            res.json({status: "FAILED", message:"An error"})
+            return res.json({status: "FAILED", message:"An error"})
         })
 }
 

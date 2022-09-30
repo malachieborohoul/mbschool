@@ -19,7 +19,7 @@ const getAllEnseignantPopulaire = "SELECT cours.id_users, users.nom, users.preno
 const addCourseToFavorite = "INSERT INTO favoris (id_users, id_cours) VALUES ($1, $2) RETURNING *;";
 const isCourseInFavorite = "SELECT * FROM favoris WHERE id_users = $1 AND id_cours=$2;";
 const removeCoursToFavorite = "DELETE FROM favoris WHERE id_users=$1 AND id_cours=$2;";
-const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cours=favoris.id_cours;";
+const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cours=favoris.id_cours WHERE favoris.id_users=$1;";
 const filterCourses = "SELECT * FROM cours WHERE id_categorie=$1 OR id_niveau=$2 OR id_langue=$3;";
 const searchCourses = "SELECT * FROM cours WHERE titre ILIKE '%' || $1 || '%'"
 const addLeconCommentaire = "INSERT INTO commentaire (intitule,users_id, lecon_id) VALUES ($1, $2, $3) RETURNING *;";
@@ -42,7 +42,7 @@ const isLeconDone = "SELECT * FROM lecon_suivi WHERE users_id = $1 AND lecon_id=
 
 const getNumberLeconCours= "SELECT COUNT(*) FROM lecon WHERE id_cours = $1;";
 
-const getNumberLeconCoursDone= "SELECT COUNT(*) FROM lecon_suivi JOIN lecon ON lecon.id_lecon=lecon_suivi.lecon_id JOIN cours ON lecon.id_cours=cours.id_cours WHERE cours.id_cours=$1;";
+const getNumberLeconCoursDone= "SELECT COUNT(*) FROM lecon_suivi JOIN lecon ON lecon.id_lecon=lecon_suivi.lecon_id JOIN cours ON lecon.id_cours=cours.id_cours WHERE cours.id_cours=$1 AND lecon_suivi.users_id=$2;";
 
 const rateCourse= "INSERT INTO notation_cours (id_users, id_cours, note, testimonial) VALUES($1,$2,$3,$4) RETURNING *;";
 

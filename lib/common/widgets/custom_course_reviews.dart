@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/models/notation_cours.dart';
 
 class CustomCourseReviews extends StatefulWidget {
@@ -30,15 +31,21 @@ class _CustomCourseReviewsState extends State<CustomCourseReviews> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(widget.notationCours.photo),
-                ),
+                widget.notationCours.photo.isNotEmpty
+                    ? CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(widget.notationCours.photo),
+                      )
+                    : CircleAvatar(
+                      backgroundColor: grey,
+                        backgroundImage:
+                            AssetImage(UserProfile['image'].toString()),
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -46,19 +53,22 @@ class _CustomCourseReviewsState extends State<CustomCourseReviews> {
                             "${widget.notationCours.nom} ${widget.notationCours.prenom}",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(
+                            width: 10,
+                          ),
                           RatingBar.builder(
-                            direction: Axis.horizontal,
-                            itemSize: 15,
-                            initialRating: double.parse(widget.notationCours.note),
-                            itemBuilder: (context,_){
-                             return Icon(
-                                Icons.star,
-                                size: 20,
-                                color: third,
-                              );
-
-                          }, onRatingUpdate: (rating){})
+                              direction: Axis.horizontal,
+                              itemSize: 15,
+                              initialRating:
+                                  double.parse(widget.notationCours.note),
+                              itemBuilder: (context, _) {
+                                return Icon(
+                                  Icons.star,
+                                  size: 20,
+                                  color: third,
+                                );
+                              },
+                              onRatingUpdate: (rating) {})
                         ],
                       ),
                       Container(

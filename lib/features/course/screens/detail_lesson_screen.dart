@@ -189,14 +189,10 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
                         ),
                         child: InkWell(
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      backgroundColor: textBlack,
-                                      content: VideoDisplay(
-                                          videoUrl:
-                                              'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
-                                    ));
+                           Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return VideoDisplay(videoUrl: widget.lecon.url);
+                          }));
                           },
                           splashColor: Colors.grey,
                           child: Icon(Icons.play_arrow),

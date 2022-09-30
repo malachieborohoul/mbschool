@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_place_holder.dart';
@@ -47,51 +48,77 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(
                 height: spacer,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomHeading(
-                      title: "Compte",
-                      subTitle: "${user.role == "1" ? "Etudiant" : ""}",
-                      color: secondary),
-                  // IconButton(onPressed: (){
-                  //    Navigator.pushNamed(
-                  //                     context, EditProfileScreen.routeName);
-                  // }, icon: Icon(Icons.edit, color: primary),)
-                  InkWell(
-                    hoverColor: primary,
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, EditProfileScreen.routeName);
-                      },
-                      child: SvgPicture.asset(
-                        assetImg + 'edit_icon.svg', height: 17,
-                        color: primary,
-                      ))
-                ],
+              SlideDownTween(
+                offset: 30,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomHeading(
+                        title: "Compte",
+                        subTitle: "${user.role == "1" ? "Etudiant" : ""}",
+                        color: secondary),
+                    // IconButton(onPressed: (){
+                    //    Navigator.pushNamed(
+                    //                     context, EditProfileScreen.routeName);
+                    // }, icon: Icon(Icons.edit, color: primary),)
+                    // InkWell(
+                    //   hoverColor: primary,
+                    //     onTap: () {
+                    //       Navigator.pushNamed(
+                    //           context, EditProfileScreen.routeName);
+                    //     },
+                    //     child: SvgPicture.asset(
+                    //       assetImg + 'edit_icon.svg', height: 17,
+                    //       color: primary,
+                    //     ))
+                  ],
+                ),
               ),
               const SizedBox(
                 height: spacer,
               ),
               user.photo.isNotEmpty
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                      child: Image.network(
-                        user.photo,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                  ? SlideDownTween(
+                      offset: 10,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        child: Hero(
+                          tag: 'profile-photo',
+                          child: Image.network(
+                            user.photo,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     )
                   : Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(100)),
-                          child: Image.asset(
-                            UserProfile['image'].toString(),
-                            width: 100,
-                            height: 100,
-                          ),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CircleAvatar(
+                              minRadius: 35,
+                              maxRadius: 35,
+                              backgroundColor: grey,
+                            ),
+                            SlideDownTween(
+                              offset: 30,
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                child: Hero(
+                                  tag: 'profile-photo',
+                                  child: Image.asset(
+                                    UserProfile['image'].toString(),
+                                    width: 100,
+                                    height: 100,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 65, left: 65),
@@ -119,14 +146,17 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(
                 height: spacer - 40,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomTitle(
-                    title: '${user.nom.toUpperCase()}',
-                    extend: false,
-                  ),
-                ],
+              SlideDownTween(
+                offset: 20,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTitle(
+                      title: '${user.nom.toUpperCase()}',
+                      extend: false,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: spacer - 40,
@@ -148,30 +178,37 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(
                 height: spacer,
               ),
-              const CustomTitle(
-                title: "Support",
-                extend: false,
+              SlideDownTween(
+                offset: 30,
+                child: const CustomTitle(
+                  title: "Paramètre",
+                  extend: false,
+                ),
               ),
               const SizedBox(
-                height: spacer,
+                height: spacer - 25,
               ),
-              Column(
-                children: List.generate(AccountMenuJson.length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: CunstomPlaceHolder(
-                        title: AccountMenuJson[index]['title']),
-                  );
-                }),
+              SlideDownTween(
+                offset: 30,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: CunstomPlaceHolder(title: "A propos de nous"),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(
-                height: spacer,
+                height: spacer - 30,
               ),
               GestureDetector(
                   onTap: () {
                     logOut(context);
                   },
-                  child: const CustomButtonBox(title: "Se déconnecter")),
+                  child: SlideDownTween(
+                      offset: 30,
+                      child: const CustomButtonBox(title: "Se déconnecter"))),
               const SizedBox(
                 height: spacer,
               ),

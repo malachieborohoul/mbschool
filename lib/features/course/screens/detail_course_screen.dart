@@ -56,6 +56,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   bool? isCourseEnroll;
   bool _isLoading = false;
   List<NotationCours> notationCours = [];
+  late double averageRate;
 
   @override
   void initState() {
@@ -69,7 +70,19 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   }
 
   void getAllNotationCours() async {
-    notationCours = await rateCourseService.getAllNotationCours(context, widget.cours);
+    int totalRate = 0;
+    notationCours =
+        await rateCourseService.getAllNotationCours(context, widget.cours);
+    setState(() {
+      if (notationCours.isNotEmpty) {
+        for (int i = 0; i < notationCours.length; i++) {
+          totalRate += int.parse(notationCours[i].note);
+        }
+        averageRate = totalRate / notationCours.length;
+      } else {
+        averageRate = 0;
+      }
+    });
   }
 
   void isCourseEnrolled() async {
@@ -134,7 +147,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               isCourseInFav == null ||
               _isLoading == true ||
               isCourseEnroll == null ||
-              notationCours == null
+              notationCours == null 
+              
           ? Loader()
           : DefaultTabController(
               length: 3,
@@ -238,6 +252,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                             child: CustomDetailCourseInfoHeader(
                               cours: coursProvider,
                               isCourseInFav: isCourseInFav!,
+                              averageRate: averageRate,
                             ))),
                     Padding(
                       padding: const EdgeInsets.only(
@@ -543,18 +558,18 @@ class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
     final coursProvider =
         Provider.of<CoursProvider>(context, listen: false).cours;
 
-       return ListView.builder(
+    return ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: widget.notationCours.length,
         itemBuilder: (context, i) {
           return Padding(
-            padding: const EdgeInsets.only(
-              left: appPadding,
-              right: appPadding,
-              bottom: 0,
-            ),
-            child: CustomCourseReviews(notationCours: widget.notationCours[i])
-          );
+              padding: const EdgeInsets.only(
+                left: appPadding,
+                right: appPadding,
+                bottom: 0,
+              ),
+              child:
+                  CustomCourseReviews(notationCours: widget.notationCours[i]));
         });
   }
 }

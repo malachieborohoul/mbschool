@@ -12,9 +12,13 @@ import 'package:mbschool/models/cours.dart';
 class CustomDetailCourseInfoHeader extends StatefulWidget {
   final Cours cours;
   bool isCourseInFav;
+  final double averageRate;
 
   CustomDetailCourseInfoHeader(
-      {Key? key, required this.cours, required this.isCourseInFav})
+      {Key? key,
+      required this.cours,
+      required this.isCourseInFav,
+      required this.averageRate})
       : super(key: key);
 
   @override
@@ -66,19 +70,32 @@ class _CustomDetailCourseInfoHeaderState
             children: [
               Row(
                 children: [
-                  RatingBarIndicator(
+                  RatingBar.builder(
                     direction: Axis.horizontal,
-                    itemCount: 5,
-                    rating: 5,
                     itemSize: 15,
-                    itemBuilder: (BuildContext context, _) {
+                    initialRating: widget.averageRate,
+                    itemBuilder: (context, _) {
                       return Icon(
                         Icons.star,
                         size: 20,
                         color: third,
                       );
                     },
+                    onRatingUpdate: (rating) {},
                   ),
+                  // RatingBarIndicator(
+                  //   direction: Axis.horizontal,
+                  //   itemCount: 5,
+                  //   rating: 5,
+                  //   itemSize: 15,
+                  //   itemBuilder: (BuildContext context, _) {
+                  //     return Icon(
+                  //       Icons.star,
+                  //       size: 20,
+                  //       color: third,
+                  //     );
+                  //   },
+                  // ),
                   // Icon(
                   //   Icons.star,
                   //   size: 20,
@@ -107,7 +124,7 @@ class _CustomDetailCourseInfoHeaderState
                   SizedBox(
                     width: 15,
                   ),
-                  Text("(4.0)"),
+                  Text("${widget.averageRate}"),
                 ],
               ),
               IconButton(

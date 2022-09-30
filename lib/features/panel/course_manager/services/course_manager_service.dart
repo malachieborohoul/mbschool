@@ -389,7 +389,8 @@ class CourseManagerService {
                 'x-auth-token': userProvider.user.token,
               },
               body: jsonEncode({
-                "cours_id": int.parse(cours.id_cours)
+                "cours_id": int.parse(cours.id_cours),
+                "users_id": int.parse(userProvider.user.id),
               }));
 
       httpErrorHandle(

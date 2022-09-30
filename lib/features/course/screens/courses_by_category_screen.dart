@@ -23,6 +23,8 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/enseignant_cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 class CoursesByCategoryScreen extends StatefulWidget {
   static const routeName = 'courses-by-category-screen';
@@ -122,9 +124,13 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                       spacing: 10,
                       children: List.generate(cours.length, (index) {
                         return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context, DetailCourseScreen.routeName,
-                              arguments: cours[index]),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, DetailCourseScreen.routeName,
+                                arguments: cours[index]);
+                            Provider.of<CoursProvider>(context, listen: false)
+                                .set_cours(cours[index]);
+                          },
                           child: cours == null
                               ? Loader()
                               : CustomCourseCardExpand(
@@ -161,8 +167,13 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                 children: List.generate(
                   categories.length,
                   (index) {
-                    return CustomCategoriesButton(
-                        title: categories[index].nom.toUpperCase());
+                    return GestureDetector(
+                      onTap: () => Navigator.pushReplacementNamed(
+                          context, CoursesByCategoryScreen.routeName,
+                          arguments: categories[index]),
+                      child: CustomCategoriesButton(
+                          title: categories[index].nom.toUpperCase()),
+                    );
                   },
                 ),
               ),

@@ -18,7 +18,7 @@ class FavoriteService{
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response coursRes = await http.get(
-        Uri.parse('$uri/getAllFavoriteCourses'),
+        Uri.parse('$uri/getAllFavoriteCourses/${userProvider.user.id}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/widgets/custom_categories_button.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
@@ -8,6 +9,7 @@ import 'package:mbschool/common/widgets/custom_place_holder.dart';
 import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/category_json.dart';
@@ -26,7 +28,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  List<Cours>? cours;
+  List<Cours> cours = [];
   FavoriteService _favoriteService = FavoriteService();
   @override
   void initState() {
@@ -66,24 +68,27 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             const CustomHeading(
                 title: "Mes favoris", subTitle: "", color: secondary),
             const SizedBox(
-              height: spacer -50,
+              height: spacer - 50,
             ),
-            Column(
-              children: List.generate(cours!.length, (index) {
+           cours.isEmpty? NoData(): Column(
+              children: List.generate(cours.length, (index) {
                 return Padding(
                     padding: const EdgeInsets.only(bottom: 25),
-                    child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, DetailCourseScreen.routeName,
-                              arguments: cours![index]);
+                    child: SlideRightTween(
+                      duration: Duration(milliseconds: (index+1) * 500),
+                      curve: Curves.easeInOutCubic,
+                      offset: 80,
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, DetailCourseScreen.routeName,
+                                arguments: cours[index]);
 
-                            
-    
-                                      Provider.of<CoursProvider>(context,
-                                              listen: false).set_cours(cours![index]);
-                        },
-                        child: CustomFavoriteCourseCard(cours: cours![index])));
+                            Provider.of<CoursProvider>(context, listen: false)
+                                .set_cours(cours[index]);
+                          },
+                          child: CustomFavoriteCourseCard(cours: cours[index])),
+                    ));
               }),
             )
           ],

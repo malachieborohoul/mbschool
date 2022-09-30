@@ -3,6 +3,7 @@ import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_my_courses_card.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/courses_json.dart';
@@ -79,12 +80,12 @@ class _CourseScreenState extends State<CourseScreen> {
             const SizedBox(
               height: spacer,
             ),
-            Column(
+            enrolledCours.isEmpty? NoData():Column(
               children: List.generate(enrolledCours.length, (index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: SlideRightTween(
-                    duration: Duration(milliseconds: index * 500),
+                    duration: Duration(milliseconds: (index+1) * 500),
                     curve: Curves.easeInOutCubic,
                     offset: 80,
                     child: GestureDetector(

@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen>
                             SlideDownTween(
                               offset: 70,
                               child: OpacityTween(
-                                begin: 0.1,
+                                begin: 0.0,
                                 child: CustomHeading(
                                     title: "Bienvenue ${user.nom} ",
                                     subTitle: "Que voulez vous apprendre?",
@@ -143,17 +143,22 @@ class _HomeScreenState extends State<HomeScreen>
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, AccountScreen.routeName);
+                                          context, EditProfileScreen.routeName);
                                     },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: user.photo.isNotEmpty
-                                          ? Image.network(
-                                              user.photo,
-                                            )
-                                          : Image.asset(
-                                              UserProfile['image'].toString(),
-                                            ),
+                                    child: CircleAvatar(
+                                      maxRadius: 30,
+                                      minRadius: 30,
+                                      backgroundColor: grey,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: user.photo.isNotEmpty
+                                            ? Image.network(
+                                                user.photo,
+                                              )
+                                            : Image.asset(
+                                                UserProfile['image'].toString(),
+                                              ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -268,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10, top: 10, bottom: 5),
                                     child: InkWell(
-                                      splashColor: Colors.grey,
+                                      splashColor: Color.fromRGBO(158, 158, 158, 1),
                                       onTap: () => Navigator.pushNamed(context,
                                           CoursesByCategoryScreen.routeName,
                                           arguments: categories[index]),

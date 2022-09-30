@@ -212,8 +212,8 @@ courseRouter.post("/isCourseInFavorite",auth, (req, res)=>{
 
 
 // get all favorite courses
-courseRouter.get("/getAllFavoriteCourses",auth,  (req, res)=>{
-  pool.query(queries.getAllFavoriteCourses, (error, results)=>{
+courseRouter.get("/getAllFavoriteCourses/:id_users",auth,  (req, res)=>{
+  pool.query(queries.getAllFavoriteCourses, [req.params.id_users],(error, results)=>{
     if (error) throw error;
 
     return res.json(results.rows);
@@ -393,8 +393,8 @@ courseRouter.post("/getNumberLeconCours",auth, (req, res)=>{
 // fetch the number of lessons done by a student for a particular course
 
 courseRouter.post("/getNumberLeconCoursDone",auth, (req, res)=>{
-  const {cours_id, } = req.body;
-  pool.query(queries.getNumberLeconCoursDone,[cours_id,], (error, results)=>{
+  const {cours_id,users_id } = req.body;
+  pool.query(queries.getNumberLeconCoursDone,[cours_id,users_id], (error, results)=>{
     if(error) throw error;
     return res.json(results.rows[0]['count']);
 

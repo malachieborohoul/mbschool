@@ -314,22 +314,20 @@ class CourseManagerService {
     }
   }
 
-
-   Future<bool> isLeconDone(BuildContext context, Lecon lecon) async {
+  Future<bool> isLeconDone(BuildContext context, Lecon lecon) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     late bool isLeconDone;
 
     try {
-      http.Response resIsDone =
-          await http.post(Uri.parse("$uri/isLeconDone"),
-              headers: <String, String>{
-                'Content-Type': 'application/json; charset=UTF-8',
-                'x-auth-token': userProvider.user.token,
-              },
-              body: jsonEncode({
-                "users_id": int.parse(userProvider.user.id),
-                "lecon_id": int.parse(lecon.id_lecon)
-              }));
+      http.Response resIsDone = await http.post(Uri.parse("$uri/isLeconDone"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': userProvider.user.token,
+          },
+          body: jsonEncode({
+            "users_id": int.parse(userProvider.user.id),
+            "lecon_id": int.parse(lecon.id_lecon)
+          }));
 
       httpErrorHandle(
         response: resIsDone,
@@ -345,9 +343,7 @@ class CourseManagerService {
     return isLeconDone;
   }
 
-
-
-   Future<String> getNumberLeconCours(BuildContext context, Cours cours) async {
+  Future<String> getNumberLeconCours(BuildContext context, Cours cours) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     late String numberLecon;
 
@@ -358,9 +354,7 @@ class CourseManagerService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({
-                "cours_id": int.parse(cours.id_cours)
-              }));
+              body: jsonEncode({"cours_id": int.parse(cours.id_cours)}));
 
       httpErrorHandle(
         response: numLeconRes,
@@ -376,8 +370,8 @@ class CourseManagerService {
     return numberLecon;
   }
 
-
-     Future<String> getNumberLeconCoursDone(BuildContext context, Cours cours) async {
+  Future<String> getNumberLeconCoursDone(
+      BuildContext context, Cours cours) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     late String numberLeconDone;
 
@@ -407,4 +401,36 @@ class CourseManagerService {
     return numberLeconDone;
   }
 
+  Future<List<Lecon>> getTotalLecons(BuildContext context, Cours cours) async {
+    List<Lecon> leconTotalList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response leconRes = await http.get(
+        Uri.parse('$uri/getTotalLecons/${int.parse(cours.id_cours)}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: leconRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(leconRes.body).length; i++) {
+              leconTotalList.add(
+                Lecon.fromJson(
+                  jsonEncode(
+                    jsonDecode(leconRes.body)[i],
+                  ),
+                ),
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return leconTotalList;
+  }
 }

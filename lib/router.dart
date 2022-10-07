@@ -17,6 +17,7 @@ import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart
 import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
@@ -27,6 +28,7 @@ import 'package:mbschool/main.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
+import 'package:mbschool/models/section.dart';
 import 'package:page_transition/page_transition.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -52,7 +54,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings, builder: (_) => const FavoriteScreen());
     case AuthScreen.routeName:
       return PageTransition(
-          settings: routeSettings, child:  const AuthScreen(), type: PageTransitionType.leftToRight);
+          settings: routeSettings,
+          child: const AuthScreen(),
+          type: PageTransitionType.leftToRight);
 
     case EditProfileScreen.routeName:
       return MaterialPageRoute(
@@ -172,9 +176,21 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           curve: Curves.easeOut,
           type: PageTransitionType.rightToLeft);
 
-     case RateCourseScreen.routeName:
+    case RateCourseScreen.routeName:
       return PageTransition(
-          settings: routeSettings, child:  const RateCourseScreen(), type: PageTransitionType.rightToLeft);
+          settings: routeSettings,
+          child: const RateCourseScreen(),
+          type: PageTransitionType.rightToLeft);
+    
+    case EditSectionScreen.routeName:
+      var section = routeSettings.arguments as Section;
+
+      return PageTransition(
+          settings: routeSettings,
+          child: EditSectionScreen(
+            section: section,
+          ),
+          type: PageTransitionType.bottomToTop);
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

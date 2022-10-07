@@ -188,6 +188,10 @@ class _SplashScreenState extends State<SplashScreen>
                       } else if (userProvider.user.token.isNotEmpty &&
                           userProvider.user.verify_code.isEmpty) {
                         Future.delayed(Duration(milliseconds: 0), () {
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return Panel();
+                          // }));
                           Navigator.pushReplacementNamed(
                               context, BottomBar.routeName);
                         });

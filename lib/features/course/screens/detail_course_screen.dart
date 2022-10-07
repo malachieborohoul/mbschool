@@ -15,6 +15,7 @@ import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
 import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
@@ -149,7 +150,6 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               isCourseEnroll == null ||
               notationCours == null ||
               averageRate == null
-              
           ? Loader()
           : DefaultTabController(
               length: 3,
@@ -327,7 +327,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                           children: [
                                             Flexible(
                                                 child: Text(
-                                              "Voulez vous vous enrôlez?",
+                                              "Voulez vous vous enrôler?",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
@@ -559,18 +559,20 @@ class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
     final coursProvider =
         Provider.of<CoursProvider>(context, listen: false).cours;
 
-    return ListView.builder(
-        physics: BouncingScrollPhysics(),
-        itemCount: widget.notationCours.length,
-        itemBuilder: (context, i) {
-          return Padding(
-              padding: const EdgeInsets.only(
-                left: appPadding,
-                right: appPadding,
-                bottom: 0,
-              ),
-              child:
-                  CustomCourseReviews(notationCours: widget.notationCours[i]));
-        });
+    return widget.notationCours.isNotEmpty
+        ? ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: widget.notationCours.length,
+            itemBuilder: (context, i) {
+              return Padding(
+                  padding: const EdgeInsets.only(
+                    left: appPadding,
+                    right: appPadding,
+                    bottom: 0,
+                  ),
+                  child: CustomCourseReviews(
+                      notationCours: widget.notationCours[i]));
+            })
+        : NoData();
   }
 }

@@ -49,6 +49,9 @@ const rateCourse= "INSERT INTO notation_cours (id_users, id_cours, note, testimo
 
 const getAllNotationCours = "SELECT * FROM notation_cours JOIN users ON notation_cours.id_users=users.id WHERE id_cours=$1;";
 
+
+const getTotalLecons = "SELECT * FROM lecon WHERE id_cours = $1 ;";
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -90,4 +93,5 @@ module.exports = {
     getNumberLeconCoursDone,
     rateCourse,
     getAllNotationCours,
+    getTotalLecons
 }

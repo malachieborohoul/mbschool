@@ -58,9 +58,10 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
                       itemCount: cours.length,
                       itemBuilder: (context, i) {
                         return GestureDetector(
-                          onTap: () => Navigator.pushNamed(context, PlanScreen.routeName,
-                      arguments:cours[i]),
-                          child: CustomCard(cours: cours[i]));
+                            onTap: () => Navigator.pushNamed(
+                                context, PlanScreen.routeName,
+                                arguments: cours[i]),
+                            child: CustomCard(cours: cours[i]));
                       }),
 
                   // child: Column(

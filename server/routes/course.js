@@ -426,6 +426,17 @@ courseRouter.get("/getAllNotationCours/:id_cours", (req, res)=>{
 })
 
 
+// count all lessons
+courseRouter.get("/getTotalLecons/:id_cours", auth,  (req, res)=>{
+  pool.query(queries.getTotalLecons,[req.params.id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
 
 
 

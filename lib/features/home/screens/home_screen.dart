@@ -22,7 +22,10 @@ import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
+import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
@@ -81,11 +84,16 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     var size = MediaQuery.of(context).size;
+    print(user.role);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-
       child: Scaffold(
+        drawer: user.role == "1"
+            ? Container()
+            : user.role == "2"
+                ? const NavigationDrawer()
+                : Container(),
         backgroundColor: background,
         extendBodyBehindAppBar: true,
         appBar: PreferredSize(
@@ -96,228 +104,349 @@ class _HomeScreenState extends State<HomeScreen>
             brightness: Brightness.light,
           ),
         ),
-        body: cours == null || categories==null? Loader(): SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  // SlideDownTween(
-                  //   child: ClipPath(
-                  //     clipper: BottomClipper(),
-                  //     child: Container(
-                  //       width: size.width,
-                  //       height: 300,
-                  //       decoration: BoxDecoration(color: secondary),
-                  //     ),
-                  //   ),
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: appPadding, right: appPadding),
-                    child: Column(
+        body: cours == null || categories == null
+            ? Loader()
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.topCenter,
                       children: [
-                        SizedBox(
-                          height: spacer + 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SlideDownTween(
-                              offset: 70,
-                              child: OpacityTween(
-                                begin: 0.0,
-                                child: CustomHeading(
-                                    title: "Bienvenue ${user.nom} ",
-                                    subTitle: "Que voulez vous apprendre?",
-                                    color: secondary),
+                        // SlideDownTween(
+                        //   child: ClipPath(
+                        //     clipper: BottomClipper(),
+                        //     child: Container(
+                        //       width: size.width,
+                        //       height: 300,
+                        //       decoration: BoxDecoration(color: secondary),
+                        //     ),
+                        //   ),
+                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: appPadding, right: appPadding),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: spacer + 5,
                               ),
-                            ),
-                            SlideDownTween(
-                              offset: 70,
-                              child: OpacityTween(
-                                begin: 0.0,
-                                child: Container(
-                                  height: spacer,
-                                  width: spacer,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, EditProfileScreen.routeName);
-                                    },
-                                    child: CircleAvatar(
-                                      maxRadius: 30,
-                                      minRadius: 30,
-                                      backgroundColor: grey,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(100),
-                                        child: user.photo.isNotEmpty
-                                            ? Image.network(
-                                                user.photo,
-                                              )
-                                            : Image.asset(
-                                                UserProfile['image'].toString(),
-                                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                      begin: 0.0,
+                                      child: CustomHeading(
+                                          title: "Bienvenue ${user.nom} ",
+                                          subTitle:
+                                              "Que voulez vous apprendre?",
+                                          color: secondary),
+                                    ),
+                                  ),
+                                  SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                      begin: 0.0,
+                                      child: Container(
+                                        height: spacer,
+                                        width: spacer,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                EditProfileScreen.routeName);
+                                          },
+                                          child: CircleAvatar(
+                                            maxRadius: 30,
+                                            minRadius: 30,
+                                            backgroundColor: grey,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: user.photo.isNotEmpty
+                                                  ? Image.network(
+                                                      user.photo,
+                                                    )
+                                                  : Image.asset(
+                                                      UserProfile['image']
+                                                          .toString(),
+                                                    ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: spacer,
+                              ),
+                              SlideDownTween(
+                                offset: 70,
+                                child: OpacityTween(
+                                  begin: 0.0,
+                                  child: CustomSearchField(
+                                    onTap: true,
+                                    hintField:
+                                        "Essayez le Developpement mobile",
+                                    backgroundColor: textWhite,
                                   ),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: spacer,
-                        ),
-                        SlideDownTween(
-                          offset: 70,
-                          child: OpacityTween(
-                            begin: 0.0,
-                            child: CustomSearchField(
-                              onTap: true,
-                              hintField: "Essayez le Developpement mobile",
-                              backgroundColor: textWhite,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: spacer - 30,
-                        ),
-                        SlideDownTween(offset: 70, child: OpacityTween(begin: 0.0,
-                        child: CustomCategoryCard())),
-                        const SizedBox(
-                          height: spacer,
-                        ),
-                        SlideDownTween(
-                            offset: 70, child: OpacityTween(begin: 0.0,
-                            child: const CustomPromotionCard())),
-                        const SizedBox(
-                          height: spacer,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: appPadding - 20, right: appPadding - 20),
-                          child: CustomTitle(
-                            title: "Cours populaires",
-                            titreLien: "Voir plus",
-                            route: AllCourseScreen.routeName,
-                            arg: cours,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: smallSpacer,
-                        ),
-                        SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: appPadding - 20, right: appPadding - 10),
-                            child: Wrap(
-                                spacing: 10,
-                                children: List.generate(cours.length, (index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                          context, DetailCourseScreen.routeName,
-                                          arguments: cours[index]);
-    
-                                      Provider.of<CoursProvider>(context,
-                                              listen: false).set_cours(cours[index]);
-                                    },
-                                    child: cours == null
-                                        ? Loader()
-                                        : CustomCourseCardExpand(
-                                            thumbNail: Hero(
-                                              tag: cours[index].vignette,
-                                              child: Image.network(
-                                                cours[index].vignette,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            videoAmount: CoursesJson[index]
-                                                ['video'],
-                                            title: cours[index].titre,
-                                            userProfile: cours[index].photo,
-                                            userName: cours[index].nom,
-                                            price: cours[index].prix.isEmpty
-                                                ? "Gratuit"
-                                                : cours[index].prix,
-                                            cours: cours[index],
+                              const SizedBox(
+                                height: spacer - 30,
+                              ),
+                              SlideDownTween(
+                                  offset: 70,
+                                  child: OpacityTween(
+                                      begin: 0.0, child: CustomCategoryCard())),
+                              const SizedBox(
+                                height: spacer,
+                              ),
+                              SlideDownTween(
+                                  offset: 70,
+                                  child: OpacityTween(
+                                      begin: 0.0,
+                                      child: const CustomPromotionCard())),
+                              const SizedBox(
+                                height: spacer,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: appPadding - 20,
+                                    right: appPadding - 20),
+                                child: CustomTitle(
+                                  title: "Cours populaires",
+                                  titreLien: "Voir plus",
+                                  route: AllCourseScreen.routeName,
+                                  arg: cours,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: smallSpacer,
+                              ),
+                              SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: appPadding - 20,
+                                      right: appPadding - 10),
+                                  child: Wrap(
+                                      spacing: 10,
+                                      children:
+                                          List.generate(cours.length, (index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamed(context,
+                                                DetailCourseScreen.routeName,
+                                                arguments: cours[index]);
+
+                                            Provider.of<CoursProvider>(context,
+                                                    listen: false)
+                                                .set_cours(cours[index]);
+                                          },
+                                          child: cours == null
+                                              ? Loader()
+                                              : CustomCourseCardExpand(
+                                                  thumbNail: Hero(
+                                                    tag: cours[index].vignette,
+                                                    child: Image.network(
+                                                      cours[index].vignette,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  videoAmount:
+                                                      CoursesJson[index]
+                                                          ['video'],
+                                                  title: cours[index].titre,
+                                                  userProfile:
+                                                      cours[index].photo,
+                                                  userName: cours[index].nom,
+                                                  price:
+                                                      cours[index].prix.isEmpty
+                                                          ? "Gratuit"
+                                                          : cours[index].prix,
+                                                  cours: cours[index],
+                                                ),
+                                        );
+                                      })),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: spacer - 20,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: appPadding - 20),
+                                child: CustomTitle(title: "Categories"),
+                              ),
+                              const SizedBox(
+                                height: smallSpacer,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: appPadding),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                          children: List.generate(
+                                              categories.length, (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10,
+                                              right: 10,
+                                              top: 10,
+                                              bottom: 5),
+                                          child: InkWell(
+                                            splashColor: Color.fromRGBO(
+                                                158, 158, 158, 1),
+                                            onTap: () => Navigator.pushNamed(
+                                                context,
+                                                CoursesByCategoryScreen
+                                                    .routeName,
+                                                arguments: categories[index]),
+                                            child: CustomCategoriesButton(
+                                                title: categories[index]
+                                                    .nom
+                                                    .toUpperCase()),
                                           ),
-                                  );
-                                })),
+                                        );
+                                      })),
+                                      // Row(
+                                      //     children: List.generate(CategoryJson2.length,
+                                      //         (index) {
+                                      //   return Padding(
+                                      //     padding: const EdgeInsets.only(
+                                      //         left: 5, right: 10, top: 10, bottom: 5),
+                                      //     child: CustomCategoriesButton(
+                                      //         title: CategoryJson2[index]['title']),
+                                      //   );
+                                      // })),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: spacer,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(
+                                    left: appPadding - 20,
+                                    right: appPadding - 20),
+                                child: CustomTitle(title: "Cours Design"),
+                              ),
+                              const SizedBox(
+                                height: smallSpacer,
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(
-                          height: spacer - 20,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: appPadding - 20),
-                          child: CustomTitle(title: "Categories"),
-                        ),
-                        const SizedBox(
-                          height: smallSpacer,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: appPadding),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                    children:
-                                        List.generate(categories.length, (index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10, top: 10, bottom: 5),
-                                    child: InkWell(
-                                      splashColor: Color.fromRGBO(158, 158, 158, 1),
-                                      onTap: () => Navigator.pushNamed(context,
-                                          CoursesByCategoryScreen.routeName,
-                                          arguments: categories[index]),
-                                      child: CustomCategoriesButton(
-                                          title: categories[index]
-                                              .nom
-                                              .toUpperCase()),
-                                    ),
-                                  );
-                                })),
-                                // Row(
-                                //     children: List.generate(CategoryJson2.length,
-                                //         (index) {
-                                //   return Padding(
-                                //     padding: const EdgeInsets.only(
-                                //         left: 5, right: 10, top: 10, bottom: 5),
-                                //     child: CustomCategoriesButton(
-                                //         title: CategoryJson2[index]['title']),
-                                //   );
-                                // })),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: spacer,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(
-                              left: appPadding - 20, right: appPadding - 20),
-                          child: CustomTitle(title: "Cours Design"),
-                        ),
-                        const SizedBox(
-                          height: smallSpacer,
                         ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [buildHeader(context), buildMenuItems(context)],
+          ),
+        ),
+      );
+
+  Widget buildHeader(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+    return Container(
+      color: primary,
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 12,
+          ),
+          CircleAvatar(
+            radius: 52,
+            backgroundColor: textWhite,
+            backgroundImage: NetworkImage(user.photo),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Text(
+            '${user.nom} ${user.prenom}',
+            style: TextStyle(fontSize: 28, color: textWhite),
+          ),
+          Text(
+            "${user.email}",
+            style: TextStyle(fontSize: 16, color: textWhite),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildMenuItems(BuildContext context) => Container(
+        padding: const EdgeInsets.all(24),
+        child: Wrap(
+          runSpacing: 16,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.store),
+              title: const Text('Gestionnaire de cours'),
+              onTap: () {
+                Navigator.pushNamed(context, CourseManagerScreen.routeName);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Créer un cours'),
+              onTap: () {
+                Navigator.pushNamed(context, CreateCourseScreen.routeName);
+              },
+            ),
+            // const Divider(color: Colors.black54,),
+            ListTile(
+              leading: const Icon(Icons.sell),
+              title: const Text('Rapport de ventes'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.paid_rounded),
+              title: const Text('Rapport de paiement'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profil'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Se déconnecter'),
+              onTap: () {
+                logOut(context);
+              },
+            ),
+          ],
+        ),
+      );
 }

@@ -44,9 +44,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
   //   'bbc',
   // ];
 
-  List<Langue>? langues;
-  List<Categorie>? categories;
-  List<Niveau>? niveaux;
+  List<Langue> langues = [];
+  List<Categorie> categories = [];
+  List<Niveau> niveaux = [];
 
   bool isChecked = false;
 
@@ -66,10 +66,12 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   getAllCategorieData() async {
     categories = await createCourseService.getAllCategorieData(context);
+    setState(() {});
   }
 
   getAllNiveauData() async {
     niveaux = await createCourseService.getAllNiveauData(context);
+    setState(() {});
   }
 
   //SELECTIONNER UNE VIGNETTE
@@ -101,21 +103,25 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String? dropdownvalue_niveau;
+
+    String? dropdownvalue_langue;
+    String? dropdownvalue_categorie;
     // return ListView.builder(
     //     itemCount: langues!.length,
     //     itemBuilder: (BuildContext context, int i) {
     //       return Text("data");
     //     });
-    String dropdownvalue_niveau = niveaux != null ? niveaux![0].id_niveau : "";
+    // String dropdownvalue_niveau = niveaux != null ? niveaux[0].id_niveau : "";
 
-    String dropdownvalue_langue = langues != null ? langues![0].id_langue : "";
-    String dropdownvalue_categorie =
-        categories != null ? categories![0].id_categorie : "";
+    // String dropdownvalue_langue = langues != null ? langues[0].id_langue : "";
+    // String dropdownvalue_categorie =
+    //     categories != null ? categories[0].id_categorie : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie); 
-    if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau); 
-    if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue); 
+    // if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie);
+    // if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau);
+    // if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue);
 
     createCourse() {
       createCourseService.createCourse(
@@ -205,7 +211,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -218,18 +223,19 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            hint: Text("Sélectionner une catégorie"),
                             value: dropdownvalue_categorie,
-                            items: categories!.map((Categorie item) {
+                            items: categories.map((Categorie item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom),
+                                child: Text(item.nom.toUpperCase()),
                                 value: item.id_categorie,
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_categorie = val!;
-                                id_categorie =
-                                    int.parse(dropdownvalue_categorie);
+                                // id_categorie =
+                                //     int.parse(dropdownvalue_categorie!);
                               });
                             }),
                         SizedBox(
@@ -246,7 +252,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -259,17 +264,18 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            hint: Text("Sélectionner un niveau"),
                             value: dropdownvalue_niveau,
-                            items: niveaux!.map((Niveau item) {
+                            items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
-                                child: Text(item.titre),
+                                child: Text(item.titre.toUpperCase()),
                                 value: item.id_niveau,
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_niveau = val!;
-                                id_niveau = int.parse(dropdownvalue_niveau);
+                                // id_niveau = int.parse(dropdownvalue_niveau);
                               });
                             }),
                         SizedBox(
@@ -286,7 +292,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
+                              // hintText: "Sélectionner une langue",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -299,19 +305,24 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
+                            hint: Text("Sélectionner une langue"),
                             value: dropdownvalue_langue,
-                            items: langues!.map((Langue item) {
+                            items: langues.map((Langue item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom),
+                                child: Text(item.nom.toUpperCase()),
                                 value: item.id_langue,
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_langue = val!;
-                                id_langue = int.parse(dropdownvalue_langue);
+                                // id_langue = int.parse(dropdownvalue_langue);
                               });
                             }),
+                        SizedBox(
+                          height: 15,
+                        ),
+
                         SizedBox(
                           height: 15,
                         ),
@@ -427,7 +438,6 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                   ),
                 ),
               ),
-      
       ),
     );
   }

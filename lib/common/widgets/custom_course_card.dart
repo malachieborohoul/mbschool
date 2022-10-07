@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/lecon.dart';
+import 'package:mbschool/models/notation_cours.dart';
 
 class CustomCourseCardExpand extends StatefulWidget {
   const CustomCourseCardExpand({
@@ -31,6 +37,41 @@ class CustomCourseCardExpand extends StatefulWidget {
 }
 
 class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
+  CourseManagerService courseManagerService = CourseManagerService();
+  RateCourseService rateCourseService = RateCourseService();
+
+  List<Lecon> lecons = [];
+double averageRate=0.0;
+  List<NotationCours> notationCours = [];
+
+  @override
+  void initState() {
+    getTotalLecons();
+    getAllNotationCours();
+    super.initState();
+  }
+
+  void getTotalLecons() async {
+    lecons = await courseManagerService.getTotalLecons(context, widget.cours);
+    setState(() {});
+  }
+
+  void getAllNotationCours() async {
+    int totalRate = 0;
+    notationCours =
+        await rateCourseService.getAllNotationCours(context, widget.cours);
+    setState(() {
+      if (notationCours.isNotEmpty) {
+        for (int i = 0; i < notationCours.length; i++) {
+          totalRate += int.parse(notationCours[i].note);
+        }
+        averageRate = totalRate / notationCours.length;
+      } else {
+        averageRate = 0;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -49,110 +90,125 @@ class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
           )
         ],
       ),
-      child: Column(
-        children: [
-          Stack(
-            alignment: Alignment.bottomLeft,
-            children: [
-              Container(
-                height: size.width * .6,
-                width: size.width * .6,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: widget.thumbNail,
-                ),
-              ),
-              Positioned(
-                bottom: 7.0,
-                left: 7.0,
-                child: Container(
-                  width: 90.0,
-                  height: 30.0,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: textWhite.withOpacity(0.75),
-                      borderRadius: BorderRadius.circular(100.0)),
-                  child: Text(
-                    '${widget.videoAmount} Videos',
-                    style: TextStyle(
-                        color: secondary,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 15.0),
-          Container(
-            padding: const EdgeInsets.only(
-              left: 7.0,
-              right: 7.0,
-            ),
-            child: Text(
-              widget.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: secondary,
-                fontSize: 17.0,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          SizedBox(height: 15.0),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 7.0,
-              right: 7.0,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: lecons == null 
+          ? Loader()
+          : Column(
               children: [
+                Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                    Container(
+                      height: size.width * .6,
+                      width: size.width * .6,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: widget.thumbNail,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 7.0,
+                      left: 7.0,
+                      child: Container(
+                        width: 90.0,
+                        height: 30.0,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: textWhite.withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(100.0)),
+                        child: Text(
+                          '${lecons.length} Lecons',
+                          style: TextStyle(
+                              color: secondary,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.0),
                 Container(
-                  height: 30.0,
-                  width: 30.0,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(100.0),
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                          context, DetailTeacherCourseScreen.routeName,
-                          arguments: widget.cours),
-                      child: Image.network(
-                        widget.userProfile,
-                        fit: BoxFit.cover,
-                      ),
+                  padding: const EdgeInsets.only(
+                    left: 7.0,
+                    right: 7.0,
+                  ),
+                  child: Text(
+                    widget.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: secondary,
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                Flexible(
-                  child: Container(
-                    width: size.width,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      widget.userName,
-                      style: TextStyle(
-                        color: secondary,
-                        fontSize: 13.0,
+                SizedBox(height: 15.0),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 7.0,
+                    right: 7.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 30.0,
+                        width: 30.0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                                context, DetailTeacherCourseScreen.routeName,
+                                arguments: widget.cours),
+                            child: widget.userProfile.isNotEmpty? Image.network(
+                              widget.userProfile,
+                              fit: BoxFit.cover,
+                            ): Image.asset(UserProfile['image'].toString()),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(width: 10),
+                      Flexible(
+                        child: Container(
+                          width: size.width,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            widget.userName,
+                            style: TextStyle(
+                              color: secondary,
+                              fontSize: 13.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '${widget.price}',
+                        style: TextStyle(
+                          color: primary,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  '${widget.price}',
-                  style: TextStyle(
-                    color: primary,
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.w700,
+                SizedBox(height: 5),
+                 RatingBar.builder(
+                    direction: Axis.horizontal,
+                    itemSize: 15,
+                    initialRating: averageRate,
+                    itemBuilder: (context, _) {
+                      return Icon(
+                        Icons.star,
+                        size: 20,
+                        color: third,
+                      );
+                    },
+                    onRatingUpdate: (rating) {},
                   ),
-                ),
               ],
             ),
-          ),
-          SizedBox(height: 5),
-        ],
-      ),
     );
   }
 }
@@ -272,6 +328,8 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                     Text("(4.0)"),
                   ],
                 ),
+              
+              
               ],
             ),
           ),
@@ -370,12 +428,13 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                       Colors.grey.shade200,
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                        width: 40,
-                                                        height: 30,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.green,
-                                                          borderRadius: BorderRadius.circular(15)
-                                                        ),
+                                                    width: 40,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.green,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
                                                     child: Text(
                                                       "Oui",
                                                       style: TextStyle(
@@ -390,12 +449,13 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                       Colors.grey.shade200,
                                                   child: Container(
                                                     alignment: Alignment.center,
-                                                        width: 40,
-                                                        height: 30,
-                                                        decoration: BoxDecoration(
-                                                          color: Colors.red,
-                                                          borderRadius: BorderRadius.circular(15)
-                                                        ),
+                                                    width: 40,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.red,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
                                                     child: Text(
                                                       "Non",
                                                       style: TextStyle(

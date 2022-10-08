@@ -9,7 +9,7 @@ const addCourseWithoutPrice = "INSERT INTO cours (titre, description, descriptio
 const addSection = "INSERT INTO section (titre, id_cours) VALUES ($1, $2) RETURNING *;"
 const addLesson = "INSERT INTO lecon (titre, resume, id_cours, id_section, id_type_lecon, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;"
 const getAllCourses = "SELECT * FROM cours JOIN users ON cours.id_users=users.id;";
-const getAllSections = "SELECT * FROM section WHERE id_cours = $1;";
+const getAllSections = "SELECT * FROM section WHERE id_cours = $1 ORDER BY id_section ASC;";
 const getAllLecons = "SELECT * FROM lecon WHERE id_cours = $1 AND id_section = $2;";
 const modifyCourse = "UPDATE cours SET titre = $1, description = $2, description_courte= $3, id_categorie = $4, id_niveau=$5, id_langue=$6, id_users=$7, vignette=$8 WHERE id_cours = $9;";
 const addExigence = "INSERT INTO exigence (nom,  id_cours) VALUES ($1, $2) RETURNING *;"
@@ -52,6 +52,12 @@ const getAllNotationCours = "SELECT * FROM notation_cours JOIN users ON notation
 
 const getTotalLecons = "SELECT * FROM lecon WHERE id_cours = $1 ;";
 
+const getSection = "SELECT * FROM section WHERE id_section = $1;";
+
+const editSection = "UPDATE section SET titre = $1 WHERE id_section = $2 RETURNING *;";
+
+const deleteSection = "DELETE FROM section WHERE id_section = $1;";
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -93,5 +99,8 @@ module.exports = {
     getNumberLeconCoursDone,
     rateCourse,
     getAllNotationCours,
-    getTotalLecons
-}
+    getTotalLecons,
+    getSection,
+    editSection,
+    deleteSection
+} 

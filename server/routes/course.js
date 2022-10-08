@@ -436,11 +436,38 @@ courseRouter.get("/getTotalLecons/:id_cours", auth,  (req, res)=>{
   })
 })
 
+// get section
+courseRouter.get("/getSection/:id_section",  (req, res)=>{
+  pool.query(queries.getSection,[req.params.id_section], (error, results)=>{
+    if (error) throw error;
 
+    return res.json(results.rows[0]);
 
+  })
+})
 
+// edit section
 
+courseRouter.post('/editSection',  (req, res)=>{
+  const {id_section,titre }= req.body;
 
+  pool.query(queries.editSection, [titre,id_section], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+// delete section
+
+courseRouter.post('/deleteSection',  (req, res)=>{
+  const {id_section }= req.body;
+
+  pool.query(queries.deleteSection, [id_section], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
 
 
 

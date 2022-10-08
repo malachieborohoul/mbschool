@@ -7,6 +7,8 @@ import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart'
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_plan_provider.dart';
+import 'package:provider/provider.dart';
 
 class CourseManagerScreen extends StatefulWidget {
   static const routeName = '/course_manager';
@@ -58,9 +60,11 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
                       itemCount: cours.length,
                       itemBuilder: (context, i) {
                         return GestureDetector(
-                            onTap: () => Navigator.pushNamed(
-                                context, PlanScreen.routeName,
-                                arguments: cours[i]),
+                            onTap: () {
+                              Navigator.pushNamed(context, PlanScreen.routeName,
+                                  arguments: cours[i]);
+
+                            },
                             child: CustomCard(cours: cours[i]));
                       }),
 

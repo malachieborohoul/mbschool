@@ -8,6 +8,8 @@ import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.d
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_plan_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomCard extends StatefulWidget {
   final Cours cours;
@@ -70,6 +72,9 @@ class _CustomCardState extends State<CustomCard> {
                 if (value == 1) {
                   Navigator.pushNamed(context, PlanScreen.routeName,
                       arguments: widget.cours);
+                      
+                              Provider.of<CoursPlanProvider>(context, listen: false)
+                                  .set_cours(widget.cours);
                 }else if (value == 2) {
                   Navigator.pushNamed(context, ModifyCourseScreen.routeName,
                       arguments: widget.cours);

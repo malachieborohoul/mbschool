@@ -433,4 +433,38 @@ class CourseManagerService {
     }
     return leconTotalList;
   }
+
+
+  
+      // DELETE COURS
+
+  void deleteCours(BuildContext context, Cours cours,
+      VoidCallback onSuccess) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      http.Response resDelete = await http.post(
+        Uri.parse('$uri/deleteCours'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            'id_cours': int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resDelete,
+          context: context,
+          onSuccess: () {
+            
+            onSuccess();
+          },
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

@@ -196,6 +196,7 @@ class _CustomDetailCourseInfoHeaderState
                                 ),
                               ),
                             ));
+                  
                   } else {
                     showDialog(
                         context: context,

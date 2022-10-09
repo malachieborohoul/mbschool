@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_button_box_panel.dart';
@@ -25,7 +26,7 @@ class ExigenceScreen extends StatefulWidget {
 
 class _ExigenceScreenState extends State<ExigenceScreen> {
   final controllers = <TextEditingController>[];
-  TextEditingController? control;
+  TextEditingController exigenceController = TextEditingController();
   List<CustomTextFieldExigence> _listExigences = [];
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
@@ -33,36 +34,45 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
   List<Exigence> exigences = [];
   final _addExigenceFormKey = GlobalKey<FormState>();
 
-
   void addExigence() {
-    for (int i = 0; i < _listExigences.length; i++)
-      exigenceService.addExigence(
-          context, _listExigences[i].controller!.text, widget.cours, () {
-        setState(() {
-          isCharging = false;
-        });
+    exigenceService.addExigence(context, exigenceController.text, widget.cours,
+        () {
+      setState(() {
+        exigenceController.text = "";
+        getAllExigences();
+        isCharging = false;
       });
+    });
 
-    showSnackBar(context, "Exigences ajoutées avec succès");
+    showSnackBar(context, "Exigence ajoutée avec succès");
   }
 
-  void getAllExigences() async {
-    exigences = await exigenceService.getAllExigences(context, widget.cours);
-    print(exigences.length);
+  void deleteExigence(Exigence exigence) {
+    exigenceService.deleteExigence(context, exigence, () {
+      setState(() {
+        // exigenceController.text = "";
+        getAllExigences();
+        isCharging = false;
+      });
+    });
+
+    showSnackBar(context, "Exigence supprimée avec succès");
   }
 
   @override
   void initState() {
     super.initState();
     getAllExigences();
+  }
+
+  void getAllExigences() async {
+    exigences = await exigenceService.getAllExigences(context, widget.cours);
     setState(() {});
   }
 
   @override
   void dispose() {
-    for (final controller in controllers) {
-      controller.dispose();
-    }
+    exigenceController.dispose();
     super.dispose();
   }
 
@@ -121,15 +131,6 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    for (int i = 0; i < exigences.length; i++) {
-      final control = TextEditingController();
-      control.text = exigences[i].nom;
-      setState(() {
-        _listExigences.add(
-            CustomTextFieldExigence(hintText: "Exigence", controller: control));
-        controllers.add(control);
-      });
-    }
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -185,66 +186,58 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
                         //   ),
                         // ),
 
-                        for (int i = 0; i < _listExigences.length; i++)
-                          Row(
-                            children: [
-                              _listExigences[i],
-                              IconButton(
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextFieldExigence(
+                                hintText: "Exigence",
+                                controller: exigenceController),
+                            IconButton(
                                 onPressed: () {
-                                  setState(() {
-                                    // selected = !selected;
-                                    _listExigences.removeAt(i);
-                                  });
+                                  if (_addExigenceFormKey.currentState!
+                                      .validate()) {
+                                    // print(_listExigences.length);
+                                    setState(() {
+                                      isCharging = true;
+                                      addExigence();
+                                      getAllExigences();
+                                    });
+                                  }
                                 },
                                 icon: Icon(
-                                  Icons.do_not_disturb_on,
-                                  color: Colors.red,
-                                ),
-                                iconSize: 30,
-                              )
-                            ],
-                          ),
-
-                        Row(
-                          children: [
-                            InkWell(
-                                splashColor: textBlack,
-                                onTap: () {
-                                  final controller = TextEditingController();
-
-                                  setState(() {
-                                    controllers.add(controller);
-                                    _listExigences.add(CustomTextFieldExigence(
-                                        hintText: "Exigence",
-                                        controller: controller));
-                                  });
-                                },
-                                child: CustomButtonBoxPanel(
-                                  title: "+Ajouter",
-                                  width: 100,
-                                )),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                if (_addExigenceFormKey.currentState!
-                                    .validate()) {
-                                  print(_listExigences.length);
-                                  setState(() {
-                                    isCharging = true;
-                                    addExigence();
-                                  });
-                                }
-                              },
-                              splashColor: textBlack,
-                              child: CustomButtonBoxPanel(
-                                title: "Envoyer",
-                                width: 100,
-                              ),
-                            ),
+                                  Icons.send_rounded,
+                                  color: primary,
+                                ))
                           ],
                         ),
+
+                        for (int i = 0; i < exigences.length; i++)
+                          SlideDownTween(
+                            duration: Duration(milliseconds: (i + 1) * 500),
+                            offset: 40,
+                            child: Card(
+                              color: third,
+                              child: ListTile(
+                                title: Text(
+                                  exigences[i].nom,
+                                  style: TextStyle(color: textWhite),
+                                ),
+                                trailing: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        isCharging = true;
+                                        deleteExigence(exigences[i]);
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.delete_outline_rounded,
+                                      color: textWhite,
+                                    )),
+                              ),
+                            ),
+                          )
+
                         // Padding(
                         //   padding: const EdgeInsets.all(appPadding - 5),
                         //   child: Row(

@@ -19,6 +19,7 @@ import 'package:mbschool/features/panel/course_manager/services/select_file_serv
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
+import 'package:mbschool/providers/lecon_provider.dart';
 import 'package:provider/provider.dart';
 
 class SelectFile extends StatefulWidget {
@@ -81,29 +82,32 @@ class _SelectFileState extends State<SelectFile> {
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue_section;
-    final coursProvider =
-        Provider.of<CoursPlanProvider>(context, listen: false).cours;
+    String dropdownvalue_section =
+        sections != null ? sections[0].id_section : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
+    if (id_section == 0) id_section = int.parse(dropdownvalue_section);
 
+   final coursProvider =
+        Provider.of<CoursPlanProvider>(context, listen: false).cours;
     void createLesson() {
       selectFileService.createLesson(
           context,
           titreEditingController.text,
           resumeEditingController.text,
           widget.cours.id_cours,
-          int.parse(dropdownvalue_section!),
+          id_section,
           widget.codeFile == 1 ? 1 : 2,
-          video!, () {
+          widget.codeFile == 1 ? video! : document!, () {
         setState(() {
           isCharging = false;
 
           Navigator.of(context)
             ..pop()
             ..pop()
+            ..pop()
             ..pushNamed(PlanScreen.routeName, arguments: coursProvider);
+
 
           showSnackBar(context, "Leçon ajoutée avec succès");
         });
@@ -166,6 +170,7 @@ class _SelectFileState extends State<SelectFile> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
+                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -178,7 +183,6 @@ class _SelectFileState extends State<SelectFile> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Selectionner une section"),
                             value: dropdownvalue_section,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
@@ -190,7 +194,7 @@ class _SelectFileState extends State<SelectFile> {
                               setState(() {
                                 //On ne peut pas envoyer cette valeur car elle prend à chaque compilation l'id du premier element
                                 dropdownvalue_section = val!;
-                                // id_section = int.parse(dropdownvalue_section);
+                                id_section = int.parse(dropdownvalue_section);
                               });
                             }),
 
@@ -262,7 +266,8 @@ class _SelectFileState extends State<SelectFile> {
                           height: appPadding,
                         ),
 
-                        GestureDetector(
+                        InkWell(
+                            splashColor: textBlack,
                             onTap: () {
                               if (_createLessonFormKey.currentState!
                                   .validate()) {

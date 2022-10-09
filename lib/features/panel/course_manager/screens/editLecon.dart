@@ -293,10 +293,10 @@ class _EditLeconState extends State<EditLecon> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // setState(() {
-                                //   isCharging = true;
-                                // });
-                                // deleteLecon();
+                                setState(() {
+                                  isCharging = true;
+                                });
+                                deleteLecon();
                               },
                               child: Container(
                                 alignment: Alignment.center,

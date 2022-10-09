@@ -60,6 +60,8 @@ const deleteSection = "DELETE FROM section WHERE id_section = $1;";
 
 const editLecon ="UPDATE lecon SET titre=$2, resume=$3, id_cours=$4, id_section=$5, url=$6 WHERE id_lecon=$1 RETURNING *;";
 const deleteLecon = "DELETE FROM lecon WHERE id_lecon = $1;";
+const deleteCours = "DELETE FROM cours WHERE id_cours = $1;";
+const deleteExigence = "DELETE FROM exigence WHERE id_exigence = $1;";
 
 module.exports = {
     checkEmailExist,
@@ -108,4 +110,6 @@ module.exports = {
     deleteSection,
     editLecon,
     deleteLecon,
+    deleteCours,
+    deleteExigence,
 } 

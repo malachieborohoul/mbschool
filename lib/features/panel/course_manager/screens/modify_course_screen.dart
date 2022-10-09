@@ -48,9 +48,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
   //   'bbc',
   // ];
 
-  List<Langue>? langues;
-  List<Categorie>? categories;
-  List<Niveau>? niveaux;
+  List<Langue> langues = [];
+  List<Categorie> categories = [];
+  List<Niveau> niveaux = [];
 
   @override
   void initState() {
@@ -60,11 +60,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     getAllLangueData();
     getAllCategorieData();
 
-     titreCoursController.text = widget.cours.titre;
+    titreCoursController.text = widget.cours.titre;
     descriptionCoursController.text = widget.cours.description;
     descriptionCourteCoursController.text = widget.cours.description_courte;
-
-
   }
 
   getAllLangueData() async {
@@ -74,10 +72,12 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
 
   getAllCategorieData() async {
     categories = await createCourseService.getAllCategorieData(context);
+    setState(() {});
   }
 
   getAllNiveauData() async {
     niveaux = await createCourseService.getAllNiveauData(context);
+    setState(() {});
   }
 
   //SELECTIONNER UNE VIGNETTE
@@ -115,20 +115,19 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     //       return Text("data");
     //     });
 
-    String dropdownvalue_niveau = widget.cours.id_niveau;
+    // String dropdownvalue_niveau = widget.cours.id_niveau;
 
-    String dropdownvalue_langue = widget.cours.id_langue;
-    String dropdownvalue_categorie = widget.cours.id_categorie;
+    // String dropdownvalue_langue = widget.cours.id_langue;
+    // String dropdownvalue_categorie = widget.cours.id_categorie;
+    String? dropdownvalue_niveau;
 
-    //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie);
-    if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau);
-    if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue);
+    String? dropdownvalue_langue;
+    String? dropdownvalue_categorie;
+
     String urlVignette = widget.cours.vignette;
-    bool isVignetteNull= false;
-   
-    
-    if(widget.cours.titre == titreCoursController.text ) {
+    bool isVignetteNull = false;
+
+    if (widget.cours.titre == titreCoursController.text) {
       titreCoursController.text = widget.cours.titre;
     } else {
       titreCoursController.text = titreCoursController.text;
@@ -158,9 +157,8 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
           prixCoursController.text,
           vignette!,
           widget.cours,
-          vignette != null? isVignetteNull = false :isVignetteNull= true,
-          urlVignette,
-           () {
+          vignette != null ? isVignetteNull = false : isVignetteNull = true,
+          urlVignette, () {
         setState(() {
           isCharging = false;
           showSnackBar(context, "Le cours a été modifié avec succès");
@@ -177,7 +175,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
           elevation: 0,
           backgroundColor: primary,
         ),
-        body: langues == null || isCharging == true
+        body: langues == null ||
+                categories == null ||
+                niveaux == null ||
+                isCharging == true
             ? const Loader()
             : SingleChildScrollView(
                 child: Padding(
@@ -236,7 +237,6 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -249,8 +249,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            value: dropdownvalue_categorie,
-                            items: categories!.map((Categorie item) {
+                            hint: Text("Sélectionner une catégorie"),
+                            value: widget.cours.id_categorie,
+                            items: categories.map((Categorie item) {
                               return DropdownMenuItem(
                                 child: Text(item.nom),
                                 value: item.id_categorie,
@@ -260,14 +261,14 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               setState(() {
                                 dropdownvalue_categorie = val!;
                                 id_categorie =
-                                    int.parse(dropdownvalue_categorie);
+                                    int.parse(dropdownvalue_categorie!);
 
-                                titreCoursController.text =
-                                    titreCoursController.text;
-                                descriptionCoursController.text =
-                                    descriptionCoursController.text;
-                                descriptionCourteCoursController.text =
-                                    descriptionCourteCoursController.text;
+                                // titreCoursController.text =
+                                //     titreCoursController.text;
+                                // descriptionCoursController.text =
+                                //     descriptionCoursController.text;
+                                // descriptionCourteCoursController.text =
+                                //     descriptionCourteCoursController.text;
                               });
                             }),
                         SizedBox(
@@ -284,7 +285,6 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -297,8 +297,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            value: dropdownvalue_niveau,
-                            items: niveaux!.map((Niveau item) {
+                            hint: Text("Sélectionner un niveau"),
+                            value: widget.cours.id_niveau,
+                            items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
                                 child: Text(item.titre),
                                 value: item.id_niveau,
@@ -307,7 +308,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_niveau = val!;
-                                id_niveau = int.parse(dropdownvalue_niveau);
+                                id_niveau = int.parse(dropdownvalue_niveau!);
                               });
                             }),
                         SizedBox(
@@ -324,7 +325,6 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -337,8 +337,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            value: dropdownvalue_langue,
-                            items: langues!.map((Langue item) {
+                            hint: Text("Sélectionner une langue"),
+                            value: widget.cours.id_langue,
+                            items: langues.map((Langue item) {
                               return DropdownMenuItem(
                                 child: Text(item.nom),
                                 value: item.id_langue,
@@ -347,7 +348,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_langue = val!;
-                                id_langue = int.parse(dropdownvalue_langue);
+                                id_langue = int.parse(dropdownvalue_langue!);
                               });
                             }),
                         SizedBox(
@@ -431,11 +432,25 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 //       builder: (context) => AlertDialogError(
                                 //           texte: "Veuillez choisir une image"));
                                 // } else {
-                                  setState(() {
-                                    isCharging = true;
-                                  });
-                                  modifyCourse();
+                                setState(() {
+                                  isCharging = true;
+                                  if (id_categorie == 0)
+                                    id_categorie =
+                                        int.parse(widget.cours.id_categorie);
+                                  if (id_niveau == 0)
+                                    id_niveau =
+                                        int.parse(widget.cours.id_niveau);
+                                  if (id_langue == 0)
+                                    id_langue =
+                                        int.parse(widget.cours.id_langue);
+                                });
+                                modifyCourse();
                                 // }
+                                //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
+
+                                // print("cat $id_categorie");
+                                // print("lan $id_langue");
+                                // print("niv $id_niveau");
                               }
                             },
                             child: CustomButtonBox(title: "Modifier")),

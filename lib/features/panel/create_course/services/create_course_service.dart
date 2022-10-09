@@ -11,6 +11,7 @@ import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/models/categorie.dart';
+import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -171,4 +172,7 @@ class CreateCourseService {
       }
     }
   }
+
+
+
 }

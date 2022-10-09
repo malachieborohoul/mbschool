@@ -76,4 +76,27 @@ class ExigenceService {
     }
     return exigenceList;
   }
+
+
+   void deleteExigence(BuildContext context,  Exigence exigence,
+      VoidCallback onSuccess) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      http.Response resAddExigence =
+          await http.post(Uri.parse('$uri/deleteExigence'),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({'id_exigence': exigence.id_exigence}));
+
+      httpErrorHandle(
+          response: resAddExigence,
+          context: context,
+          onSuccess: onSuccess,
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

@@ -492,6 +492,32 @@ courseRouter.post('/deleteLecon',  (req, res)=>{
   })
 })
 
+// delete cours
+
+courseRouter.post('/deleteCours',  (req, res)=>{
+  const {id_cours }= req.body;
+
+  pool.query(queries.deleteCours, [id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
+
+// delete exigence
+
+courseRouter.post('/deleteExigence',  (req, res)=>{
+  const {id_exigence }= req.body;
+
+  pool.query(queries.deleteExigence, [id_exigence], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
+
 
 
 module.exports = courseRouter;

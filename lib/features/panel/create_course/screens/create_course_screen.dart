@@ -234,8 +234,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_categorie = val!;
-                                // id_categorie =
-                                //     int.parse(dropdownvalue_categorie!);
+                                id_categorie =
+                                    int.parse(dropdownvalue_categorie!);
                               });
                             }),
                         SizedBox(
@@ -275,7 +275,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_niveau = val!;
-                                // id_niveau = int.parse(dropdownvalue_niveau);
+                                id_niveau = int.parse(dropdownvalue_niveau!);
                               });
                             }),
                         SizedBox(
@@ -316,7 +316,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalue_langue = val!;
-                                // id_langue = int.parse(dropdownvalue_langue);
+                                id_langue = int.parse(dropdownvalue_langue!);
                               });
                             }),
                         SizedBox(

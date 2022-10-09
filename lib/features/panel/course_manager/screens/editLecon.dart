@@ -15,30 +15,33 @@ import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
+import 'package:mbschool/features/panel/course_manager/services/edit_lecon_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/select_file_service.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
+import 'package:mbschool/providers/lecon_provider.dart';
 import 'package:provider/provider.dart';
 
-class SelectFile extends StatefulWidget {
-  static const routeName = '/select-file';
-  final codeFile;
+class EditLecon extends StatefulWidget {
+  static const routeName = '/edit_lecon';
+  final Lecon lecon;
   final Cours cours;
-  const SelectFile({Key? key, this.codeFile, required this.cours})
+  const EditLecon({Key? key, required this.lecon, required this.cours})
       : super(key: key);
 
   @override
-  State<SelectFile> createState() => _SelectFileState();
+  State<EditLecon> createState() => _EditLeconState();
 }
 
-class _SelectFileState extends State<SelectFile> {
+class _EditLeconState extends State<EditLecon> {
   List<Section> sections = [];
   CourseManagerService courseManagerService = CourseManagerService();
   TextEditingController titreEditingController = TextEditingController();
   TextEditingController resumeEditingController = TextEditingController();
-  final _createLessonFormKey = GlobalKey<FormState>();
-  SelectFileService selectFileService = SelectFileService();
+  final _editLeconFormKey = GlobalKey<FormState>();
+  EditLeconService editLeconService = EditLeconService();
 
   @override
   void initState() {
@@ -81,21 +84,26 @@ class _SelectFileState extends State<SelectFile> {
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue_section;
+    print(widget.cours.titre);
+    print(widget.lecon.titre);
+    final leconProvider =
+        Provider.of<LeconProvider>(context, listen: false).lecon;
     final coursProvider =
         Provider.of<CoursPlanProvider>(context, listen: false).cours;
+    String? dropdownvalue_section;
+    // sections != null ? sections[0].id_section : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
     // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
 
-    void createLesson() {
-      selectFileService.createLesson(
+    void editLecon() {
+      editLeconService.editLecon(
           context,
+          leconProvider,
           titreEditingController.text,
           resumeEditingController.text,
           widget.cours.id_cours,
           int.parse(dropdownvalue_section!),
-          widget.codeFile == 1 ? 1 : 2,
           video!, () {
         setState(() {
           isCharging = false;
@@ -105,9 +113,31 @@ class _SelectFileState extends State<SelectFile> {
             ..pop()
             ..pushNamed(PlanScreen.routeName, arguments: coursProvider);
 
-          showSnackBar(context, "Leçon ajoutée avec succès");
+          showSnackBar(context, "Leçon modifiée avec succès");
         });
       });
+    }
+
+    void deleteLecon() {
+      editLeconService.deleteLecon(context, leconProvider, () {
+        setState(() {
+          isCharging = false;
+          showSnackBar(context, "Leçon supprimée");
+          Navigator.of(context)
+            ..pop()
+            ..pop()
+            ..pushNamed(PlanScreen.routeName, arguments: coursProvider);
+        });
+      });
+    }
+
+    if (isCharging == false) {
+      titreEditingController.text = leconProvider.titre;
+      resumeEditingController.text = leconProvider.resume;
+      dropdownvalue_section = leconProvider.id_section;
+    } else {
+      titreEditingController.text = titreEditingController.text;
+      resumeEditingController.text = resumeEditingController.text;
     }
 
     return Scaffold(
@@ -116,25 +146,25 @@ class _SelectFileState extends State<SelectFile> {
         foregroundColor: textBlack,
         backgroundColor: textWhite,
         title: const Text(
-          "Ajouter une nouvelle leçon",
+          "Modifier une leçon",
           style: TextStyle(color: textBlack),
         ),
         elevation: 1,
       ),
-      body: isCharging == true
+      body: isCharging == true || sections == null
           ? Loader()
           : GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: SingleChildScrollView(
                 child: Form(
-                  key: _createLessonFormKey,
+                  key: _editLeconFormKey,
                   child: Padding(
                     padding: const EdgeInsets.all(appPadding),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Créer une leçon: ${widget.codeFile == 1 ? "Vidéo" : "Document"}",
+                          "Modifier une leçon",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -197,18 +227,14 @@ class _SelectFileState extends State<SelectFile> {
                         const SizedBox(
                           height: appPadding,
                         ),
-                        CustomTitlePanel(
-                            title:
-                                "Télécharger ${widget.codeFile == 1 ? "une vidéo" : "un document"}"),
+                        CustomTitlePanel(title: "Télécharger une vidéo"),
                         const SizedBox(
                           height: appPadding - 20,
                         ),
 
                         InkWell(
                           splashColor: textBlack,
-                          onTap: widget.codeFile == 1
-                              ? selectVideo
-                              : selectDocument,
+                          onTap: selectVideo,
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
@@ -262,17 +288,58 @@ class _SelectFileState extends State<SelectFile> {
                           height: appPadding,
                         ),
 
-                        GestureDetector(
-                            onTap: () {
-                              if (_createLessonFormKey.currentState!
-                                  .validate()) {
-                                setState(() {
-                                  isCharging = true;
-                                });
-                                createLesson();
-                              }
-                            },
-                            child: CustomButtonBox(title: "Ajouter leçon"))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // setState(() {
+                                //   isCharging = true;
+                                // });
+                                // deleteLecon();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 150,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: secondary,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: const Text(
+                                  "Supprimer leçon",
+                                  style: TextStyle(
+                                      color: textWhite,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (_editLeconFormKey.currentState!
+                                    .validate()) {
+                                  setState(() {
+                                    isCharging = true;
+                                  });
+                                  editLecon();
+                                }
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 150,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: const Text(
+                                  "Modifier leçon",
+                                  style: TextStyle(
+                                      color: textWhite,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),

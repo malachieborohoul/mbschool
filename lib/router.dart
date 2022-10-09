@@ -17,6 +17,7 @@ import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart
 import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/editLecon.dart';
 import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
@@ -151,7 +152,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       var cours = routeSettings.arguments as CourseLessonArguments;
       var lecon = routeSettings.arguments as CourseLessonArguments;
 
-      //  var codeFile = routeSettings.arguments as SelectFileArguments;
+      // var codeFile = routeSettings.arguments as SelectFileArguments;
       // var cours = routeSettings.arguments as SelectFileArguments;
 
       return PageTransition(
@@ -181,7 +182,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           child: const RateCourseScreen(),
           type: PageTransitionType.rightToLeft);
-    
+
     case EditSectionScreen.routeName:
       var section = routeSettings.arguments as Section;
 
@@ -189,6 +190,17 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           child: EditSectionScreen(
             section: section,
+          ),
+          type: PageTransitionType.bottomToTop);
+
+    case EditLecon.routeName:
+      var cours = routeSettings.arguments as CourseLessonArguments;
+      var lecon = routeSettings.arguments as CourseLessonArguments;
+
+      return PageTransition(
+          settings: routeSettings,
+          child: EditLecon(
+            cours: cours.cours, lecon: lecon.lecon,
           ),
           type: PageTransitionType.bottomToTop);
     default:

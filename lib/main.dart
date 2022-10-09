@@ -10,6 +10,7 @@ import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
+import 'package:mbschool/providers/lecon_provider.dart';
 import 'package:mbschool/providers/number_entry_provider.dart';
 import 'package:mbschool/providers/section_provider.dart';
 import 'package:mbschool/providers/tabbar_provider.dart';
@@ -27,6 +28,7 @@ void main() {
       ChangeNotifierProvider(create: (context) => TabBarProvider()),
       ChangeNotifierProvider(create: (context) => NumberEntryProvider()),
       ChangeNotifierProvider(create: (context) => SectionProvider()),
+      ChangeNotifierProvider(create: (context) => LeconProvider()),
     ],
     child: const MyApp(),
   ));

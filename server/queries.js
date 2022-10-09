@@ -58,6 +58,9 @@ const editSection = "UPDATE section SET titre = $1 WHERE id_section = $2 RETURNI
 
 const deleteSection = "DELETE FROM section WHERE id_section = $1;";
 
+const editLecon ="UPDATE lecon SET titre=$2, resume=$3, id_cours=$4, id_section=$5, url=$6 WHERE id_lecon=$1 RETURNING *;";
+const deleteLecon = "DELETE FROM lecon WHERE id_lecon = $1;";
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -102,5 +105,7 @@ module.exports = {
     getTotalLecons,
     getSection,
     editSection,
-    deleteSection
+    deleteSection,
+    editLecon,
+    deleteLecon,
 } 

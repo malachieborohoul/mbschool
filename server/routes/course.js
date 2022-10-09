@@ -469,6 +469,29 @@ courseRouter.post('/deleteSection',  (req, res)=>{
   })
 })
 
+// edit lecon
+
+courseRouter.post('/editLecon',  (req, res)=>{
+  const {id_lecon,titre,resume, id_cours,id_section,  url}= req.body;
+
+  pool.query(queries.editLecon, [id_lecon,titre,resume, id_cours,id_section,  url], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows[0])
+  })
+})
+
+// delete lecon
+
+courseRouter.post('/deleteLecon',  (req, res)=>{
+  const {id_lecon }= req.body;
+
+  pool.query(queries.deleteLecon, [id_lecon], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
 
 
 module.exports = courseRouter;

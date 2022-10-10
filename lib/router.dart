@@ -22,6 +22,7 @@ import 'package:mbschool/features/panel/course_manager/screens/edit_section_scre
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/resultat_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/features/search/screens/search_screen.dart';
@@ -200,9 +201,17 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return PageTransition(
           settings: routeSettings,
           child: EditLecon(
-            cours: cours.cours, lecon: lecon.lecon,
+            cours: cours.cours,
+            lecon: lecon.lecon,
           ),
           type: PageTransitionType.bottomToTop);
+
+    case ResultatScreen.routeName:
+      var cours = routeSettings.arguments as Cours;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => ResultatScreen(cours: cours));
+
     default:
       return MaterialPageRoute(
           builder: (_) => const Scaffold(

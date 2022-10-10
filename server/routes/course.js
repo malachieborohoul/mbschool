@@ -143,8 +143,8 @@ courseRouter.post('/addExigence',auth,  (req, res)=>{
 
 
 // get all exigences
-courseRouter.get("/getAllExigences/:id_exigence",auth,  (req, res)=>{
-  pool.query(queries.getAllExigences,[req.params.id_exigence], (error, results)=>{
+courseRouter.get("/getAllExigences/:id_cours",auth,  (req, res)=>{
+  pool.query(queries.getAllExigences,[req.params.id_cours], (error, results)=>{
     if (error) throw error;
 
     return res.json(results.rows);
@@ -511,6 +511,42 @@ courseRouter.post('/deleteExigence',  (req, res)=>{
   const {id_exigence }= req.body;
 
   pool.query(queries.deleteExigence, [id_exigence], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
+
+// add course resultat
+
+courseRouter.post('/addResultat',auth,  (req, res)=>{
+  const {titre, id_cours}= req.body;
+
+  pool.query(queries.addResultat, [titre, id_cours,], (error, results)=>{
+    if (error) throw error;
+    return res.json(results.rows)
+  })
+})
+
+
+// get all resultats
+courseRouter.get("/getAllResultats/:id_cours",auth,  (req, res)=>{
+  pool.query(queries.getAllResultats,[req.params.id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+// delete resultat
+
+courseRouter.post('/deleteResultat',  (req, res)=>{
+  const {id_resultat }= req.body;
+
+  pool.query(queries.deleteResultat, [id_resultat], (error, results)=>{
     if (error) throw error;
 
     return res.json(true)

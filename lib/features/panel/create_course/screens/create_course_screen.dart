@@ -11,6 +11,7 @@ import 'package:mbschool/common/widgets/custom_dropdown_button_langue.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/navigation_drawer.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';

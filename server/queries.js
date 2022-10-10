@@ -63,6 +63,11 @@ const deleteLecon = "DELETE FROM lecon WHERE id_lecon = $1;";
 const deleteCours = "DELETE FROM cours WHERE id_cours = $1;";
 const deleteExigence = "DELETE FROM exigence WHERE id_exigence = $1;";
 
+
+const addResultat = "INSERT INTO resultat (titre,  id_cours) VALUES ($1, $2) RETURNING *;"
+const getAllResultats = "SELECT * FROM resultat WHERE id_cours = $1;";
+const deleteResultat = "DELETE FROM resultat WHERE id_resultat = $1;";
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -112,4 +117,7 @@ module.exports = {
     deleteLecon,
     deleteCours,
     deleteExigence,
+    addResultat,
+    getAllResultats,
+    deleteResultat,
 } 

@@ -21,6 +21,7 @@ class CustomTextFieldPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       controller: controller,
       decoration: InputDecoration(
         filled: true,

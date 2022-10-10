@@ -11,6 +11,7 @@ import 'package:mbschool/features/panel/course_manager/screens/course_manager_sc
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
+import 'package:mbschool/features/panel/course_manager/screens/resultat_screen.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
 import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/models/cours.dart';
@@ -105,7 +106,15 @@ class _CustomCardState extends State<CustomCard> {
                 } else if (value == 3) {
                   Navigator.pushNamed(context, ExigenceScreen.routeName,
                       arguments: widget.cours);
-                } else if (value == 5) {
+                      
+                }
+                else if (value == 4) {
+                  Navigator.pushNamed(context, ResultatScreen.routeName,
+                      arguments: widget.cours);
+                      
+                }
+                
+                 else if (value == 5) {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -198,12 +207,12 @@ class _CustomCardState extends State<CustomCard> {
                     onTap: () {},
                   ),
                   PopupMenuItem(
-                    value: 3,
+                    value: 4,
                     child: Text("Resultats"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
-                    value: 4,
+                    value: 5,
                     child: Text("Tarif"),
                     onTap: () {},
                   ),

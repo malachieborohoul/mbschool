@@ -448,9 +448,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 // }
                                 //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
 
-                                // print("cat $id_categorie");
-                                // print("lan $id_langue");
-                                // print("niv $id_niveau");
+                                print("cat $id_categorie");
+                                print("lan $id_langue");
+                                print("niv $id_niveau");
                               }
                             },
                             child: CustomButtonBox(title: "Modifier")),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_card.dart';
+import 'package:mbschool/common/widgets/navigation_drawer.dart';
+import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -49,11 +51,7 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
               ),
             )
           : cours.isEmpty
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: primary,
-                  ),
-                )
+              ? NoData()
               : Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ListView.builder(

@@ -11,6 +11,7 @@ import 'package:mbschool/common/widgets/custom_promotion_card.dart';
 import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen>
             ? Container()
             : user.role == "2"
                 ? const NavigatorDrawerTeacher()
-                : Container(),
+                : NavigatorDrawerAdmin(),
         backgroundColor: background,
         extendBodyBehindAppBar: true,
         appBar: PreferredSize(

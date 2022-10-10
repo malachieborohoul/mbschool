@@ -123,8 +123,8 @@ courseRouter.get("/getAllLecons/:id_cours/:id_section", auth,  (req, res)=>{
 // modify course
 
 courseRouter.post("/modifyCourse",  (req, res)=>{
-  const {titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette, id_cours}= req.body;
-  pool.query(queries.modifyCourse, [titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, vignette, id_cours] , (error, results)=>{
+  const {titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, prix, vignette,  id_cours}= req.body;
+  pool.query(queries.modifyCourse, [titre, description, description_courte, id_categorie, id_niveau, id_langue, id_users, prix, vignette,  id_cours] , (error, results)=>{
     if (error) throw error;
     return res.json(true)
   })

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_card.dart';
-import 'package:mbschool/common/widgets/navigation_drawer.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
@@ -38,7 +38,7 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: NavigatorDrawerTeacher(),
       appBar: AppBar(
         backgroundColor: primary,
         elevation: 1,

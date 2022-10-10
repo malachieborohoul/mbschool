@@ -19,8 +19,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ModifyCourseService {
-  
-  void modifyCourse(
+  void modifyCourseNewVignette(
       BuildContext context,
       String titre,
       String description,
@@ -31,55 +30,84 @@ class ModifyCourseService {
       String prix,
       PlatformFile vignette,
       Cours cours,
-      bool isVignetteNull,
-      String urlVignette,
       VoidCallback onSuccess) async {
-      try {
-        final userProvider = Provider.of<UserProvider>(context, listen: false);
-        final cloudinary = CloudinaryPublic('dshli1qgh', 'lffwqjlm');
-        String url;
-        CloudinaryResponse res = await cloudinary.uploadFile(
-            CloudinaryFile.fromFile(vignette.path!,
-                folder: titre.toLowerCase()));
-        url = res.secureUrl;
-        http.Response resModifyCourse =
-            await http.post(Uri.parse('$uri/modifyCourse'),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                  'x-auth-token': userProvider.user.token,
-                },
-                body: isVignetteNull != false? jsonEncode({
-                  'titre': titre,
-                  'description': description,
-                  'description_courte': description_courte,
-                  'id_categorie': categorie,
-                  'id_niveau': niveau,
-                  'id_langue': langue,
-                  'id_users': int.parse(userProvider.user.id),
-                  'vignette': url,
-                  'id_cours': int.parse(cours.id_cours)
-                }):
-                jsonEncode({
-                  'titre': titre,
-                  'description': description,
-                  'description_courte': description_courte,
-                  'id_categorie': categorie,
-                  'id_niveau': niveau,
-                  'id_langue': langue,
-                  'id_users': int.parse(userProvider.user.id),
-                  'vignette': urlVignette,
-                  'id_cours': int.parse(cours.id_cours)
-                })
-                );
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final cloudinary = CloudinaryPublic('dshli1qgh', 'lffwqjlm');
+      String url;
+      CloudinaryResponse res = await cloudinary.uploadFile(
+          CloudinaryFile.fromFile(vignette.path!, folder: titre.toLowerCase()));
+      url = res.secureUrl;
+      http.Response resModifyCourse =
+          await http.post(Uri.parse('$uri/modifyCourse'),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                'titre': titre,
+                'description': description,
+                'description_courte': description_courte,
+                'id_categorie': categorie,
+                'id_niveau': niveau,
+                'id_langue': langue,
+                'id_users': int.parse(userProvider.user.id),
+                'prix': prix,
+                'vignette': url,
+                'id_cours': int.parse(cours.id_cours)
+              }));
 
-        httpErrorHandle(
-            response: resModifyCourse,
-            context: context,
-            onSuccess: onSuccess,
-            onFailed: onSuccess
-            );
-      } catch (e) {
-        showSnackBar(context, e.toString());
-      }
+      httpErrorHandle(
+          response: resModifyCourse,
+          context: context,
+          onSuccess: onSuccess,
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
     }
   }
+
+  void modifyCourseOldVignette(
+      BuildContext context,
+      String titre,
+      String description,
+      String description_courte,
+      int categorie,
+      int niveau,
+      int langue,
+      String prix,
+      String vignette,
+      Cours cours,
+      VoidCallback onSuccess) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resModifyCourse =
+          await http.post(Uri.parse('$uri/modifyCourse'),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token,
+              },
+              body: jsonEncode({
+                'titre': titre,
+                'description': description,
+                'description_courte': description_courte,
+                'id_categorie': categorie,
+                'id_niveau': niveau,
+                'id_langue': langue,
+                'id_users': int.parse(userProvider.user.id),
+                'prix': prix,
+                'vignette': vignette,
+                'id_cours': int.parse(cours.id_cours)
+              }));
+
+      httpErrorHandle(
+          response: resModifyCourse,
+          context: context,
+          onSuccess: onSuccess,
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+}

@@ -211,11 +211,7 @@ class _CustomCardState extends State<CustomCard> {
                     child: Text("Resultats"),
                     onTap: () {},
                   ),
-                  PopupMenuItem(
-                    value: 5,
-                    child: Text("Tarif"),
-                    onTap: () {},
-                  ),
+                  
                   PopupMenuItem(
                     value: 5,
                     child: Text("Supprimer cours"),

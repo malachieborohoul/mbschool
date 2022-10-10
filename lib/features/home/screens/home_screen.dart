@@ -11,7 +11,7 @@ import 'package:mbschool/common/widgets/custom_promotion_card.dart';
 import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
 import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/navigation_drawer.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen>
         drawer: user.role == "1"
             ? Container()
             : user.role == "2"
-                ? const NavigationDrawer()
+                ? const NavigatorDrawerTeacher()
                 : Container(),
         backgroundColor: background,
         extendBodyBehindAppBar: true,

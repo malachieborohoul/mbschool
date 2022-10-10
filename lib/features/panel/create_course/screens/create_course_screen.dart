@@ -11,7 +11,7 @@ import 'package:mbschool/common/widgets/custom_dropdown_button_langue.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/navigation_drawer.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
@@ -135,7 +135,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           id_langue,
           prixCoursController.text,
           isChecked,
-          vignette!, () {
+          vignette!, 
+          () {
         setState(() {
           isCharging = false;
           showSnackBar(context, "Le cours a été avec succès");
@@ -147,7 +148,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        drawer: NavigationDrawer(),
+        drawer: NavigatorDrawerTeacher(),
         appBar: AppBar(
           title: const Text("Créer un nouveau cours"),
           elevation: 0,

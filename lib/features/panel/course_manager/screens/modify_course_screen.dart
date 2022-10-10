@@ -63,6 +63,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     titreCoursController.text = widget.cours.titre;
     descriptionCoursController.text = widget.cours.description;
     descriptionCourteCoursController.text = widget.cours.description_courte;
+    prixCoursController.text = widget.cours.prix;
   }
 
   getAllLangueData() async {
@@ -145,26 +146,50 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
       descriptionCourteCoursController.text =
           descriptionCourteCoursController.text;
     }
+
+    if (prixCoursController.text == widget.cours.prix) {
+      prixCoursController.text = widget.cours.prix;
+    } else {
+      prixCoursController.text = prixCoursController.text;
+    }
     modifyCourse() {
-      modifyCourseService.modifyCourse(
-          context,
-          titreCoursController.text,
-          descriptionCoursController.text,
-          descriptionCourteCoursController.text,
-          id_categorie,
-          id_niveau,
-          id_langue,
-          prixCoursController.text,
-          vignette!,
-          widget.cours,
-          vignette != null ? isVignetteNull = false : isVignetteNull = true,
-          urlVignette, () {
-        setState(() {
-          isCharging = false;
-          showSnackBar(context, "Le cours a été modifié avec succès");
-          Navigator.pushNamed(context, CourseManagerScreen.routeName);
+      if (vignette == null) {
+        modifyCourseService.modifyCourseOldVignette(
+            context,
+            titreCoursController.text,
+            descriptionCoursController.text,
+            descriptionCourteCoursController.text,
+            id_categorie,
+            id_niveau,
+            id_langue,
+            prixCoursController.text,
+            urlVignette,
+            widget.cours, () {
+          setState(() {
+            isCharging = false;
+            showSnackBar(context, "Le cours a été modifié avec succès");
+            Navigator.pushNamed(context, CourseManagerScreen.routeName);
+          });
         });
-      });
+      } else {
+        modifyCourseService.modifyCourseNewVignette(
+            context,
+            titreCoursController.text,
+            descriptionCoursController.text,
+            descriptionCourteCoursController.text,
+            id_categorie,
+            id_niveau,
+            id_langue,
+            prixCoursController.text,
+            vignette!,
+            widget.cours, () {
+          setState(() {
+            isCharging = false;
+            showSnackBar(context, "Le cours a été modifié avec succès");
+            Navigator.pushNamed(context, CourseManagerScreen.routeName);
+          });
+        });
+      }
     }
 
     return GestureDetector(
@@ -416,6 +441,12 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                         SizedBox(
                           height: 15,
                         ),
+                        CustomTextFieldPanel(
+                          hintText: "Prix du cours",
+                          prefixIcon: Icons.price_change,
+                          controller: prixCoursController,
+                          keyboardType: TextInputType.number,
+                        ),
 
                         const SizedBox(
                           height: 15,
@@ -448,9 +479,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 // }
                                 //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
 
-                                print("cat $id_categorie");
-                                print("lan $id_langue");
-                                print("niv $id_niveau");
+                                // print("cat $id_categorie");
+                                // print("lan $id_langue");
+                                // print("niv $id_niveau");
                               }
                             },
                             child: CustomButtonBox(title: "Modifier")),

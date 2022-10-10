@@ -1,14 +1,20 @@
-
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+class NavigatorDrawerTeacher extends StatelessWidget {
+  const NavigatorDrawerTeacher({Key? key}) : super(key: key);
+
+  void logOut(BuildContext context) {
+    accountService.logOut(context);
+  }
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -31,7 +37,7 @@ class NavigationDrawer extends StatelessWidget {
             height: 12,
           ),
           CircleAvatar(
-            radius: 52,
+            radius: 30,
             backgroundColor: textWhite,
             backgroundImage: NetworkImage(user.photo),
           ),
@@ -40,7 +46,8 @@ class NavigationDrawer extends StatelessWidget {
           ),
           Text(
             '${user.nom} ${user.prenom}',
-            style: TextStyle(fontSize: 28, color: textWhite),
+            style: TextStyle(
+                fontSize: 20, color: textWhite, fontWeight: FontWeight.bold),
           ),
           Text(
             "${user.email}",
@@ -59,6 +66,13 @@ class NavigationDrawer extends StatelessWidget {
         child: Wrap(
           runSpacing: 16,
           children: [
+            ListTile(
+              leading: const Icon(Icons.home_outlined),
+              title: const Text('Accueil'),
+              onTap: () {
+                Navigator.pushNamed(context, BottomBar.routeName);
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.store),
               title: const Text('Gestionnaire de cours'),
@@ -87,7 +101,9 @@ class NavigationDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Profil'),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, EditProfileScreen.routeName);
+              },
             ),
             ListTile(
               leading: const Icon(Icons.logout),

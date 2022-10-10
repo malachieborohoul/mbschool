@@ -11,7 +11,7 @@ const addLesson = "INSERT INTO lecon (titre, resume, id_cours, id_section, id_ty
 const getAllCourses = "SELECT * FROM cours JOIN users ON cours.id_users=users.id;";
 const getAllSections = "SELECT * FROM section WHERE id_cours = $1 ORDER BY id_section ASC;";
 const getAllLecons = "SELECT * FROM lecon WHERE id_cours = $1 AND id_section = $2;";
-const modifyCourse = "UPDATE cours SET titre = $1, description = $2, description_courte= $3, id_categorie = $4, id_niveau=$5, id_langue=$6, id_users=$7, vignette=$8 WHERE id_cours = $9;";
+const modifyCourse = "UPDATE cours SET titre = $1, description = $2, description_courte= $3, id_categorie = $4, id_niveau=$5, id_langue=$6, id_users=$7,prix = $8, vignette=$9 WHERE id_cours = $10;";
 const addExigence = "INSERT INTO exigence (nom,  id_cours) VALUES ($1, $2) RETURNING *;"
 const getAllExigences = "SELECT * FROM exigence WHERE id_cours = $1;";
 const getAllCoursesByCategory = "SELECT * FROM cours JOIN users ON cours.id_users = users.id WHERE id_categorie = $1;";

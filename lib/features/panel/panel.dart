@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:mbschool/common/widgets/navigation_drawer.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
@@ -27,7 +27,7 @@ class _PanelState extends State<Panel> {
         title: const Text('MBSCHOOL'),
         backgroundColor: primary,
       ),
-      drawer: const NavigationDrawer(),
+      drawer: const NavigatorDrawerTeacher(),
     );
   }
 }

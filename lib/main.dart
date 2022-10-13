@@ -12,6 +12,7 @@ import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
 import 'package:mbschool/providers/number_entry_provider.dart';
+import 'package:mbschool/providers/search_user_provider.dart';
 import 'package:mbschool/providers/section_provider.dart';
 import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -23,6 +24,7 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => UserProvider()),
+      ChangeNotifierProvider(create: (context) => SearchUserProvider()),
       ChangeNotifierProvider(create: (context) => CoursPlanProvider()),
       ChangeNotifierProvider(create: (context) => CoursProvider()),
       ChangeNotifierProvider(create: (context) => TabBarProvider()),

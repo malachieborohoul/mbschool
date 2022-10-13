@@ -68,6 +68,21 @@ const addResultat = "INSERT INTO resultat (titre,  id_cours) VALUES ($1, $2) RET
 const getAllResultats = "SELECT * FROM resultat WHERE id_cours = $1;";
 const deleteResultat = "DELETE FROM resultat WHERE id_resultat = $1;";
 
+
+const searchUsers = "SELECT * FROM users WHERE nom ILIKE '%' || $1 || '%'"
+
+
+const getAllTakingCourses = "SELECT * FROM cours_suivis JOIN users ON users.id=cours_suivis.users_id JOIN cours ON cours.id_cours=cours_suivis.cours_id WHERE users.id=$1;";
+const getAllTeachingCourses = "SELECT * FROM cours JOIN users ON users.id=cours.id_users WHERE id_users=$1;";
+
+const getTotalStudents = "SELECT * FROM cours_suivis JOIN users ON users.id=cours_suivis.users_id JOIN cours ON cours.id_cours=cours_suivis.cours_id WHERE cours.id_users=$1;";
+const getAllUsers = "SELECT * FROM users;";
+
+const modifyRole = "UPDATE users SET role = $1 WHERE id=$2;";
+const activateUser = "UPDATE users SET statut_users = $1 WHERE id=$2 RETURNING *;";
+const desactivateUser = "UPDATE users SET statut_users = $1 WHERE id=$2 RETURNING *;";
+const deleteUser = "DELETE FROM users WHERE id=$1 ;";
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -120,4 +135,13 @@ module.exports = {
     addResultat,
     getAllResultats,
     deleteResultat,
+    searchUsers,
+    getAllTakingCourses,
+    getAllTeachingCourses,
+    getTotalStudents,
+    getAllUsers,
+    modifyRole,
+    activateUser,
+    desactivateUser,
+    deleteUser,
 } 

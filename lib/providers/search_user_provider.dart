@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/models/user.dart';
 
-class UserProvider extends ChangeNotifier {
+class SearchUserProvider extends ChangeNotifier {
   User _user =
       User(
           id: "",
@@ -25,6 +25,11 @@ class UserProvider extends ChangeNotifier {
 
   void setUser(String user) {
     _user = User.fromJson(user);
+    notifyListeners();
+  }
+
+  void set_user(User user) {
+    _user = user;
     notifyListeners();
   }
 }

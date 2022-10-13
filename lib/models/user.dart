@@ -7,6 +7,7 @@ class User {
   final String email;
   final String password;
   final String role;
+  final String statut_users;
   final String photo;
   final String sexe;
   final String localisation;
@@ -17,13 +18,14 @@ class User {
   final String token;
   final String verify_code;
 
-  User({
+  User( {
     required this.id,
     required this.nom,
     required this.prenom,
     required this.email,
     required this.password,
     required this.role,
+    required this.statut_users,
     required this.photo,
     required this.sexe,
     required this.localisation,
@@ -43,6 +45,7 @@ class User {
       'email': email,
       'password': password,
       'role': role,
+      'statut_users': statut_users,
       'photo': photo,
       'sexe': sexe,
       'localisation': localisation,
@@ -63,6 +66,7 @@ class User {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       role: map['role'] ?? 0,
+      statut_users: map['statut_users'] ?? '',
       photo: map['photo'] ?? '',
       sexe: map['sexe'] ?? '',
       localisation: map['localisation'] ?? '',

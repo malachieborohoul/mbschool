@@ -11,6 +11,7 @@ import 'package:mbschool/common/widgets/custom_dropdown_button_langue.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
@@ -21,6 +22,7 @@ import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
+import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class CreateCourseScreen extends StatefulWidget {
@@ -144,11 +146,16 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         });
       });
     }
+    final user = Provider.of<UserProvider>(context).user;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        drawer: NavigatorDrawerTeacher(),
+        drawer: user.role == "1"
+            ? Container()
+            : user.role == "2"
+                ? const NavigatorDrawerTeacher()
+                : NavigatorDrawerAdmin(),
         appBar: AppBar(
           title: const Text("Créer un nouveau cours"),
           elevation: 0,

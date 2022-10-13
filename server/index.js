@@ -6,6 +6,7 @@ const express = require('express');
 const authRouter = require('./routes/auth');
 const accountRouter = require('./routes/account');
 const courseRouter = require('./routes/course');
+const userRouter = require("./routes/user");
 // INIT
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(authRouter);
 app.use(accountRouter);
 app.use(courseRouter);
+app.use(userRouter);
 
 
 

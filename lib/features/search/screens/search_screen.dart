@@ -201,7 +201,8 @@ class _CustomSearchState extends State<CustomSearch> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
+    return 
+    Container(
       width: size.width,
       height: spacer,
       alignment: Alignment.center,
@@ -252,6 +253,7 @@ class _CustomSearchState extends State<CustomSearch> {
         ],
       ),
     );
+  
   }
 }
 

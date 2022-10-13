@@ -553,6 +553,60 @@ courseRouter.post('/deleteResultat',  (req, res)=>{
   })
 })
 
+// search all the  users
+courseRouter.get("/searchUsers/:nom",  (req, res)=>{
+  pool.query(queries.searchUsers,[req.params.nom], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+
+})
+
+
+// get all taking courses
+courseRouter.get("/getAllTakingCourses/:id_users",  (req, res)=>{
+  pool.query(queries.getAllTakingCourses,[req.params.id_users], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+// get all teaching courses
+courseRouter.get("/getAllTeachingCourses/:id_users",  (req, res)=>{
+  pool.query(queries.getAllTeachingCourses,[req.params.id_users], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+// get total students
+courseRouter.get("/getTotalStudents/:id_users",  (req, res)=>{
+  pool.query(queries.getTotalStudents,[req.params.id_users], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+// get all users
+courseRouter.get("/getAllUsers",  (req, res)=>{
+  pool.query(queries.getAllUsers, (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
+
+
 
 
 

@@ -42,7 +42,7 @@ class AuthService {
         cv: '',
         token: '',
         telephone: '',
-        verify_code: '',
+        verify_code: '', statut_users: '',
       );
       http.Response res = await http.post(
           Uri.parse(
@@ -127,7 +127,7 @@ class AuthService {
         numCompte: "",
         cv: "",
         token: "",
-        verify_code: "");
+        verify_code: "", statut_users: '');
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');

@@ -188,6 +188,7 @@ class _CustomCardState extends State<CustomCard> {
                                     ),
                                   ),
                           ));
+                
                 }
               }, itemBuilder: (context) {
                 return [
@@ -220,6 +221,7 @@ class _CustomCardState extends State<CustomCard> {
                 ];
               }),
             )
+         
           ],
         ),
       ),

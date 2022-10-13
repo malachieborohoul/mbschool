@@ -4,6 +4,8 @@ import 'package:mbschool/common/arguments/select_file_arguments.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
+import 'package:mbschool/features/admin/users/screens/user_details_screen.dart';
+import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
@@ -32,6 +34,8 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:page_transition/page_transition.dart';
+
+import 'models/user.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
@@ -211,6 +215,17 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => ResultatScreen(cours: cours));
+
+    case UsersScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => UsersScreen());
+
+    case UserDetailsScreen.routeName:
+      var user = routeSettings.arguments as User;
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => UserDetailsScreen(user: user),
+      );
 
     default:
       return MaterialPageRoute(

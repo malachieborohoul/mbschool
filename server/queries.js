@@ -83,6 +83,10 @@ const activateUser = "UPDATE users SET statut_users = $1 WHERE id=$2 RETURNING *
 const desactivateUser = "UPDATE users SET statut_users = $1 WHERE id=$2 RETURNING *;";
 const deleteUser = "DELETE FROM users WHERE id=$1 ;";
 
+
+const addCategorie = "INSERT INTO categorie (nom) VALUES ($1) RETURNING *;";
+
+
 module.exports = {
     checkEmailExist,
     addUser,
@@ -144,4 +148,5 @@ module.exports = {
     activateUser,
     desactivateUser,
     deleteUser,
+    addCategorie,
 } 

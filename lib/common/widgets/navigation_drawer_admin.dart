@@ -3,6 +3,7 @@ import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
@@ -78,7 +79,7 @@ class NavigatorDrawerAdmin extends StatelessWidget {
               leading: const Icon(Icons.admin_panel_settings_outlined),
               title: const Text('Admin'),
               onTap: () {
-                Navigator.pushNamed(context, CourseManagerScreen.routeName);
+                Navigator.pushNamed(context, AdminScreen.routeName);
               },
             ),
             ListTile(

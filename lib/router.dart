@@ -4,6 +4,8 @@ import 'package:mbschool/common/arguments/select_file_arguments.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/categorie_screen.dart';
 import 'package:mbschool/features/admin/users/screens/user_details_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
@@ -226,6 +228,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => UserDetailsScreen(user: user),
       );
+
+     case AdminScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => AdminScreen(),
+      );
+
+      case CategorieScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => CategorieScreen(),
+      );
+
+
 
     default:
       return MaterialPageRoute(

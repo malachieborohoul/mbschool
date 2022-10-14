@@ -45,29 +45,27 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     super.initState();
   }
 
-   void getAllTakingCourses() async {
-      courseTaking = await _courseManagerService.getAllTakingCourses(
-          context, searchUserProvider);
-      setState(() {});
-    }
+  void getAllTakingCourses() async {
+    courseTaking = await _courseManagerService.getAllTakingCourses(
+        context, searchUserProvider);
+    setState(() {});
+  }
 
-    void getAllTeachingCourses() async {
-      courseTeaching = await _courseManagerService.getAllTeachingCourses(
-          context, searchUserProvider);
-      setState(() {});
-    }
+  void getAllTeachingCourses() async {
+    courseTeaching = await _courseManagerService.getAllTeachingCourses(
+        context, searchUserProvider);
+    setState(() {});
+  }
 
-    void getTotalStudents() async {
-      totalStudents = await _courseManagerService.getTotalStudents(
-          context, searchUserProvider);
-      setState(() {});
-    }
+  void getTotalStudents() async {
+    totalStudents = await _courseManagerService.getTotalStudents(
+        context, searchUserProvider);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     // print(' stat ${searchUserProvider.statut_users}');
-
-   
 
     void activateUser() {
       _usersManagerService.activateUser(context, searchUserProvider, () {
@@ -107,9 +105,11 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           isCharging = false;
 
           Navigator.of(context)
-            ..pop()
-            ..pop()
-            ..pushNamed(UsersScreen.routeName);
+          ..pop()
+          ..pop()
+          ..pop()
+          ..pushNamed(UsersScreen.routeName)
+          ;
           showSnackBar(context, "Utilisateur supprimé");
         });
       });
@@ -225,7 +225,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   ),
                                 ),
                         ));
-              }else if (value == 3) {
+              } else if (value == 3) {
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -236,11 +236,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   height: 90,
                                   child: Column(
                                     children: [
-                                       Text(
-                                              "Voulez vous supprimer l'utilisateur?",
-                                              style: TextStyle(fontSize: 14),
-                                            ),
-                                          
+                                      Text(
+                                        "Voulez vous supprimer l'utilisateur?",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
                                       const SizedBox(
                                         height: appPadding,
                                       ),
@@ -253,7 +252,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                 // Navigator.pop(context);
                                                 setState(() {
                                                   deleteUser();
-                                                 
+
                                                   isCharging = true;
                                                 });
                                               },
@@ -319,9 +318,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 PopupMenuItem(
                   value: 3,
                   child: Text("Supprimer l'utilisateur"),
-                  onTap: () {
-                    
-                  },
+                  onTap: () {},
                 ),
               ];
             }),

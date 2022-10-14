@@ -61,6 +61,7 @@ class _UsersScreenState extends State<UsersScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+      
       appBar: PreferredSize(
           child: Padding(
             padding: const EdgeInsets.all(appPadding),

@@ -1,6 +1,6 @@
 # mbschool
 
-A new Flutter project.
+An E Learning mobile app
 
 ## Getting Started
 

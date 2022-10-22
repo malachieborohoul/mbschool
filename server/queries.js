@@ -86,6 +86,17 @@ const deleteUser = "DELETE FROM users WHERE id=$1 ;";
 
 const addCategorie = "INSERT INTO categorie (nom) VALUES ($1) RETURNING *;";
 
+const deleteCategorie = "DELETE FROM categorie WHERE id_categorie=$1 ;";
+
+
+const editCategorie = "UPDATE categorie SET nom = $1 WHERE id_categorie=$2;";
+
+const addLangue = "INSERT INTO langue (nom) VALUES ($1) RETURNING *;";
+
+const deleteLangue = "DELETE FROM langue WHERE id_langue=$1 ;";
+
+
+const editLangue = "UPDATE langue SET nom = $1 WHERE id_langue=$2;";
 
 module.exports = {
     checkEmailExist,
@@ -149,4 +160,9 @@ module.exports = {
     desactivateUser,
     deleteUser,
     addCategorie,
+    deleteCategorie,
+    editCategorie,
+    addLangue,
+    deleteLangue,
+    editLangue,
 } 

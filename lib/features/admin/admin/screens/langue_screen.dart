@@ -11,77 +11,77 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/admin/admin/screens/edit_categorie_screen.dart';
-import 'package:mbschool/features/admin/admin/services/categorie_service.dart';
+import 'package:mbschool/features/admin/admin/screens/edit_langue_screen.dart';
+import 'package:mbschool/features/admin/admin/services/langue_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/resultat_service.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
-import 'package:mbschool/models/categorie.dart';
+import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/resultat.dart';
 
-class CategorieScreen extends StatefulWidget {
-  static const routeName = 'categorie-screen';
-  const CategorieScreen({
+class LangueScreen extends StatefulWidget {
+  static const routeName = 'langue-screen';
+  const LangueScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CategorieScreen> createState() => _CategorieScreenState();
+  State<LangueScreen> createState() => _LangueScreenState();
 }
 
-class _CategorieScreenState extends State<CategorieScreen> {
-  TextEditingController categorieController = TextEditingController();
-  TextEditingController modifyCategorieController = TextEditingController();
+class _LangueScreenState extends State<LangueScreen> {
+  TextEditingController langueController = TextEditingController();
+  TextEditingController modifyLangueController = TextEditingController();
   final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
-  CategorieService categorieService = CategorieService();
+  LangueService langueService = LangueService();
   CreateCourseService createCourseService = CreateCourseService();
-  List<Categorie> categories = [];
-  final _addCategorieFormKey = GlobalKey<FormState>();
+  List<Langue> langues = [];
+  final _addLangueFormKey = GlobalKey<FormState>();
 
-  void addCategorie() {
-    categorieService.addCategorie(context, categorieController.text, () {
+  void addLangue() {
+    langueService.addLangue(context, langueController.text, () {
       setState(() {
-        categorieController.text = "";
-        getAllCategories();
+        langueController.text = "";
+        getAllLangues();
         isCharging = false;
       });
     });
 
-    showSnackBar(context, "Categorie ajouté avec succès");
+    showSnackBar(context, "Langue ajouté avec succès");
   }
 
-  void deleteCategorie(Categorie categorie) {
-    categorieService.deleteCategorie(context, categorie, () {
+  void deleteLangue(Langue langue) {
+    langueService.deleteLangue(context, langue, () {
       setState(() {
-        // categorieController.text = "";
+        // langueController.text = "";
         Navigator.pop(context);
-        getAllCategories();
+        getAllLangues();
         isCharging = false;
       });
     });
 
-    showSnackBar(context, "Categorie supprimé avec succès");
+    showSnackBar(context, "Langue supprimé avec succès");
   }
 
   @override
   void initState() {
     super.initState();
-    getAllCategories();
+    getAllLangues();
   }
 
-  void getAllCategories() async {
-    categories = await createCourseService.getAllCategorieData(context);
+  void getAllLangues() async {
+    langues = await createCourseService.getAllLangueData(context);
     setState(() {});
   }
 
   @override
   void dispose() {
-    categorieController.dispose();
-    modifyCategorieController.dispose();
+    langueController.dispose();
+    modifyLangueController.dispose();
     super.dispose();
   }
 
@@ -90,11 +90,11 @@ class _CategorieScreenState extends State<CategorieScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: CustomAppBarPanel(texte: "categories"),
-        body: isCharging == true || categories == null
+        appBar: CustomAppBarPanel(texte: "langues"),
+        body: isCharging == true || langues == null
             ? Loader()
             : Form(
-                key: _addCategorieFormKey,
+                key: _addLangueFormKey,
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(appPadding - 15),
@@ -108,17 +108,17 @@ class _CategorieScreenState extends State<CategorieScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomTextFieldExigence(
-                                hintText: "Catégorie",
-                                controller: categorieController),
+                                hintText: "Langue",
+                                controller: langueController),
                             IconButton(
                                 onPressed: () {
-                                  if (_addCategorieFormKey.currentState!
+                                  if (_addLangueFormKey.currentState!
                                       .validate()) {
-                                    // print(_listcategories.length);
+                                    // print(_listlangues.length);
                                     setState(() {
                                       isCharging = true;
-                                      addCategorie();
-                                      getAllCategories();
+                                      addLangue();
+                                      getAllLangues();
                                     });
                                   }
                                 },
@@ -128,7 +128,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                 ))
                           ],
                         ),
-                        for (int i = 0; i < categories.length; i++)
+                        for (int i = 0; i < langues.length; i++)
                           SlideDownTween(
                             duration: Duration(milliseconds: (i + 1) * 500),
                             offset: 40,
@@ -146,7 +146,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        categories[i].nom,
+                                        langues[i].nom,
                                         style: TextStyle(color: textWhite),
                                       ),
                                       Row(
@@ -171,7 +171,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                                                               Column(
                                                                             children: [
                                                                               Text(
-                                                                                "Voulez vous supprimer la catégorie?",
+                                                                                "Voulez vous supprimer la langue?",
                                                                                 style: TextStyle(fontSize: 14),
                                                                               ),
                                                                               const SizedBox(
@@ -185,7 +185,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                                                                         // Navigator.pop(context);
                                                                                         setState(() {
                                                                                           isCharging = true;
-                                                                                          deleteCategorie(categories[i]);
+                                                                                          deleteLangue(langues[i]);
                                                                                         });
                                                                                       },
                                                                                       splashColor: Colors.grey.shade200,
@@ -229,8 +229,8 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                             onPressed: () {
                                               Navigator.pushNamed(
                                                   context,
-                                                  EditCategorieScreen
-                                                      .routeName, arguments: categories[i]);
+                                                  EditLangueScreen
+                                                      .routeName, arguments: langues[i]);
                                             },
                                             icon: Icon(
                                               Icons.edit_outlined,

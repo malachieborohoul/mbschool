@@ -6,6 +6,9 @@ import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/categorie_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/edit_categorie_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/edit_langue_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/langue_screen.dart';
 import 'package:mbschool/features/admin/users/screens/user_details_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
@@ -33,6 +36,7 @@ import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/main.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:page_transition/page_transition.dart';
@@ -240,6 +244,21 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
         builder: (_) => CategorieScreen(),
       );
+
+      case EditCategorieScreen.routeName:
+      var categorie = routeSettings.arguments as Categorie;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => EditCategorieScreen(categorie: categorie));
+
+      case LangueScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_) => LangueScreen(),
+      );
+      case EditLangueScreen.routeName:
+      var langue = routeSettings.arguments as Langue;
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => EditLangueScreen(langue: langue));
 
 
 

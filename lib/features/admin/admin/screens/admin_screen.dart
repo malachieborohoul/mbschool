@@ -7,6 +7,7 @@ import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/features/admin/admin/screens/categorie_screen.dart';
+import 'package:mbschool/features/admin/admin/screens/langue_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/user.dart';
@@ -75,7 +76,11 @@ class _AdminScreenState extends State<AdminScreen> {
             SizedBox(
               height: appPadding,
             ),
-            CustomButtonBox(title: "Ajouter langue"),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, LangueScreen.routeName);
+                },
+                child: CustomButtonBox(title: "Ajouter langue")),
             SizedBox(
               height: appPadding + 10,
             ),

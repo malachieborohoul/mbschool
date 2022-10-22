@@ -298,6 +298,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   ),
                                 ),
                         ));
+              
               }
             }, itemBuilder: (context) {
               return [

@@ -72,6 +72,30 @@ An E Learning mobile app
   <img src="/assets/screenshots/Screenshot_2022.10.05_12.44.57.172.png" width="200px">
   <img src="/assets/screenshots/Screenshot_2022.10.05_12.45.07.573.png" width="200px">
   <div>
+  
+  <h2>Duscussion Screens</h2>
+  <div class="row">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.06.34.769" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.17.29.426" width="200px">
+  <div>
+  
+  <h2>Teacher Panel Course Management Screens</h2>
+  <div class="row">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.28.31.811" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.10.301" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.26.252" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.32.335" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.44.752" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.44.752" width="200px">
+  <div>
+  
+  <h2>Admin Panel Course Management Screens</h2>
+  <div class="row">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.31.33.642" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.10.24.953" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.10.32.568" width="200px">
+  <img src="/assets/screenshots/Screenshot_2022.10.25_22.10.44.635" width="200px">
+  <div>
 </div>
 
 

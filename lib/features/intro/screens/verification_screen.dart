@@ -121,13 +121,13 @@ class _VerificationScreenState extends State<VerificationScreen>
                               fontWeight: FontWeight.w300),
                           children: [
                             TextSpan(
-                              text: "Entrez le code vérification envoyé à ",
+                              text: "Entrez le code vérification qui vous a été envoyé ",
                             ),
-                            TextSpan(
-                                text: "bsmlancer@gmail.com",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: textBlack)),
+                            // TextSpan(
+                            //     text: "bsmlancer@gmail.com",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
+                            //         color: textBlack)),
                           ]),
                     ),
                   ),

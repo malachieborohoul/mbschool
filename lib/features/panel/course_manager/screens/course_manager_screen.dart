@@ -27,13 +27,13 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
   List<Cours> cours = [];
   @override
   void initState() {
-    getAllCourses();
+    getAllCoursesTeacher();
 
     super.initState();
   }
 
-  void getAllCourses() async {
-    cours = await courseManagerService.getAllCourses(context);
+  void getAllCoursesTeacher() async {
+    cours = await courseManagerService.getAllCoursesTeacher(context);
     setState(() {});
   }
 

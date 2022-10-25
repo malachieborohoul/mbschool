@@ -50,6 +50,73 @@ class CourseManagerService {
     return coursList;
   }
 
+  Future<List<Cours>> getAllPublishedCourses(BuildContext context) async {
+    List<Cours> coursList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response coursRes = await http.get(
+        Uri.parse('$uri/getAllPublishedCourses'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: coursRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(coursRes.body).length; i++) {
+              coursList.add(
+                Cours.fromJson(
+                  jsonEncode(
+                    jsonDecode(coursRes.body)[i],
+                  ),
+                ),
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return coursList;
+  }
+
+  Future<List<Cours>> getAllCoursesTeacher(BuildContext context) async {
+    List<Cours> coursList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response coursRes = await http.get(
+        Uri.parse(
+            '$uri/getAllCoursesTeacher/${int.parse(userProvider.user.id)}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: coursRes,
+          context: context,
+          onSuccess: () {
+            for (int i = 0; i < jsonDecode(coursRes.body).length; i++) {
+              coursList.add(
+                Cours.fromJson(
+                  jsonEncode(
+                    jsonDecode(coursRes.body)[i],
+                  ),
+                ),
+              );
+            }
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return coursList;
+  }
+
   Future<List<Section>> getAllSections(
       BuildContext context, Cours cours) async {
     List<Section> sectionList = [];
@@ -465,6 +532,119 @@ class CourseManagerService {
     }
   }
 
+  // PUBLISH COURS
+
+  void publishCours(
+      BuildContext context, Cours cours, VoidCallback onSuccess) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      http.Response resDelete = await http.post(
+        Uri.parse('$uri/publishCours'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            'id_cours': int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resDelete,
+          context: context,
+          onSuccess: () {
+            onSuccess();
+          },
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  void deactivateCours(
+      BuildContext context, Cours cours, VoidCallback onSuccess) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      http.Response resDelete = await http.post(
+        Uri.parse('$uri/deactivateCours'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode(
+          {
+            'id_cours': int.parse(cours.id_cours),
+          },
+        ),
+      );
+
+      httpErrorHandle(
+          response: resDelete,
+          context: context,
+          onSuccess: () {
+            onSuccess();
+          },
+          onFailed: onSuccess);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<bool> verifyCourseHasExigence(
+      BuildContext context, Cours cours) async {
+    bool? isCourseHasExigence;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response usersRes = await http.get(
+        Uri.parse('$uri/verifyCourseHasExigence/${cours.id_cours}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: usersRes,
+          context: context,
+          onSuccess: () {
+            isCourseHasExigence = jsonDecode(usersRes.body);
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return isCourseHasExigence!;
+  }
+
+    Future<bool> verifyCourseHasResultat(
+      BuildContext context, Cours cours) async {
+    bool? isCourseHasResultat;
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response usersRes = await http.get(
+        Uri.parse('$uri/verifyCourseHasResultat/${cours.id_cours}'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+      );
+
+      httpErrorHandle(
+          response: usersRes,
+          context: context,
+          onSuccess: () {
+            isCourseHasResultat = jsonDecode(usersRes.body);
+          },
+          onFailed: () {});
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return isCourseHasResultat!;
+  }
+
   Future<List<User>> getAllUsers(BuildContext context) async {
     List<User> usersList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -598,7 +778,4 @@ class CourseManagerService {
     }
     return usersList;
   }
-
-
-  
 }

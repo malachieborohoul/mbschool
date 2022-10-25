@@ -41,9 +41,56 @@ class _CustomCardState extends State<CustomCard> {
           Navigator.of(context)
             ..pop()
             ..pop()
-            ..pushNamed(CourseManagerScreen.routeName);
+            ..pushNamed(CourseManagerScreen.routeName);       
 
           showSnackBar(context, "Cours supprimé");
+        });
+      });
+    }
+
+    bool? isCourseExigence;
+    bool? isCourseResultat;
+    void publishCours() async {
+      isCourseExigence = await courseManagerService.verifyCourseHasExigence(
+          context, widget.cours);
+
+      isCourseResultat = await courseManagerService.verifyCourseHasResultat(
+          context, widget.cours);
+          setState(() {
+            
+          });
+
+      if (isCourseExigence == false && isCourseResultat==false) {
+        Navigator.pop(context);
+        isCharging = false;
+        showSnackBar(context, "Veuillez compléter la procédure");
+      } else {
+        courseManagerService.publishCours(context, widget.cours, () {
+          setState(() {
+            isCharging = false;
+
+            Navigator.of(context)
+              ..pop()
+              ..pop()
+              ..pushNamed(CourseManagerScreen.routeName);
+
+            showSnackBar(context, "Cours publié");
+          });
+        });
+      }
+    }
+
+    void deactivateCours() {
+      courseManagerService.deactivateCours(context, widget.cours, () {
+        setState(() {
+          isCharging = false;
+
+          Navigator.of(context)
+            ..pop()
+            ..pop()
+            ..pushNamed(CourseManagerScreen.routeName);
+
+          showSnackBar(context, "Cours désactivé");
         });
       });
     }
@@ -106,15 +153,10 @@ class _CustomCardState extends State<CustomCard> {
                 } else if (value == 3) {
                   Navigator.pushNamed(context, ExigenceScreen.routeName,
                       arguments: widget.cours);
-                      
-                }
-                else if (value == 4) {
+                } else if (value == 4) {
                   Navigator.pushNamed(context, ResultatScreen.routeName,
                       arguments: widget.cours);
-                      
-                }
-                
-                 else if (value == 5) {
+                } else if (value == 5) {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
@@ -188,7 +230,154 @@ class _CustomCardState extends State<CustomCard> {
                                     ),
                                   ),
                           ));
-                
+                } else if (value == 6) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text("Notification"),
+                            content: isCharging == true
+                                ? Loader()
+                                : Container(
+                                    height: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Voulez vous publier le cours?",
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        const SizedBox(
+                                          height: appPadding,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  // Navigator.pop(context);
+                                                  setState(() {
+                                                    publishCours();
+                                                    isCharging = true;
+                                                  });
+                                                },
+                                                splashColor:
+                                                    Colors.grey.shade200,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.green,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                )),
+                                            InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                splashColor:
+                                                    Colors.grey.shade200,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: Text(
+                                                    "Non",
+                                                    style: TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                )),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                          ));
+                } else if (value == 7) {
+                  showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            title: Text("Notification"),
+                            content: isCharging == true
+                                ? Loader()
+                                : Container(
+                                    height: 90,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          "Voulez vous désactiver le cours?",
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                        const SizedBox(
+                                          height: appPadding,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  // Navigator.pop(context);
+                                                  setState(() {
+                                                    deactivateCours();
+                                                    isCharging = true;
+                                                  });
+                                                },
+                                                splashColor:
+                                                    Colors.grey.shade200,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.green,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                )),
+                                            InkWell(
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                splashColor:
+                                                    Colors.grey.shade200,
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.red,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  child: Text(
+                                                    "Non",
+                                                    style: TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                )),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                          ));
                 }
               }, itemBuilder: (context) {
                 return [
@@ -212,16 +401,25 @@ class _CustomCardState extends State<CustomCard> {
                     child: Text("Resultats"),
                     onTap: () {},
                   ),
-                  
                   PopupMenuItem(
                     value: 5,
                     child: Text("Supprimer cours"),
                     onTap: () {},
                   ),
+                  widget.cours.statut == 0
+                      ? PopupMenuItem(
+                          value: 6,
+                          child: Text("Publier cours"),
+                          onTap: () {},
+                        )
+                      : PopupMenuItem(
+                          value: 7,
+                          child: Text("Désactiver cours"),
+                          onTap: () {},
+                        ),
                 ];
               }),
             )
-         
           ],
         ),
       ),

@@ -22,22 +22,21 @@ import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
 import 'package:provider/provider.dart';
 
-class SelectFile extends StatefulWidget {
-  static const routeName = '/select-file';
-  final codeFile;
+class YoutubeLink extends StatefulWidget {
+  static const routeName = '/youtube-link';
   final Cours cours;
-  const SelectFile({Key? key, this.codeFile, required this.cours})
-      : super(key: key);
+  const YoutubeLink({Key? key, required this.cours}) : super(key: key);
 
   @override
-  State<SelectFile> createState() => _SelectFileState();
+  State<YoutubeLink> createState() => _YoutubeLinkState();
 }
 
-class _SelectFileState extends State<SelectFile> {
+class _YoutubeLinkState extends State<YoutubeLink> {
   List<Section> sections = [];
   CourseManagerService courseManagerService = CourseManagerService();
   TextEditingController titreEditingController = TextEditingController();
   TextEditingController resumeEditingController = TextEditingController();
+  TextEditingController lienEditingController = TextEditingController();
   final _createLessonFormKey = GlobalKey<FormState>();
   SelectFileService selectFileService = SelectFileService();
 
@@ -83,23 +82,23 @@ class _SelectFileState extends State<SelectFile> {
   @override
   Widget build(BuildContext context) {
     String? dropdownvalue_section;
-     
-        //sections != null ? sections[0].id_section : "";
+    // String dropdownvalue_section =
+    //     sections != null ? sections[0].id_section : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
     // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
 
-   final coursProvider =
+    final coursProvider =
         Provider.of<CoursPlanProvider>(context, listen: false).cours;
     void createLesson() {
-      selectFileService.createLesson(
+      selectFileService.createLessonLinkYoutube(
           context,
           titreEditingController.text,
           resumeEditingController.text,
           widget.cours.id_cours,
           id_section,
-          widget.codeFile == 1 ? 1 : 2,
-          widget.codeFile == 1 ? video! : document!, () {
+          2,
+          lienEditingController.text, () {
         setState(() {
           isCharging = false;
 
@@ -108,7 +107,6 @@ class _SelectFileState extends State<SelectFile> {
             ..pop()
             ..pop()
             ..pushNamed(PlanScreen.routeName, arguments: coursProvider);
-
 
           showSnackBar(context, "Leçon ajoutée avec succès");
         });
@@ -139,7 +137,7 @@ class _SelectFileState extends State<SelectFile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Créer une leçon: ${widget.codeFile == 1 ? "Vidéo" : "Document"}",
+                          "Créer une leçon: Lien Youtube",
                           style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -171,7 +169,7 @@ class _SelectFileState extends State<SelectFile> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner une section",
+                              hintText: "Selectionner section",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -202,56 +200,14 @@ class _SelectFileState extends State<SelectFile> {
                         const SizedBox(
                           height: appPadding,
                         ),
-                        CustomTitlePanel(
-                            title:
-                                "Télécharger ${widget.codeFile == 1 ? "une vidéo" : "un document"}"),
+                        const CustomTitlePanel(title: "Lien Youtube"),
                         const SizedBox(
                           height: appPadding - 20,
                         ),
-
-                        InkWell(
-                          splashColor: textBlack,
-                          onTap: widget.codeFile == 1
-                              ? selectVideo
-                              : selectDocument,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                height: 100,
-                                decoration: const BoxDecoration(
-                                    color: textWhite,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8))),
-
-                                // child: video != null ? Text(video!.path!) : Text(""),
-                              ),
-                              Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  video != null ? Text(video!.path!) : Text(""),
-                                  Container(
-                                    height: 30,
-                                    width: 150,
-                                    decoration: const BoxDecoration(
-                                        color: primary,
-                                        borderRadius: BorderRadius.all(
-                                            const Radius.circular(8))),
-                                    child: const Center(
-                                        child: const Text(
-                                      "Choisir une video",
-                                      style: TextStyle(
-                                          color: textWhite,
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
+                        CustomTextFieldPanel(
+                            hintText: "Lien Youtube",
+                            prefixIcon: Icons.info,
+                            controller: lienEditingController),
                         const SizedBox(
                           height: appPadding,
                         ),

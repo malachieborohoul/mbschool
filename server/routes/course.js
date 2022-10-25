@@ -76,6 +76,26 @@ courseRouter.get("/getAllCourses",auth,  (req, res)=>{
   })
 })
 
+
+// get all published courses
+courseRouter.get("/getAllPublishedCourses",auth,  (req, res)=>{
+  pool.query(queries.getAllPublishedCourses, (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+// get all courses teacher
+courseRouter.get("/getAllCoursesTeacher/:id",auth,  (req, res)=>{
+  pool.query(queries.getAllCoursesTeacher,[req.params.id], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(results.rows);
+
+  })
+})
+
 // get all sections
 courseRouter.get("/getAllSections/:id_section",auth,  (req, res)=>{
   pool.query(queries.getAllSections,[req.params.id_section], (error, results)=>{
@@ -504,6 +524,30 @@ courseRouter.post('/deleteCours',  (req, res)=>{
   })
 })
 
+// publish cours
+
+courseRouter.post('/publishCours',  (req, res)=>{
+  const {id_cours }= req.body;
+
+  pool.query(queries.publishCours, [id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
+// deactivate cours
+
+courseRouter.post('/deactivateCours',  (req, res)=>{
+  const {id_cours }= req.body;
+
+  pool.query(queries.deactivateCours, [id_cours], (error, results)=>{
+    if (error) throw error;
+
+    return res.json(true)
+  })
+})
+
 
 // delete exigence
 
@@ -604,6 +648,41 @@ courseRouter.get("/getAllUsers",  (req, res)=>{
 
   })
 })
+
+
+// verify if course has exigence
+courseRouter.get("/verifyCourseHasExigence/:id_cours",  (req, res)=>{
+  pool.query(queries.verifyCourseHasExigence,[req.params.id_cours], (error, results)=>{
+    if (error) throw error;
+
+    if(results.rows.length){
+      return res.json(true);
+    }else{
+      return res.json(false);
+    }
+
+    // return res.json(results.rows);
+
+  })
+})
+
+
+// verify if course has resultat
+courseRouter.get("/verifyCourseHasResultat/:id_cours",  (req, res)=>{
+  pool.query(queries.verifyCourseHasResultat,[req.params.id_cours], (error, results)=>{
+    if (error) throw error;
+
+    if(results.rows.length){
+      return res.json(true);
+    }else{
+      return res.json(false);
+    }
+
+    // return res.json(results.rows);
+
+  })
+})
+
 
 
 

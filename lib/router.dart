@@ -31,6 +31,7 @@ import 'package:mbschool/features/panel/course_manager/screens/modify_course_scr
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/resultat_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
+import 'package:mbschool/features/panel/course_manager/screens/youtube_link.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/main.dart';
@@ -99,6 +100,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           builder: (_) => SelectFile(
                 codeFile: codeFile.codeFile,
                 cours: cours.cours,
+              ));
+
+    case YoutubeLink.routeName:
+      var cours = routeSettings.arguments as Cours;
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => YoutubeLink(
+                cours: cours,
               ));
 
     case ModifyCourseScreen.routeName:

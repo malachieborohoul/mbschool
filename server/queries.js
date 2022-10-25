@@ -9,6 +9,8 @@ const addCourseWithoutPrice = "INSERT INTO cours (titre, description, descriptio
 const addSection = "INSERT INTO section (titre, id_cours) VALUES ($1, $2) RETURNING *;"
 const addLesson = "INSERT INTO lecon (titre, resume, id_cours, id_section, id_type_lecon, url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;"
 const getAllCourses = "SELECT * FROM cours JOIN users ON cours.id_users=users.id;";
+const getAllPublishedCourses = "SELECT * FROM cours JOIN users ON cours.id_users=users.id WHERE statut = 1;";
+const getAllCoursesTeacher = "SELECT * FROM cours JOIN users ON cours.id_users=users.id WHERE cours.id_users=$1;";
 const getAllSections = "SELECT * FROM section WHERE id_cours = $1 ORDER BY id_section ASC;";
 const getAllLecons = "SELECT * FROM lecon WHERE id_cours = $1 AND id_section = $2;";
 const modifyCourse = "UPDATE cours SET titre = $1, description = $2, description_courte= $3, id_categorie = $4, id_niveau=$5, id_langue=$6, id_users=$7,prix = $8, vignette=$9 WHERE id_cours = $10;";
@@ -61,6 +63,8 @@ const deleteSection = "DELETE FROM section WHERE id_section = $1;";
 const editLecon ="UPDATE lecon SET titre=$2, resume=$3, id_cours=$4, id_section=$5, url=$6 WHERE id_lecon=$1 RETURNING *;";
 const deleteLecon = "DELETE FROM lecon WHERE id_lecon = $1;";
 const deleteCours = "DELETE FROM cours WHERE id_cours = $1;";
+const publishCours = "UPDATE cours SET statut=1 WHERE id_cours=$1 RETURNING *;";
+const deactivateCours = "UPDATE cours SET statut=0 WHERE id_cours=$1 RETURNING *;";
 const deleteExigence = "DELETE FROM exigence WHERE id_exigence = $1;";
 
 
@@ -98,6 +102,9 @@ const deleteLangue = "DELETE FROM langue WHERE id_langue=$1 ;";
 
 const editLangue = "UPDATE langue SET nom = $1 WHERE id_langue=$2;";
 
+
+const verifyCourseHasExigence = "SELECT * FROM exigence WHERE id_cours=$1;";
+const verifyCourseHasResultat = "SELECT * FROM resultat WHERE id_cours=$1;";
 module.exports = {
     checkEmailExist,
     addUser,
@@ -165,4 +172,10 @@ module.exports = {
     addLangue,
     deleteLangue,
     editLangue,
+    getAllCoursesTeacher,
+    getAllPublishedCourses,
+    publishCours,
+    deactivateCours,
+    verifyCourseHasExigence,
+    verifyCourseHasResultat,
 } 

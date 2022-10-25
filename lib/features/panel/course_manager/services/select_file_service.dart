@@ -78,4 +78,59 @@ class SelectFileService {
       showSnackBar(context, e.toString());
     }
   }
+
+   void createLessonLinkYoutube(
+      BuildContext context,
+      String titre,
+      String resume,
+      String id_cours,
+      int id_section,
+      int id_type_lecon,
+      String lienYoutube,
+      VoidCallback onSuccess) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      
+
+      http.Response resCreateLesson =
+          await http.post(Uri.parse("$uri/createLesson"),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+                'x-auth-token': userProvider.user.token
+              },
+              body: jsonEncode({
+                'titre': titre,
+                'resume': resume,
+                'id_cours': int.parse(id_cours),
+                'id_section': id_section,
+                'id_type_lecon': id_type_lecon,
+                'url': lienYoutube
+              }));
+
+      var response = jsonDecode(resCreateLesson.body);
+      if (response == true) {
+        http.Response userRes = await http.get(
+          Uri.parse("$uri/"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': userProvider.user.token
+          },
+        );
+
+        httpErrorHandle(
+            response: userRes,
+            context: context,
+            onSuccess: () {
+              // Provider.of<UserProvider>(context, listen: false)
+              //     .setUser(userRes.body);
+              onSuccess();
+              
+            },
+            onFailed: () {});
+      }
+      onSuccess();
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

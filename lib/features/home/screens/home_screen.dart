@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen>
   late final Animation<double> _animation;
   @override
   void initState() {
-    getAllCourses();
+    getAllPublishedCourses();
     getAllCategorieData();
 
     _animationController = AnimationController(
@@ -72,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
-  void getAllCourses() async {
-    cours = await courseManagerService.getAllCourses(context);
+  void getAllPublishedCourses() async {
+    cours = await courseManagerService.getAllPublishedCourses(context);
     setState(() {});
   }
 
@@ -337,12 +337,12 @@ class _HomeScreenState extends State<HomeScreen>
                               const SizedBox(
                                 height: spacer,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                    left: appPadding - 20,
-                                    right: appPadding - 20),
-                                child: CustomTitle(title: "Cours Design"),
-                              ),
+                              // const Padding(
+                              //   padding: EdgeInsets.only(
+                              //       left: appPadding - 20,
+                              //       right: appPadding - 20),
+                              //   child: CustomTitle(title: "Cours Design"),
+                              // ),
                               const SizedBox(
                                 height: smallSpacer,
                               ),

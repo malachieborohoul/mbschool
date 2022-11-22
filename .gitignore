@@ -31,7 +31,6 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
-/lib/constants/global.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -47,6 +46,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# 
-global.dart
-db.js
+
+lib/constants/global.dart
+

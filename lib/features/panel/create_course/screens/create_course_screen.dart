@@ -382,9 +382,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                   ),
                                 ],
                               ),
+                           
                             ],
                           ),
                         ),
+                        
                         SizedBox(
                           height: 15,
                         ),

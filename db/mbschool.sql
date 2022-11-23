@@ -54,6 +54,42 @@ ALTER SEQUENCE public.categorie_id_categorie_seq OWNED BY public.categorie.id_ca
 
 
 --
+-- Name: commentaire; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.commentaire (
+    id_commentaire bigint NOT NULL,
+    intitule text NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    lecon_id bigint,
+    users_id bigint
+);
+
+
+ALTER TABLE public.commentaire OWNER TO postgres;
+
+--
+-- Name: commentaire_id_commentaire_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.commentaire_id_commentaire_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.commentaire_id_commentaire_seq OWNER TO postgres;
+
+--
+-- Name: commentaire_id_commentaire_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.commentaire_id_commentaire_seq OWNED BY public.commentaire.id_commentaire;
+
+
+--
 -- Name: cours; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -64,11 +100,11 @@ CREATE TABLE public.cours (
     statut integer DEFAULT 0 NOT NULL,
     description text NOT NULL,
     description_courte text,
-    id_users bigint,
     prix numeric,
     id_categorie bigint,
     id_langue bigint,
-    id_niveau bigint
+    id_niveau bigint,
+    id_users bigint
 );
 
 
@@ -96,13 +132,48 @@ ALTER SEQUENCE public.cours_id_cours_seq OWNED BY public.cours.id_cours;
 
 
 --
+-- Name: cours_suivis; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.cours_suivis (
+    id_cours_suivis bigint NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    users_id bigint,
+    cours_id bigint
+);
+
+
+ALTER TABLE public.cours_suivis OWNER TO postgres;
+
+--
+-- Name: cours_suivis_id_cours_suivis_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.cours_suivis_id_cours_suivis_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cours_suivis_id_cours_suivis_seq OWNER TO postgres;
+
+--
+-- Name: cours_suivis_id_cours_suivis_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.cours_suivis_id_cours_suivis_seq OWNED BY public.cours_suivis.id_cours_suivis;
+
+
+--
 -- Name: exigence; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.exigence (
     id_exigence bigint NOT NULL,
     nom character varying(255) NOT NULL,
-    id_cours bigint NOT NULL
+    id_cours bigint
 );
 
 
@@ -205,9 +276,9 @@ CREATE TABLE public.lecon (
     titre character varying(255) NOT NULL,
     url character varying(255) NOT NULL,
     resume text,
-    id_cours bigint,
+    id_type_lecon bigint,
     id_section bigint,
-    id_type_lecon bigint
+    id_cours bigint
 );
 
 
@@ -232,6 +303,40 @@ ALTER TABLE public.lecon_id_lecon_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.lecon_id_lecon_seq OWNED BY public.lecon.id_lecon;
+
+
+--
+-- Name: lecon_suivi; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.lecon_suivi (
+    id_lecon_suivi bigint NOT NULL,
+    users_id bigint,
+    lecon_id bigint
+);
+
+
+ALTER TABLE public.lecon_suivi OWNER TO postgres;
+
+--
+-- Name: lecon_suivi_id_lecon_suivi_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.lecon_suivi_id_lecon_suivi_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.lecon_suivi_id_lecon_suivi_seq OWNER TO postgres;
+
+--
+-- Name: lecon_suivi_id_lecon_suivi_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.lecon_suivi_id_lecon_suivi_seq OWNED BY public.lecon_suivi.id_lecon_suivi;
 
 
 --
@@ -265,6 +370,78 @@ ALTER TABLE public.niveau_id_niveau_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.niveau_id_niveau_seq OWNED BY public.niveau.id_niveau;
+
+
+--
+-- Name: notation_cours; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.notation_cours (
+    id_notation_cours bigint NOT NULL,
+    note numeric NOT NULL,
+    testimonial text NOT NULL,
+    id_users bigint,
+    id_cours bigint
+);
+
+
+ALTER TABLE public.notation_cours OWNER TO postgres;
+
+--
+-- Name: notation_cours_id_notation_cours_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.notation_cours_id_notation_cours_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.notation_cours_id_notation_cours_seq OWNER TO postgres;
+
+--
+-- Name: notation_cours_id_notation_cours_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.notation_cours_id_notation_cours_seq OWNED BY public.notation_cours.id_notation_cours;
+
+
+--
+-- Name: reponse; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.reponse (
+    id_reponse bigint NOT NULL,
+    intitule_reponse text NOT NULL,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
+    commentaire_id bigint,
+    users_id bigint
+);
+
+
+ALTER TABLE public.reponse OWNER TO postgres;
+
+--
+-- Name: reponse_id_reponse_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.reponse_id_reponse_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reponse_id_reponse_seq OWNER TO postgres;
+
+--
+-- Name: reponse_id_reponse_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.reponse_id_reponse_seq OWNED BY public.reponse.id_reponse;
 
 
 --
@@ -417,8 +594,11 @@ CREATE TABLE public.users (
     qualification character varying(50),
     numcompte character varying(50),
     cv character varying(255),
-    role bigint NOT NULL,
-    id bigint NOT NULL
+    id bigint NOT NULL,
+    verify_code character varying(225),
+    role character varying(50) DEFAULT 1,
+    statut_users bigint DEFAULT 0,
+    id_users bigint
 );
 
 
@@ -453,10 +633,24 @@ ALTER TABLE ONLY public.categorie ALTER COLUMN id_categorie SET DEFAULT nextval(
 
 
 --
+-- Name: commentaire id_commentaire; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.commentaire ALTER COLUMN id_commentaire SET DEFAULT nextval('public.commentaire_id_commentaire_seq'::regclass);
+
+
+--
 -- Name: cours id_cours; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.cours ALTER COLUMN id_cours SET DEFAULT nextval('public.cours_id_cours_seq'::regclass);
+
+
+--
+-- Name: cours_suivis id_cours_suivis; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cours_suivis ALTER COLUMN id_cours_suivis SET DEFAULT nextval('public.cours_suivis_id_cours_suivis_seq'::regclass);
 
 
 --
@@ -488,10 +682,31 @@ ALTER TABLE ONLY public.lecon ALTER COLUMN id_lecon SET DEFAULT nextval('public.
 
 
 --
+-- Name: lecon_suivi id_lecon_suivi; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecon_suivi ALTER COLUMN id_lecon_suivi SET DEFAULT nextval('public.lecon_suivi_id_lecon_suivi_seq'::regclass);
+
+
+--
 -- Name: niveau id_niveau; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.niveau ALTER COLUMN id_niveau SET DEFAULT nextval('public.niveau_id_niveau_seq'::regclass);
+
+
+--
+-- Name: notation_cours id_notation_cours; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notation_cours ALTER COLUMN id_notation_cours SET DEFAULT nextval('public.notation_cours_id_notation_cours_seq'::regclass);
+
+
+--
+-- Name: reponse id_reponse; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reponse ALTER COLUMN id_reponse SET DEFAULT nextval('public.reponse_id_reponse_seq'::regclass);
 
 
 --
@@ -538,11 +753,27 @@ ALTER TABLE ONLY public.categorie
 
 
 --
+-- Name: commentaire commentaire_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.commentaire
+    ADD CONSTRAINT commentaire_pkey PRIMARY KEY (id_commentaire);
+
+
+--
 -- Name: cours cours_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.cours
     ADD CONSTRAINT cours_pkey PRIMARY KEY (id_cours);
+
+
+--
+-- Name: cours_suivis cours_suivis_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cours_suivis
+    ADD CONSTRAINT cours_suivis_pkey PRIMARY KEY (id_cours_suivis);
 
 
 --
@@ -578,6 +809,14 @@ ALTER TABLE ONLY public.lecon
 
 
 --
+-- Name: lecon_suivi lecon_suivi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecon_suivi
+    ADD CONSTRAINT lecon_suivi_pkey PRIMARY KEY (id_lecon_suivi);
+
+
+--
 -- Name: niveau niveau_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -586,11 +825,19 @@ ALTER TABLE ONLY public.niveau
 
 
 --
--- Name: resultat resultat_id_cours_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: notation_cours notation_cours_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public.resultat
-    ADD CONSTRAINT resultat_id_cours_key UNIQUE (id_cours);
+ALTER TABLE ONLY public.notation_cours
+    ADD CONSTRAINT notation_cours_pkey PRIMARY KEY (id_notation_cours);
+
+
+--
+-- Name: reponse reponse_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reponse
+    ADD CONSTRAINT reponse_pkey PRIMARY KEY (id_reponse);
 
 
 --
@@ -634,11 +881,27 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: commentaire commentaire_lecon_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.commentaire
+    ADD CONSTRAINT commentaire_lecon_id_fkey FOREIGN KEY (lecon_id) REFERENCES public.lecon(id_lecon) ON DELETE CASCADE;
+
+
+--
+-- Name: commentaire commentaire_users_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.commentaire
+    ADD CONSTRAINT commentaire_users_id_fkey FOREIGN KEY (users_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: cours cours_id_categorie_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.cours
-    ADD CONSTRAINT cours_id_categorie_fkey FOREIGN KEY (id_categorie) REFERENCES public.categorie(id_categorie);
+    ADD CONSTRAINT cours_id_categorie_fkey FOREIGN KEY (id_categorie) REFERENCES public.categorie(id_categorie) ON DELETE CASCADE;
 
 
 --
@@ -646,7 +909,7 @@ ALTER TABLE ONLY public.cours
 --
 
 ALTER TABLE ONLY public.cours
-    ADD CONSTRAINT cours_id_langue_fkey FOREIGN KEY (id_langue) REFERENCES public.langue(id_langue);
+    ADD CONSTRAINT cours_id_langue_fkey FOREIGN KEY (id_langue) REFERENCES public.langue(id_langue) ON DELETE CASCADE;
 
 
 --
@@ -654,7 +917,7 @@ ALTER TABLE ONLY public.cours
 --
 
 ALTER TABLE ONLY public.cours
-    ADD CONSTRAINT cours_id_niveau_fkey FOREIGN KEY (id_niveau) REFERENCES public.niveau(id_niveau);
+    ADD CONSTRAINT cours_id_niveau_fkey FOREIGN KEY (id_niveau) REFERENCES public.niveau(id_niveau) ON DELETE CASCADE;
 
 
 --
@@ -662,7 +925,23 @@ ALTER TABLE ONLY public.cours
 --
 
 ALTER TABLE ONLY public.cours
-    ADD CONSTRAINT cours_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id);
+    ADD CONSTRAINT cours_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: cours_suivis cours_suivis_cours_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cours_suivis
+    ADD CONSTRAINT cours_suivis_cours_id_fkey FOREIGN KEY (cours_id) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
+
+
+--
+-- Name: cours_suivis cours_suivis_users_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.cours_suivis
+    ADD CONSTRAINT cours_suivis_users_id_fkey FOREIGN KEY (users_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -670,7 +949,7 @@ ALTER TABLE ONLY public.cours
 --
 
 ALTER TABLE ONLY public.exigence
-    ADD CONSTRAINT exigence_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours);
+    ADD CONSTRAINT exigence_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
 
 
 --
@@ -678,7 +957,7 @@ ALTER TABLE ONLY public.exigence
 --
 
 ALTER TABLE ONLY public.favoris
-    ADD CONSTRAINT favoris_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours);
+    ADD CONSTRAINT favoris_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
 
 
 --
@@ -686,7 +965,7 @@ ALTER TABLE ONLY public.favoris
 --
 
 ALTER TABLE ONLY public.favoris
-    ADD CONSTRAINT favoris_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id);
+    ADD CONSTRAINT favoris_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --
@@ -694,7 +973,7 @@ ALTER TABLE ONLY public.favoris
 --
 
 ALTER TABLE ONLY public.lecon
-    ADD CONSTRAINT lecon_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours);
+    ADD CONSTRAINT lecon_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
 
 
 --
@@ -702,7 +981,7 @@ ALTER TABLE ONLY public.lecon
 --
 
 ALTER TABLE ONLY public.lecon
-    ADD CONSTRAINT lecon_id_section_fkey FOREIGN KEY (id_section) REFERENCES public.section(id_section);
+    ADD CONSTRAINT lecon_id_section_fkey FOREIGN KEY (id_section) REFERENCES public.section(id_section) ON DELETE CASCADE;
 
 
 --
@@ -714,11 +993,59 @@ ALTER TABLE ONLY public.lecon
 
 
 --
+-- Name: lecon_suivi lecon_suivi_lecon_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecon_suivi
+    ADD CONSTRAINT lecon_suivi_lecon_id_fkey FOREIGN KEY (lecon_id) REFERENCES public.lecon(id_lecon) ON DELETE CASCADE;
+
+
+--
+-- Name: lecon_suivi lecon_suivi_users_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.lecon_suivi
+    ADD CONSTRAINT lecon_suivi_users_id_fkey FOREIGN KEY (users_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: notation_cours notation_cours_id_cours_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notation_cours
+    ADD CONSTRAINT notation_cours_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
+
+
+--
+-- Name: notation_cours notation_cours_id_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.notation_cours
+    ADD CONSTRAINT notation_cours_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
+-- Name: reponse reponse_commentaire_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reponse
+    ADD CONSTRAINT reponse_commentaire_id_fkey FOREIGN KEY (commentaire_id) REFERENCES public.commentaire(id_commentaire) ON DELETE CASCADE;
+
+
+--
+-- Name: reponse reponse_users_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.reponse
+    ADD CONSTRAINT reponse_users_id_fkey FOREIGN KEY (users_id) REFERENCES public.users(id) ON DELETE CASCADE;
+
+
+--
 -- Name: resultat resultat_id_cours_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.resultat
-    ADD CONSTRAINT resultat_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours);
+    ADD CONSTRAINT resultat_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
 
 
 --
@@ -726,7 +1053,15 @@ ALTER TABLE ONLY public.resultat
 --
 
 ALTER TABLE ONLY public.section
-    ADD CONSTRAINT section_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours);
+    ADD CONSTRAINT section_id_cours_fkey FOREIGN KEY (id_cours) REFERENCES public.cours(id_cours) ON DELETE CASCADE;
+
+
+--
+-- Name: users users_id_users_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_id_users_fkey FOREIGN KEY (id_users) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
 --

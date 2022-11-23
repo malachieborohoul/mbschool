@@ -640,7 +640,7 @@ courseRouter.get("/getTotalStudents/:id_users",  (req, res)=>{
 })
 
 // get all users
-courseRouter.get("/getAllUsers",  (req, res)=>{
+courseRouter.get("/https://mb-school.herokuapp.com/",  (req, res)=>{
   pool.query(queries.getAllUsers, (error, results)=>{
     if (error) throw error;
 

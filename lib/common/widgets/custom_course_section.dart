@@ -5,9 +5,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_course_lecon.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:mbschool/providers/section_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomCourseSection extends StatefulWidget {
   final Section sections;
@@ -53,8 +56,26 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(widget.sections.titre),
-                          IconButton(
-                              onPressed: () {}, icon: Icon(Icons.more_horiz))
+                          GestureDetector(
+                            child: PopupMenuButton(onSelected: (value) {
+                              if (value == 1) {
+                                Navigator.pushNamed(
+                                    context, EditSectionScreen.routeName,
+                                    arguments: widget.sections);
+
+                                Provider.of<SectionProvider>(context,listen: false)
+                                    .set_section(widget.sections);
+                              }
+                            }, itemBuilder: (context) {
+                              return [
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Text("Modifier section"),
+                                  onTap: () {},
+                                ),
+                              ];
+                            }),
+                          )
                         ],
                       ),
                       // BOuble pour afficher le nombre de lecons appartenant à cette section
@@ -84,8 +105,26 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(widget.sections.titre),
-                          IconButton(
-                              onPressed: () {}, icon: Icon(Icons.more_horiz))
+                          GestureDetector(
+                            child: PopupMenuButton(onSelected: (value) {
+                              if (value == 1) {
+                                Navigator.pushNamed(
+                                    context, EditSectionScreen.routeName,
+                                    arguments: widget.sections);
+
+                                Provider.of<SectionProvider>(context,listen: false)
+                                    .set_section(widget.sections);
+                              }
+                            }, itemBuilder: (context) {
+                              return [
+                                PopupMenuItem(
+                                  value: 1,
+                                  child: Text("Modifier section"),
+                                  onTap: () {},
+                                ),
+                              ];
+                            }),
+                          )
                         ],
                       ),
                       // BOuble pour afficher le nombre de lecons appartenant à cette section

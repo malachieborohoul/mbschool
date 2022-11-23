@@ -1,23 +1,32 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/features/course/services/course_enrollment_service.dart';
+import 'package:mbschool/models/cours.dart';
+import 'package:mbschool/providers/course_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'custom_button_box.dart';
 
-class CustomCourseFooter extends StatelessWidget {
-  const CustomCourseFooter({
+CourseEnrollmentService courseEnrollmentService = CourseEnrollmentService();
+
+class CustomCoursePriceFooter extends StatelessWidget {
+  const CustomCoursePriceFooter({
     Key? key,
     this.coursePrice = '',
     this.enrolled = false,
+    required this.cours,
   }) : super(key: key);
 
   final String coursePrice;
   final bool enrolled;
+  final Cours cours;
 
   @override
   Widget build(BuildContext context) {
+    
+
     var size = MediaQuery.of(context).size;
     return (enrolled)
         ? Container(
@@ -31,10 +40,10 @@ class CustomCourseFooter extends StatelessWidget {
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: CustomButtonBox(title: 'Continue Class'),
+            child: CustomButtonBox(title: 'Continuer le cours'),
           )
         : Container(
-            width: size.width,
+            width: size.width*0.4,
             height: 100.0,
             padding: const EdgeInsets.only(
               left: appPadding,
@@ -56,15 +65,15 @@ class CustomCourseFooter extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Course Price',
+                        'Prix',
                         style: TextStyle(fontSize: 12.0, color: grey),
                       ),
                       SizedBox(height: 5),
                       Text(
-                        coursePrice,
+                        cours.prix.isEmpty ? "Gratuit" : cours.prix,
                         style: TextStyle(
                           fontSize: 20.0,
-                          color: primary,
+                          color: third,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -72,7 +81,7 @@ class CustomCourseFooter extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: miniSpacer + 5),
-                Flexible(child: CustomButtonBox(title: 'Enroll Now')),
+               
               ],
             ),
           );

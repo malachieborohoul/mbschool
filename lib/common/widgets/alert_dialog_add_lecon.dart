@@ -10,6 +10,7 @@ import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
+import 'package:mbschool/features/panel/course_manager/screens/youtube_link.dart';
 import 'package:mbschool/features/panel/course_manager/services/plan.service.dart';
 import 'package:mbschool/models/cours.dart';
 
@@ -99,7 +100,7 @@ class _AlertDialogAddLeconState extends State<AlertDialogAddLecon> {
                         RadioListTile<int>(
                           value: 1,
                           groupValue: selectedRadio,
-                          title: const Text("Vidéo"),
+                          title: const Text("Fichier Vidéo"),
                           onChanged: (int? value) {
                             setState(() => selectedRadio = value);
                           },
@@ -107,7 +108,7 @@ class _AlertDialogAddLeconState extends State<AlertDialogAddLecon> {
                         RadioListTile<int>(
                           value: 2,
                           groupValue: selectedRadio,
-                          title: const Text("Document"),
+                          title: const Text("Vidéo Youtube"),
                           onChanged: (int? value) {
                             setState(() => selectedRadio = value);
                           },
@@ -127,8 +128,8 @@ class _AlertDialogAddLeconState extends State<AlertDialogAddLecon> {
                       Navigator.pushNamed(context, SelectFile.routeName,
                           arguments: SelectFileArguments(1, widget.cours));
                     } else {
-                      Navigator.pushNamed(context, SelectFile.routeName,
-                          arguments: SelectFileArguments(2, widget.cours));
+                      Navigator.pushNamed(context, YoutubeLink.routeName,
+                          arguments: widget.cours);
                     }
                   },
                   child: CustomButtonBox(title: "Suivant"))

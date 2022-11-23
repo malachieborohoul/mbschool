@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
 
 class CustomPersonCard extends StatelessWidget {
-  const CustomPersonCard({
+  const CustomPersonCard(
+    {
     Key? key,
     required this.image,
     required this.name,
-    required this.course,
+    
     required this.totalCourses,
     required this.totalStudents,
   }) : super(key: key);
 
   final String image;
   final String name;
-  final String course;
   final String totalCourses;
   final String totalStudents;
 
@@ -60,15 +60,7 @@ class CustomPersonCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: 5.0),
-                      Text(
-                        course,
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: grey,
-                        ),
-                      ),
+                     
                     ],
                   ),
                 ),

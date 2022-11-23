@@ -7,6 +7,7 @@ class User {
   final String email;
   final String password;
   final String role;
+  final String statut_users;
   final String photo;
   final String sexe;
   final String localisation;
@@ -15,22 +16,26 @@ class User {
   final String numCompte;
   final String cv;
   final String token;
+  final String verify_code;
 
-  User(
-      {required this.id,
-      required this.nom,
-      required this.prenom,
-      required this.email,
-      required this.password,
-      required this.role,
-      required this.photo,
-      required this.sexe,
-      required this.localisation,
-      required this.telephone,
-      required this.qualification,
-      required this.numCompte,
-      required this.cv,
-      required this.token});
+  User( {
+    required this.id,
+    required this.nom,
+    required this.prenom,
+    required this.email,
+    required this.password,
+    required this.role,
+    required this.statut_users,
+    required this.photo,
+    required this.sexe,
+    required this.localisation,
+    required this.telephone,
+    required this.qualification,
+    required this.numCompte,
+    required this.cv,
+    required this.token,
+    required this.verify_code,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,6 +45,7 @@ class User {
       'email': email,
       'password': password,
       'role': role,
+      'statut_users': statut_users,
       'photo': photo,
       'sexe': sexe,
       'localisation': localisation,
@@ -48,6 +54,7 @@ class User {
       'numCompte': numCompte,
       'cv': cv,
       'token': token,
+      'verify_code': verify_code,
     };
   }
 
@@ -59,6 +66,7 @@ class User {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       role: map['role'] ?? 0,
+      statut_users: map['statut_users'] ?? '',
       photo: map['photo'] ?? '',
       sexe: map['sexe'] ?? '',
       localisation: map['localisation'] ?? '',
@@ -67,6 +75,7 @@ class User {
       numCompte: map['numCompte'] ?? '',
       cv: map['cv'] ?? '',
       token: map['token'] ?? '',
+      verify_code: map['verify_code'] ?? '',
     );
   }
 

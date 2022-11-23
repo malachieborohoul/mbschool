@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -39,53 +38,60 @@ class CustomAppBar extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                      color: primary.withOpacity(0.7),
-                      borderRadius: BorderRadius.circular(100.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: primary.withOpacity(0.5),
-                          spreadRadius: 0.0,
-                          blurRadius: 6.0,
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                    ),
-                    alignment: Alignment.center,
-                    child: GestureDetector(
+                  GestureDetector(
+                    // splashColor: textWhite,
                       onTap: () {
                         Navigator.pop(context);
                       },
+                    child: Container(
+                      // clipBehavior: Clip.antiAlias,
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                        color: primary.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(100.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: primary.withOpacity(0.5),
+                            spreadRadius: 0.0,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                      ),
+                      alignment: Alignment.center,
                       child: SvgPicture.asset(
                         assetImg + 'arrow_left_icon.svg',
                         color: textWhite,
                       ),
                     ),
                   ),
+                  
                   Spacer(),
                   Text(
                     title,
-                    style: TextStyle(fontSize: 17, color: secondary),
+                    style: TextStyle(fontSize: 17, color: secondary, fontWeight: FontWeight.w500),
                   ),
                   Spacer(),
+
                   (action)
-                      ? Container(
-                          width: 40.0,
-                          child: Container(
-                            child: SvgPicture.asset(
-                              assetImg + actionIcon,
-                              color: iconColor,
-                              height: 15.0,
+                      ? GestureDetector(
+                        child: Container(
+                            width: 40.0,
+                            child: Container(
+                              child: SvgPicture.asset(
+                                assetImg + actionIcon,
+                                color: iconColor,
+                                height: 20.0,
+                              ),
                             ),
                           ),
-                        )
+                      )
                       : Container(
                           width: 40.0,
                           height: 40.0,
                         ),
+                  
                 ],
               )
             ],

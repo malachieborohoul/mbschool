@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:mbschool/models/user.dart';
 
@@ -19,7 +17,9 @@ class UserProvider extends ChangeNotifier {
           qualification: '',
           numCompte: '',
           cv: '',
-          token: '');
+          token: '', 
+          verify_code: '', 
+          statut_users: '');
 
   User get user => _user;
 

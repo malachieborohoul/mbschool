@@ -18,6 +18,9 @@ import 'package:mbschool/features/panel/course_manager/services/course_manager_s
 import 'package:mbschool/features/panel/course_manager/services/select_file_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/section.dart';
+import 'package:mbschool/providers/course_plan_provider.dart';
+import 'package:mbschool/providers/lecon_provider.dart';
+import 'package:provider/provider.dart';
 
 class SelectFile extends StatefulWidget {
   static const routeName = '/select-file';
@@ -79,12 +82,15 @@ class _SelectFileState extends State<SelectFile> {
 
   @override
   Widget build(BuildContext context) {
-    String dropdownvalue_section =
-        sections != null ? sections[0].id_section : "";
+    String? dropdownvalue_section;
+     
+        //sections != null ? sections[0].id_section : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    if (id_section == 0) id_section = int.parse(dropdownvalue_section);
+    // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
 
+   final coursProvider =
+        Provider.of<CoursPlanProvider>(context, listen: false).cours;
     void createLesson() {
       selectFileService.createLesson(
           context,
@@ -97,8 +103,12 @@ class _SelectFileState extends State<SelectFile> {
         setState(() {
           isCharging = false;
 
-          Navigator.popAndPushNamed(context, PlanScreen.routeName,
-              arguments: widget.cours);
+          Navigator.of(context)
+            ..pop()
+            ..pop()
+            ..pop()
+            ..pushNamed(PlanScreen.routeName, arguments: coursProvider);
+
 
           showSnackBar(context, "Leçon ajoutée avec succès");
         });
@@ -161,7 +171,7 @@ class _SelectFileState extends State<SelectFile> {
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: textWhite,
-                              hintText: "Selectionner",
+                              hintText: "Selectionner une section",
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
@@ -185,7 +195,7 @@ class _SelectFileState extends State<SelectFile> {
                               setState(() {
                                 //On ne peut pas envoyer cette valeur car elle prend à chaque compilation l'id du premier element
                                 dropdownvalue_section = val!;
-                                id_section = int.parse(dropdownvalue_section);
+                                id_section = int.parse(dropdownvalue_section!);
                               });
                             }),
 

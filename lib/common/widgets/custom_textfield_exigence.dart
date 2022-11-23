@@ -31,14 +31,14 @@ class CustomTextFieldExigence extends StatelessWidget {
            
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey.shade300),
-            // enabledBorder: OutlineInputBorder(
-            //   borderSide: BorderSide(color: Colors.transparent),
-            //   borderRadius: BorderRadius.circular(10),
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderSide: BorderSide(color: primary),
-            //   borderRadius: BorderRadius.circular(10),
-            // ),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: primary),
+              borderRadius: BorderRadius.circular(10),
+            ),
             errorBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red),
               borderRadius: BorderRadius.circular(10),

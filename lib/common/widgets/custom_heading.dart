@@ -21,7 +21,7 @@ class CustomHeading extends StatelessWidget {
           title,
           style: TextStyle(
             color: color,
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
         ),

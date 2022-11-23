@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
-import 'package:mbschool/features/explore/screens/explore_screen.dart';
+import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
+import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -18,12 +19,43 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int pageIndex = 0;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: getFooter(),
-      body: getBody(),
+      body: pageIndex ==0? HomeScreen(): pageIndex==1? CourseScreen():pageIndex==2? FavoriteScreen():pageIndex==3? AccountScreen():Container(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigator.pushNamed(context, FilterCourseScreen.routeName);
+          showModalBottomSheet(
+           useRootNavigator: true,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              context: context,
+              builder: (context) {
+                return DraggableScrollableSheet(
+                  initialChildSize: 0.9,
+                  builder: (_, controller)=>
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    color: Colors.white,
+                    
+                    ),
+                    child: FilterCourseScreen(controller: controller,),
+                    
+                  ),
+                );
+              });
+        },
+        backgroundColor: secondary,
+        child: Icon(Icons.filter_list_outlined),
+      ),
     );
   }
 
@@ -31,7 +63,7 @@ class _BottomBarState extends State<BottomBar> {
     List items = [
       "assets/images/home_icon.svg",
       "assets/images/play_icon.svg",
-      "assets/images/rocket_icon.svg",
+      "assets/images/favorite_icon.svg",
       "assets/images/user_icon.svg",
     ];
     var size = MediaQuery.of(context).size;
@@ -92,7 +124,7 @@ class _BottomBarState extends State<BottomBar> {
       children: const [
         HomeScreen(),
         CourseScreen(),
-        ExploreScreen(),
+        FavoriteScreen(),
         AccountScreen()
       ],
     );

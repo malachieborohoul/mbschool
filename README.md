@@ -102,7 +102,7 @@ Validate the publication of a course <br>
   <img src="/client/assets/screenshots/Screenshot_2022.10.05_12.45.07.573.png" width="200px">
   <div>
   
-  <h2>Duscussion Screens</h2>
+  <h2>Discussion Screens</h2>
   <div class="row">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.06.34.769" width="200px">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.17.29.426" width="200px">

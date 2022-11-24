@@ -1,13 +1,13 @@
 # mbschool
 MbSchool is a E-Learning mobile app developed with Flutter and Node JS REST api 
 
-4 main actors: 
+4 main actors: <br>
 ➢ Visitor: this is the profile of the person accessing the application for the first time without an account.<br>
 ➢ Student user: this is the main consumer of the application's contents, he/she is the main actor. <br>
 ➢ Teacher user: this is the second type of user targeted by our application, in charge of content distribution. <br>
 ➢ Manager: interacts in the validation of teacher profiles. <br>
 
-Use cases
+Use cases<br>
 
 Create an account <br>
 View course listings <br>

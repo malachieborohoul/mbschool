@@ -9,34 +9,34 @@ An E Learning mobile app
   
   <h2>Intro Screens</h2>
   <div class="row">
-  <img src="/assets/screenshots/Screenshot_2022.10.19_10.35.01.414.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.19_10.35.12.096.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.19_10.35.01.414.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.19_10.35.12.096.png" width="200px">
   <div>
   
   <h2>Authentification Screens</h2>
   <div class="row">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_10.18.25.109.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_10.55.10.660.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_10.18.25.109.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_10.55.10.660.png" width="200px">
   <div>
   
   <h2>Home Screens</h2>
   <div class="row">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_11.12.22.140.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_11.14.43.939.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_11.12.22.140.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_11.14.43.939.png" width="200px">
   <div>
   
   <h2>Search Screens</h2>
   <div class="row">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_11.24.32.907.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_11.30.42.390.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_11.24.32.907.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_11.30.42.390.png" width="200px">
   <div>
   
   
   <h2>Detail Course Screens</h2>
   <div class="row">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_11.33.48.173.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_12.21.28.906.png" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.05_12.17.01.041.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_11.33.48.173.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_12.21.28.906.png" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.05_12.17.01.041.png" width="200px">
   <div>
   
   <h2>Filter Courses Screens</h2>
@@ -87,7 +87,7 @@ An E Learning mobile app
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.28.31.811" width="200px">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.09.10.301" width="200px">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.09.26.252" width="200px">
-  <img src="/assets/screenshots/Screenshot_2022.10.25_22.09.32.335" width="200px">
+  <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.09.32.335" width="200px">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.09.44.752" width="200px">
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.09.44.752" width="200px">
   <div>

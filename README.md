@@ -2,34 +2,34 @@
 MbSchool is a E-Learning mobile app developed with Flutter and Node JS REST api 
 
 4 main actors: 
-➢ Visitor: this is the profile of the person accessing the application for the first time without an account.
-➢ Student user: this is the main consumer of the application's contents, he/she is the main actor. 
-➢ Teacher user: this is the second type of user targeted by our application, in charge of content distribution. 
-➢ Manager: interacts in the validation of teacher profiles. 
+➢ Visitor: this is the profile of the person accessing the application for the first time without an account.<br>
+➢ Student user: this is the main consumer of the application's contents, he/she is the main actor. <br>
+➢ Teacher user: this is the second type of user targeted by our application, in charge of content distribution. <br>
+➢ Manager: interacts in the validation of teacher profiles. <br>
 
 Use cases
 
-Create an account 
-View course listings 
-View course details 
-Filter courses 
-Search for a course 
-Add a course to your favourites 
-Enrol in a course 
-Modify your account 
-View list of courses taken 
-Take a course 
-View course list 
-Create a new course 
-Establish a course outline 
-Define course outcomes 
-Publish a course 
-View sales reports 
-View payment reports 
-View list of courses taught 
-Update course settings 
-View user list 
-Validate the publication of a course 
+Create an account <br>
+View course listings <br>
+View course details <br>
+Filter courses <br>
+Search for a course <br>
+Add a course to your favourites <br>
+Enrol in a course <br>
+Modify your account <br>
+View list of courses taken <br>
+Take a course <br>
+View course list <br>
+Create a new course <br>
+Establish a course outline <br>
+Define course outcomes <br>
+Publish a course <br>
+View sales reports <br>
+View payment reports <br>
+View list of courses taught <br>
+Update course settings <br>
+View user list <br>
+Validate the publication of a course <br>
 
 <div class="col">
   

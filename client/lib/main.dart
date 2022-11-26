@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    getConnectivity();
+    // getConnectivity();
     super.initState();
     // getUserData();
     // initialization();
@@ -106,27 +106,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    print(this.hasInternet);
-    this.hasInternet == true
-        ? showSnackBar(context, "Internet")
-        : showSnackBar(context, "No internet");
-    return OverlaySupport.global(
-      child: MaterialApp(
-          // ERROR HANDLED BY FLUTTER
-          builder: (context, widget) {
-            Widget error = Image.asset(assetImg + "error_handle.png");
-            if (widget is Scaffold || widget is Navigator) {
-              error = Scaffold(body: Center(child: error));
-            }
-            ErrorWidget.builder = (errorDetails) => error;
-            if (widget != null) return widget;
-            throw ('widget is null');
-          },
-          theme: ThemeData(fontFamily: "WorkSans"),
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: (setting) => generateRoute(setting),
-          home: SplashScreen()),
-    );
+    
+    return MaterialApp(
+        // ERROR HANDLED BY FLUTTER
+        builder: (context, widget) {
+          Widget error = Image.asset(assetImg + "error_handle.png");
+          if (widget is Scaffold || widget is Navigator) {
+            error = Scaffold(body: Center(child: error));
+          }
+          ErrorWidget.builder = (errorDetails) => error;
+          if (widget != null) return widget;
+          throw ('widget is null');
+        },
+        theme: ThemeData(fontFamily: "WorkSans"),
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: (setting) => generateRoute(setting),
+        home: SplashScreen());
   }
 }
 

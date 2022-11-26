@@ -41,7 +41,9 @@ dependencies:
   flutter_svg: ^1.1.1+1
   font_awesome_flutter: ^10.2.1
   http: ^0.13.4
+  internet_connection_checker: ^0.0.1+4
   modal_bottom_sheet: ^2.1.0
+  overlay_support: ^2.1.0
   page_transition: ^2.0.9
   provider: ^6.0.3
   rename: ^2.0.1

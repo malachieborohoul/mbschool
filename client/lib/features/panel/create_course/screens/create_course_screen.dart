@@ -1,13 +1,9 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/alert_dialog_error.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_dropdown_button_langue.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
@@ -17,8 +13,6 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
-import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
-import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
@@ -155,7 +149,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
             ? Container()
             : user.role == "2"
                 ? const NavigatorDrawerTeacher()
-                : NavigatorDrawerAdmin(),
+                : const NavigatorDrawerAdmin(),
         appBar: AppBar(
           title: const Text("Créer un nouveau cours"),
           elevation: 0,
@@ -174,7 +168,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Titre du cours"),
+                        const CustomTitlePanel(title: "Titre du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -182,10 +176,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                             hintText: "Titre du cours",
                             prefixIcon: Icons.title_sharp,
                             controller: titreCoursController),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Description du cours"),
+                        const CustomTitlePanel(title: "Description du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -195,10 +189,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           controller: descriptionCoursController,
                           maxLines: 4,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Courte description du cours"),
+                        const CustomTitlePanel(title: "Courte description du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -208,11 +202,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           controller: descriptionCourteCoursController,
                           maxLines: 2,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Categorie"),
+                        const CustomTitlePanel(title: "Categorie"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -223,21 +217,21 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner une catégorie"),
+                            hint: const Text("Sélectionner une catégorie"),
                             value: dropdownvalue_categorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom.toUpperCase()),
                                 value: item.id_categorie,
+                                child: Text(item.nom.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -247,11 +241,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                     int.parse(dropdownvalue_categorie!);
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Niveau"),
+                        const CustomTitlePanel(title: "Niveau"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -264,21 +258,21 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner un niveau"),
+                            hint: const Text("Sélectionner un niveau"),
                             value: dropdownvalue_niveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
-                                child: Text(item.titre.toUpperCase()),
                                 value: item.id_niveau,
+                                child: Text(item.titre.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -287,11 +281,11 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 id_niveau = int.parse(dropdownvalue_niveau!);
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Langue"),
+                        const CustomTitlePanel(title: "Langue"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -305,21 +299,21 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner une langue"),
+                            hint: const Text("Sélectionner une langue"),
                             value: dropdownvalue_langue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom.toUpperCase()),
                                 value: item.id_langue,
+                                child: Text(item.nom.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -328,14 +322,14 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 id_langue = int.parse(dropdownvalue_langue!);
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Vignette du cours"),
+                        const CustomTitlePanel(title: "Vignette du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -364,16 +358,16 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                           width: 100,
                                           height: 100,
                                         )
-                                      : Text(""),
+                                      : const Text(""),
                                   Container(
                                     height: 30,
                                     width: 150,
                                     decoration: const BoxDecoration(
                                         color: primary,
                                         borderRadius: BorderRadius.all(
-                                            const Radius.circular(8))),
+                                            Radius.circular(8))),
                                     child: const Center(
-                                        child: const Text(
+                                        child: Text(
                                       "Choisir une vignette",
                                       style: TextStyle(
                                           color: textWhite,
@@ -387,7 +381,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           ),
                         ),
                         
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Row(
@@ -407,7 +401,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                     isChecked = val!;
                                   });
                                 }),
-                            Text("Cocher si le cours est gratuit")
+                            const Text("Cocher si le cours est gratuit")
                           ],
                         ),
                         const SizedBox(
@@ -420,7 +414,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 controller: prixCoursController,
                                 keyboardType: TextInputType.number,
                               )
-                            : Text(""),
+                            : const Text(""),
                         const SizedBox(
                           height: 15,
                         ),
@@ -433,7 +427,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 if (vignette == null) {
                                   showDialog(
                                       context: context,
-                                      builder: (context) => AlertDialogError(
+                                      builder: (context) => const AlertDialogError(
                                           texte: "Veuillez choisir une image"));
                                 } else {
                                   setState(() {
@@ -443,7 +437,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 }
                               }
                             },
-                            child: CustomButtonBox(title: "Créer")),
+                            child: const CustomButtonBox(title: "Créer")),
                       ],
                     ),
                   ),

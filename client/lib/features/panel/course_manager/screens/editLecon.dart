@@ -1,22 +1,17 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
+
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/edit_lecon_service.dart';
-import 'package:mbschool/features/panel/course_manager/services/select_file_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
@@ -84,8 +79,8 @@ class _EditLeconState extends State<EditLecon> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.cours.titre);
-    print(widget.lecon.titre);
+    // print(widget.cours.titre);
+    // print(widget.lecon.titre);
     final leconProvider =
         Provider.of<LeconProvider>(context, listen: false).lecon;
     final coursProvider =
@@ -152,7 +147,7 @@ class _EditLeconState extends State<EditLecon> {
         elevation: 1,
       ),
       body: isCharging == true || sections == null
-          ? Loader()
+          ? const Loader()
           : GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: SingleChildScrollView(
@@ -163,9 +158,9 @@ class _EditLeconState extends State<EditLecon> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Modifier une leçon",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
@@ -199,21 +194,21 @@ class _EditLeconState extends State<EditLecon> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Selectionner une section"),
+                            hint: const Text("Selectionner une section"),
                             value: dropdownvalue_section,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
-                                child: Text(item.titre),
                                 value: item.id_section,
+                                child: Text(item.titre),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -227,7 +222,7 @@ class _EditLeconState extends State<EditLecon> {
                         const SizedBox(
                           height: appPadding,
                         ),
-                        CustomTitlePanel(title: "Télécharger une vidéo"),
+                        const CustomTitlePanel(title: "Télécharger une vidéo"),
                         const SizedBox(
                           height: appPadding - 20,
                         ),
@@ -251,16 +246,16 @@ class _EditLeconState extends State<EditLecon> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  video != null ? Text(video!.path!) : Text(""),
+                                  video != null ? Text(video!.path!) : const Text(""),
                                   Container(
                                     height: 30,
                                     width: 150,
                                     decoration: const BoxDecoration(
                                         color: primary,
                                         borderRadius: BorderRadius.all(
-                                            const Radius.circular(8))),
-                                    child: const Center(
-                                        child: const Text(
+                                             Radius.circular(8))),
+                                    child:  const Center(
+                                        child: Text(
                                       "Choisir une video",
                                       style: TextStyle(
                                           color: textWhite,

@@ -1,17 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/arguments/select_file_arguments.dart';
 
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
-import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
-import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/course_manager/services/plan.service.dart';
-import 'package:mbschool/models/cours.dart';
 
 class AlertDialogError extends StatefulWidget {
   final String texte;
@@ -24,12 +14,10 @@ class AlertDialogError extends StatefulWidget {
 enum type_lecon { video, document }
 
 class _AlertDialogErrorState extends State<AlertDialogError> {
-  final _addSectionFormKey = GlobalKey<FormState>();
 
   TextEditingController titreSectionController = TextEditingController();
 
   PlanService planService = PlanService();
-  bool _isCharging = false;
 
   @override
   void dispose() {
@@ -60,7 +48,7 @@ class _AlertDialogErrorState extends State<AlertDialogError> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.red),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.close,
                           color: textWhite,
@@ -68,14 +56,14 @@ class _AlertDialogErrorState extends State<AlertDialogError> {
                       )))
             ],
           ),
-          content: Container(
+          content: SizedBox(
             height: 80,
             child: Column(
               children: [
                 Flexible(
                     child: Text(
                   widget.texte,
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 )),
                
               ],

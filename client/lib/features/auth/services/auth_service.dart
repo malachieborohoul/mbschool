@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:file_picker/file_picker.dart';
@@ -12,22 +11,22 @@ import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/models/user.dart';
-import 'package:mbschool/providers/number_entry_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   // SIGNUP USER
-  void signUpUser(
-      {required BuildContext context,
-      required String name,
-      required String prenom,
-      required String email,
-      required String password,
-      required VoidCallback onSuccess}) async {
+  void signUpUser({
+    required BuildContext context,
+    required String name,
+    required String prenom,
+    required String email,
+    required String password,
+    required VoidCallback onSuccess,
+  }) async {
     try {
-      User user = new User(
+      User user = User(
         id: "",
         nom: name,
         prenom: prenom,
@@ -42,7 +41,8 @@ class AuthService {
         cv: '',
         token: '',
         telephone: '',
-        verify_code: '', statut_users: '',
+        verify_code: '',
+        statut_users: '',
       );
       http.Response res = await http.post(
           Uri.parse(
@@ -112,7 +112,7 @@ class AuthService {
   }
 
   Future<User> getUserData(BuildContext context) async {
-    User user = new User(
+    User user = User(
         id: "",
         nom: "",
         prenom: "",
@@ -127,7 +127,8 @@ class AuthService {
         numCompte: "",
         cv: "",
         token: "",
-        verify_code: "", statut_users: '');
+        verify_code: "",
+        statut_users: '');
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -154,7 +155,7 @@ class AuthService {
           user = jsonDecode(userRes.body);
         }
       }
-     
+
       await Future.delayed(Duration(seconds: 3));
       //  Provider.of<UserProvider>(context, listen: false).setUser(jsonEncode({
       //   "id": "",

@@ -1,18 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/alert_dialog_add_lecon.dart';
 import 'package:mbschool/common/widgets/alert_dialog_add_section.dart';
 import 'package:mbschool/common/widgets/alert_dialog_error.dart';
 import 'package:mbschool/common/widgets/custom_animated_button.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/section.dart';
-import 'package:mbschool/providers/floating_button_provider.dart';
-import 'package:provider/provider.dart';
 
 class CustomAnimatedFloatingButtons extends StatefulWidget {
   final Cours cours;
@@ -58,7 +52,7 @@ class _CustomAnimatedFloatingButtonsState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       // color: Colors.black26,
       width: 250,
       child: Stack(
@@ -94,7 +88,7 @@ class _CustomAnimatedFloatingButtonsState
               showDialog(
                   context: context,
                   builder: (context) => sections == null || sections.isEmpty
-                      ? AlertDialogError(
+                      ? const AlertDialogError(
                           texte: "Veuillez d'abord créer une section! ")
                       : AlertDialogAddLecon(
                           cours: widget.cours,
@@ -113,7 +107,7 @@ class _CustomAnimatedFloatingButtonsState
             onTap: () {},
           ),
           Container(
-            margin: EdgeInsets.only(left: 150),
+            margin: const EdgeInsets.only(left: 150),
             width: 70,
             height: 70,
             child: FloatingActionButton(

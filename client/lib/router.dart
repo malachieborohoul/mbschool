@@ -34,11 +34,9 @@ import 'package:mbschool/features/panel/course_manager/screens/select_file.dart'
 import 'package:mbschool/features/panel/course_manager/screens/youtube_link.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
 import 'package:mbschool/features/search/screens/search_screen.dart';
-import 'package:mbschool/main.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
-import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -164,7 +162,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case SearchScreen.routeName:
       return PageTransition(
           settings: routeSettings,
-          child: SearchScreen(),
+          child: const SearchScreen(),
           curve: Curves.easeOut,
           type: PageTransitionType.fade);
 
@@ -186,14 +184,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case IntroScreen.routeName:
       return PageTransition(
           settings: routeSettings,
-          child: IntroScreen(),
+          child: const IntroScreen(),
           curve: Curves.easeOut,
           type: PageTransitionType.rightToLeft);
 
     case VerificationScreen.routeName:
       return PageTransition(
           settings: routeSettings,
-          child: VerificationScreen(),
+          child: const VerificationScreen(),
           curve: Curves.easeOut,
           type: PageTransitionType.rightToLeft);
 
@@ -233,7 +231,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
     case UsersScreen.routeName:
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => UsersScreen());
+          settings: routeSettings, builder: (_) => const UsersScreen());
 
     case UserDetailsScreen.routeName:
       var user = routeSettings.arguments as User;
@@ -245,13 +243,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
      case AdminScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => AdminScreen(),
+        builder: (_) => const AdminScreen(),
       );
 
       case CategorieScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => CategorieScreen(),
+        builder: (_) => const CategorieScreen(),
       );
 
       case EditCategorieScreen.routeName:
@@ -262,7 +260,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       case LangueScreen.routeName:
       return MaterialPageRoute(
         settings: routeSettings,
-        builder: (_) => LangueScreen(),
+        builder: (_) => const LangueScreen(),
       );
       case EditLangueScreen.routeName:
       var langue = routeSettings.arguments as Langue;

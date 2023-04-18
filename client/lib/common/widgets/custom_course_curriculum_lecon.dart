@@ -1,14 +1,5 @@
-import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
-import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
-import 'package:mbschool/models/section.dart';
 
 class CustomCourseCurriculumLecon extends StatefulWidget {
   final Lecon lecon;
@@ -28,7 +19,7 @@ class _CustomCourseCurriculumLeconState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Row(
@@ -37,23 +28,23 @@ class _CustomCourseCurriculumLeconState
             
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.play_arrow,
                   size: 15,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(widget.lecon.titre),
               ],
             ),
-            widget.isCourseEnrolled==false? Icon(Icons.lock_outline, size: 15,): Container()
+            widget.isCourseEnrolled==false? const Icon(Icons.lock_outline, size: 15,): Container()
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
-        Divider(
+        const Divider(
           thickness: 0.5,
         ),
       ],

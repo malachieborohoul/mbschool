@@ -2,17 +2,12 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield.dart';
 import 'package:mbschool/common/widgets/custom_textfield_second.dart';
-import 'package:mbschool/common/widgets/custom_title.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -106,17 +101,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Scaffold(
         backgroundColor: background,
         extendBodyBehindAppBar: true,
-        appBar: PreferredSize(
+        appBar:   const PreferredSize(
+            preferredSize: Size.fromHeight(40),
             child: CustomAppBar(
               backgroundColor: Colors.transparent,
               action: false,
               actionIcon: 'search_icon.svg',
               title: "Modifier profil",
-            ),
-            preferredSize: Size.fromHeight(40)),
+            )),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(appPadding),
+            padding: const EdgeInsets.all(appPadding),
             child: Form(
               key: _editUserProfileFormKey,
               child: Column(
@@ -133,7 +128,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           image != null
                               ? ClipRRect(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(100)),
+                                      const BorderRadius.all(Radius.circular(100)),
                                   child: Image.file(
                                     File(image!.path!),
                                     width: 100,
@@ -142,7 +137,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 )
                               : user.photo.isNotEmpty
                                   ? ClipRRect(
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(100)),
                                       child: Hero(
                                         tag: 'profile-photo',
@@ -154,7 +149,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       ),
                                     )
                                   : ClipRRect(
-                                      borderRadius: BorderRadius.all(
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(100)),
                                       child: Hero(
                                         tag: 'profile-photo',
@@ -170,21 +165,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             child: Container(
                               width: 40,
                               height: 40,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: background,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(50))),
                               child: IconButton(
                                   onPressed: selectImage,
-                                  icon: Icon(Icons.camera_alt_rounded)),
+                                  icon: const Icon(Icons.camera_alt_rounded)),
                             ),
                           )
                         ],
                       ),
 
                       Text(
-                        "${user.nom.toUpperCase()}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        user.nom.toUpperCase(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       // CustomTitle(
                       //   title: '${user.nom.toUpperCase()}',
@@ -238,18 +233,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(color: primary),
+                            borderSide: const BorderSide(color: primary),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(color: primary),
+                            borderSide: const BorderSide(color: primary),
                           ),
                           prefixIcon: Container(
                               height: 50.0,
                               width: 50.0,
                               // color: grey,
                               alignment: Alignment.center,
-                              child: Icon(Icons.male_sharp, color: primary)),
+                              child: const Icon(Icons.male_sharp, color: primary)),
                         ),
                         value: dropdownvalue,
                         items: items.map((String items) {
@@ -276,12 +271,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                       child: Column(
                         children: [
-                          CustomButtonBox(title: "Modifier"),
+                          const CustomButtonBox(title: "Modifier"),
                           isCharging == true
-                              ? CircularProgressIndicator(
+                              ? const CircularProgressIndicator(
                                   color: primary,
                                 )
-                              : Text("")
+                              : const Text("")
                         ],
                       ))
                 ],

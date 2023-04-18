@@ -7,7 +7,6 @@ import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
-import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +34,7 @@ class NavigatorDrawerAdmin extends StatelessWidget {
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           CircleAvatar(
@@ -43,19 +42,19 @@ class NavigatorDrawerAdmin extends StatelessWidget {
             backgroundColor: textWhite,
             backgroundImage: NetworkImage(user.photo),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Text(
             '${user.nom} ${user.prenom}',
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20, color: textWhite, fontWeight: FontWeight.bold),
           ),
           Text(
-            "${user.email}",
-            style: TextStyle(fontSize: 16, color: textWhite),
+            user.email,
+            style: const TextStyle(fontSize: 16, color: textWhite),
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
         ],

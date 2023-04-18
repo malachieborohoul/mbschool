@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/models/exigence.dart';
-import 'package:mbschool/models/section.dart';
 
 class CustomExigenceCours extends StatelessWidget {
   final Exigence exigence;
@@ -15,14 +11,14 @@ class CustomExigenceCours extends StatelessWidget {
     return Column(
       crossAxisAlignment:CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
           exigence.nom,
-          style: TextStyle(color: textWhite),
+          style: const TextStyle(color: textWhite),
         ),
-        Divider(
+        const Divider(
           thickness: 0.5,
         ),
       ],

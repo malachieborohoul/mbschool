@@ -17,7 +17,7 @@ class SearchService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response coursRes = await http.get(
-        Uri.parse('$uri/searchCourses/${titre}'),
+        Uri.parse('$uri/searchCourses/$titre'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -51,7 +51,7 @@ class SearchService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response usersRes = await http.get(
-        Uri.parse('$uri/searchUsers/${nom}'),
+        Uri.parse('$uri/searchUsers/$nom'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

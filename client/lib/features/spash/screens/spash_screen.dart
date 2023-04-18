@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
-import 'package:mbschool/main.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/widgets/bottom_bar.dart';
 
 class MySplashScreen extends StatefulWidget {
+  const MySplashScreen({super.key});
+
   @override
   State<MySplashScreen> createState() => _MySplashScreenState();
 }
@@ -19,8 +20,8 @@ class _MySplashScreenState extends State<MySplashScreen> {
   startTimer() {
     Timer(const Duration(seconds: 3), () async {
       Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? BottomBar()
-          : AuthScreen();
+          ? const BottomBar()
+          : const AuthScreen();
     });
   }
 
@@ -38,7 +39,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             Text(
               "MBSCHOOL",
               style: TextStyle(fontSize: 50, color: primary),

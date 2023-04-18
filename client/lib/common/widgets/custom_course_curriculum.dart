@@ -1,16 +1,10 @@
 import 'package:expandable/expandable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:http/http.dart';
 import 'package:mbschool/common/arguments/course_lesson_arguments.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum_lecon.dart';
-import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/course/screens/detail_lesson_screen.dart';
-import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
@@ -44,7 +38,7 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
   void getAllLecons() async {
     lecons = await courseManagerService.getAllLecons(context, widget.section);
     setState(() {
-      print(lecons.length);
+      // print(lecons.length);
     });
   }
 
@@ -82,12 +76,12 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                     width: 70,
                     decoration: BoxDecoration(
                         color: Colors.green.shade200,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
+                        borderRadius: const BorderRadius.all(Radius.circular(5))),
+                    child: const Center(
                         child:
                             Text("00:20:30", style: TextStyle(fontSize: 12))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Container(
@@ -95,8 +89,8 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                     width: 70,
                     decoration: BoxDecoration(
                         color: Colors.red.shade200,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
+                        borderRadius: const BorderRadius.all(Radius.circular(5))),
+                    child: const Center(
                         child: Text(
                       "10 leçons",
                       style: TextStyle(fontSize: 12),
@@ -104,7 +98,7 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],
@@ -118,12 +112,12 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                     width: 70,
                     decoration: BoxDecoration(
                         color: Colors.green.shade200,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
+                        borderRadius: const BorderRadius.all(Radius.circular(5))),
+                    child: const Center(
                         child:
                             Text("00:20:30", style: TextStyle(fontSize: 12))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Container(
@@ -131,8 +125,8 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
                     width: 70,
                     decoration: BoxDecoration(
                         color: Colors.red.shade200,
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    child: Center(
+                        borderRadius: const BorderRadius.all(Radius.circular(5))),
+                    child: const Center(
                         child: Text(
                       "10 leçons",
                       style: TextStyle(fontSize: 12),

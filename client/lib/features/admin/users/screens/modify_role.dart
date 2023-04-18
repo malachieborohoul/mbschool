@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/utils.dart';
@@ -20,7 +19,7 @@ class ModifyRole extends StatefulWidget {
 late int role;
 
 class _ModifyRoleState extends State<ModifyRole> {
-  UsersManagerService _usersManagerService = UsersManagerService();
+  final UsersManagerService _usersManagerService = UsersManagerService();
   bool isCharging = false;
   @override
   void initState() {
@@ -46,14 +45,14 @@ class _ModifyRoleState extends State<ModifyRole> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isCharging == true
-          ? Loader()
+          ? const Loader()
           : Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
+              child: SizedBox(
                 height: 200,
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "Modifier rôle",
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
@@ -65,7 +64,7 @@ class _ModifyRoleState extends State<ModifyRole> {
                           role = 1;
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         // color: primary,
                         height: 30,
                         child: Row(
@@ -78,11 +77,11 @@ class _ModifyRoleState extends State<ModifyRole> {
                                         ? FontWeight.bold
                                         : FontWeight.normal),
                               ),
-                              role == 1 ? Icon(Icons.check) : Container()
+                              role == 1 ? const Icon(Icons.check) : Container()
                             ]),
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                     ),
                     InkWell(
@@ -92,7 +91,7 @@ class _ModifyRoleState extends State<ModifyRole> {
                           role = 2;
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 30,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,11 +103,11 @@ class _ModifyRoleState extends State<ModifyRole> {
                                         ? FontWeight.bold
                                         : FontWeight.normal),
                               ),
-                              role == 2 ? Icon(Icons.check) : Container()
+                              role == 2 ? const Icon(Icons.check) : Container()
                             ]),
                       ),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 0.5,
                     ),
                     InkWell(
@@ -118,7 +117,7 @@ class _ModifyRoleState extends State<ModifyRole> {
                           role = 3;
                         });
                       },
-                      child: Container(
+                      child: SizedBox(
                         height: 30,
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,11 +129,11 @@ class _ModifyRoleState extends State<ModifyRole> {
                                         ? FontWeight.bold
                                         : FontWeight.normal),
                               ),
-                              role == 3 ? Icon(Icons.check) : Container()
+                              role == 3 ? const Icon(Icons.check) : Container()
                             ]),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     GestureDetector(
@@ -151,7 +150,7 @@ class _ModifyRoleState extends State<ModifyRole> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8),
                               color: primary),
-                          child: Text(
+                          child: const Text(
                             "Terminé",
                             style: TextStyle(color: textWhite),
                           )),

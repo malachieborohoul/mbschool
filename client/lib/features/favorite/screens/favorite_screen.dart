@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/animations/slide_right_tween.dart';
-import 'package:mbschool/common/widgets/custom_categories_button.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
-import 'package:mbschool/common/widgets/custom_place_holder.dart';
-import 'package:mbschool/common/widgets/custom_search_field.dart';
-import 'package:mbschool/common/widgets/custom_title.dart';
+
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/category_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/favorite/services/favorite_service.dart';
 import 'package:mbschool/models/cours.dart';
@@ -29,7 +24,7 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   List<Cours> cours = [];
-  FavoriteService _favoriteService = FavoriteService();
+  final FavoriteService _favoriteService = FavoriteService();
   @override
   void initState() {
     getAllFavoriteCourses();
@@ -51,7 +46,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: cours == null ? Loader() : getBody(),
+      body: cours == null ? const Loader() : getBody(),
     );
   }
 
@@ -70,7 +65,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             const SizedBox(
               height: spacer - 50,
             ),
-           cours.isEmpty? NoData(): Column(
+           cours.isEmpty? const NoData(): Column(
               children: List.generate(cours.length, (index) {
                 return Padding(
                     padding: const EdgeInsets.only(bottom: 25),

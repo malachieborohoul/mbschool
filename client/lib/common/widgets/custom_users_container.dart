@@ -13,7 +13,7 @@ class CustomUsersContainer extends StatefulWidget {
 }
 
 class _CustomUsersContainerState extends State<CustomUsersContainer> {
-  CourseManagerService _courseManagerService = CourseManagerService();
+  final CourseManagerService _courseManagerService = CourseManagerService();
   List<Cours> courseTaking = [];
   List<Cours> courseTeaching = [];
   List<User> totalStudents = [];
@@ -48,10 +48,10 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
     return courseTaking == null ||
             courseTeaching == null ||
             totalStudents == null
-        ? Loader()
+        ? const Loader()
         : Container(
           height: 60,
-            margin: EdgeInsets.only(bottom: 8.0),
+            margin: const EdgeInsets.only(bottom: 8.0),
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(20.0),
@@ -73,17 +73,17 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
                     children: [
                       Text(
                         "${widget.user.nom} ${widget.user.prenom}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Cours suivis: ${courseTaking.length} - Cours enseignés ${courseTeaching.length} - Etudiants ${totalStudents.length}",
-                        style: TextStyle(fontSize: 12),
+                        style: const TextStyle(fontSize: 12),
                       )
                     ],
                   ),
                 ),
 
-                Icon(Icons.arrow_forward_ios_outlined, size: 15,)
+                const Icon(Icons.arrow_forward_ios_outlined, size: 15,)
               ],
             ),
           );

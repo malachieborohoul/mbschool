@@ -22,7 +22,8 @@ class _AlertNotificationState extends State<AlertNotification> {
       backgroundColor: Colors.transparent,
       content: SlideUpTween(
           curve: Curves.bounceOut,
-          duration: Duration(milliseconds: 700),
+          duration: const Duration(milliseconds: 700),
+          offset: 300,
           child: ClipRRect(
             // borderRadius: BorderRadius.circular(10),
             child: BackdropFilter(
@@ -32,35 +33,34 @@ class _AlertNotificationState extends State<AlertNotification> {
                 width: 350,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Color.fromARGB(255, 255, 254, 254),
+                  color: const Color.fromARGB(255, 255, 254, 254),
                 ),
                 child: Center(
                     child: Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 15),
+                            margin: const EdgeInsets.only(left: 15),
                             height: 30,
                             width: 30,
                             decoration: BoxDecoration(
                               color: widget.error==true? Colors.red:Colors.green,
-                              borderRadius: BorderRadius.all(Radius.circular(15))
+                              borderRadius: const BorderRadius.all(Radius.circular(15))
                             ),
                             child: Center(child:  Icon( widget.error==true?Icons.close:Icons.check, color: Colors.black)),
                           ),
 
-                      SizedBox(width: 25,),
+                      const SizedBox(width: 25,),
                       Flexible(
                         child: Text(
                           widget.message,
-                          style: TextStyle(color: textBlack, fontSize: 12),
+                          style: const TextStyle(color: textBlack, fontSize: 12),
                         ),
                       )
                     ])),
               ),
             ),
-          ),
-          offset: 300),
+          )),
     );
   }
 }

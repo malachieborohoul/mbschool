@@ -29,7 +29,7 @@ class CustomExpandableWidget extends StatelessWidget {
               child: Container(
                 width: size.width,
                 height: size.width * .21,
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   color: textWhite,
                   borderRadius: BorderRadius.circular(22.0),
@@ -49,30 +49,30 @@ class CustomExpandableWidget extends StatelessWidget {
                             color: primary.withOpacity(0.5),
                             spreadRadius: 0.0,
                             blurRadius: 6.0,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           )
                         ],
                       ),
-                      child: Icon(
+                      child: const Icon(
                         CupertinoIcons.play_fill,
                         color: textWhite,
                         size: 20.0,
                       ),
                     ),
-                    SizedBox(width: miniSpacer + 5),
+                    const SizedBox(width: miniSpacer + 5),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           curiculumTitle,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w700,
                             color: secondary,
                           ),
                         ),
-                        SizedBox(height: 5.0),
+                        const SizedBox(height: 5.0),
                         Text(
                           '$totalVideoAmount Lectures - $totalVideoRuntime total length',
                           style: TextStyle(
@@ -82,7 +82,7 @@ class CustomExpandableWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                   ],
                 ),
               ),
@@ -91,7 +91,7 @@ class CustomExpandableWidget extends StatelessWidget {
               child: Container(
                 width: size.width,
                 // height: size.width * .9,
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                   color: textWhite,
@@ -115,30 +115,30 @@ class CustomExpandableWidget extends StatelessWidget {
                                 color: primary.withOpacity(0.5),
                                 spreadRadius: 0.0,
                                 blurRadius: 6.0,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               )
                             ],
                           ),
-                          child: Icon(
+                          child: const Icon(
                             CupertinoIcons.play_fill,
                             color: textWhite,
                             size: 20.0,
                           ),
                         ),
-                        SizedBox(width: miniSpacer + 5),
+                        const SizedBox(width: miniSpacer + 5),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               curiculumTitle,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.w700,
                                 color: secondary,
                               ),
                             ),
-                            SizedBox(height: 5.0),
+                            const SizedBox(height: 5.0),
                             Text(
                               '$totalVideoAmount Lectures - $totalVideoRuntime total length',
                               style: TextStyle(
@@ -148,14 +148,14 @@ class CustomExpandableWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
-                    SizedBox(height: smallSpacer),
+                    const SizedBox(height: smallSpacer),
                     Column(
                       children: List.generate(lectures.length, (index) {
                         return Padding(
-                          padding: EdgeInsets.only(bottom: appPadding),
+                          padding: const EdgeInsets.only(bottom: appPadding),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,22 +166,22 @@ class CustomExpandableWidget extends StatelessWidget {
                                 children: [
                                   Text(
                                     lectures[index]['title'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       color: secondary,
                                     ),
                                   ),
-                                  Icon(
+                                  const Icon(
                                     CupertinoIcons.play_circle_fill,
                                     color: secondary,
                                     size: 13.0,
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5.0),
+                              const SizedBox(height: 5.0),
                               Text(
                                 'Runtime: ' + lectures[index]['runtime'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   color: grey,
                                 ),

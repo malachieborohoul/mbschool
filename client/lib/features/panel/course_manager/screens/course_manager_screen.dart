@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/custom_card.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
@@ -8,9 +7,7 @@ import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
-import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -46,20 +43,20 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
             ? Container()
             : user.role == "2"
                 ? const NavigatorDrawerTeacher()
-                : NavigatorDrawerAdmin(),
+                : const NavigatorDrawerAdmin(),
       appBar: AppBar(
         backgroundColor: primary,
         elevation: 1,
-        title: Text("Gestionnaire de cours"),
+        title: const Text("Gestionnaire de cours"),
       ),
       body: cours == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(
                 color: primary,
               ),
             )
           : cours.isEmpty
-              ? NoData()
+              ? const NoData()
               : Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ListView.builder(

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/features/course/services/course_enrollment_service.dart';
 import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/providers/course_provider.dart';
-import 'package:provider/provider.dart';
 
 import 'custom_button_box.dart';
 
@@ -33,14 +30,14 @@ class CustomCoursePriceFooter extends StatelessWidget {
             width: size.width,
             height: 100.0,
             padding: const EdgeInsets.all(appPadding),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: textWhite,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
                 topRight: Radius.circular(20.0),
               ),
             ),
-            child: CustomButtonBox(title: 'Continuer le cours'),
+            child: const CustomButtonBox(title: 'Continuer le cours'),
           )
         : Container(
             width: size.width*0.4,
@@ -50,7 +47,7 @@ class CustomCoursePriceFooter extends StatelessWidget {
               right: appPadding,
               top: appPadding,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: textWhite,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
@@ -60,27 +57,25 @@ class CustomCoursePriceFooter extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Prix',
-                        style: TextStyle(fontSize: 12.0, color: grey),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Prix',
+                      style: TextStyle(fontSize: 12.0, color: grey),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      cours.prix.isEmpty ? "Gratuit" : cours.prix,
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        color: third,
+                        fontWeight: FontWeight.w700,
                       ),
-                      SizedBox(height: 5),
-                      Text(
-                        cours.prix.isEmpty ? "Gratuit" : cours.prix,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: third,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: miniSpacer + 5),
+                const SizedBox(width: miniSpacer + 5),
                
               ],
             ),

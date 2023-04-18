@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_course_lecon.dart';
 import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/lecon.dart';
@@ -34,7 +30,7 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
   void getAllLecons() async {
     lecons = await courseManagerService.getAllLecons(context, widget.sections);
     setState(() {
-      print(lecons.length);
+      // print(lecons.length);
     });
   }
 
@@ -44,9 +40,9 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
       width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.grey.shade200,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
+          borderRadius: const BorderRadius.all(Radius.circular(8))),
       child: lecons == null
-          ? Loader()
+          ? const Loader()
           : lecons.isEmpty
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -70,7 +66,7 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
                               return [
                                 PopupMenuItem(
                                   value: 1,
-                                  child: Text("Modifier section"),
+                                  child: const Text("Modifier section"),
                                   onTap: () {},
                                 ),
                               ];
@@ -119,7 +115,7 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
                               return [
                                 PopupMenuItem(
                                   value: 1,
-                                  child: Text("Modifier section"),
+                                  child: const Text("Modifier section"),
                                   onTap: () {},
                                 ),
                               ];

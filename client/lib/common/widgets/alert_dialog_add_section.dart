@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/plan.service.dart';
 import 'package:mbschool/models/cours.dart';
@@ -56,7 +51,7 @@ class _AlertDialogAddSectionState extends State<AlertDialogAddSection> {
           backgroundColor: Colors.grey.shade100,
           title: Row(
             children: [
-              Flexible(
+              const Flexible(
                   child: Text(
                 "Ajouter une nouvelle section",
                 style: TextStyle(fontSize: 20),
@@ -71,7 +66,7 @@ class _AlertDialogAddSectionState extends State<AlertDialogAddSection> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.red),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.close,
                           color: textWhite,
@@ -80,16 +75,16 @@ class _AlertDialogAddSectionState extends State<AlertDialogAddSection> {
             ],
           ),
           content: _isCharging == true
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator(
                     color: primary,
                   ),
                 )
-              : Container(
+              : SizedBox(
                   height: MediaQuery.of(context).size.height * 0.2,
                   child: Column(
                     children: [
-                      CustomTitlePanel(title: "Titre"),
+                      const CustomTitlePanel(title: "Titre"),
                       const SizedBox(
                         height: 15,
                       ),
@@ -112,7 +107,7 @@ class _AlertDialogAddSectionState extends State<AlertDialogAddSection> {
                     addSection();
                   }
                 },
-                child: CustomButtonBox(title: "Enregistrer"))
+                child: const CustomButtonBox(title: "Enregistrer"))
           ],
         ),
       ),

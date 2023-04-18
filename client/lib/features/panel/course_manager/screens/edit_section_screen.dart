@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
@@ -89,7 +88,7 @@ class _EditSectionScreenState extends State<EditSectionScreen> {
                 elevation: 0,
                 shadowColor: Colors.transparent,
                 centerTitle: true,
-                title: Text('Modifier la section'),
+                title: const Text('Modifier la section'),
               ),
               body: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -98,7 +97,7 @@ class _EditSectionScreenState extends State<EditSectionScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTitlePanel(title: "Titre de la section"),
+                      const CustomTitlePanel(title: "Titre de la section"),
                       const SizedBox(
                         height: 15,
                       ),

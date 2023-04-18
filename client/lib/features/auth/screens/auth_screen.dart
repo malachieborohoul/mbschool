@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/clipper.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_button_social.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
@@ -14,11 +13,8 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
-import 'package:mbschool/providers/number_entry_provider.dart';
-import 'package:provider/provider.dart';
+
 
 enum Auth {
   sign_up,
@@ -36,7 +32,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController prenomController = TextEditingController();
-  // bool isCharging = false;
+  bool isCharging = false;
 
   TextEditingController cPasswordController = TextEditingController();
   Auth _auth = Auth.sign_up;
@@ -79,8 +75,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 3), () {
-      SplashScreen();
+    Future.delayed( const Duration(seconds: 3), () {
+      const SplashScreen();
     });
     super.initState();
   }
@@ -123,9 +119,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer,
                           ),
-                          OpacityTween(
+                         const OpacityTween(
                             begin: 0.0,
-                            child: const CustomHeading(
+                            child:  CustomHeading(
                                 title: "Inscrivez vous",
                                 subTitle: "Bienvenue",
                                 color: secondary),
@@ -201,10 +197,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                   children: [
                                     const CustomButtonBox(title: "S'inscrire"),
                                     isCharging == true
-                                        ? CircularProgressIndicator(
+                                        ? const CircularProgressIndicator(
                                             color: primary,
                                           )
-                                        : Text("")
+                                        : const Text("")
                                   ],
                                 ),
                               )),
@@ -271,7 +267,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               begin: 0,
                               child: Center(
                                   child: SvgPicture.asset(
-                                assetImg + "login_image.svg",
+                                "${assetImg}login_image.svg",
                                 width: 250,
                                 height: 250,
                               )),
@@ -280,12 +276,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer - 40,
                           ),
-                          SlideDownTween(
+                          const SlideDownTween(
                             delay: 1.4,
                             offset: 40,
                             child: OpacityTween(
                               begin: 0.2,
-                              child: const CustomHeading(
+                              child:  CustomHeading(
                                   title: "Connectez-vous",
                                   subTitle: "Bienvenue",
                                   color: secondary),
@@ -346,10 +342,10 @@ class _AuthScreenState extends State<AuthScreen> {
                                       const CustomButtonBox(
                                           title: "Se connecter"),
                                       isCharging == true
-                                          ? CircularProgressIndicator(
+                                          ? const CircularProgressIndicator(
                                               color: primary,
                                             )
-                                          : Text("")
+                                          : const Text("")
                                     ],
                                   ),
                                 ),

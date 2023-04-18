@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/arguments/course_lesson_arguments.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/features/panel/course_manager/screens/editLecon.dart';
@@ -27,7 +25,7 @@ class _CustomCourseLeconState extends State<CustomCourseLecon> {
       child: Container(
         width: double.infinity,
         height: 50,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: textWhite,
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Padding(
@@ -45,7 +43,7 @@ class _CustomCourseLeconState extends State<CustomCourseLecon> {
                         Navigator.pushNamed(context, EditLecon.routeName,
                             arguments: CourseLessonArguments(coursProvider, widget.lecon));
                       },
-                      child: Icon(Icons.edit))
+                      child: const Icon(Icons.edit))
                 ],
               ),
             ],

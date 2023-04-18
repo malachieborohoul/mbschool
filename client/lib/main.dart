@@ -1,16 +1,9 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
-import 'package:mbschool/features/panel/panel.dart';
-import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
-import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
@@ -24,7 +17,6 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => UserProvider()),
@@ -69,10 +61,10 @@ class _MyAppState extends State<MyApp> {
       showSnackBar(context, "text");
     });
     // hasInternet = await InternetConnectionChecker().hasConnection;
-    final text = this.hasInternet ? "Internet" : "Pas d'internet";
-    final color = this.hasInternet ? Colors.green : Colors.red;
+    final text = hasInternet ? "Internet" : "Pas d'internet";
+    final color = hasInternet ? Colors.green : Colors.red;
     showSimpleNotification(
-        Text(text, style: TextStyle(color: Colors.white, fontSize: 20)),
+        Text(text, style: const TextStyle(color: Colors.white, fontSize: 20)),
         background: color);
   }
 
@@ -110,7 +102,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         // ERROR HANDLED BY FLUTTER
         builder: (context, widget) {
-          Widget error = Image.asset(assetImg + "error_handle.png");
+          Widget error = Image.asset("${assetImg}error_handle.png");
           if (widget is Scaffold || widget is Navigator) {
             error = Scaffold(body: Center(child: error));
           }
@@ -121,7 +113,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(fontFamily: "WorkSans"),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: (setting) => generateRoute(setting),
-        home: SplashScreen());
+        home: const SplashScreen());
   }
 }
 

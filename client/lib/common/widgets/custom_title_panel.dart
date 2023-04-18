@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CustomTitlePanel extends StatelessWidget {
   final String title;
@@ -8,8 +6,6 @@ class CustomTitlePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(title, style: TextStyle(fontWeight: FontWeight.bold),),
-    );
+    return Text(title, style: const TextStyle(fontWeight: FontWeight.bold),);
   }
 }

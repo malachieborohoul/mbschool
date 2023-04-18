@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/common/arguments/select_file_arguments.dart';
 
 import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/select_file.dart';
 import 'package:mbschool/features/panel/course_manager/services/plan.service.dart';
@@ -29,7 +24,6 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
   TextEditingController titreSectionController = TextEditingController();
 
   PlanService planService = PlanService();
-  bool _isCharging = false;
 
   @override
   void dispose() {
@@ -39,20 +33,10 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
 
   @override
   Widget build(BuildContext context) {
-    type_lecon? type_lecon_value = type_lecon.video; //Radio value
+//Radio value
 
     int? selectedRadio = 1;
 
-    void addSection() {
-      planService.addSection(context, titreSectionController.text, widget.cours,
-          () {
-        setState(() {
-          _isCharging = false;
-          Navigator.popAndPushNamed(context, PlanScreen.routeName,
-              arguments: widget.cours);
-        });
-      });
-    }
 
     return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -62,7 +46,7 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
           AlertDialog(
             title: Row(
               children: [
-                Flexible(
+                const Flexible(
                     child: Text(
                   "Ajouter une nouvelle leçon",
                   style: TextStyle(fontSize: 20),
@@ -77,7 +61,7 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.red),
-                        child: Center(
+                        child: const Center(
                           child: Icon(
                             Icons.close,
                             color: textWhite,
@@ -85,11 +69,11 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
                         )))
               ],
             ),
-            content: Container(
+            content: SizedBox(
               height: 150,
               child: Column(
                 children: [
-                  Flexible(
+                  const Flexible(
                       child: Text(
                     "Selectionner le type de la leçon",
                     style: TextStyle(fontSize: 15),
@@ -132,7 +116,7 @@ class _AlertDialogEnrolerState extends State<AlertDialogEnroler> {
                           arguments: SelectFileArguments(2, widget.cours));
                     }
                   },
-                  child: CustomButtonBox(title: "Suivant"))
+                  child: const CustomButtonBox(title: "Suivant"))
             ],
           ),
         ));

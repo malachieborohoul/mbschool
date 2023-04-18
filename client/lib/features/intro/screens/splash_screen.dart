@@ -1,19 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/bottom_bar.dart';
-import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/verification_screen.dart';
-import 'package:mbschool/features/panel/panel.dart';
 import 'package:mbschool/models/user.dart';
-import 'package:mbschool/providers/number_entry_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -66,15 +61,14 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void getUserData() async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     userFuture = authService.getUserData(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('x-auth-token');
 
     setState(() {
-      print("token ${token} ");
-      print("verify code: ${userProvider.user.verify_code} ");
+      // print("token ${token} ");
+      // print("verify code: ${userProvider.user.verify_code} ");
       // print("token pro: ${userProvider.user.token} ");
 
       // print(numberEntry.count);
@@ -158,70 +152,66 @@ class _SplashScreenState extends State<SplashScreen>
 
     // getUserData();
 
-    var height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
-        child: Center(
-            child: FutureBuilder(
-                future: userFuture,
-                builder: (context, snapshot) {
-                  var text;
-                  if (snapshot.hasData) {
-                    if (token == null) {
-                      Future.delayed(Duration(milliseconds: 0), () {
-                        Navigator.pushReplacementNamed(
-                            context, IntroScreen.routeName);
-                      });
-                    } else {
-                      if (userProvider.user.token.isNotEmpty &&
-                          userProvider.user.verify_code.isNotEmpty) {
-                        Future.delayed(Duration(milliseconds: 0), () {
-                          Navigator.pushReplacementNamed(
-                              context, VerificationScreen.routeName);
-                        });
-                      } else if (userProvider.user.token.isEmpty &&
-                          userProvider.user.verify_code.isEmpty) {
-                        Future.delayed(Duration(milliseconds: 0), () {
-                          Navigator.pushReplacementNamed(
-                              context, AuthScreen.routeName);
-                        });
-                      } else if (userProvider.user.token.isNotEmpty &&
-                          userProvider.user.verify_code.isEmpty) {
-                        Future.delayed(Duration(milliseconds: 0), () {
-                          // Navigator.push(context,
-                          //     MaterialPageRoute(builder: (context) {
-                          //   return Panel();
-                          // }));
-                          Navigator.pushReplacementNamed(
-                              context, BottomBar.routeName);
-                        });
-                      }
-                    }
-                    return Container();
+      body: Center(
+          child: FutureBuilder(
+              future: userFuture,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (token == null) {
+                    Future.delayed(const Duration(milliseconds: 0), () {
+                      Navigator.pushReplacementNamed(
+                          context, IntroScreen.routeName);
+                    });
                   } else {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ScaleTransition(
-                          scale: _animation,
-                          child: const Text(
-                            "MbSchool",
-                            style: TextStyle(
-                                color: primary,
-                                fontSize: 50,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        // const Padding(
-                        //   padding: EdgeInsets.only(top: 100.0),
-                        //   child: Loader(),
-                        // )
-                      ],
-                    );
+                    if (userProvider.user.token.isNotEmpty &&
+                        userProvider.user.verify_code.isNotEmpty) {
+                      Future.delayed(const Duration(milliseconds: 0), () {
+                        Navigator.pushReplacementNamed(
+                            context, VerificationScreen.routeName);
+                      });
+                    } else if (userProvider.user.token.isEmpty &&
+                        userProvider.user.verify_code.isEmpty) {
+                      Future.delayed(const Duration(milliseconds: 0), () {
+                        Navigator.pushReplacementNamed(
+                            context, AuthScreen.routeName);
+                      });
+                    } else if (userProvider.user.token.isNotEmpty &&
+                        userProvider.user.verify_code.isEmpty) {
+                      Future.delayed(const Duration(milliseconds: 0), () {
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return Panel();
+                        // }));
+                        Navigator.pushReplacementNamed(
+                            context, BottomBar.routeName);
+                      });
+                    }
                   }
-                })),
-      ),
+                  return Container();
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ScaleTransition(
+                        scale: _animation,
+                        child: const Text(
+                          "MbSchool",
+                          style: TextStyle(
+                              color: primary,
+                              fontSize: 50,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.only(top: 100.0),
+                      //   child: Loader(),
+                      // )
+                    ],
+                  );
+                }
+              })),
     );
   }
 }

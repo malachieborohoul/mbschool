@@ -1,26 +1,19 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:mbschool/common/widgets/alert_notification.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/filter/services/filter_service.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/animations/slide_up_tween.dart';
+
 
 class FilterCourseScreen extends StatefulWidget {
   const FilterCourseScreen({Key? key, required this.controller})
@@ -34,7 +27,7 @@ class FilterCourseScreen extends StatefulWidget {
 }
 
 class _FilterCourseScreenState extends State<FilterCourseScreen> {
-  FilterService _filterService = FilterService();
+  final FilterService _filterService = FilterService();
 
   List<Langue>? langues;
   List<Categorie>? categories;
@@ -75,7 +68,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
         context, id_categorie, id_niveau, id_langue);
     setState(() {
       Navigator.pop(context);
-      Future.delayed(Duration(milliseconds: 200), () {
+      Future.delayed(const Duration(milliseconds: 200), () {
         Navigator.pushNamed(context, AllCourseScreen.routeName,
             arguments: cours);
       });
@@ -95,10 +88,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue_niveau;
 
-    String? dropdownvalue_langue;
-    String? dropdownvalue_categorie;
     // categories != null ? categories![0].id_categorie : "0";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
@@ -150,7 +140,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                             borderRadius: BorderRadius.circular(7)),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
@@ -164,13 +154,13 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                               selectedNiveau = 0;
                             });
                           },
-                          child: Text(
+                          child: const Text(
                             "Réintialiser",
                             style: TextStyle(
                                 color: textBlack, fontWeight: FontWeight.w500),
                           ),
                         ),
-                        Text(
+                        const Text(
                           "Filtrer ",
                           style: TextStyle(
                               color: textBlack, fontWeight: FontWeight.bold),
@@ -183,7 +173,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    return AlertNotification(
+                                    return const AlertNotification(
                                       message: 'Aucune donnée choisie',
                                     );
                                   });
@@ -193,8 +183,8 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                             }
                           },
                           child: cours == null
-                              ? Loader()
-                              : Text(
+                              ? const Loader()
+                              : const Text(
                                   "Terminé",
                                   style: TextStyle(
                                       color: primary,
@@ -211,7 +201,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                       height: 15,
                     ),
 
-                    CustomTitlePanel(title: "CATEGORIE"),
+                    const CustomTitlePanel(title: "CATEGORIE"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -292,11 +282,11 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                             )
                         ]),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
 
-                    CustomTitlePanel(title: "NIVEAU"),
+                    const CustomTitlePanel(title: "NIVEAU"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -341,7 +331,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                       ),
                                       selectedNiveau ==
                                               int.parse(niveaux![i].id_niveau)
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.check,
                                               color: primary,
                                             )
@@ -351,11 +341,11 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                             )
                         ]),
 
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
 
-                    CustomTitlePanel(title: "LANGUE"),
+                    const CustomTitlePanel(title: "LANGUE"),
                     const SizedBox(
                       height: 15,
                     ),
@@ -400,7 +390,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                       ),
                                       selectedLangue ==
                                               int.parse(langues![i].id_langue)
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.check,
                                               color: primary,
                                             )

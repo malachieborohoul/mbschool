@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -13,7 +11,6 @@ import 'package:mbschool/features/panel/course_manager/screens/modify_course_scr
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/resultat_screen.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
-import 'package:mbschool/features/search/screens/search_screen.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:provider/provider.dart';
@@ -96,9 +93,9 @@ class _CustomCardState extends State<CustomCard> {
     }
 
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20),
       height: 100,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: textWhite,
           borderRadius: BorderRadius.all(
             Radius.circular(15),
@@ -120,22 +117,22 @@ class _CustomCardState extends State<CustomCard> {
               height: 80,
               decoration: BoxDecoration(
                 color: widget.cours.statut == 0 ? Colors.red : Colors.green,
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(15),
                 ),
               ),
               child: Center(
                   child: widget.cours.statut == 0
-                      ? Text(
+                      ? const Text(
                           "N",
                           style: TextStyle(color: textWhite, fontSize: 30),
                         )
-                      : Text(
+                      : const Text(
                           "P",
                           style: TextStyle(color: textWhite, fontSize: 30),
                         )),
             ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
             Flexible(child: Text(widget.cours.titre)),
@@ -160,14 +157,14 @@ class _CustomCardState extends State<CustomCard> {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Notification"),
+                            title: const Text("Notification"),
                             content: isCharging == true
-                                ? Loader()
-                                : Container(
+                                ? const Loader()
+                                : SizedBox(
                                     height: 90,
                                     child: Column(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Voulez vous supprimer le cours?",
                                           style: TextStyle(fontSize: 15),
                                         ),
@@ -197,7 +194,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Oui",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -218,7 +215,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Non",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -234,14 +231,14 @@ class _CustomCardState extends State<CustomCard> {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Notification"),
+                            title: const Text("Notification"),
                             content: isCharging == true
-                                ? Loader()
-                                : Container(
+                                ? const Loader()
+                                : SizedBox(
                                     height: 90,
                                     child: Column(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Voulez vous publier le cours?",
                                           style: TextStyle(fontSize: 15),
                                         ),
@@ -271,7 +268,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Oui",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -292,7 +289,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Non",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -308,14 +305,14 @@ class _CustomCardState extends State<CustomCard> {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                            title: Text("Notification"),
+                            title: const Text("Notification"),
                             content: isCharging == true
-                                ? Loader()
-                                : Container(
+                                ? const Loader()
+                                : SizedBox(
                                     height: 90,
                                     child: Column(
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Voulez vous désactiver le cours?",
                                           style: TextStyle(fontSize: 15),
                                         ),
@@ -345,7 +342,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Oui",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -366,7 +363,7 @@ class _CustomCardState extends State<CustomCard> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               15)),
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Non",
                                                     style: TextStyle(
                                                         color: textWhite),
@@ -383,38 +380,38 @@ class _CustomCardState extends State<CustomCard> {
                 return [
                   PopupMenuItem(
                     value: 1,
-                    child: Text("Plan"),
+                    child: const Text("Plan"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
                     value: 2,
-                    child: Text("Modifier cours"),
+                    child: const Text("Modifier cours"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
                     value: 3,
-                    child: Text("Exigences"),
+                    child: const Text("Exigences"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
                     value: 4,
-                    child: Text("Resultats"),
+                    child: const Text("Resultats"),
                     onTap: () {},
                   ),
                   PopupMenuItem(
                     value: 5,
-                    child: Text("Supprimer cours"),
+                    child: const Text("Supprimer cours"),
                     onTap: () {},
                   ),
                   widget.cours.statut == 0
                       ? PopupMenuItem(
                           value: 6,
-                          child: Text("Publier cours"),
+                          child: const Text("Publier cours"),
                           onTap: () {},
                         )
                       : PopupMenuItem(
                           value: 7,
-                          child: Text("Désactiver cours"),
+                          child: const Text("Désactiver cours"),
                           onTap: () {},
                         ),
                 ];

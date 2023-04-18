@@ -6,7 +6,6 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/course/services/course_enrollment_service.dart';
 import 'package:mbschool/models/cours.dart';
@@ -45,7 +44,7 @@ class _CourseScreenState extends State<CourseScreen> {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: enrolledCours == null ? Loader() : getBody(),
+      body: enrolledCours == null ? const Loader() : getBody(),
     );
   }
 
@@ -57,14 +56,14 @@ class _CourseScreenState extends State<CourseScreen> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: spacer,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CustomHeading(
+              children: const [
+                CustomHeading(
                     title: "Mes Cours",
                     subTitle: "Reprenons",
                     color: textBlack),
@@ -80,36 +79,38 @@ class _CourseScreenState extends State<CourseScreen> {
             const SizedBox(
               height: spacer,
             ),
-            enrolledCours.isEmpty? NoData():Column(
-              children: List.generate(enrolledCours.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 25),
-                  child: SlideRightTween(
-                    duration: Duration(milliseconds: (index+1) * 500),
-                    curve: Curves.easeInOutCubic,
-                    offset: 80,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, DetailCourseScreen.routeName,
-                            arguments: enrolledCours[index]);
+            enrolledCours.isEmpty
+                ? const NoData()
+                : Column(
+                    children: List.generate(enrolledCours.length, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 25),
+                        child: SlideRightTween(
+                          duration: Duration(milliseconds: (index + 1) * 500),
+                          curve: Curves.easeInOutCubic,
+                          offset: 80,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, DetailCourseScreen.routeName,
+                                  arguments: enrolledCours[index]);
 
-                        Provider.of<CoursProvider>(context, listen: false)
-                            .set_cours(enrolledCours[index]);
-                      },
-                      child: CustomMyCoursesCard(
-                        image: enrolledCours[index].vignette,
-                        title: enrolledCours[index].titre,
-                        instructor: enrolledCours[index].nom,
-                        videoAmount: "20",
-                        percentage: 20,
-                        cours: enrolledCours[index],
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            )
+                              Provider.of<CoursProvider>(context, listen: false)
+                                  .set_cours(enrolledCours[index]);
+                            },
+                            child: CustomMyCoursesCard(
+                              image: enrolledCours[index].vignette,
+                              title: enrolledCours[index].titre,
+                              instructor: enrolledCours[index].nom,
+                              videoAmount: "20",
+                              percentage: 20,
+                              cours: enrolledCours[index],
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  )
           ],
         ),
       ),

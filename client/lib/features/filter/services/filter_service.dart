@@ -16,7 +16,7 @@ class FilterService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response coursRes = await http.get(
-        Uri.parse('$uri/filterCourses/${id_categorie}/${id_niveau}/${id_langue}'),
+        Uri.parse('$uri/filterCourses/$id_categorie/$id_niveau/$id_langue'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

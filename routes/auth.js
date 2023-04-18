@@ -26,7 +26,9 @@ const transporter = nodemailer.createTransport({
 //         console.log(success )
 //     }
 // })
-
+authRouter.get("/ok", (req, res)=>{
+    res.send("OK");
+})
 
 // SIGNUP
 authRouter.post('/api/signup', async (req, res)=> {

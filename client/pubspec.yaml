@@ -40,7 +40,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   flutter_svg: ^1.1.1+1
   font_awesome_flutter: ^10.2.1
-  http: ^0.13.4
+  http: ^0.13.5
   internet_connection_checker: ^0.0.1+4
   modal_bottom_sheet: ^2.1.0
   overlay_support: ^2.1.0

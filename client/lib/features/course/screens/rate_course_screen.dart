@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:provider/provider.dart';
@@ -25,17 +21,10 @@ class RateCourseScreen extends StatefulWidget {
 
 class _RateCourseScreenState extends State<RateCourseScreen>
     with SingleTickerProviderStateMixin {
-  RateCourseService _rateCourseService = RateCourseService();
+  final RateCourseService _rateCourseService = RateCourseService();
   final _ratingFormKey = GlobalKey<FormState>();
   double ratingCourse = 0.0;
   TextEditingController testimonialController = TextEditingController();
-  late final _animationController =
-      AnimationController(vsync: this, duration: Duration(milliseconds: 750))
-          .addStatusListener((status) {
-    if (status == AnimationStatus.completed) {
-      showSnackBar(context, "Merci");
-    } else {}
-  });
 
   bool click = false;
   bool circular = false;
@@ -59,12 +48,12 @@ class _RateCourseScreenState extends State<RateCourseScreen>
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     var size = MediaQuery.of(context).size;
-    print(click);
+    // print(click);
 
     void rateCourse() async {
       _rateCourseService.rateCourse(
           context, coursProvider, ratingCourse, testimonialController.text, () {
-        Future.delayed(Duration(seconds: 2), () {
+        Future.delayed(const Duration(seconds: 2), () {
           setState(() {
             // click = !click;
             // circular = !circular;
@@ -81,13 +70,13 @@ class _RateCourseScreenState extends State<RateCourseScreen>
           resizeToAvoidBottomInset: true,
           //  extendBodyBehindAppBar: true,
           appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(40),
               child: changeMessage == false
-                  ? CustomAppBar(
+                  ? const CustomAppBar(
                       title: "Notez ce cours",
                       backgroundColor: Colors.transparent,
                     )
-                  : Container(),
-              preferredSize: Size.fromHeight(40)),
+                  : Container()),
           body: SingleChildScrollView(
             child: Center(
               child: Padding(
@@ -95,7 +84,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: appPadding,
                     ),
                     changeMessage == false
@@ -105,39 +94,39 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
+                                const Text(
                                   "FELICITATIONS!",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25),
                                 ),
-                                SizedBox(height: appPadding - 10),
-                                Text(
+                                const SizedBox(height: appPadding - 10),
+                                const Text(
                                   "Vous avez terminé!",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 15),
                                 ),
-                                SizedBox(height: appPadding - 10),
+                                const SizedBox(height: appPadding - 10),
                                 Text(
-                                  "${coursProvider.titre}",
-                                  style: TextStyle(
+                                  coursProvider.titre,
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w800,
                                       fontSize: 20),
                                 ),
-                                SizedBox(height: appPadding - 10),
-                                Text(
+                                const SizedBox(height: appPadding - 10),
+                                const Text(
                                   "S'il vous plait prenez un moment pour laisser une note et un témoignage. Cordialement!",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15),
                                 ),
-                                SizedBox(height: appPadding - 10),
+                                const SizedBox(height: appPadding - 10),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Notation",
                                       style:
                                           TextStyle(color: grey, fontSize: 15),
@@ -157,7 +146,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                             ),
                                         onRatingUpdate: (rating) {
                                           ratingCourse = rating;
-                                          print(ratingCourse);
+                                          // print(ratingCourse);
                                         })
                                   ],
                                 ),
@@ -171,10 +160,10 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  assetImg + "thanks.png",
+                                  "${assetImg}thanks.png",
                                 ),
-                                SizedBox(height: appPadding - 10),
-                                SlideUpTween(
+                                const SizedBox(height: appPadding - 10),
+                                const SlideUpTween(
                                   offset: 70,
                                   child: Text(
                                     "Merci!",
@@ -191,7 +180,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                         key: _ratingFormKey,
                         child: Column(
                           children: [
-                            SizedBox(height: appPadding - 10),
+                            const SizedBox(height: appPadding - 10),
                             changeMessage == false
                                 ? SlideDownTween(
                                     delay: 2,
@@ -204,7 +193,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                         }
                                         return null;
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         label: Text("Témoignage"),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: BorderSide(color: grey),
@@ -217,7 +206,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                     ),
                                   )
                                 : Container(),
-                            SizedBox(height: appPadding - 5),
+                            const SizedBox(height: appPadding - 5),
                             GestureDetector(
                               onTap: changeMessage == false
                                   ? () {
@@ -241,10 +230,6 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                       }
                                     }
                                   : () {
-                                      final coursProvider =
-                                          Provider.of<CoursProvider>(context,
-                                                  listen: false)
-                                              .cours;
                                       Navigator.pop(context);
                                     },
                               child: AnimatedContainer(
@@ -259,7 +244,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                       color: primary.withOpacity(0.5),
                                       spreadRadius: 0.0,
                                       blurRadius: 6.0,
-                                      offset: Offset(0, 2),
+                                      offset: const Offset(0, 2),
                                     )
                                   ],
                                 ),
@@ -267,11 +252,11 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                 curve: Curves.easeInOutBack,
                                 child: changeMessage == false
                                     ? circular == true
-                                        ? CircularProgressIndicator.adaptive(
+                                        ? const CircularProgressIndicator.adaptive(
                                             backgroundColor: textWhite,
                                             strokeWidth: 1,
                                           )
-                                        : Text(
+                                        : const Text(
                                             "Envoyer",
                                             style: TextStyle(
                                               fontSize: 14.0,
@@ -279,7 +264,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                               color: textWhite,
                                             ),
                                           )
-                                    : Icon(
+                                    : const Icon(
                                         Icons.check,
                                         color: textWhite,
                                       ),

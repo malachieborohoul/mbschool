@@ -1,13 +1,9 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:mbschool/common/widgets/alert_dialog_error.dart';
+
 import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_dropdown_button_langue.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
@@ -16,13 +12,11 @@ import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/modify_course_service.dart';
-import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
-import 'package:mbschool/features/panel/panel.dart';
+
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
-import 'package:provider/provider.dart';
 
 class ModifyCourseScreen extends StatefulWidget {
   static const routeName = '/modify-course';
@@ -126,7 +120,6 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     String? dropdownvalue_categorie;
 
     String urlVignette = widget.cours.vignette;
-    bool isVignetteNull = false;
 
     if (widget.cours.titre == titreCoursController.text) {
       titreCoursController.text = widget.cours.titre;
@@ -216,7 +209,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Titre du cours"),
+                        const CustomTitlePanel(title: "Titre du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -224,10 +217,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             hintText: "Titre du cours",
                             prefixIcon: Icons.title_sharp,
                             controller: titreCoursController),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Description du cours"),
+                        const CustomTitlePanel(title: "Description du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -237,10 +230,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                           controller: descriptionCoursController,
                           maxLines: 4,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Courte description du cours"),
+                        const CustomTitlePanel(title: "Courte description du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -250,11 +243,11 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                           controller: descriptionCourteCoursController,
                           maxLines: 2,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Categorie"),
+                        const CustomTitlePanel(title: "Categorie"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -265,21 +258,21 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner une catégorie"),
+                            hint: const Text("Sélectionner une catégorie"),
                             value: widget.cours.id_categorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom),
                                 value: item.id_categorie,
+                                child: Text(item.nom),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -296,11 +289,11 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 //     descriptionCourteCoursController.text;
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Niveau"),
+                        const CustomTitlePanel(title: "Niveau"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -313,21 +306,21 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner un niveau"),
+                            hint: const Text("Sélectionner un niveau"),
                             value: widget.cours.id_niveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
-                                child: Text(item.titre),
                                 value: item.id_niveau,
+                                child: Text(item.titre),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -336,11 +329,11 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 id_niveau = int.parse(dropdownvalue_niveau!);
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
 
-                        CustomTitlePanel(title: "Langue"),
+                        const CustomTitlePanel(title: "Langue"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -353,21 +346,21 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               hintStyle: TextStyle(color: Colors.grey.shade300),
                               enabledBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                    const BorderSide(color: Colors.transparent),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            hint: Text("Sélectionner une langue"),
+                            hint: const Text("Sélectionner une langue"),
                             value: widget.cours.id_langue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
-                                child: Text(item.nom),
                                 value: item.id_langue,
+                                child: Text(item.nom),
                               );
                             }).toList(),
                             onChanged: (String? val) {
@@ -376,10 +369,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 id_langue = int.parse(dropdownvalue_langue!);
                               });
                             }),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
-                        CustomTitlePanel(title: "Vignette du cours"),
+                        const CustomTitlePanel(title: "Vignette du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -409,7 +402,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                           height: 100,
                                         )
                                       : urlVignette.isNotEmpty
-                                          ? Container(
+                                          ? SizedBox(
                                               width: 150,
                                               height: 150,
                                               child: Image.network(
@@ -417,16 +410,16 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                                 width: 20,
                                                 height: 20,
                                               ))
-                                          : Text(""),
+                                          : const Text(""),
                                   Container(
                                     height: 30,
                                     width: 150,
                                     decoration: const BoxDecoration(
                                         color: primary,
                                         borderRadius: BorderRadius.all(
-                                            const Radius.circular(8))),
+                                            Radius.circular(8))),
                                     child: const Center(
-                                        child: const Text(
+                                        child: Text(
                                       "Choisir une vignette",
                                       style: TextStyle(
                                           color: textWhite,
@@ -438,7 +431,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         CustomTextFieldPanel(
@@ -465,15 +458,18 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 // } else {
                                 setState(() {
                                   isCharging = true;
-                                  if (id_categorie == 0)
+                                  if (id_categorie == 0) {
                                     id_categorie =
                                         int.parse(widget.cours.id_categorie);
-                                  if (id_niveau == 0)
+                                  }
+                                  if (id_niveau == 0) {
                                     id_niveau =
                                         int.parse(widget.cours.id_niveau);
-                                  if (id_langue == 0)
+                                  }
+                                  if (id_langue == 0) {
                                     id_langue =
                                         int.parse(widget.cours.id_langue);
+                                  }
                                 });
                                 modifyCourse();
                                 // }
@@ -484,7 +480,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 // print("niv $id_niveau");
                               }
                             },
-                            child: CustomButtonBox(title: "Modifier")),
+                            child: const CustomButtonBox(title: "Modifier")),
                       ],
                     ),
                   ),

@@ -34,7 +34,7 @@ class CustomCategoryCard extends StatelessWidget {
                   BoxShadow(
                     color: textBlack.withOpacity(0.05),
                     blurRadius: 15.0,
-                    offset: Offset(0, 7),
+                    offset: const Offset(0, 7),
                   )
                 ],
               ),
@@ -54,27 +54,25 @@ class CustomCategoryCard extends StatelessWidget {
                           color: primary.withOpacity(0.5),
                           spreadRadius: 0.0,
                           blurRadius: 6.0,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         )
                       ],
                     ),
-                    child: Container(
-                      child: SvgPicture.asset(
-                        HomePageCategoryJson[index]['icon'],
-                        color: textWhite,
-                        width: 15.0,
-                      ),
+                    child: SvgPicture.asset(
+                      HomePageCategoryJson[index]['icon'],
+                      color: textWhite,
+                      width: 15.0,
                     ),
                   ),
                   Text(
                     HomePageCategoryJson[index]['title'],
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: secondary,
                       fontSize: 15.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  SizedBox(height: 0.0),
+                  const SizedBox(height: 0.0),
                 ],
               ),
             ),

@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/alert_dialog_enroler.dart';
 import 'package:mbschool/common/widgets/alert_notification.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
 import 'package:mbschool/common/widgets/custom_course_price_footer.dart';
 import 'package:mbschool/common/widgets/custom_course_reviews.dart';
 import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
-import 'package:mbschool/common/widgets/custom_exigence_cours.dart';
-import 'package:mbschool/common/widgets/custom_heading.dart';
+
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -30,7 +25,6 @@ import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/notation_cours.dart';
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/course_provider.dart';
-import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:provider/provider.dart';
 
 class DetailCourseScreen extends StatefulWidget {
@@ -100,7 +94,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
 
   void getAllExigences() async {
     exigences = await exigenceService.getAllExigences(context, widget.cours);
-    print(exigences.length);
+    // print(exigences.length);
   }
 
   void getAllSections() async {
@@ -113,7 +107,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
   void getAllLecons() async {
     lecons = await courseManagerService.getAllLecons(context, sections[0]);
     setState(() {
-      print(lecons.length);
+      // print(lecons.length);
     });
   }
 
@@ -123,7 +117,6 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     // final tabController = Provider.of<TabBarProvider>(context).controller;
-    TabController _tabController = TabController(length: 3, vsync: this);
 
     final cours = Provider.of<CoursProvider>(context, listen: false).cours;
 
@@ -135,7 +128,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
           showDialog(
               context: context,
               builder: (context) {
-                return AlertNotification(
+                return const AlertNotification(
                     error: false,
                     message: "Votre enrôlement s'est effectué avec succès");
               });
@@ -150,7 +143,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               isCourseEnroll == null ||
               notationCours == null ||
               averageRate == null
-          ? Loader()
+          ? const Loader()
           : DefaultTabController(
               length: 3,
               child: NestedScrollView(
@@ -177,13 +170,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                   color: primary.withOpacity(0.5),
                                   spreadRadius: 0.0,
                                   blurRadius: 6.0,
-                                  offset: Offset(0, 2),
+                                  offset: const Offset(0, 2),
                                 )
                               ],
                             ),
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
-                              assetImg + 'arrow_left_icon.svg',
+                              '${assetImg}arrow_left_icon.svg',
                               color: textWhite,
                             ),
                           ),
@@ -224,7 +217,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                     onTap: () {
                                       showDialog(
                                           context: context,
-                                          builder: (context) => AlertDialog(
+                                          builder: (context) => const AlertDialog(
                                                 backgroundColor: textBlack,
                                                 content: VideoDisplay(
                                                     videoUrl:
@@ -232,7 +225,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                               ));
                                     },
                                     splashColor: Colors.grey,
-                                    child: Icon(Icons.play_arrow),
+                                    child: const Icon(Icons.play_arrow),
                                   ),
                                 ),
                               ],
@@ -255,18 +248,18 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                               isCourseInFav: isCourseInFav!,
                               averageRate: averageRate,
                             ))),
-                    Padding(
-                      padding: const EdgeInsets.only(
+                    const Padding(
+                      padding: EdgeInsets.only(
                         left: appPadding,
                         right: appPadding,
                       ),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         height: 40,
                         child: TabBar(
                             labelColor: textBlack,
                             indicatorColor: primary,
-                            tabs: const [
+                            tabs: [
                               OpacityTween(
                                 begin: 0,
                                 child: Tab(
@@ -305,7 +298,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
               ),
             ),
       bottomNavigationBar: _isLoading == true
-          ? Loader()
+          ? const Loader()
           : isCourseEnroll == false
               ? Row(
                   children: [
@@ -325,14 +318,14 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                         height: 75,
                                         child: Column(
                                           children: [
-                                            Flexible(
+                                            const Flexible(
                                                 child: Text(
                                               "Voulez vous vous enrôler?",
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             )),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Row(
@@ -358,7 +351,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                                 BorderRadius
                                                                     .circular(
                                                                         15)),
-                                                        child: Text(
+                                                        child: const Text(
                                                           "Non",
                                                           style: TextStyle(
                                                               color:
@@ -384,7 +377,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15)),
-                                                    child: Text(
+                                                    child: const Text(
                                                       "Oui",
                                                       style: TextStyle(
                                                           color: textWhite),
@@ -401,13 +394,13 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                 );
                               });
                         },
-                        child: CustomButtonBox(title: "S'enrôler maintenant"),
+                        child: const CustomButtonBox(title: "S'enrôler maintenant"),
                       ),
                     ),
                   ],
                 )
-              : Padding(
-                  padding: const EdgeInsets.all(appPadding),
+              : const Padding(
+                  padding: EdgeInsets.all(appPadding),
                   child: CustomButtonBox(title: "Enrôlé(e)"),
                 ),
     );
@@ -434,7 +427,7 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
         Provider.of<CoursProvider>(context, listen: false).cours;
 
     return ListView.builder(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: widget.sections.length,
         itemBuilder: (context, i) {
           return Padding(
@@ -467,7 +460,7 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
     return Padding(
       padding: const EdgeInsets.all(appPadding),
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -476,12 +469,12 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Exigences",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   for (var i = 0; i < widget.exigences.length; i++)
-                    Text('${widget.exigences[i].nom}'),
+                    Text(widget.exigences[i].nom),
                 ],
               ),
             ),
@@ -489,12 +482,12 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Objectifs",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   for (var i = 0; i < widget.exigences.length; i++)
-                    Text('${widget.exigences[i].nom}'),
+                    Text(widget.exigences[i].nom),
                 ],
               ),
             ),
@@ -502,12 +495,12 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Résultats",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   for (var i = 0; i < widget.exigences.length; i++)
-                    Text('${widget.exigences[i].nom}'),
+                    Text(widget.exigences[i].nom),
                 ],
               ),
             ),
@@ -556,12 +549,10 @@ class ReviewsTabBarView extends StatefulWidget {
 class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
   @override
   Widget build(BuildContext context) {
-    final coursProvider =
-        Provider.of<CoursProvider>(context, listen: false).cours;
 
     return widget.notationCours.isNotEmpty
         ? ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: widget.notationCours.length,
             itemBuilder: (context, i) {
               return Padding(
@@ -573,6 +564,6 @@ class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
                   child: CustomCourseReviews(
                       notationCours: widget.notationCours[i]));
             })
-        : NoData();
+        : const NoData();
   }
 }

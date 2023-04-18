@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -68,11 +67,11 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   height: size.width * .13,
                   child: Row(
                     children: [
-                      Container(
+                      SizedBox(
                         height: size.width * .13,
                         width: size.width * .13,
                         child: ClipRRect(
@@ -83,7 +82,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                           ),
                         ),
                       ),
-                      SizedBox(width: miniSpacer),
+                      const SizedBox(width: miniSpacer),
                       Flexible(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,7 +92,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                               widget.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: secondary,
                                 fontSize: 13.0,
                                 fontWeight: FontWeight.w700,
@@ -103,15 +102,15 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Enseignant: ' + widget.instructor,
-                                  style: TextStyle(
+                                  'Enseignant: ${widget.instructor}',
+                                  style: const TextStyle(
                                     fontSize: 11.0,
                                     color: grey,
                                   ),
                                 ),
                                 Text(
-                                  '$numberLeconDone/' + numberLecon,
-                                  style: TextStyle(
+                                  '$numberLeconDone/$numberLecon',
+                                  style: const TextStyle(
                                     fontSize: 11.0,
                                     color: grey,
                                   ),
@@ -150,7 +149,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                                 BoxShadow(
                                   color: primary.withOpacity(0.5),
                                   blurRadius: 6.0,
-                                  offset: Offset(0, 3),
+                                  offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -158,13 +157,13 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                         ],
                       ),
                     ),
-                    SizedBox(width: miniSpacer * 2),
+                    const SizedBox(width: miniSpacer * 2),
                     Container(
                       width: 50,
                       alignment: Alignment.centerRight,
                       child:  Text(
-                       numberLecon == "0"? "0": (((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()).toString()+ '%',
-                        style: TextStyle(
+                       numberLecon == "0"? "0": '${((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()}%',
+                        style: const TextStyle(
                             fontSize: 13.0,
                             color: primary,
                             fontWeight: FontWeight.w700),

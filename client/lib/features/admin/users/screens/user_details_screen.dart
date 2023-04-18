@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/custom_course_card.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -25,8 +24,8 @@ class UserDetailsScreen extends StatefulWidget {
 }
 
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
-  CourseManagerService _courseManagerService = CourseManagerService();
-  UsersManagerService _usersManagerService = UsersManagerService();
+  final CourseManagerService _courseManagerService = CourseManagerService();
+  final UsersManagerService _usersManagerService = UsersManagerService();
   List<Cours> courseTaking = [];
   List<Cours> courseTeaching = [];
   List<User> totalStudents = [];
@@ -138,21 +137,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                          title: Text("Notification"),
+                          title: const Text("Notification"),
                           content: isCharging == true
-                              ? Loader()
-                              : Container(
+                              ? const Loader()
+                              : SizedBox(
                                   height: 90,
                                   child: Column(
                                     children: [
                                       searchUserProvider.statut_users == "0"
-                                          ? Text(
+                                          ? const Text(
                                               "Voulez vous activer l'utilisateur?",
                                               style: TextStyle(fontSize: 14),
                                             )
                                           : searchUserProvider.statut_users ==
                                                   "1"
-                                              ? Text(
+                                              ? const Text(
                                                   "Voulez vous désactiver l'utilisateur?",
                                                   style:
                                                       TextStyle(fontSize: 14),
@@ -193,7 +192,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15)),
-                                                child: Text(
+                                                child: const Text(
                                                   "Oui",
                                                   style: TextStyle(
                                                       color: textWhite),
@@ -213,7 +212,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15)),
-                                                child: Text(
+                                                child: const Text(
                                                   "Non",
                                                   style: TextStyle(
                                                       color: textWhite),
@@ -229,14 +228,14 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                          title: Text("Notification"),
+                          title: const Text("Notification"),
                           content: isCharging == true
-                              ? Loader()
-                              : Container(
+                              ? const Loader()
+                              : SizedBox(
                                   height: 90,
                                   child: Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Voulez vous supprimer l'utilisateur?",
                                         style: TextStyle(fontSize: 14),
                                       ),
@@ -266,7 +265,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15)),
-                                                child: Text(
+                                                child: const Text(
                                                   "Oui",
                                                   style: TextStyle(
                                                       color: textWhite),
@@ -286,7 +285,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             15)),
-                                                child: Text(
+                                                child: const Text(
                                                   "Non",
                                                   style: TextStyle(
                                                       color: textWhite),
@@ -304,21 +303,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
               return [
                 PopupMenuItem(
                   value: 1,
-                  child: Text("Modifier rôle"),
+                  child: const Text("Modifier rôle"),
                   onTap: () {},
                 ),
                 PopupMenuItem(
                   value: 2,
                   child: searchUserProvider.statut_users == "0"
-                      ? Text("Activer l'utilisateur")
+                      ? const Text("Activer l'utilisateur")
                       : searchUserProvider.statut_users == "1"
-                          ? Text("Désactiver l'utilisateur")
-                          : Text(""),
+                          ? const Text("Désactiver l'utilisateur")
+                          : const Text(""),
                   onTap: () {},
                 ),
                 PopupMenuItem(
                   value: 3,
-                  child: Text("Supprimer l'utilisateur"),
+                  child: const Text("Supprimer l'utilisateur"),
                   onTap: () {},
                 ),
               ];
@@ -329,98 +328,96 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
       body: courseTaking == null ||
               courseTeaching == null ||
               totalStudents == null
-          ? Loader()
+          ? const Loader()
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 200,
                     child: Image.network(searchUserProvider.photo),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(appPadding),
-                    child: Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Cours suivis",
-                                style: TextStyle(fontWeight: FontWeight.w700),
-                              ),
-                              Text("${courseTaking.length}",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 0.8,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Cours enseignés",
-                                style: TextStyle(fontWeight: FontWeight.w700),
-                              ),
-                              Text("${courseTeaching.length}",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                            ],
-                          ),
-                          Divider(
-                            thickness: 0.8,
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Etudiants enrôlés",
-                                style: TextStyle(fontWeight: FontWeight.w700),
-                              ),
-                              Text("${totalStudents.length}",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: appPadding,
-                          ),
-                          Text(
-                            "Cours suivis:",
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          for (int i = 0; i < courseTaking.length; i++)
-                            CustomCourseCardShrink(
-                                thumbNail: courseTaking[i].vignette,
-                                title: courseTaking[i].titre,
-                                nom: courseTaking[i].nom,
-                                prenom: courseTaking[i].prenom,
-                                price: courseTaking[i].prix),
-                          SizedBox(
-                            height: appPadding,
-                          ),
-                          Text(
-                            "Cours enseignés:",
-                            style: TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          for (int i = 0; i < courseTeaching.length; i++)
-                            CustomCourseCardShrink(
-                                thumbNail: courseTeaching[i].vignette,
-                                title: courseTeaching[i].titre,
-                                nom: courseTeaching[i].nom,
-                                prenom: courseTeaching[i].prenom,
-                                price: courseTeaching[i].prix)
-                        ],
-                      ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Cours suivis",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text("${courseTaking.length}",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.w700)),
+                          ],
+                        ),
+                        const Divider(
+                          thickness: 0.8,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Cours enseignés",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text("${courseTeaching.length}",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.w700)),
+                          ],
+                        ),
+                        const Divider(
+                          thickness: 0.8,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Etudiants enrôlés",
+                              style: TextStyle(fontWeight: FontWeight.w700),
+                            ),
+                            Text("${totalStudents.length}",
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.w700)),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: appPadding,
+                        ),
+                        const Text(
+                          "Cours suivis:",
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        for (int i = 0; i < courseTaking.length; i++)
+                          CustomCourseCardShrink(
+                              thumbNail: courseTaking[i].vignette,
+                              title: courseTaking[i].titre,
+                              nom: courseTaking[i].nom,
+                              prenom: courseTaking[i].prenom,
+                              price: courseTaking[i].prix),
+                        const SizedBox(
+                          height: appPadding,
+                        ),
+                        const Text(
+                          "Cours enseignés:",
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        for (int i = 0; i < courseTeaching.length; i++)
+                          CustomCourseCardShrink(
+                              thumbNail: courseTeaching[i].vignette,
+                              title: courseTeaching[i].titre,
+                              nom: courseTeaching[i].nom,
+                              prenom: courseTeaching[i].prenom,
+                              price: courseTeaching[i].prix)
+                      ],
                     ),
                   )
                 ],

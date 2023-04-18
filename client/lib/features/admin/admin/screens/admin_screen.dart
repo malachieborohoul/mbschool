@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
@@ -26,7 +24,7 @@ class _AdminScreenState extends State<AdminScreen> {
   List<User> users = [];
   List<Cours> cours = [];
 
-  CourseManagerService _courseManagerService = CourseManagerService();
+  final CourseManagerService _courseManagerService = CourseManagerService();
 
   @override
   void initState() {
@@ -54,14 +52,14 @@ class _AdminScreenState extends State<AdminScreen> {
           ? Container()
           : user.role == "2"
               ? const NavigatorDrawerTeacher()
-              : NavigatorDrawerAdmin(),
+              : const NavigatorDrawerAdmin(),
       appBar: AppBar(
         foregroundColor: textBlack,
         backgroundColor: textWhite,
         elevation: 0,
         shadowColor: Colors.transparent,
         centerTitle: true,
-        title: Text("Admin"),
+        title: const Text("Admin"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(appPadding),
@@ -72,33 +70,33 @@ class _AdminScreenState extends State<AdminScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, CategorieScreen.routeName);
                 },
-                child: CustomButtonBox(title: "Ajouter categorie")),
-            SizedBox(
+                child: const CustomButtonBox(title: "Ajouter categorie")),
+            const SizedBox(
               height: appPadding,
             ),
             GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(context, LangueScreen.routeName);
                 },
-                child: CustomButtonBox(title: "Ajouter langue")),
-            SizedBox(
+                child: const CustomButtonBox(title: "Ajouter langue")),
+            const SizedBox(
               height: appPadding + 10,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("Utilisateurs"), Text("${users.length}")],
+              children: [const Text("Utilisateurs"), Text("${users.length}")],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
             ),
-            SizedBox(
+            const SizedBox(
               height: 8.0,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("Cours"), Text("${cours.length}")],
+              children: [const Text("Cours"), Text("${cours.length}")],
             ),
-            Divider(
+            const Divider(
               thickness: 0.5,
             ),
           ],

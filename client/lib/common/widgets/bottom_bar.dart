@@ -23,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: getFooter(),
-      body: pageIndex ==0? HomeScreen(): pageIndex==1? CourseScreen():pageIndex==2? FavoriteScreen():pageIndex==3? AccountScreen():Container(),
+      body: pageIndex ==0? const HomeScreen(): pageIndex==1? const CourseScreen():pageIndex==2? const FavoriteScreen():pageIndex==3? const AccountScreen():Container(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigator.pushNamed(context, FilterCourseScreen.routeName);
@@ -31,7 +31,7 @@ class _BottomBarState extends State<BottomBar> {
            useRootNavigator: true,
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
@@ -42,7 +42,7 @@ class _BottomBarState extends State<BottomBar> {
                   initialChildSize: 0.9,
                   builder: (_, controller)=>
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                     color: Colors.white,
                     
@@ -54,7 +54,7 @@ class _BottomBarState extends State<BottomBar> {
               });
         },
         backgroundColor: secondary,
-        child: Icon(Icons.filter_list_outlined),
+        child: const Icon(Icons.filter_list_outlined),
       ),
     );
   }
@@ -74,7 +74,7 @@ class _BottomBarState extends State<BottomBar> {
         BoxShadow(
             color: textBlack.withOpacity(0.12),
             blurRadius: 30,
-            offset: Offset(0, -10))
+            offset: const Offset(0, -10))
       ]),
       child: Padding(
         padding: const EdgeInsets.only(left: 40, right: 40, top: 20),
@@ -99,7 +99,7 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                   pageIndex == index
                       ? AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           child: Container(
                             height: 5,
                             width: 20,

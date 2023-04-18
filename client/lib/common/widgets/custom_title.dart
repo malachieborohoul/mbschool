@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -42,7 +41,7 @@ class CustomTitle extends StatelessWidget {
           },
           child: Text(
             titreLien,
-            style: TextStyle(
+            style: const TextStyle(
                 color: primary, fontSize: 15.0, fontWeight: FontWeight.w400),
           ),
         )

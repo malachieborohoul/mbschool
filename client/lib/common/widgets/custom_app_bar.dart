@@ -55,39 +55,37 @@ class CustomAppBar extends StatelessWidget {
                             color: primary.withOpacity(0.5),
                             spreadRadius: 0.0,
                             blurRadius: 6.0,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           )
                         ],
                       ),
                       alignment: Alignment.center,
                       child: SvgPicture.asset(
-                        assetImg + 'arrow_left_icon.svg',
+                        '${assetImg}arrow_left_icon.svg',
                         color: textWhite,
                       ),
                     ),
                   ),
                   
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     title,
-                    style: TextStyle(fontSize: 17, color: secondary, fontWeight: FontWeight.w500),
+                    style: const TextStyle(fontSize: 17, color: secondary, fontWeight: FontWeight.w500),
                   ),
-                  Spacer(),
+                  const Spacer(),
 
                   (action)
                       ? GestureDetector(
-                        child: Container(
+                        child: SizedBox(
                             width: 40.0,
-                            child: Container(
-                              child: SvgPicture.asset(
-                                assetImg + actionIcon,
-                                color: iconColor,
-                                height: 20.0,
-                              ),
+                            child: SvgPicture.asset(
+                              assetImg + actionIcon,
+                              color: iconColor,
+                              height: 20.0,
                             ),
                           ),
                       )
-                      : Container(
+                      : const SizedBox(
                           width: 40.0,
                           height: 40.0,
                         ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
 import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
@@ -7,13 +6,8 @@ import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/admin/admin/screens/categorie_screen.dart';
 import 'package:mbschool/features/admin/admin/services/categorie_service.dart';
-import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
-import 'package:mbschool/features/panel/course_manager/services/edit_section_service.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/section.dart';
-import 'package:mbschool/providers/course_plan_provider.dart';
-import 'package:mbschool/providers/section_provider.dart';
-import 'package:provider/provider.dart';
 
 class EditCategorieScreen extends StatefulWidget {
   static const routeName = '/edit-categorie-screen';
@@ -41,11 +35,7 @@ class _EditCategorieScreenState extends State<EditCategorieScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final sectionProvider =
-        Provider.of<SectionProvider>(context, listen: false).section;
 
-    final coursProvider =
-        Provider.of<CoursPlanProvider>(context, listen: false).cours;
 
 
     void editCategorie() {
@@ -82,7 +72,7 @@ class _EditCategorieScreenState extends State<EditCategorieScreen> {
                 elevation: 0,
                 shadowColor: Colors.transparent,
                 centerTitle: true,
-                title: Text('Modifier la catégorie'),
+                title: const Text('Modifier la catégorie'),
               ),
               body: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -91,7 +81,7 @@ class _EditCategorieScreenState extends State<EditCategorieScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTitlePanel(title: "Titre de la section"),
+                      const CustomTitlePanel(title: "Titre de la section"),
                       const SizedBox(
                         height: 15,
                       ),

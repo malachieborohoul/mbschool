@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/custom_animated_floating_buttons.dart';
 import 'package:mbschool/common/widgets/custom_course_section.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/padding.dart';
+
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
-import 'package:mbschool/providers/floating_button_provider.dart';
-import 'package:provider/provider.dart';
+
 
 class PlanScreen extends StatefulWidget {
   static const routeName = '/plan_cours';
@@ -27,7 +24,6 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
-  late AnimationController _controller;
   bool isPlay = false;
   bool selected = false;
   bool isScreenTouched = false;
@@ -38,8 +34,6 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     getAllSections();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
   }
 
   void getAllSections() async {
@@ -54,7 +48,7 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
   void getAllLecons(Section? section) async {
     lecons = await courseManagerService.getAllLecons(context, section!);
     setState(() {
-      print(lecons);
+      // print(lecons);
     });
   }
 
@@ -82,9 +76,9 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
         body: sections == null
-            ? Loader()
+            ? const Loader()
             : sections.isEmpty
-                ? Center(
+                ? const Center(
                     child: Text("Aucune information"),
                   )
                 : Container(

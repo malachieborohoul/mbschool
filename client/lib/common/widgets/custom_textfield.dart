@@ -53,14 +53,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
             width: 50.0,
             // color: grey,
             alignment: Alignment.center,
-            child: Container(
-                child: SvgPicture.asset(
+            child: SvgPicture.asset(
               assetImg + widget.prefixIcon,
               height: widget.iconHeight,
               color: widget.iconColor,
-            )),
+            ),
           ),
-          SizedBox(width: miniSpacer),
+          const SizedBox(width: miniSpacer),
           Flexible(
               child: TextFormField(
             keyboardType: widget.keyboardType,
@@ -68,7 +67,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             obscureText: widget.isPassword,
             controller: widget.controller,
             maxLines: widget.maxLine,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
               color: secondary,
               fontWeight: FontWeight.w500,

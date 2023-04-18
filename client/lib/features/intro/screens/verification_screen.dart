@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/textbox_verification.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -22,21 +19,18 @@ class VerificationScreen extends StatefulWidget {
 }
 
 bool _selected = false;
-bool _hide = false;
-double _width = double.infinity;
-double _height = 45;
 
 class _VerificationScreenState extends State<VerificationScreen>
     with SingleTickerProviderStateMixin {
   final _codeVerificationFormKey = GlobalKey<FormState>();
-  TextEditingController _controller1 = TextEditingController();
-  TextEditingController _controller2 = TextEditingController();
-  TextEditingController _controller3 = TextEditingController();
-  TextEditingController _controller4 = TextEditingController();
-  TextEditingController _controller5 = TextEditingController();
-  TextEditingController _controller6 = TextEditingController();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller6 = TextEditingController();
 
-  AuthService _authService = AuthService();
+  final AuthService _authService = AuthService();
 
   late final _animationController = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 750));
@@ -93,14 +87,14 @@ class _VerificationScreenState extends State<VerificationScreen>
                     offset: 60,
                     child: Container(
                       alignment: Alignment.topCenter,
-                      child: Image.asset(assetImg + "verification.png",
+                      child: Image.asset("${assetImg}verification.png",
                           width: 250),
                     ),
                   ),
-                  SlideDownTween(
+                  const SlideDownTween(
                     delay: 1.2,
                     offset: 50,
-                    child: const Text(
+                    child: Text(
                       "Vérification",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -145,44 +139,44 @@ class _VerificationScreenState extends State<VerificationScreen>
                           TextBoxVerification(
                             controller: _controller1,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           TextBoxVerification(
                             controller: _controller2,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           TextBoxVerification(
                             controller: _controller3,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           TextBoxVerification(
                             controller: _controller4,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           TextBoxVerification(
                             controller: _controller5,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           TextBoxVerification(
                             controller: _controller6,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   SlideDownTween(
@@ -207,7 +201,7 @@ class _VerificationScreenState extends State<VerificationScreen>
                           ]),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   GestureDetector(
@@ -221,7 +215,7 @@ class _VerificationScreenState extends State<VerificationScreen>
                               _controller4.text +
                               _controller5.text +
                               _controller6.text;
-                          print(code);
+                          // print(code);
                           // _selected = !_selected;
                           codeVerification(code);
                         });
@@ -242,7 +236,7 @@ class _VerificationScreenState extends State<VerificationScreen>
                               borderRadius: BorderRadius.circular(50)),
                           child: Center(
                             child: _selected == false
-                                ? Text(
+                                ? const Text(
                                     "Vérifier",
                                     style: TextStyle(
                                         color: textWhite,

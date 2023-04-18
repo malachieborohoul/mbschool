@@ -1,6 +1,5 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/utils.dart';
@@ -21,7 +20,7 @@ class _CunstomPlaceHolderState extends State<CunstomPlaceHolder> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
+    return SizedBox(
       width: size.width,
       height: size.width * .1,
       child: Row(
@@ -29,7 +28,7 @@ class _CunstomPlaceHolderState extends State<CunstomPlaceHolder> {
         children: [
           Text(
             widget.title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
               color: grey,
             ),
@@ -44,7 +43,7 @@ class _CunstomPlaceHolderState extends State<CunstomPlaceHolder> {
                     });
                   },
                 )
-              : SvgPicture.asset(assetImg + 'arrow_up_icon.svg'),
+              : SvgPicture.asset('${assetImg}arrow_up_icon.svg'),
         ],
       ),
     );

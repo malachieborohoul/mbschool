@@ -5,7 +5,6 @@ import 'package:mbschool/constants/error_handling.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/models/commentaire.dart';
-import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/reponse_commentaire.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -123,7 +122,6 @@ class CourseCommentaireService {
   //GEt all lesson commentaires
   Future<String> getAllLessonNumberReponses(
       BuildContext context, Commentaire commentaire) async {
-    List<Commentaire> commentaireList = [];
     String? numberReponse;
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -190,7 +188,6 @@ class CourseCommentaireService {
   //GEt all lesson commentaires
   Future<String> countAllLessonReponseAndCommentaires(
       BuildContext context, Lecon lecon) async {
-    List<Commentaire> commentaireList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     String number_discussions = "";
     try {

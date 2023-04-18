@@ -1,34 +1,19 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mbschool/common/widgets/alert_notification.dart';
+
 import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
 import 'package:mbschool/common/widgets/custom_lesson_reponse_commentaires.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
-import 'package:mbschool/features/course/screens/all_course_screen.dart';
-import 'package:mbschool/features/course/screens/detail_course_screen.dart';
-import 'package:mbschool/features/filter/services/filter_service.dart';
-import 'package:mbschool/models/categorie.dart';
+
 import 'package:mbschool/models/commentaire.dart';
-import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/models/langue.dart';
-import 'package:mbschool/models/lecon.dart';
-import 'package:mbschool/models/niveau.dart';
+
 import 'package:mbschool/models/reponse_commentaire.dart';
 import 'package:mbschool/providers/user_provider.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/animations/slide_up_tween.dart';
+
 import 'package:provider/provider.dart';
 
 class CourseReponseCommentaireScreen extends StatefulWidget {
@@ -47,12 +32,12 @@ class CourseReponseCommentaireScreen extends StatefulWidget {
 
 class _CourseReponseCommentaireScreenState
     extends State<CourseReponseCommentaireScreen> {
-  CourseCommentaireService _courseCommentaireService =
+  final CourseCommentaireService _courseCommentaireService =
       CourseCommentaireService();
 
   final _addCourseReponseCommentaire = GlobalKey<FormState>();
 
-  TextEditingController _reponseCommentaireController = TextEditingController();
+  final TextEditingController _reponseCommentaireController = TextEditingController();
   bool _isFieldEmpty = true;
   bool _isloading = false;
 
@@ -97,7 +82,7 @@ class _CourseReponseCommentaireScreenState
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: lessonReponseCommentaires == null
-            ? Loader()
+            ? const Loader()
             : SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
@@ -114,7 +99,7 @@ class _CourseReponseCommentaireScreenState
                               borderRadius: BorderRadius.circular(7)),
                         ),
                       ),
-                      SizedBox(
+                     const  SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -126,8 +111,8 @@ class _CourseReponseCommentaireScreenState
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: Icon(Icons.arrow_back_outlined)),
-                              Text(
+                                  icon: const Icon(Icons.arrow_back_outlined)),
+                              const Text(
                                 "Reponses",
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
@@ -138,10 +123,10 @@ class _CourseReponseCommentaireScreenState
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              icon: Icon(Icons.close))
+                              icon: const Icon(Icons.close))
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       CustomLessonCommentaires(
@@ -149,7 +134,7 @@ class _CourseReponseCommentaireScreenState
                         commentaire: widget.commentaire,
                       ),
 
-                      Divider(thickness: 0.7),
+                      const Divider(thickness: 0.7),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -173,7 +158,7 @@ class _CourseReponseCommentaireScreenState
                                   },
                                   decoration: InputDecoration(
                                     hintText: "Ajouter une reponse",
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: const UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: primary,
                                       ),
@@ -192,9 +177,9 @@ class _CourseReponseCommentaireScreenState
                                                       });
                                                     }
                                                   },
-                                            icon: Icon(Icons.send),
+                                            icon: const Icon(Icons.send),
                                           )
-                                        : Loader(),
+                                        : const Loader(),
                                   ),
                                 ),
                               ),

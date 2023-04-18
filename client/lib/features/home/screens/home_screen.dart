@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/clipper.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
+
 import 'package:mbschool/common/widgets/custom_categories_button.dart';
 import 'package:mbschool/common/widgets/custom_category_card.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
@@ -16,19 +16,14 @@ import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/category_json.dart';
 import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/datas/user_profile.dart';
-import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
-import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
-import 'package:mbschool/features/panel/create_course/screens/create_course_screen.dart';
-import 'package:mbschool/features/panel/panel.dart';
-import 'package:mbschool/features/search/screens/search_screen.dart';
+
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/course_provider.dart';
@@ -47,11 +42,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   CourseManagerService courseManagerService = CourseManagerService();
-  List<Cours> cours = [];
-  List<Categorie> categories = [];
+  late Future<List<Cours>> cours;
+  late Future<List<Categorie>> categories;
 
   late final AnimationController _animationController;
-  late final Animation<double> _animation;
   @override
   void initState() {
     getAllPublishedCourses();
@@ -59,9 +53,6 @@ class _HomeScreenState extends State<HomeScreen>
 
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 750));
-
-    _animation =
-        Tween<double>(begin: 1.0, end: 5.0).animate(_animationController);
 
     super.initState();
   }
@@ -72,21 +63,20 @@ class _HomeScreenState extends State<HomeScreen>
     super.dispose();
   }
 
-  void getAllPublishedCourses() async {
-    cours = await courseManagerService.getAllPublishedCourses(context);
+  void getAllPublishedCourses() {
+    cours = courseManagerService.getAllPublishedCourses(context);
     setState(() {});
   }
 
-  getAllCategorieData() async {
-    categories = await createCourseService.getAllCategorieData(context);
+  getAllCategorieData() {
+    categories = createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    var size = MediaQuery.of(context).size;
-    print(user.role);
+    // print(user.role);
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -95,19 +85,19 @@ class _HomeScreenState extends State<HomeScreen>
             ? Container()
             : user.role == "2"
                 ? const NavigatorDrawerTeacher()
-                : NavigatorDrawerAdmin(),
+                : const NavigatorDrawerAdmin(),
         backgroundColor: background,
         extendBodyBehindAppBar: true,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(0),
           child: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            brightness: Brightness.light,
+            systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
         ),
         body: cours == null || categories == null
-            ? Loader()
+            ? const Loader()
             : SingleChildScrollView(
                 child: Column(
                   children: [
@@ -129,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen>
                               left: appPadding, right: appPadding),
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: spacer + 5,
                               ),
                               Row(
@@ -151,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     offset: 70,
                                     child: OpacityTween(
                                       begin: 0.0,
-                                      child: Container(
+                                      child: SizedBox(
                                         height: spacer,
                                         width: spacer,
                                         child: GestureDetector(
@@ -185,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen>
                               const SizedBox(
                                 height: spacer,
                               ),
-                              SlideDownTween(
+                              const SlideDownTween(
                                 offset: 70,
                                 child: OpacityTween(
                                   begin: 0.0,
@@ -200,23 +190,23 @@ class _HomeScreenState extends State<HomeScreen>
                               const SizedBox(
                                 height: spacer - 30,
                               ),
-                              SlideDownTween(
+                              const SlideDownTween(
                                   offset: 70,
                                   child: OpacityTween(
                                       begin: 0.0, child: CustomCategoryCard())),
                               const SizedBox(
                                 height: spacer,
                               ),
-                              SlideDownTween(
+                              const SlideDownTween(
                                   offset: 70,
                                   child: OpacityTween(
                                       begin: 0.0,
-                                      child: const CustomPromotionCard())),
+                                      child: CustomPromotionCard())),
                               const SizedBox(
                                 height: spacer,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     left: appPadding - 20,
                                     right: appPadding - 20),
                                 child: CustomTitle(
@@ -230,52 +220,79 @@ class _HomeScreenState extends State<HomeScreen>
                                 height: smallSpacer,
                               ),
                               SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 scrollDirection: Axis.horizontal,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: appPadding - 20,
-                                      right: appPadding - 10),
-                                  child: Wrap(
-                                      spacing: 10,
-                                      children:
-                                          List.generate(cours.length, (index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(context,
-                                                DetailCourseScreen.routeName,
-                                                arguments: cours[index]);
+                                    padding: const EdgeInsets.only(
+                                        left: appPadding - 20,
+                                        right: appPadding - 10),
+                                    child: FutureBuilder(
+                                        future: cours,
+                                        builder: (context,
+                                            AsyncSnapshot<List<Cours>>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return Wrap(
+                                              spacing: 10,
+                                              children: List.generate(
+                                                snapshot.data!.length,
+                                                (index) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pushNamed(
+                                                          context,
+                                                          DetailCourseScreen
+                                                              .routeName,
+                                                          arguments: snapshot
+                                                              .data![index]);
 
-                                            Provider.of<CoursProvider>(context,
-                                                    listen: false)
-                                                .set_cours(cours[index]);
-                                          },
-                                          child: cours == null
-                                              ? Loader()
-                                              : CustomCourseCardExpand(
-                                                  thumbNail: Hero(
-                                                    tag: cours[index].vignette,
-                                                    child: Image.network(
-                                                      cours[index].vignette,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                  videoAmount:
-                                                      CoursesJson[index]
-                                                          ['video'],
-                                                  title: cours[index].titre,
-                                                  userProfile:
-                                                      cours[index].photo,
-                                                  userName: cours[index].nom,
-                                                  price:
-                                                      cours[index].prix.isEmpty
+                                                      Provider.of<CoursProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .set_cours(snapshot
+                                                              .data![index]);
+                                                    },
+                                                    child:
+                                                        CustomCourseCardExpand(
+                                                      thumbNail: Hero(
+                                                        tag: snapshot
+                                                            .data![index]
+                                                            .vignette,
+                                                        child: Image.network(
+                                                          snapshot.data![index]
+                                                              .vignette,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      videoAmount:
+                                                          CoursesJson[index]
+                                                              ['video'],
+                                                      title: snapshot
+                                                          .data![index].titre,
+                                                      userProfile: snapshot
+                                                          .data![index].photo,
+                                                      userName: snapshot
+                                                          .data![index].nom,
+                                                      price: snapshot
+                                                              .data![index]
+                                                              .prix
+                                                              .isEmpty
                                                           ? "Gratuit"
-                                                          : cours[index].prix,
-                                                  cours: cours[index],
-                                                ),
-                                        );
-                                      })),
-                                ),
+                                                          : snapshot
+                                                              .data![index]
+                                                              .prix,
+                                                      cours:
+                                                          snapshot.data![index],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          } else {
+                                            return Loader();
+                                          }
+                                        })),
                               ),
                               const SizedBox(
                                 height: spacer - 20,
@@ -291,48 +308,50 @@ class _HomeScreenState extends State<HomeScreen>
                                 padding:
                                     const EdgeInsets.only(left: appPadding),
                                 child: SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                          children: List.generate(
-                                              categories.length, (index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                              top: 10,
-                                              bottom: 5),
-                                          child: InkWell(
-                                            splashColor: Color.fromRGBO(
-                                                158, 158, 158, 1),
-                                            onTap: () => Navigator.pushNamed(
-                                                context,
-                                                CoursesByCategoryScreen
-                                                    .routeName,
-                                                arguments: categories[index]),
-                                            child: CustomCategoriesButton(
-                                                title: categories[index]
-                                                    .nom
-                                                    .toUpperCase()),
-                                          ),
-                                        );
-                                      })),
-                                      // Row(
-                                      //     children: List.generate(CategoryJson2.length,
-                                      //         (index) {
-                                      //   return Padding(
-                                      //     padding: const EdgeInsets.only(
-                                      //         left: 5, right: 10, top: 10, bottom: 5),
-                                      //     child: CustomCategoriesButton(
-                                      //         title: CategoryJson2[index]['title']),
-                                      //   );
-                                      // })),
-                                    ],
-                                  ),
-                                ),
+                                    scrollDirection: Axis.horizontal,
+                                    child: FutureBuilder(
+                                        future: categories,
+                                        builder: (context,
+                                            AsyncSnapshot<List<Categorie>>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return Row(
+                                              children: List.generate(
+                                                  snapshot.data!.length,
+                                                  (index) {
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 10,
+                                                          right: 10,
+                                                          top: 10,
+                                                          bottom: 5),
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        const Color.fromRGBO(
+                                                            158, 158, 158, 1),
+                                                    onTap: () =>
+                                                        Navigator.pushNamed(
+                                                            context,
+                                                            CoursesByCategoryScreen
+                                                                .routeName,
+                                                            arguments: snapshot
+                                                                .data![index]),
+                                                    child:
+                                                        CustomCategoriesButton(
+                                                            title: snapshot
+                                                                .data![index]
+                                                                .nom
+                                                                .toUpperCase()),
+                                                  ),
+                                                );
+                                              }),
+                                            );
+                                          } else {
+                                            return Loader();
+                                          }
+                                        })),
                               ),
                               const SizedBox(
                                 height: spacer,

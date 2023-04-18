@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/models/user.dart';
 
 class CoursProvider extends ChangeNotifier {
   Cours _cours = Cours(

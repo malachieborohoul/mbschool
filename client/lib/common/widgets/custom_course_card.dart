@@ -78,7 +78,7 @@ double averageRate=0.0;
     return Container(
       width: size.width * .6,
       alignment: Alignment.topCenter,
-      padding: EdgeInsets.all(7.0),
+      padding: const EdgeInsets.all(7.0),
       decoration: BoxDecoration(
         color: textWhite,
         borderRadius: BorderRadius.circular(17.0),
@@ -86,18 +86,18 @@ double averageRate=0.0;
           BoxShadow(
             color: textBlack.withOpacity(0.1),
             blurRadius: 10.0,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           )
         ],
       ),
       child: lecons == null 
-          ? Loader()
+          ? const Loader()
           : Column(
               children: [
                 Stack(
                   alignment: Alignment.bottomLeft,
                   children: [
-                    Container(
+                    SizedBox(
                       height: size.width * .6,
                       width: size.width * .6,
                       child: ClipRRect(
@@ -117,7 +117,7 @@ double averageRate=0.0;
                             borderRadius: BorderRadius.circular(100.0)),
                         child: Text(
                           '${lecons.length} Lecons',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: secondary,
                               fontSize: 14.0,
                               fontWeight: FontWeight.w700),
@@ -126,7 +126,7 @@ double averageRate=0.0;
                     ),
                   ],
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Container(
                   padding: const EdgeInsets.only(
                     left: 7.0,
@@ -136,14 +136,14 @@ double averageRate=0.0;
                     widget.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: secondary,
                       fontSize: 17.0,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 7.0,
@@ -152,7 +152,7 @@ double averageRate=0.0;
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 30.0,
                         width: 30.0,
                         child: ClipRRect(
@@ -168,14 +168,14 @@ double averageRate=0.0;
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Flexible(
                         child: Container(
                           width: size.width,
                           alignment: Alignment.centerLeft,
                           child: Text(
                             widget.userName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: secondary,
                               fontSize: 13.0,
                             ),
@@ -183,8 +183,8 @@ double averageRate=0.0;
                         ),
                       ),
                       Text(
-                        '${widget.price}',
-                        style: TextStyle(
+                        widget.price,
+                        style: const TextStyle(
                           color: primary,
                           fontSize: 15.0,
                           fontWeight: FontWeight.w700,
@@ -193,13 +193,13 @@ double averageRate=0.0;
                     ],
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                  RatingBar.builder(
                     direction: Axis.horizontal,
                     itemSize: 15,
                     initialRating: averageRate,
                     itemBuilder: (context, _) {
-                      return Icon(
+                      return const Icon(
                         Icons.star,
                         size: 20,
                         color: third,
@@ -248,7 +248,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
       ),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             height: size.width * .125,
             width: size.width * .125,
             child: ClipRRect(
@@ -259,7 +259,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
               ),
             ),
           ),
-          SizedBox(width: 15.0),
+          const SizedBox(width: 15.0),
           Flexible(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +269,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   widget.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14.0,
                     color: secondary,
                     fontWeight: FontWeight.w700,
@@ -279,15 +279,15 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Instructor: ' + widget.nom + ' ' + widget.prenom,
-                      style: TextStyle(
+                      'Instructor: ${widget.nom} ${widget.prenom}',
+                      style: const TextStyle(
                         fontSize: 12.0,
                         color: grey,
                       ),
                     ),
                     Text(
-                      '' + widget.price,
-                      style: TextStyle(
+                      widget.price,
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: primary,
                         fontWeight: FontWeight.w700,
@@ -296,7 +296,7 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
                   ],
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Icon(
                       Icons.star,
                       size: 15,
@@ -385,7 +385,7 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                       widget.cours.titre,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14.0,
                         color: secondary,
                         fontWeight: FontWeight.w700,
@@ -396,18 +396,18 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                       height: size.height * 0.05,
                       decoration: BoxDecoration(
                           color: Colors.grey.shade100,
-                          borderRadius: BorderRadius.all(Radius.circular(25))),
+                          borderRadius: const BorderRadius.all(Radius.circular(25))),
                       child: InkWell(
                         onTap: () {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title: Text("Notification"),
-                                    content: Container(
+                                    title: const Text("Notification"),
+                                    content: SizedBox(
                                       height: 90,
                                       child: Column(
                                         children: [
-                                          Text(
+                                          const Text(
                                             "Voulez vous le retirer des favoris ?",
                                             style: TextStyle(fontSize: 15),
                                           ),
@@ -435,7 +435,7 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15)),
-                                                    child: Text(
+                                                    child: const Text(
                                                       "Oui",
                                                       style: TextStyle(
                                                           color: textWhite),
@@ -456,7 +456,7 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15)),
-                                                    child: Text(
+                                                    child: const Text(
                                                       "Non",
                                                       style: TextStyle(
                                                           color: textWhite),
@@ -471,7 +471,7 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                          children: const [
                             Icon(
                               Icons.close,
                               size: 15,
@@ -490,7 +490,7 @@ class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: size.height * 0.190,
           width: size.width * 0.35,
           child: ClipRRect(

@@ -92,7 +92,7 @@ class _VideoDisplayState extends State<VideoDisplay> {
       body: chewieController != null &&
               chewieController!.videoPlayerController.value.isInitialized
           ? Chewie(controller: chewieController!)
-          : Loader(),
+          : const Loader(),
     );
   }
 }

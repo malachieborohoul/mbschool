@@ -25,13 +25,13 @@ class CustomButtonBox extends StatelessWidget {
             color: primary.withOpacity(0.5),
             spreadRadius: 0.0,
             blurRadius: 6.0,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           )
         ],
       ),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
           color: textWhite,

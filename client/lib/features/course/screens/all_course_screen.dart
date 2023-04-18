@@ -4,14 +4,11 @@ import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/custom_heading.dart';
-import 'package:mbschool/common/widgets/custom_my_courses_card.dart';
+
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/courses_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
-import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:provider/provider.dart';
@@ -45,30 +42,29 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
     return Scaffold(
       backgroundColor: background,
       extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
+      appBar:  const PreferredSize(
+          preferredSize: Size.fromHeight(40),
           child: CustomAppBar(
             backgroundColor: Colors.transparent,
             action: true,
             actionIcon: 'search_icon.svg',
-          ),
-          preferredSize: Size.fromHeight(40)),
+          )),
       body: widget.cours == null
-          ? Loader()
+          ? const Loader()
           : widget.cours.isNotEmpty
               ? getBody()
-              : Center(child: Text("Pas d'informations")),
+              : const Center(child: Text("Pas d'informations")),
     );
   }
 
   Widget getBody() {
-    var size = MediaQuery.of(context).size;
 
     return Padding(
       padding: const EdgeInsets.all(appPadding),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: spacer,
             ),
             Row(

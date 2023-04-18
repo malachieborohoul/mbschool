@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_button_box_panel.dart';
+
 import 'package:mbschool/common/widgets/custom_textfield_exigence.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -27,8 +24,6 @@ class ExigenceScreen extends StatefulWidget {
 class _ExigenceScreenState extends State<ExigenceScreen> {
   final controllers = <TextEditingController>[];
   TextEditingController exigenceController = TextEditingController();
-  List<CustomTextFieldExigence> _listExigences = [];
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
   ExigenceService exigenceService = ExigenceService();
   List<Exigence> exigences = [];
@@ -110,24 +105,6 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
   //   _listExigences.removeAt(index);
   // }
 
-  void _removeCourseExigence(int index) {
-    AnimatedContainer(
-      duration: Duration(seconds: 3),
-      curve: Curves.easeInOut,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        decoration: BoxDecoration(
-            color: Colors.red,
-            borderRadius: BorderRadius.all(Radius.circular(8))),
-        child: Text(
-          "Supprimé",
-          style: TextStyle(color: textWhite),
-        ),
-      ),
-    );
-    _listExigences.removeAt(index);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +113,7 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
       child: Scaffold(
         appBar: CustomAppBarPanel(texte: "Exigences"),
         body: isCharging == true || exigences == null
-            ? Loader()
+            ? const Loader()
             : Form(
                 key: _addExigenceFormKey,
                 child: SingleChildScrollView(
@@ -205,7 +182,7 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
                                     });
                                   }
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.send_rounded,
                                   color: primary,
                                 ))
@@ -221,7 +198,7 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
                               child: ListTile(
                                 title: Text(
                                   exigences[i].nom,
-                                  style: TextStyle(color: textWhite),
+                                  style: const TextStyle(color: textWhite),
                                 ),
                                 trailing: IconButton(
                                     onPressed: () {
@@ -230,7 +207,7 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
                                         deleteExigence(exigences[i]);
                                       });
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete_outline_rounded,
                                       color: textWhite,
                                     )),

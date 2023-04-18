@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/common/widgets/custom_heading.dart';
 import 'package:mbschool/common/widgets/custom_place_holder.dart';
-import 'package:mbschool/common/widgets/custom_textfield.dart';
 import 'package:mbschool/common/widgets/custom_title.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/account_menu_json.dart';
 import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -55,7 +50,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   children: [
                     CustomHeading(
                         title: "Compte",
-                        subTitle: "${user.role == "1" ? "Etudiant" : ""}",
+                        subTitle: user.role == "1" ? "Etudiant" : "",
                         color: secondary),
                     // IconButton(onPressed: (){
                     //    Navigator.pushNamed(
@@ -81,7 +76,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   ? SlideDownTween(
                       offset: 10,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
                         child: Hero(
                           tag: 'profile-photo',
                           child: Image.network(
@@ -98,7 +94,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         Stack(
                           alignment: Alignment.center,
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               minRadius: 35,
                               maxRadius: 35,
                               backgroundColor: grey,
@@ -106,8 +102,8 @@ class _AccountScreenState extends State<AccountScreen> {
                             SlideDownTween(
                               offset: 30,
                               child: ClipRRect(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(100)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(100)),
                                 child: Hero(
                                   tag: 'profile-photo',
                                   child: Image.asset(
@@ -125,7 +121,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           child: Container(
                             width: 40,
                             height: 40,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: background,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(50))),
@@ -135,7 +131,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                       context, EditProfileScreen.routeName);
                                 },
                                 hoverColor: primary,
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.edit,
                                   color: textBlack,
                                 )),
@@ -152,7 +148,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     CustomTitle(
-                      title: '${user.nom.toUpperCase()}',
+                      title: user.nom.toUpperCase(),
                       extend: false,
                     ),
                   ],
@@ -178,9 +174,9 @@ class _AccountScreenState extends State<AccountScreen> {
               const SizedBox(
                 height: spacer,
               ),
-              SlideDownTween(
+              const SlideDownTween(
                 offset: 30,
-                child: const CustomTitle(
+                child: CustomTitle(
                   title: "Paramètre",
                   extend: false,
                 ),
@@ -191,9 +187,9 @@ class _AccountScreenState extends State<AccountScreen> {
               SlideDownTween(
                 offset: 30,
                 child: Column(
-                  children: [
+                  children: const [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
+                      padding: EdgeInsets.only(bottom: 10),
                       child: CunstomPlaceHolder(title: "A propos de nous"),
                     )
                   ],
@@ -206,9 +202,9 @@ class _AccountScreenState extends State<AccountScreen> {
                   onTap: () {
                     logOut(context);
                   },
-                  child: SlideDownTween(
+                  child: const SlideDownTween(
                       offset: 30,
-                      child: const CustomButtonBox(title: "Se déconnecter"))),
+                      child: CustomButtonBox(title: "Se déconnecter"))),
               const SizedBox(
                 height: spacer,
               ),

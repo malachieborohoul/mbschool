@@ -1,20 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_button_box_panel.dart';
+
 import 'package:mbschool/common/widgets/custom_textfield_exigence.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/resultat_service.dart';
 import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/models/exigence.dart';
 import 'package:mbschool/models/resultat.dart';
 
 class ResultatScreen extends StatefulWidget {
@@ -28,7 +23,6 @@ class ResultatScreen extends StatefulWidget {
 
 class _ResultatScreenState extends State<ResultatScreen> {
   TextEditingController resultatController = TextEditingController();
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
   ResultatService resultatService = ResultatService();
   List<Resultat> resultats = [];
@@ -85,7 +79,7 @@ class _ResultatScreenState extends State<ResultatScreen> {
       child: Scaffold(
         appBar: CustomAppBarPanel(texte: "Resultats"),
         body: isCharging == true || resultats == null
-            ? Loader()
+            ? const Loader()
             : Form(
                 key: _addResultatFormKey,
                 child: SingleChildScrollView(
@@ -116,7 +110,7 @@ class _ResultatScreenState extends State<ResultatScreen> {
                                     });
                                   }
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.send_rounded,
                                   color: primary,
                                 ))
@@ -132,7 +126,7 @@ class _ResultatScreenState extends State<ResultatScreen> {
                               child: ListTile(
                                 title: Text(
                                   resultats[i].titre,
-                                  style: TextStyle(color: textWhite),
+                                  style: const TextStyle(color: textWhite),
                                 ),
                                 trailing: IconButton(
                                     onPressed: () {
@@ -141,7 +135,7 @@ class _ResultatScreenState extends State<ResultatScreen> {
                                         deleteResultat(resultats[i]);
                                       });
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete_outline_rounded,
                                       color: textWhite,
                                     )),

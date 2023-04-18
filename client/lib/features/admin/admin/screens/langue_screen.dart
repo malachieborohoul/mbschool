@@ -1,11 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/common/animations/slide_down_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_button_box_panel.dart';
 import 'package:mbschool/common/widgets/custom_textfield_exigence.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -13,14 +8,9 @@ import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/admin/admin/screens/edit_langue_screen.dart';
 import 'package:mbschool/features/admin/admin/services/langue_service.dart';
-import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
-import 'package:mbschool/features/panel/course_manager/services/exigence_service.dart';
-import 'package:mbschool/features/panel/course_manager/services/resultat_service.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
 import 'package:mbschool/models/langue.dart';
-import 'package:mbschool/models/cours.dart';
-import 'package:mbschool/models/exigence.dart';
-import 'package:mbschool/models/resultat.dart';
+
 
 class LangueScreen extends StatefulWidget {
   static const routeName = 'langue-screen';
@@ -35,7 +25,6 @@ class LangueScreen extends StatefulWidget {
 class _LangueScreenState extends State<LangueScreen> {
   TextEditingController langueController = TextEditingController();
   TextEditingController modifyLangueController = TextEditingController();
-  final GlobalKey<AnimatedListState> _key = GlobalKey();
   bool isCharging = false;
   LangueService langueService = LangueService();
   CreateCourseService createCourseService = CreateCourseService();
@@ -92,7 +81,7 @@ class _LangueScreenState extends State<LangueScreen> {
       child: Scaffold(
         appBar: CustomAppBarPanel(texte: "langues"),
         body: isCharging == true || langues == null
-            ? Loader()
+            ? const Loader()
             : Form(
                 key: _addLangueFormKey,
                 child: SingleChildScrollView(
@@ -122,7 +111,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                     });
                                   }
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.send_rounded,
                                   color: primary,
                                 ))
@@ -133,7 +122,7 @@ class _LangueScreenState extends State<LangueScreen> {
                             duration: Duration(milliseconds: (i + 1) * 500),
                             offset: 40,
                             child: Container(
-                                margin: EdgeInsets.only(top: 8.0),
+                                margin: const EdgeInsets.only(top: 8.0),
                                 height: 50,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -147,7 +136,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                     children: [
                                       Text(
                                         langues[i].nom,
-                                        style: TextStyle(color: textWhite),
+                                        style: const TextStyle(color: textWhite),
                                       ),
                                       Row(
                                         children: [
@@ -158,19 +147,19 @@ class _LangueScreenState extends State<LangueScreen> {
                                                     builder:
                                                         (context) =>
                                                             AlertDialog(
-                                                              title: Text(
+                                                              title: const Text(
                                                                   "Notification"),
                                                               content:
                                                                   isCharging ==
                                                                           true
-                                                                      ? Loader()
-                                                                      : Container(
+                                                                      ? const Loader()
+                                                                      :  SizedBox(
                                                                           height:
                                                                               90,
                                                                           child:
                                                                               Column(
                                                                             children: [
-                                                                              Text(
+                                                                              const Text(
                                                                                 "Voulez vous supprimer la langue?",
                                                                                 style: TextStyle(fontSize: 14),
                                                                               ),
@@ -194,7 +183,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                                                                         width: 40,
                                                                                         height: 30,
                                                                                         decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: Text(
+                                                                                        child: const Text(
                                                                                           "Oui",
                                                                                           style: TextStyle(color: textWhite),
                                                                                         ),
@@ -209,7 +198,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                                                                         width: 40,
                                                                                         height: 30,
                                                                                         decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: Text(
+                                                                                        child: const Text(
                                                                                           "Non",
                                                                                           style: TextStyle(color: textWhite),
                                                                                         ),
@@ -221,7 +210,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                                                         ),
                                                             ));
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.delete_outline_rounded,
                                                 color: textWhite,
                                               )),
@@ -232,7 +221,7 @@ class _LangueScreenState extends State<LangueScreen> {
                                                   EditLangueScreen
                                                       .routeName, arguments: langues[i]);
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.edit_outlined,
                                               color: textWhite,
                                             ),

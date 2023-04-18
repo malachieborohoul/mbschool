@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/models/langue.dart';
 
@@ -28,19 +26,19 @@ class _CustomDropdownButtonLangueState extends State<CustomDropdownButtonLangue>
           hintText: "Selectionner",
           hintStyle: TextStyle(color: Colors.grey.shade300),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.transparent),
+            borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(10),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.transparent),
+            borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
         value: dropdownvalue,
         items: widget.items.map((Langue item) {
           return DropdownMenuItem(
-            child: Text(item.nom),
             value: item.id_langue,
+            child: Text(item.nom),
           );
         }).toList(),
         onChanged: (String? val) {

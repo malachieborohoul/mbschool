@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/custom_search_field.dart';
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/promotion.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/search/services/search_service.dart';
 import 'package:mbschool/models/cours.dart';
@@ -30,7 +26,6 @@ List<Cours> cours = [];
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -43,13 +38,13 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           SliverToBoxAdapter(
               child: cours == null
-                  ? Loader()
+                  ? const Loader()
                   : Padding(
                       padding: const EdgeInsets.all(appPadding),
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: spacer,
                             ),
                             Row(
@@ -126,8 +121,8 @@ class _SearchHeader extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final percent = shrinkOffset / _maxHeaderExtent;
-    const _searchWidth = 300.0;
-    print(percent);
+    const searchWidth = 300.0;
+    // print(percent);
 
     return Container(
       color: background,
@@ -153,8 +148,8 @@ class _SearchHeader extends SliverPersistentHeaderDelegate {
             Positioned(
               // left: (150*(1-percent)).clamp(33.0, 150),
               top: (80 * (1 - percent)).clamp(10.0, 80),
-              width: (_searchWidth * (1 - percent)).clamp(60.0, _searchWidth),
-              child: CustomSearch(),
+              width: (searchWidth * (1 - percent)).clamp(60.0, searchWidth),
+              child: const CustomSearch(),
             ),
           ],
         ),
@@ -181,9 +176,9 @@ class CustomSearch extends StatefulWidget {
 }
 
 class _CustomSearchState extends State<CustomSearch> {
-  TextEditingController _keyword = TextEditingController();
+  final TextEditingController _keyword = TextEditingController();
 
-  SearchService _searchService = SearchService();
+  final SearchService _searchService = SearchService();
 
   @override
   void dispose() {
@@ -217,12 +212,10 @@ class _CustomSearchState extends State<CustomSearch> {
             height: 40.0,
             width: 40.0,
             alignment: Alignment.center,
-            child: Container(
-              child: SvgPicture.asset(
-                assetImg + 'search_icon.svg',
-                color: secondary.withOpacity(0.5),
-                height: 15.0,
-              ),
+            child: SvgPicture.asset(
+              '${assetImg}search_icon.svg',
+              color: secondary.withOpacity(0.5),
+              height: 15.0,
             ),
           ),
           Flexible(
@@ -236,7 +229,7 @@ class _CustomSearchState extends State<CustomSearch> {
                   searchCourses(text);
                     
                 },
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
                 cursorColor: textBlack,
                 decoration: InputDecoration(
                   hintText: "",
@@ -249,7 +242,7 @@ class _CustomSearchState extends State<CustomSearch> {
               ),
             ),
           ),
-          SizedBox(width: 10.0),
+          const SizedBox(width: 10.0),
         ],
       ),
     );

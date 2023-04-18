@@ -36,7 +36,7 @@ class CustomTextFieldSecond extends StatefulWidget {
 class _CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.height,
       width: double.infinity,
       // decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class _CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: miniSpacer),
+          const SizedBox(width: miniSpacer),
           Flexible(
               child: TextFormField(
             keyboardType: widget.keyboardType,
@@ -55,7 +55,7 @@ class _CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
             obscureText: widget.isPassword,
             controller: widget.controller,
             maxLines: widget.maxLine,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15.0,
               color: secondary,
               fontWeight: FontWeight.w500,
@@ -67,21 +67,20 @@ class _CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
                 width: 50.0,
                 // color: grey,
                 alignment: Alignment.center,
-                child: Container(
-                    child: SvgPicture.asset(
+                child: SvgPicture.asset(
                   assetImg + widget.prefixIcon,
                   height: widget.iconHeight,
                   color: widget.iconColor,
-                )),
+                ),
               ),
               // border: InputBorder.none,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(color: primary),
+                borderSide: const BorderSide(color: primary),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide(color: primary),
+                borderSide: const BorderSide(color: primary),
               ),
               labelText: widget.labelText,
               labelStyle: TextStyle(

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:mbschool/models/user.dart';
 
 class FloatingButtonProvider extends ChangeNotifier {
 

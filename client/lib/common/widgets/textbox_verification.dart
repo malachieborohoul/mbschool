@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 
 class TextBoxVerification extends StatefulWidget {
@@ -20,7 +18,7 @@ class _TextBoxVerificationState extends State<TextBoxVerification> {
       width: 43,
       height: 48,
       decoration:
-          BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50))),
+          const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(50))),
       child: TextFormField(
         controller: widget.controller,
         onChanged: (value) {

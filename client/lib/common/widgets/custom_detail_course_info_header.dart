@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -28,9 +25,8 @@ class CustomDetailCourseInfoHeader extends StatefulWidget {
 
 class _CustomDetailCourseInfoHeaderState
     extends State<CustomDetailCourseInfoHeader> {
-  bool _isFavorite = false;
 
-  CourseManagerService _courseManagerService = CourseManagerService();
+  final CourseManagerService _courseManagerService = CourseManagerService();
 
   void addCoursToFavorite() {
     _courseManagerService.addCourseToFavorite(context, widget.cours, () {
@@ -60,9 +56,9 @@ class _CustomDetailCourseInfoHeaderState
         children: [
           Text(
             widget.cours.titre,
-            style: TextStyle(fontSize: 25),
+            style: const TextStyle(fontSize: 25),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           Row(
@@ -75,7 +71,7 @@ class _CustomDetailCourseInfoHeaderState
                     itemSize: 15,
                     initialRating: widget.averageRate,
                     itemBuilder: (context, _) {
-                      return Icon(
+                      return const Icon(
                         Icons.star,
                         size: 20,
                         color: third,
@@ -121,7 +117,7 @@ class _CustomDetailCourseInfoHeaderState
                   //   size: 20,
                   //   color: third,
                   // ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   Text("${widget.averageRate}"),
@@ -133,12 +129,12 @@ class _CustomDetailCourseInfoHeaderState
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              title: Text("Notification"),
-                              content: Container(
+                              title: const Text("Notification"),
+                              content: SizedBox(
                                 height: 90,
                                 child: Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Voulez vous l'ajouter aux favoris ?",
                                       style: TextStyle(fontSize: 15),
                                     ),
@@ -164,7 +160,7 @@ class _CustomDetailCourseInfoHeaderState
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15)),
-                                              child: Text(
+                                              child: const Text(
                                                 "Oui",
                                                 style:
                                                     TextStyle(color: textWhite),
@@ -184,7 +180,7 @@ class _CustomDetailCourseInfoHeaderState
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15)),
-                                              child: Text(
+                                              child: const Text(
                                                 "Non",
                                                 style:
                                                     TextStyle(color: textWhite),
@@ -201,12 +197,12 @@ class _CustomDetailCourseInfoHeaderState
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              title: Text("Notification"),
-                              content: Container(
+                              title: const Text("Notification"),
+                              content: SizedBox(
                                 height: 90,
                                 child: Column(
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Voulez vous le retirer des favoris ?",
                                       style: TextStyle(fontSize: 15),
                                     ),
@@ -232,7 +228,7 @@ class _CustomDetailCourseInfoHeaderState
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15)),
-                                              child: Text(
+                                              child: const Text(
                                                 "Oui",
                                                 style:
                                                     TextStyle(color: textWhite),
@@ -252,7 +248,7 @@ class _CustomDetailCourseInfoHeaderState
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15)),
-                                              child: Text(
+                                              child: const Text(
                                                 "Non",
                                                 style:
                                                     TextStyle(color: textWhite),
@@ -267,7 +263,7 @@ class _CustomDetailCourseInfoHeaderState
                   }
                 },
                 icon: Icon(
-                  color: Color.fromARGB(255, 255, 0, 0),
+                  color: const Color.fromARGB(255, 255, 0, 0),
                   widget.isCourseInFav == false
                       ? Icons.favorite_outline_rounded
                       : Icons.favorite_rounded,

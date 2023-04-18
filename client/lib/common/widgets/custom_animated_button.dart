@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mbschool/constants/colors.dart';
 
 class CustomAnimatedButton extends StatefulWidget {
@@ -41,24 +39,24 @@ class _CustomAnimatedButtonState extends State<CustomAnimatedButton> {
         child: Row(
           children: [
             AnimatedContainer(
-              duration: Duration(seconds: 1),
+              duration: const Duration(seconds: 1),
               curve: Curves.bounceInOut,
               child: Container(
-                margin: EdgeInsets.only(left: 30, right: 30),
+                margin: const EdgeInsets.only(left: 30, right: 30),
                 height: widget.selected == false ? 0 : 25,
                 width: widget.selected == false ? 0 : 120,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: secondary,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 child: Center(
                     child: Text(
                   widget.text,
-                  style: TextStyle(color: textWhite),
+                  style: const TextStyle(color: textWhite),
                 )),
               ),
             ),
             AnimatedContainer(
-              duration: Duration(seconds: 1),
+              duration: const Duration(seconds: 1),
               curve: Curves.bounceInOut,
               child: GestureDetector(
                 onTap: widget.onTap,
@@ -70,7 +68,7 @@ class _CustomAnimatedButtonState extends State<CustomAnimatedButton> {
                     borderRadius: BorderRadius.circular(60),
                   ),
                   child: widget.selected == false
-                      ? Text("")
+                      ? const Text("")
                       : Icon(widget.icon, color: textWhite),
                 ),
               ),

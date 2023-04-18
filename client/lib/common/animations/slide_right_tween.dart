@@ -1,7 +1,4 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SlideRightTween extends StatelessWidget {
   const SlideRightTween({
@@ -21,13 +18,13 @@ class SlideRightTween extends StatelessWidget {
     return TweenAnimationBuilder<double>(
         tween: Tween(begin: 1.0, end: 0),
         duration: duration,
-        child: child,
         curve: curve,
         builder: (context, value, child) {
           return Transform.translate(
             offset: Offset(value * offset, 0),
             child: child,
           );
-        });
+        },
+        child: child);
   }
 }

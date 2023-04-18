@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:mbschool/common/widgets/custom_button_box.dart';
 import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/auth/screens/auth_screen.dart';
-import 'package:mbschool/providers/number_entry_provider.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -50,21 +47,19 @@ class _IntroScreenState extends State<IntroScreen> {
         backgroundColor: textWhite,
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20, top: 20),
+            padding: const EdgeInsets.only(right: 20, top: 20),
             child: GestureDetector(
               onTap: () {
                 prefs!.setString('x-auth-token', '');
 
                 Navigator.pushReplacementNamed(context, AuthScreen.routeName);
               },
-              child: Container(
-                child: Text(
-                  "Sauter",
-                  style: TextStyle(
-                      color: primary,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600),
-                ),
+              child: const Text(
+                "Sauter",
+                style: TextStyle(
+                    color: primary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -96,7 +91,7 @@ class _IntroScreenState extends State<IntroScreen> {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 40),
+            margin: const EdgeInsets.only(bottom: 40),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: _buildIndicator(),
@@ -110,35 +105,35 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget makePage(
       {image, title, content, button = false, SharedPreferences? prefs}) {
     return Container(
-      padding: EdgeInsets.only(left: 50, right: 50, bottom: 50),
+      padding: const EdgeInsets.only(left: 50, right: 50, bottom: 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Image.asset(
               assetImg + image,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 color: primary, fontSize: 24, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Text(
             content,
-            style: TextStyle(
+            style: const TextStyle(
                 color: secondary, fontSize: 15, fontWeight: FontWeight.w300),
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           button == false
@@ -154,7 +149,7 @@ class _IntroScreenState extends State<IntroScreen> {
                     Navigator.pushReplacementNamed(
                         context, AuthScreen.routeName);
                   },
-                  child: CustomButtonBox(title: "Commençons"))
+                  child: const CustomButtonBox(title: "Commençons"))
         ],
       ),
     );
@@ -165,7 +160,7 @@ class _IntroScreenState extends State<IntroScreen> {
         duration: const Duration(milliseconds: 300),
         height: 8,
         width: isActive ? 30 : 8,
-        margin: EdgeInsets.only(right: 5),
+        margin: const EdgeInsets.only(right: 5),
         decoration: BoxDecoration(
             color: primary, borderRadius: BorderRadius.circular(5)));
   }

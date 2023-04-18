@@ -31,25 +31,25 @@ class CustomPromotionCard extends StatelessWidget {
               children: [
                 Text(
                   Promotion['title'].toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 25.0,
                     color: textWhite,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 7.0),
-                Container(
+                const SizedBox(height: 7.0),
+                SizedBox(
                   width: size.width * .425,
                   child: Text(
                     Promotion['subTitle'].toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15.0,
                       color: textWhite,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   height: 35.0,
                   width: 100.0,
@@ -62,11 +62,11 @@ class CustomPromotionCard extends StatelessWidget {
                         color: primary.withOpacity(0.5),
                         spreadRadius: 0.0,
                         blurRadius: 6.0,
-                        offset: Offset(0, 2),
+                        offset: const Offset(0, 2),
                       )
                     ],
                   ),
-                  child: Text(
+                  child: const Text(
                     "S'enrôler ",
                     style: TextStyle(
                       fontSize: 15.0,
@@ -81,7 +81,7 @@ class CustomPromotionCard extends StatelessWidget {
           Positioned(
             top: 25.0,
             left: 125.0,
-            child: Container(
+            child: SizedBox(
               height: size.width * .4,
               child: SvgPicture.asset(
                 Promotion['image'].toString(),

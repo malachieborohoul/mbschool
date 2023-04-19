@@ -34,9 +34,9 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
     with TickerProviderStateMixin {
   CourseManagerService courseManagerService = CourseManagerService();
 
-  List<Cours> cours = [];
-  List<Categorie> categories = [];
-  List<EnseignantCours> enseignantPop = [];
+  late Future<List<Cours>> cours;
+  late Future<List<Categorie>> categories;
+  late Future<List<EnseignantCours>> enseignantPop;
 
   @override
   void initState() {
@@ -47,26 +47,24 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
     super.initState();
   }
 
-  void getAllCoursesByCategory() async {
-    cours = await courseManagerService.getAllCoursesByCategory(
-        context, widget.categorie);
+  void getAllCoursesByCategory() {
+    cours =
+        courseManagerService.getAllCoursesByCategory(context, widget.categorie);
     setState(() {});
   }
 
-  void getAllEnseignantPopulaire() async {
-    enseignantPop =
-        await courseManagerService.getAllEnseignantPopulaire(context);
+  void getAllEnseignantPopulaire() {
+    enseignantPop = courseManagerService.getAllEnseignantPopulaire(context);
     setState(() {});
   }
 
-  getAllCategorieData() async {
-    categories = await createCourseService.getAllCategorieData(context);
+  getAllCategorieData() {
+    categories = createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
@@ -112,35 +110,44 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: appPadding - 20, right: appPadding - 10),
-                  child: Wrap(
-                      spacing: 10,
-                      children: List.generate(cours.length, (index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, DetailCourseScreen.routeName,
-                                arguments: cours[index]);
-                            Provider.of<CoursProvider>(context, listen: false)
-                                .set_cours(cours[index]);
-                          },
-                          child: cours == null
-                              ? const Loader()
-                              : CustomCourseCardExpand(
+                  child: FutureBuilder(
+                    future: cours,
+                    builder: (context, AsyncSnapshot<List<Cours>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Wrap(
+                            spacing: 10,
+                            children:
+                                List.generate(snapshot.data!.length, (index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, DetailCourseScreen.routeName,
+                                      arguments: snapshot.data![index]);
+                                  Provider.of<CoursProvider>(context,
+                                          listen: false)
+                                      .set_cours(snapshot.data![index]);
+                                },
+                                child: CustomCourseCardExpand(
                                   thumbNail: Image.network(
-                                    cours[index].vignette,
+                                    snapshot.data![index].vignette,
                                     fit: BoxFit.cover,
                                   ),
                                   videoAmount: CoursesJson[index]['video'],
-                                  title: cours[index].titre,
-                                  userProfile: cours[index].photo,
-                                  userName: cours[index].nom,
-                                  price: cours[index].prix.isEmpty
+                                  title: snapshot.data![index].titre,
+                                  userProfile: snapshot.data![index].photo,
+                                  userName: snapshot.data![index].nom,
+                                  price: snapshot.data![index].prix.isEmpty
                                       ? "Gratuit"
-                                      : cours[index].prix,
-                                  cours: cours[index],
+                                      : snapshot.data![index].prix,
+                                  cours: snapshot.data![index],
                                 ),
-                        );
-                      })),
+                              );
+                            }));
+                      } else {
+                        return const Loader();
+                      }
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
@@ -153,21 +160,30 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
               const SizedBox(
                 height: appPadding,
               ),
-              Wrap(
-                runSpacing: 10,
-                spacing: 10,
-                children: List.generate(
-                  categories.length,
-                  (index) {
-                    return GestureDetector(
-                      onTap: () => Navigator.pushReplacementNamed(
-                          context, CoursesByCategoryScreen.routeName,
-                          arguments: categories[index]),
-                      child: CustomCategoriesButton(
-                          title: categories[index].nom.toUpperCase()),
+              FutureBuilder(
+                future: categories,
+                builder: (context, AsyncSnapshot<List<Categorie>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: List.generate(
+                        snapshot.data!.length,
+                        (index) {
+                          return GestureDetector(
+                            onTap: () => Navigator.pushReplacementNamed(
+                                context, CoursesByCategoryScreen.routeName,
+                                arguments: snapshot.data![index]),
+                            child: CustomCategoriesButton(
+                                title: snapshot.data![index].nom.toUpperCase()),
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
+                  } else {
+                    return const Loader();
+                  }
+                },
               ),
               const SizedBox(
                 height: spacer,
@@ -179,22 +195,34 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
               const SizedBox(
                 height: appPadding,
               ),
-              Wrap(
-                runSpacing: 10,
-                spacing: 10,
-                children: List.generate(
-                  enseignantPop.length,
-                  (index) {
-                    return Builder(builder: (context) {
-                      String fullName = "${enseignantPop[index].nom} ${enseignantPop[index].prenom}";
-                      return CustomPersonCard(
-                          image: enseignantPop[index].photo,
-                          name: fullName,
-                          totalCourses: enseignantPop[index].nombre_cours,
-                          totalStudents: "4");
-                    });
-                  },
-                ),
+              FutureBuilder(
+                future: enseignantPop,
+                builder:
+                    (context, AsyncSnapshot<List<EnseignantCours>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: List.generate(
+                        snapshot.data!.length,
+                        (index) {
+                          return Builder(builder: (context) {
+                            String fullName =
+                                "${snapshot.data![index].nom} ${snapshot.data![index].prenom}";
+                            return CustomPersonCard(
+                                image: snapshot.data![index].photo,
+                                name: fullName,
+                                totalCourses:
+                                    snapshot.data![index].nombre_cours,
+                                totalStudents: "4");
+                          });
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Loader();
+                  }
+                },
               ),
             ],
           ),

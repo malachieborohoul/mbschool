@@ -42,10 +42,10 @@ RateCourseService rateCourseService = RateCourseService();
 
 class _DetailCourseScreenState extends State<DetailCourseScreen>
     with TickerProviderStateMixin {
-  List<Section> sections = [];
+  late Future<List<Section>> sections;
   CourseManagerService courseManagerService = CourseManagerService();
   ExigenceService exigenceService = ExigenceService();
-  List<Exigence> exigences = [];
+  late Future<List<Exigence>> exigences;
   List<Lecon> lecons = [];
   bool? isCourseInFav;
   bool? isCourseEnroll;
@@ -58,7 +58,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     super.initState();
     getAllSections();
     getAllExigences();
-    getAllLecons();
+    // getAllLecons();
     isCoursInFavorite();
     isCourseEnrolled();
     getAllNotationCours();
@@ -92,24 +92,24 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     setState(() {});
   }
 
-  void getAllExigences() async {
-    exigences = await exigenceService.getAllExigences(context, widget.cours);
+  void getAllExigences() {
+    exigences = exigenceService.getAllExigences(context, widget.cours);
     // print(exigences.length);
   }
 
-  void getAllSections() async {
-    sections = await courseManagerService.getAllSections(context, widget.cours);
+  void getAllSections() {
+    sections = courseManagerService.getAllSections(context, widget.cours);
     setState(() {
       // print(sections.length);
     });
   }
 
-  void getAllLecons() async {
-    lecons = await courseManagerService.getAllLecons(context, sections[0]);
-    setState(() {
-      // print(lecons.length);
-    });
-  }
+  // void getAllLecons() async {
+  //   lecons = await courseManagerService.getAllLecons(context, sections[0]);
+  //   setState(() {
+  // print(lecons.length);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -137,12 +137,9 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
     }
 
     return Scaffold(
-      body: sections == null ||
-              isCourseInFav == null ||
+      body: isCourseInFav == null ||
               _isLoading == true ||
-              isCourseEnroll == null ||
-              notationCours == null ||
-              averageRate == null
+              isCourseEnroll == null
           ? const Loader()
           : DefaultTabController(
               length: 3,
@@ -184,7 +181,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                       ),
 
                       backgroundColor: Colors.transparent,
-                      expandedHeight: 170,
+                      expandedHeight: MediaQuery.of(context).size.height * 0.3,
                       flexibleSpace: FlexibleSpaceBar(
                         background: Column(
                           children: [
@@ -217,7 +214,8 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                     onTap: () {
                                       showDialog(
                                           context: context,
-                                          builder: (context) => const AlertDialog(
+                                          builder: (context) =>
+                                              const AlertDialog(
                                                 backgroundColor: textBlack,
                                                 content: VideoDisplay(
                                                     videoUrl:
@@ -284,11 +282,32 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                     Expanded(
                       child: TabBarView(
                         children: [
-                          InfosTabBarView(exigences: exigences),
-                          LeconTabBarView(
-                            sections: sections,
-                            isCourseEnrolled: isCourseEnroll!,
-                          ),
+                          FutureBuilder(
+                              future: exigences,
+                              builder: (context,
+                                  AsyncSnapshot<List<Exigence>> snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return InfosTabBarView(
+                                      exigences: snapshot.data!);
+                                } else {
+                                  return const Loader();
+                                }
+                              }),
+                          FutureBuilder(
+                              future: sections,
+                              builder: (context,
+                                  AsyncSnapshot<List<Section>> snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  return LeconTabBarView(
+                                    sections: snapshot.data!,
+                                    isCourseEnrolled: isCourseEnroll!,
+                                  );
+                                } else {
+                                  return const Loader();
+                                }
+                              }),
                           ReviewsTabBarView(notationCours: notationCours)
                         ],
                       ),
@@ -314,87 +333,85 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                   child: OpacityTween(
                                     begin: 0.5,
                                     child: AlertDialog(
-                                      content: Container(
-                                        height: 75,
-                                        child: Column(
-                                          children: [
-                                            const Flexible(
-                                                child: Text(
-                                              "Voulez vous vous enrôler?",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 25.0),
-                                                  child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        width: 40,
-                                                        height: 30,
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.red,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                        child: const Text(
-                                                          "Non",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      )),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
+                                      content: Column(
+                                        children: [
+                                          const Flexible(
+                                              child: Text(
+                                            "Voulez vous vous enrôler?",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        right: 25.0),
+                                                child: InkWell(
+                                                    onTap: () {
                                                       Navigator.pop(context);
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      width: 40,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                      child: const Text(
+                                                        "Non",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    )),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    Navigator.pop(context);
 
-                                                      _isLoading = true;
-                                                      enrollToCourse();
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    width: 40,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15)),
-                                                    child: const Text(
-                                                      "Oui",
-                                                      style: TextStyle(
-                                                          color: textWhite),
-                                                    ),
+                                                    _isLoading = true;
+                                                    enrollToCourse();
+                                                  });
+                                                },
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.green,
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(15)),
+                                                  child: const Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: textWhite),
                                                   ),
                                                 ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
                                 );
                               });
                         },
-                        child: const CustomButtonBox(title: "S'enrôler maintenant"),
+                        child: const CustomButtonBox(
+                            title: "S'enrôler maintenant"),
                       ),
                     ),
                   ],
@@ -468,6 +485,7 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
             Padding(
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Exigences",
@@ -481,6 +499,7 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
             Padding(
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Objectifs",
@@ -494,6 +513,7 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
             Padding(
               padding: const EdgeInsets.only(bottom: appPadding),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Résultats",
@@ -549,7 +569,6 @@ class ReviewsTabBarView extends StatefulWidget {
 class _ReviewsTabBarViewState extends State<ReviewsTabBarView> {
   @override
   Widget build(BuildContext context) {
-
     return widget.notationCours.isNotEmpty
         ? ListView.builder(
             physics: const BouncingScrollPhysics(),

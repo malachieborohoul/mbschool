@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/common/widgets/custom_button_box.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -21,8 +22,8 @@ class AdminScreen extends StatefulWidget {
 }
 
 class _AdminScreenState extends State<AdminScreen> {
-  List<User> users = [];
-  List<Cours> cours = [];
+  late Future<List<User>> users;
+  late Future<List<Cours>> cours;
 
   final CourseManagerService _courseManagerService = CourseManagerService();
 
@@ -33,13 +34,13 @@ class _AdminScreenState extends State<AdminScreen> {
     super.initState();
   }
 
-  void getAllUsers() async {
-    users = await _courseManagerService.getAllUsers(context);
+  void getAllUsers() {
+    users = _courseManagerService.getAllUsers(context);
     setState(() {});
   }
 
-  void getAllCours() async {
-    cours = await _courseManagerService.getAllCourses(context);
+  void getAllCours() {
+    cours = _courseManagerService.getAllCourses(context);
     setState(() {});
   }
 
@@ -82,20 +83,42 @@ class _AdminScreenState extends State<AdminScreen> {
             const SizedBox(
               height: appPadding + 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [const Text("Utilisateurs"), Text("${users.length}")],
-            ),
+            FutureBuilder(
+                future: users,
+                builder: (context, AsyncSnapshot<List<User>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Utilisateurs"),
+                        Text("${snapshot.data!.length}")
+                      ],
+                    );
+                  } else {
+                    return const Loader();
+                  }
+                }),
             const Divider(
               thickness: 0.5,
             ),
             const SizedBox(
               height: 8.0,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [const Text("Cours"), Text("${cours.length}")],
-            ),
+            FutureBuilder(
+                future: cours,
+                builder: (context, AsyncSnapshot<List<Cours>> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("Cours"),
+                        Text("${snapshot.data!.length}")
+                      ],
+                    );
+                  } else {
+                    return const Loader();
+                  }
+                }),
             const Divider(
               thickness: 0.5,
             ),

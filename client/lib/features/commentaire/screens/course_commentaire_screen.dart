@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
@@ -39,8 +38,8 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
   bool _isFieldEmpty = true;
   bool _isloading = false;
 
-  List<Commentaire> lessonCommentaires = [];
-  List<Commentaire> lessonNumberReponses = [];
+  late Future<List<Commentaire>> lessonCommentaires;
+  late Future<List<Commentaire>> lessonNumberReponses;
 
   @override
   void initState() {
@@ -49,9 +48,9 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
     // getAllLessonNumberReponses();
   }
 
-  void getAllLessonCommentaires() async {
-    lessonCommentaires =
-        await _courseCommentaireService.getAllLessonCommentaires(context, widget.lecon);
+  void getAllLessonCommentaires() {
+    lessonCommentaires = _courseCommentaireService.getAllLessonCommentaires(
+        context, widget.lecon);
     setState(() {});
   }
 
@@ -86,7 +85,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
             : SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
-                  padding: const EdgeInsets.all(appPadding ),
+                  padding: const EdgeInsets.all(appPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -186,12 +185,48 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       //       focusedBorder: UnderlineInputBorder(
                       //           borderSide: BorderSide(color: primary))),
                       // ),
-                    for (var i = 0; i <  lessonCommentaires.length; i++)
-                      lessonCommentaires.isNotEmpty?  CustomLessonCommentaires(
-                          icon: true,
-                          reponse: true,
-                          commentaire: lessonCommentaires[i], 
-                        ): Container()
+
+                      FutureBuilder(
+                          future: lessonCommentaires,
+                          builder: (context,
+                              AsyncSnapshot<List<Commentaire>> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, i) {
+                                    return snapshot.data!.isNotEmpty
+                                        ? CustomLessonCommentaires(
+                                            icon: true,
+                                            reponse: true,
+                                            commentaire: snapshot.data![i],
+                                          )
+                                        : Container();
+                                  });
+                              //  List.generate(
+                              //     snapshot.data!.length,
+                              //     (i) => snapshot.data!.isNotEmpty
+                              //         ? CustomLessonCommentaires(
+                              //             icon: true,
+                              //             reponse: true,
+                              //             commentaire: snapshot.data![i],
+                              //           )
+                              //         : Container());
+                              // for (var i = 0; i < snapshot.data!.length; i++) {
+                              //   snapshot.data!.isNotEmpty
+                              //       ? CustomLessonCommentaires(
+                              //           icon: true,
+                              //           reponse: true,
+                              //           commentaire: snapshot.data![i],
+                              //         )
+                              //       : Container();
+                              // }
+                            } else {
+                              return const Loader();
+                            }
+                          })
                     ],
                   ),
                 ),

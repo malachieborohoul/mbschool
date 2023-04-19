@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/datas/user_profile.dart';
 
 class CustomPersonCard extends StatelessWidget {
-  const CustomPersonCard(
-    {
+  const CustomPersonCard({
     Key? key,
     required this.image,
     required this.name,
-    
     required this.totalCourses,
     required this.totalStudents,
   }) : super(key: key);
@@ -40,7 +39,13 @@ class CustomPersonCard extends StatelessWidget {
                   height: size.width * .125,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100.0),
-                    child: Image.network(image, fit: BoxFit.cover),
+                    child: image.isNotEmpty
+                        ? Image.network(image, fit: BoxFit.cover)
+                        : Image.asset(
+                            UserProfile['image'].toString(),
+                            width: 100,
+                            height: 100,
+                          ),
                   ),
                 ),
                 const SizedBox(width: 15.0),
@@ -60,7 +65,6 @@ class CustomPersonCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 5.0),
-                     
                     ],
                   ),
                 ),

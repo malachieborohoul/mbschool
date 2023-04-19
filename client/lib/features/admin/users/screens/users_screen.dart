@@ -27,9 +27,9 @@ class _UsersScreenState extends State<UsersScreen> {
   final TextEditingController _keyword = TextEditingController();
   bool isCharging = false;
 
-  List<User> users = [];
-  List<User> allUsers = [];
-  void searchUsers(String nom) async {
+  late Future<List<User>> users;
+  late Future<List<User>> allUsers;
+  void searchUsers(String nom) {
     // print(nom);
     if (nom.isEmpty) {
       getAllUsers();
@@ -37,7 +37,7 @@ class _UsersScreenState extends State<UsersScreen> {
         isCharging = false;
       });
     } else {
-      users = await _searchService.searchUsers(context, nom);
+      users = _searchService.searchUsers(context, nom);
       setState(() {
         isCharging = false;
       });
@@ -50,8 +50,8 @@ class _UsersScreenState extends State<UsersScreen> {
     getAllUsers();
   }
 
-  void getAllUsers() async {
-    users = await _courseManagerService.getAllUsers(context);
+  void getAllUsers() {
+    users = _courseManagerService.getAllUsers(context);
     setState(() {});
   }
 
@@ -60,7 +60,6 @@ class _UsersScreenState extends State<UsersScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(135),
           child: Padding(
@@ -76,8 +75,8 @@ class _UsersScreenState extends State<UsersScreen> {
                         icon: const Icon(Icons.arrow_back)),
                     const Text(
                       "Utilisateurs",
-                      style: TextStyle(
-                          fontSize: 15, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
@@ -144,27 +143,35 @@ class _UsersScreenState extends State<UsersScreen> {
       //             cours.length, (index) => Text(cours[index].nom)),
       //       ),
 
-      body: isCharging == true || users == null
-          ? const Loader()
-          : users.isEmpty
-              ? const NoData()
-              : Padding(
+      body: isCharging == true 
+          ? const Loader():
+           Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: ListView.builder(
-                    itemCount: users.length,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, UserDetailsScreen.routeName,
-                              arguments: users[i]);
-                          Provider.of<SearchUserProvider>(context, listen: false)
-                              .set_user(users[i]);
-                        },
-                        child: CustomUsersContainer(user: users[i]),
-                      );
-                    },
-                  ),
+                  child: FutureBuilder(
+                      future: users,
+                      builder: (context, AsyncSnapshot<List<User>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data!.isEmpty ? const NoData(): ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, i) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, UserDetailsScreen.routeName,
+                                      arguments: snapshot.data![i]);
+                                  Provider.of<SearchUserProvider>(context,
+                                          listen: false)
+                                      .set_user(snapshot.data![i]);
+                                },
+                                child: CustomUsersContainer(
+                                    user: snapshot.data![i]),
+                              );
+                            },
+                          );
+                        } else {
+                          return const Loader();
+                        }
+                      }),
                 ),
     );
   }

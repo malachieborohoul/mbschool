@@ -25,13 +25,15 @@ class CustomDetailCourseInfoHeader extends StatefulWidget {
 
 class _CustomDetailCourseInfoHeaderState
     extends State<CustomDetailCourseInfoHeader> {
-
   final CourseManagerService _courseManagerService = CourseManagerService();
+
+  bool isCharging = false;
 
   void addCoursToFavorite() {
     _courseManagerService.addCourseToFavorite(context, widget.cours, () {
       setState(() {
         widget.isCourseInFav = true;
+        isCharging = false;
       });
       showSnackBar(context, "Cours ajouté aux favoris");
     });
@@ -41,6 +43,8 @@ class _CustomDetailCourseInfoHeaderState
     _courseManagerService.removeCoursToFavorite(context, widget.cours, () {
       setState(() {
         widget.isCourseInFav = false;
+        isCharging = false;
+
       });
       showSnackBar(context, "Cours retiré des favoris");
     });
@@ -192,7 +196,6 @@ class _CustomDetailCourseInfoHeaderState
                                 ),
                               ),
                             ));
-                  
                   } else {
                     showDialog(
                         context: context,

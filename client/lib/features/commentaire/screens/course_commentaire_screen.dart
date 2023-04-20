@@ -193,8 +193,8 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
                                   itemCount: snapshot.data!.length,
                                   itemBuilder: (context, i) {
                                     return snapshot.data!.isNotEmpty

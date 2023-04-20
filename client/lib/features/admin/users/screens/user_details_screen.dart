@@ -5,6 +5,7 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/admin/users/screens/modify_role.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/admin/users/services/users_manager_service.dart';
@@ -26,13 +27,13 @@ class UserDetailsScreen extends StatefulWidget {
 class _UserDetailsScreenState extends State<UserDetailsScreen> {
   final CourseManagerService _courseManagerService = CourseManagerService();
   final UsersManagerService _usersManagerService = UsersManagerService();
-  List<Cours> courseTaking = [];
-  List<Cours> courseTeaching = [];
-  List<User> totalStudents = [];
+  late Future<List<Cours>> courseTaking;
+  late Future<List<Cours>> courseTeaching;
+  late Future<List<User>> totalStudents;
 
   int role = 1;
   bool isCharging = false;
-  late final searchUserProvider;
+  late User searchUserProvider;
 
   @override
   void initState() {
@@ -44,21 +45,21 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     super.initState();
   }
 
-  void getAllTakingCourses() async {
-    courseTaking = await _courseManagerService.getAllTakingCourses(
+  void getAllTakingCourses() {
+    courseTaking =
+        _courseManagerService.getAllTakingCourses(context, searchUserProvider);
+    setState(() {});
+  }
+
+  void getAllTeachingCourses() {
+    courseTeaching = _courseManagerService.getAllTeachingCourses(
         context, searchUserProvider);
     setState(() {});
   }
 
-  void getAllTeachingCourses() async {
-    courseTeaching = await _courseManagerService.getAllTeachingCourses(
-        context, searchUserProvider);
-    setState(() {});
-  }
-
-  void getTotalStudents() async {
-    totalStudents = await _courseManagerService.getTotalStudents(
-        context, searchUserProvider);
+  void getTotalStudents() {
+    totalStudents =
+        _courseManagerService.getTotalStudents(context, searchUserProvider);
     setState(() {});
   }
 
@@ -104,11 +105,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           isCharging = false;
 
           Navigator.of(context)
-          ..pop()
-          ..pop()
-          ..pop()
-          ..pushNamed(UsersScreen.routeName)
-          ;
+            ..pop()
+            ..pop()
+            ..pop()
+            ..pushNamed(UsersScreen.routeName);
           showSnackBar(context, "Utilisateur supprimé");
         });
       });
@@ -297,7 +297,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   ),
                                 ),
                         ));
-              
               }
             }, itemBuilder: (context) {
               return [
@@ -332,63 +331,109 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 200,
-                    child: Image.network(searchUserProvider.photo),
-                  ),
+                  searchUserProvider.photo.isNotEmpty
+                      ? SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: Image.network(searchUserProvider.photo),
+                        )
+                      : SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: Image.asset(
+                            UserProfile['image'].toString(),
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
                   Padding(
                     padding: const EdgeInsets.all(appPadding),
                     child: Column(
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Cours suivis",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            Text("${courseTaking.length}",
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        FutureBuilder(
+                            future: courseTaking,
+                            builder:
+                                (context, AsyncSnapshot<List<Cours>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "Cours suivis",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text("${snapshot.data!.length}",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700)),
+                                  ],
+                                );
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                         const Divider(
                           thickness: 0.8,
                         ),
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Cours enseignés",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            Text("${courseTeaching.length}",
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        FutureBuilder(
+                            future: courseTeaching,
+                            builder:
+                                (context, AsyncSnapshot<List<Cours>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "Cours enseignés",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text("${snapshot.data!.length}",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700)),
+                                  ],
+                                );
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                         const Divider(
                           thickness: 0.8,
                         ),
                         const SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Etudiants enrôlés",
-                              style: TextStyle(fontWeight: FontWeight.w700),
-                            ),
-                            Text("${totalStudents.length}",
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.w700)),
-                          ],
-                        ),
+                        FutureBuilder(
+                            future: totalStudents,
+                            builder:
+                                (context, AsyncSnapshot<List<User>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      "Etudiants enrôlés",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    Text("${snapshot.data!.length}",
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w700)),
+                                  ],
+                                );
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                         const SizedBox(
                           height: appPadding,
                         ),
@@ -396,13 +441,29 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           "Cours suivis:",
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
-                        for (int i = 0; i < courseTaking.length; i++)
-                          CustomCourseCardShrink(
-                              thumbNail: courseTaking[i].vignette,
-                              title: courseTaking[i].titre,
-                              nom: courseTaking[i].nom,
-                              prenom: courseTaking[i].prenom,
-                              price: courseTaking[i].prix),
+                        FutureBuilder(
+                            future: courseTaking,
+                            builder:
+                                (context, AsyncSnapshot<List<Cours>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return CustomCourseCardShrink(
+                                          thumbNail: snapshot.data![i].vignette,
+                                          title: snapshot.data![i].titre,
+                                          nom: snapshot.data![i].nom,
+                                          prenom: snapshot.data![i].prenom,
+                                          price: snapshot.data![i].prix);
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                         const SizedBox(
                           height: appPadding,
                         ),
@@ -410,13 +471,29 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           "Cours enseignés:",
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
-                        for (int i = 0; i < courseTeaching.length; i++)
-                          CustomCourseCardShrink(
-                              thumbNail: courseTeaching[i].vignette,
-                              title: courseTeaching[i].titre,
-                              nom: courseTeaching[i].nom,
-                              prenom: courseTeaching[i].prenom,
-                              price: courseTeaching[i].prix)
+                        FutureBuilder(
+                            future: courseTeaching,
+                            builder:
+                                (context, AsyncSnapshot<List<Cours>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return CustomCourseCardShrink(
+                                          thumbNail: snapshot.data![i].vignette,
+                                          title: snapshot.data![i].titre,
+                                          nom: snapshot.data![i].nom,
+                                          prenom: snapshot.data![i].prenom,
+                                          price: snapshot.data![i].prix);
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                       ],
                     ),
                   )

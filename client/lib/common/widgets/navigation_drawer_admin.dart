@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/common/widgets/bottom_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
@@ -37,11 +38,23 @@ class NavigatorDrawerAdmin extends StatelessWidget {
           const SizedBox(
             height: 12,
           ),
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: textWhite,
-            backgroundImage: NetworkImage(user.photo),
-          ),
+          user.photo.isNotEmpty
+              ? CircleAvatar(
+                  radius: 30,
+                  backgroundColor: textWhite,
+                  backgroundImage: NetworkImage(user.photo),
+                )
+              : ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(100)),
+                  child: Hero(
+                    tag: 'profile-photo',
+                    child: Image.asset(
+                      UserProfile['image'].toString(),
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                ),
           const SizedBox(
             height: 12,
           ),

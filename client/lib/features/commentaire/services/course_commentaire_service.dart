@@ -214,7 +214,6 @@ class CourseCommentaireService {
     return number_discussions;
   }
 
-
   void markLessonAsDone(
       BuildContext context, Lecon lecon, VoidCallback success) async {
     try {
@@ -247,6 +246,4 @@ class CourseCommentaireService {
       showSnackBar(context, e.toString());
     }
   }
-
-  
 }

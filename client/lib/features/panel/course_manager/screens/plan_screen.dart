@@ -10,7 +10,6 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/section.dart';
 
-
 class PlanScreen extends StatefulWidget {
   static const routeName = '/plan_cours';
   final Cours cours;
@@ -27,7 +26,7 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
   bool isPlay = false;
   bool selected = false;
   bool isScreenTouched = false;
-  List<Section> sections = [];
+  late Future<List<Section>> sections;
   CourseManagerService courseManagerService = CourseManagerService();
 
   @override
@@ -36,8 +35,8 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
     getAllSections();
   }
 
-  void getAllSections() async {
-    sections = await courseManagerService.getAllSections(context, widget.cours);
+  void getAllSections() {
+    sections = courseManagerService.getAllSections(context, widget.cours);
     setState(() {
       // print(sections.length);
     });
@@ -75,42 +74,44 @@ class _PlanScreenState extends State<PlanScreen> with TickerProviderStateMixin {
           },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        body: sections == null
-            ? const Loader()
-            : sections.isEmpty
-                ? const Center(
-                    child: Text("Aucune information"),
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      color: selected == false ? Colors.white10 : Colors.grey,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      // child: Column(
-                      //   children: [
-                      //     Text(
-                      //       "Plan du cours",
-                      //       style: TextStyle(fontSize: 15),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 20,
-                      //     ),
-                      //     CustomCourseSection()
-                      //   ],
-                      // ),
+        body:
+            // sections == null
+            //     ? const Loader()
+            //     : sections.isEmpty
+            //         ? const Center(
+            //             child: Text("Aucune information"),
+            //           )
+            //         :
 
-                      child: ListView.builder(
-                          itemCount: sections.length,
-                          itemBuilder: (context, i) {
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                top: 35.0,
-                              ),
-                              child: CustomCourseSection(sections: sections[i]),
-                            );
-                          }),
-                    ),
-                  ));
+            FutureBuilder(
+              future: sections,
+                builder: (context, AsyncSnapshot<List<Section>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+             return snapshot.data!.isEmpty? const Center(child: Text("Aucunes informations"),): Container(
+            decoration: BoxDecoration(
+              color: selected == false ? Colors.white10 : Colors.grey,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(18.0),
+            
+
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, i) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        top: 35.0,
+                      ),
+                      child: CustomCourseSection(sections: snapshot.data![i]),
+                    );
+                  }),
+            ),
+          );
+          } else {
+            return const Loader();
+          }
+        }));
   }
 }

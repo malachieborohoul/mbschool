@@ -46,56 +46,70 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(appPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: spacer,
-                ),
-                const CustomHeading(
-                    title: "Mes favoris", subTitle: "", color: secondary),
-                const SizedBox(
-                  height: spacer - 50,
-                ),
-                FutureBuilder(
-                  future: cours,
-                    builder: (context, AsyncSnapshot<List<Cours>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return snapshot.data!.isEmpty
-                        ? const NoData()
-                        : Column(
-                            children:
-                                List.generate(snapshot.data!.length, (index) {
-                              return Padding(
-                                  padding: const EdgeInsets.only(bottom: 25),
-                                  child: SlideRightTween(
-                                    duration: Duration(
-                                        milliseconds: (index + 1) * 500),
-                                    curve: Curves.easeInOutCubic,
-                                    offset: 80,
-                                    child: InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              DetailCourseScreen.routeName,
-                                              arguments: snapshot.data![index]);
+        body: RefreshIndicator(
+          color: primary,
+          onRefresh: () {
+            return cours = _favoriteService.getAllFavoriteCourses(context);
+          },
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(appPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: spacer,
+                  ),
+                  const CustomHeading(
+                      title: "Mes favoris", subTitle: "", color: secondary),
+                  const SizedBox(
+                    height: spacer - 50,
+                  ),
+                  FutureBuilder(
+                      future: cours,
+                      builder: (context, AsyncSnapshot<List<Cours>> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return snapshot.data!.isEmpty
+                              ? const NoData()
+                              : Column(
+                                  children: List.generate(snapshot.data!.length,
+                                      (index) {
+                                    return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 25),
+                                        child: SlideRightTween(
+                                          duration: Duration(
+                                              milliseconds: (index + 1) * 500),
+                                          curve: Curves.easeInOutCubic,
+                                          offset: 80,
+                                          child: InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    DetailCourseScreen
+                                                        .routeName,
+                                                    arguments:
+                                                        snapshot.data![index]);
 
-                                          Provider.of<CoursProvider>(context,
-                                                  listen: false)
-                                              .set_cours(snapshot.data![index]);
-                                        },
-                                        child: CustomFavoriteCourseCard(
-                                            cours: snapshot.data![index])),
-                                  ));
-                            }),
-                          );
-                  } else {
-                    return const Loader();
-                  }
-                })
-              ],
+                                                Provider.of<CoursProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .set_cours(
+                                                        snapshot.data![index]);
+                                              },
+                                              child: CustomFavoriteCourseCard(
+                                                  cours:
+                                                      snapshot.data![index])),
+                                        ));
+                                  }),
+                                );
+                        } else {
+                          return const Loader();
+                        }
+                      })
+                ],
+              ),
             ),
           ),
         ));

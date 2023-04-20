@@ -25,7 +25,7 @@ const getAllFavoriteCourses = "SELECT * FROM favoris JOIN cours ON cours.id_cour
 const filterCourses = "SELECT * FROM cours WHERE id_categorie=$1 OR id_niveau=$2 OR id_langue=$3;";
 const searchCourses = "SELECT * FROM cours WHERE titre ILIKE '%' || $1 || '%'"
 const addLeconCommentaire = "INSERT INTO commentaire (intitule,users_id, lecon_id) VALUES ($1, $2, $3) RETURNING *;";
-const getAllLessonCommentaires ="SELECT users.nom, users.prenom, users.photo, commentaire.intitule,commentaire.id_commentaire FROM commentaire JOIN users ON users.id=commentaire.users_id WHERE commentaire.lecon_id=$1 ORDER BY created_at DESC;";
+const getAllLessonCommentaires ="SELECT users.nom, users.prenom, users.photo, commentaire.intitule,commentaire.id_commentaire FROM commentaire JOIN users ON users.id=commentaire.users_id WHERE commentaire.lecon_id=$1 ORDER BY commentaire.created_at DESC;"; 
 const getAllLessonNumberReponses ="SELECT COUNT(*) FROM reponse where commentaire_id=$1;";
 // const getAllLessonNumberReponses ="SELECT intitule,nom,prenom,photo,id_commentaire, COUNT(*) AS number_reponses  FROM reponse JOIN commentaire ON reponse.commentaire_id=commentaire.id_commentaire  JOIN users ON commentaire.users_id =users.id WHERE lecon_id=$1 GROUP BY id_commentaire, users.nom, users.prenom, users.photo ORDER BY commentaire.created_at DESC;";
 const addLeconReponseCommentaire = "INSERT INTO reponse (intitule_reponse,users_id, commentaire_id) VALUES ($1, $2, $3) RETURNING *;";

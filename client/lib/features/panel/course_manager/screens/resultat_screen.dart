@@ -25,7 +25,7 @@ class _ResultatScreenState extends State<ResultatScreen> {
   TextEditingController resultatController = TextEditingController();
   bool isCharging = false;
   ResultatService resultatService = ResultatService();
-  List<Resultat> resultats = [];
+  late Future<List<Resultat>> resultats;
   final _addResultatFormKey = GlobalKey<FormState>();
 
   void addResultat() {
@@ -59,8 +59,8 @@ class _ResultatScreenState extends State<ResultatScreen> {
     getAllResultats();
   }
 
-  void getAllResultats() async {
-    resultats = await resultatService.getAllResultats(context, widget.cours);
+  void getAllResultats() {
+    resultats = resultatService.getAllResultats(context, widget.cours);
     setState(() {});
   }
 
@@ -69,8 +69,6 @@ class _ResultatScreenState extends State<ResultatScreen> {
     resultatController.dispose();
     super.dispose();
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +88,6 @@ class _ResultatScreenState extends State<ResultatScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                       
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,34 +113,50 @@ class _ResultatScreenState extends State<ResultatScreen> {
                                 ))
                           ],
                         ),
-
-                        for (int i = 0; i < resultats.length; i++)
-                          SlideDownTween(
-                            duration: Duration(milliseconds: (i + 1) * 500),
-                            offset: 40,
-                            child: Card(
-                              color: third,
-                              child: ListTile(
-                                title: Text(
-                                  resultats[i].titre,
-                                  style: const TextStyle(color: textWhite),
-                                ),
-                                trailing: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isCharging = true;
-                                        deleteResultat(resultats[i]);
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete_outline_rounded,
-                                      color: textWhite,
-                                    )),
-                              ),
-                            ),
-                          )
-
-                        
+                        FutureBuilder(
+                            future: resultats,
+                            builder: (context,
+                                AsyncSnapshot<List<Resultat>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return SlideDownTween(
+                                        duration: Duration(
+                                            milliseconds: (i + 1) * 500),
+                                        offset: 40,
+                                        child: Card(
+                                          color: third,
+                                          child: ListTile(
+                                            title: Text(
+                                              snapshot.data![i].titre,
+                                              style: const TextStyle(
+                                                  color: textWhite),
+                                            ),
+                                            trailing: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isCharging = true;
+                                                    deleteResultat(
+                                                        snapshot.data![i]);
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete_outline_rounded,
+                                                  color: textWhite,
+                                                )),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                       ],
                     ),
                   ),

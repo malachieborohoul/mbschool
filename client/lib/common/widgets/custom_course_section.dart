@@ -18,7 +18,7 @@ class CustomCourseSection extends StatefulWidget {
 }
 
 class _CustomCourseSectionState extends State<CustomCourseSection> {
-  List<Lecon> lecons = [];
+  late Future<List<Lecon>> lecons;
   CourseManagerService courseManagerService = CourseManagerService();
 
   @override
@@ -27,8 +27,8 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
     getAllLecons();
   }
 
-  void getAllLecons() async {
-    lecons = await courseManagerService.getAllLecons(context, widget.sections);
+  void getAllLecons() {
+    lecons = courseManagerService.getAllLecons(context, widget.sections);
     setState(() {
       // print(lecons.length);
     });
@@ -41,107 +41,115 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
       decoration: BoxDecoration(
           color: Colors.grey.shade200,
           borderRadius: const BorderRadius.all(Radius.circular(8))),
-      child: lecons == null
-          ? const Loader()
-          : lecons.isEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: FutureBuilder(
+          future: lecons,
+          builder: (context, AsyncSnapshot<List<Lecon>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return snapshot.data!.isEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
                         children: [
-                          Text(widget.sections.titre),
-                          GestureDetector(
-                            child: PopupMenuButton(onSelected: (value) {
-                              if (value == 1) {
-                                Navigator.pushNamed(
-                                    context, EditSectionScreen.routeName,
-                                    arguments: widget.sections);
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.sections.titre),
+                              GestureDetector(
+                                child: PopupMenuButton(onSelected: (value) {
+                                  if (value == 1) {
+                                    Navigator.pushNamed(
+                                        context, EditSectionScreen.routeName,
+                                        arguments: widget.sections);
 
-                                Provider.of<SectionProvider>(context,listen: false)
-                                    .set_section(widget.sections);
-                              }
-                            }, itemBuilder: (context) {
-                              return [
-                                PopupMenuItem(
-                                  value: 1,
-                                  child: const Text("Modifier section"),
-                                  onTap: () {},
-                                ),
-                              ];
-                            }),
-                          )
+                                    Provider.of<SectionProvider>(context,
+                                            listen: false)
+                                        .set_section(widget.sections);
+                                  }
+                                }, itemBuilder: (context) {
+                                  return [
+                                    PopupMenuItem(
+                                      value: 1,
+                                      child: const Text("Modifier section"),
+                                      onTap: () {},
+                                    ),
+                                  ];
+                                }),
+                              )
+                            ],
+                          ),
+                          // BOuble pour afficher le nombre de lecons appartenant à cette section
+                          for (int i = 0; i < snapshot.data!.length; i++)
+                            CustomCourseLecon(
+                              lecon: snapshot.data![i],
+                            ),
+
+                          // ListView.builder(
+                          //     itemCount: lecons.length,
+                          //     itemBuilder: (context, i) {
+                          //       return Padding(
+                          //         padding: const EdgeInsets.only(
+                          //           top: 35.0,
+                          //         ),
+                          //         child: CustomCourseLecon(),
+                          //       );
+                          //     }),
                         ],
                       ),
-                      // BOuble pour afficher le nombre de lecons appartenant à cette section
-                      for (int i = 0; i < lecons.length; i++)
-                        CustomCourseLecon(
-                          lecon: lecons[i],
-                        ),
-
-                      // ListView.builder(
-                      //     itemCount: lecons.length,
-                      //     itemBuilder: (context, i) {
-                      //       return Padding(
-                      //         padding: const EdgeInsets.only(
-                      //           top: 35.0,
-                      //         ),
-                      //         child: CustomCourseLecon(),
-                      //       );
-                      //     }),
-                    ],
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
                         children: [
-                          Text(widget.sections.titre),
-                          GestureDetector(
-                            child: PopupMenuButton(onSelected: (value) {
-                              if (value == 1) {
-                                Navigator.pushNamed(
-                                    context, EditSectionScreen.routeName,
-                                    arguments: widget.sections);
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.sections.titre),
+                              GestureDetector(
+                                child: PopupMenuButton(onSelected: (value) {
+                                  if (value == 1) {
+                                    Navigator.pushNamed(
+                                        context, EditSectionScreen.routeName,
+                                        arguments: widget.sections);
 
-                                Provider.of<SectionProvider>(context,listen: false)
-                                    .set_section(widget.sections);
-                              }
-                            }, itemBuilder: (context) {
-                              return [
-                                PopupMenuItem(
-                                  value: 1,
-                                  child: const Text("Modifier section"),
-                                  onTap: () {},
-                                ),
-                              ];
-                            }),
-                          )
+                                    Provider.of<SectionProvider>(context,
+                                            listen: false)
+                                        .set_section(widget.sections);
+                                  }
+                                }, itemBuilder: (context) {
+                                  return [
+                                    PopupMenuItem(
+                                      value: 1,
+                                      child: const Text("Modifier section"),
+                                      onTap: () {},
+                                    ),
+                                  ];
+                                }),
+                              )
+                            ],
+                          ),
+                          // BOuble pour afficher le nombre de lecons appartenant à cette section
+                          for (int i = 0; i < snapshot.data!.length; i++)
+                            CustomCourseLecon(
+                              lecon: snapshot.data![i],
+                            ),
+
+                          // ListView.builder(
+                          //     itemCount: lecons.length,
+                          //     itemBuilder: (context, i) {
+                          //       return Padding(
+                          //         padding: const EdgeInsets.only(
+                          //           top: 35.0,
+                          //         ),
+                          //         child: CustomCourseLecon(),
+                          //       );
+                          //     }),
                         ],
                       ),
-                      // BOuble pour afficher le nombre de lecons appartenant à cette section
-                      for (int i = 0; i < lecons.length; i++)
-                        CustomCourseLecon(
-                          lecon: lecons[i],
-                        ),
-
-                      // ListView.builder(
-                      //     itemCount: lecons.length,
-                      //     itemBuilder: (context, i) {
-                      //       return Padding(
-                      //         padding: const EdgeInsets.only(
-                      //           top: 35.0,
-                      //         ),
-                      //         child: CustomCourseLecon(),
-                      //       );
-                      //     }),
-                    ],
-                  ),
-                ),
+                    );
+            } else {
+              return const Loader();
+            }
+          }),
     );
   }
 }

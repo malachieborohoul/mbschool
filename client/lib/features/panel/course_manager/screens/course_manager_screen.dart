@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mbschool/common/widgets/custom_card.dart';
+import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
 import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
 import 'package:mbschool/common/widgets/nodata.dart';
@@ -21,7 +22,7 @@ class CourseManagerScreen extends StatefulWidget {
 
 class _CourseManagerScreenState extends State<CourseManagerScreen> {
   CourseManagerService courseManagerService = CourseManagerService();
-  List<Cours> cours = [];
+  late Future<List<Cours>> cours;
   @override
   void initState() {
     getAllCoursesTeacher();
@@ -29,8 +30,8 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
     super.initState();
   }
 
-  void getAllCoursesTeacher() async {
-    cours = await courseManagerService.getAllCoursesTeacher(context);
+  void getAllCoursesTeacher() {
+    cours = courseManagerService.getAllCoursesTeacher(context);
     setState(() {});
   }
 
@@ -40,41 +41,56 @@ class _CourseManagerScreenState extends State<CourseManagerScreen> {
 
     return Scaffold(
       drawer: user.role == "1"
-            ? Container()
-            : user.role == "2"
-                ? const NavigatorDrawerTeacher()
-                : const NavigatorDrawerAdmin(),
+          ? Container()
+          : user.role == "2"
+              ? const NavigatorDrawerTeacher()
+              : const NavigatorDrawerAdmin(),
       appBar: AppBar(
         backgroundColor: primary,
         elevation: 1,
         title: const Text("Gestionnaire de cours"),
       ),
-      body: cours == null
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: primary,
+      body:
+          // cours == null
+          //     ? const Center(
+          //         child: CircularProgressIndicator(
+          //           color: primary,
+          //         ),
+          //       )
+          //     : cours.isEmpty
+          //         ? const NoData()
+          //         :
+          Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: FutureBuilder(
+                  future: cours,
+                  builder: (context, AsyncSnapshot<List<Cours>> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return snapshot.data!.isEmpty
+                          ? const NoData()
+                          : ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, i) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, PlanScreen.routeName,
+                                          arguments: snapshot.data![i]);
+                                    },
+                                    child:
+                                        CustomCard(cours: snapshot.data![i]));
+                              });
+                    } else {
+                      return const Loader();
+                    }
+                  })
+
+              // child: Column(
+              //   children: [CustomCard()],
+              // ),
               ),
-            )
-          : cours.isEmpty
-              ? const NoData()
-              : Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ListView.builder(
-                      itemCount: cours.length,
-                      itemBuilder: (context, i) {
-                        return GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, PlanScreen.routeName,
-                                  arguments: cours[i]);
-
-                            },
-                            child: CustomCard(cours: cours[i]));
-                      }),
-
-                  // child: Column(
-                  //   children: [CustomCard()],
-                  // ),
-                ),
     );
   }
 }

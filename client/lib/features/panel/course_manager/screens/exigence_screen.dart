@@ -26,7 +26,7 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
   TextEditingController exigenceController = TextEditingController();
   bool isCharging = false;
   ExigenceService exigenceService = ExigenceService();
-  List<Exigence> exigences = [];
+  late Future<List<Exigence>> exigences;
   final _addExigenceFormKey = GlobalKey<FormState>();
 
   void addExigence() {
@@ -60,8 +60,8 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
     getAllExigences();
   }
 
-  void getAllExigences() async {
-    exigences = await exigenceService.getAllExigences(context, widget.cours);
+  void getAllExigences() {
+    exigences = exigenceService.getAllExigences(context, widget.cours);
     setState(() {});
   }
 
@@ -104,7 +104,6 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
   //   );
   //   _listExigences.removeAt(index);
   // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -189,31 +188,50 @@ class _ExigenceScreenState extends State<ExigenceScreen> {
                           ],
                         ),
 
-                        for (int i = 0; i < exigences.length; i++)
-                          SlideDownTween(
-                            duration: Duration(milliseconds: (i + 1) * 500),
-                            offset: 40,
-                            child: Card(
-                              color: third,
-                              child: ListTile(
-                                title: Text(
-                                  exigences[i].nom,
-                                  style: const TextStyle(color: textWhite),
-                                ),
-                                trailing: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isCharging = true;
-                                        deleteExigence(exigences[i]);
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete_outline_rounded,
-                                      color: textWhite,
-                                    )),
-                              ),
-                            ),
-                          )
+                        FutureBuilder(
+                            future: exigences,
+                            builder: (context,
+                                AsyncSnapshot<List<Exigence>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return SlideDownTween(
+                                        duration: Duration(
+                                            milliseconds: (i + 1) * 500),
+                                        offset: 40,
+                                        child: Card(
+                                          color: third,
+                                          child: ListTile(
+                                            title: Text(
+                                              snapshot.data![i].nom,
+                                              style: const TextStyle(
+                                                  color: textWhite),
+                                            ),
+                                            trailing: IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isCharging = true;
+                                                    deleteExigence(
+                                                        snapshot.data![i]);
+                                                  });
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete_outline_rounded,
+                                                  color: textWhite,
+                                                )),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
 
                         // Padding(
                         //   padding: const EdgeInsets.all(appPadding - 5),

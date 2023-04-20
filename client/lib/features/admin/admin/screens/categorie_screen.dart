@@ -27,7 +27,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
   bool isCharging = false;
   CategorieService categorieService = CategorieService();
   CreateCourseService createCourseService = CreateCourseService();
-  List<Categorie> categories = [];
+  late Future<List<Categorie>> categories;
   final _addCategorieFormKey = GlobalKey<FormState>();
 
   void addCategorie() {
@@ -61,8 +61,8 @@ class _CategorieScreenState extends State<CategorieScreen> {
     getAllCategories();
   }
 
-  void getAllCategories() async {
-    categories = await createCourseService.getAllCategorieData(context);
+  void getAllCategories() {
+    categories = createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
@@ -116,121 +116,143 @@ class _CategorieScreenState extends State<CategorieScreen> {
                                 ))
                           ],
                         ),
-                        for (int i = 0; i < categories.length; i++)
-                          SlideDownTween(
-                            duration: Duration(milliseconds: (i + 1) * 500),
-                            offset: 40,
-                            child: Container(
-                                margin: const EdgeInsets.only(top: 8.0),
-                                height: 50,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: third,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        categories[i].nom,
-                                        style:
-                                            const TextStyle(color: textWhite),
-                                      ),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (context) =>
-                                                            AlertDialog(
-                                                              title: const Text(
-                                                                  "Notification"),
-                                                              content:
-                                                                  isCharging ==
-                                                                          true
-                                                                      ? const Loader()
-                                                                      : SizedBox(
-                                                                          height:
-                                                                              90,
-                                                                          child:
-                                                                              Column(
-                                                                            children: [
-                                                                              const Text(
-                                                                                "Voulez vous supprimer la catégorie?",
-                                                                                style: TextStyle(fontSize: 14),
-                                                                              ),
-                                                                              const SizedBox(
-                                                                                height: appPadding,
-                                                                              ),
-                                                                              Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                                children: [
-                                                                                  InkWell(
-                                                                                      onTap: () {
-                                                                                        // Navigator.pop(context);
-                                                                                        setState(() {
-                                                                                          isCharging = true;
-                                                                                          deleteCategorie(categories[i]);
-                                                                                        });
-                                                                                      },
-                                                                                      splashColor: Colors.grey.shade200,
-                                                                                      child: Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        width: 40,
-                                                                                        height: 30,
-                                                                                        decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: const Text(
-                                                                                          "Oui",
-                                                                                          style: TextStyle(color: textWhite),
-                                                                                        ),
-                                                                                      )),
-                                                                                  InkWell(
-                                                                                      onTap: () {
-                                                                                        Navigator.pop(context);
-                                                                                      },
-                                                                                      splashColor: Colors.grey.shade200,
-                                                                                      child: Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        width: 40,
-                                                                                        height: 30,
-                                                                                        decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: const Text(
-                                                                                          "Non",
-                                                                                          style: TextStyle(color: textWhite),
-                                                                                        ),
-                                                                                      )),
-                                                                                ],
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                            ));
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete_outline_rounded,
-                                                color: textWhite,
-                                              )),
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(context,
-                                                  EditCategorieScreen.routeName,
-                                                  arguments: categories[i]);
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit_outlined,
-                                              color: textWhite,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          )
+                        FutureBuilder(
+                            future: categories,
+                            builder: (context,
+                                AsyncSnapshot<List<Categorie>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return SlideDownTween(
+                                        duration: Duration(
+                                            milliseconds: (i + 1) * 500),
+                                        offset: 40,
+                                        child: Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 8.0),
+                                            height: 50,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: third,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data![i].nom,
+                                                    style: const TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                          title:
+                                                                              const Text("Notification"),
+                                                                          content: isCharging == true
+                                                                              ? const Loader()
+                                                                              : SizedBox(
+                                                                                  height: 90,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      const Text(
+                                                                                        "Voulez vous supprimer la catégorie?",
+                                                                                        style: TextStyle(fontSize: 14),
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        height: appPadding,
+                                                                                      ),
+                                                                                      Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                                        children: [
+                                                                                          InkWell(
+                                                                                              onTap: () {
+                                                                                                // Navigator.pop(context);
+                                                                                                setState(() {
+                                                                                                  isCharging = true;
+                                                                                                  deleteCategorie(snapshot.data![i]);
+                                                                                                });
+                                                                                              },
+                                                                                              splashColor: Colors.grey.shade200,
+                                                                                              child: Container(
+                                                                                                alignment: Alignment.center,
+                                                                                                width: 40,
+                                                                                                height: 30,
+                                                                                                decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
+                                                                                                child: const Text(
+                                                                                                  "Oui",
+                                                                                                  style: TextStyle(color: textWhite),
+                                                                                                ),
+                                                                                              )),
+                                                                                          InkWell(
+                                                                                              onTap: () {
+                                                                                                Navigator.pop(context);
+                                                                                              },
+                                                                                              splashColor: Colors.grey.shade200,
+                                                                                              child: Container(
+                                                                                                alignment: Alignment.center,
+                                                                                                width: 40,
+                                                                                                height: 30,
+                                                                                                decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
+                                                                                                child: const Text(
+                                                                                                  "Non",
+                                                                                                  style: TextStyle(color: textWhite),
+                                                                                                ),
+                                                                                              )),
+                                                                                        ],
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                        ));
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .delete_outline_rounded,
+                                                            color: textWhite,
+                                                          )),
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              EditCategorieScreen
+                                                                  .routeName,
+                                                              arguments: snapshot
+                                                                  .data![i]);
+                                                        },
+                                                        icon: const Icon(
+                                                          Icons.edit_outlined,
+                                                          color: textWhite,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
+                                      );
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                       ],
                     ),
                   ),

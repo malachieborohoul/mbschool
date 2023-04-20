@@ -11,7 +11,6 @@ import 'package:mbschool/features/admin/admin/services/langue_service.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
 import 'package:mbschool/models/langue.dart';
 
-
 class LangueScreen extends StatefulWidget {
   static const routeName = 'langue-screen';
   const LangueScreen({
@@ -28,7 +27,7 @@ class _LangueScreenState extends State<LangueScreen> {
   bool isCharging = false;
   LangueService langueService = LangueService();
   CreateCourseService createCourseService = CreateCourseService();
-  List<Langue> langues = [];
+  late Future<List<Langue>> langues;
   final _addLangueFormKey = GlobalKey<FormState>();
 
   void addLangue() {
@@ -62,8 +61,8 @@ class _LangueScreenState extends State<LangueScreen> {
     getAllLangues();
   }
 
-  void getAllLangues() async {
-    langues = await createCourseService.getAllLangueData(context);
+  void getAllLangues() {
+    langues = createCourseService.getAllLangueData(context);
     setState(() {});
   }
 
@@ -117,121 +116,143 @@ class _LangueScreenState extends State<LangueScreen> {
                                 ))
                           ],
                         ),
-                        for (int i = 0; i < langues.length; i++)
-                          SlideDownTween(
-                            duration: Duration(milliseconds: (i + 1) * 500),
-                            offset: 40,
-                            child: Container(
-                                margin: const EdgeInsets.only(top: 8.0),
-                                height: 50,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    color: third,
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        langues[i].nom,
-                                        style: const TextStyle(color: textWhite),
-                                      ),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (context) =>
-                                                            AlertDialog(
-                                                              title: const Text(
-                                                                  "Notification"),
-                                                              content:
-                                                                  isCharging ==
-                                                                          true
-                                                                      ? const Loader()
-                                                                      :  SizedBox(
-                                                                          height:
-                                                                              90,
-                                                                          child:
-                                                                              Column(
-                                                                            children: [
-                                                                              const Text(
-                                                                                "Voulez vous supprimer la langue?",
-                                                                                style: TextStyle(fontSize: 14),
-                                                                              ),
-                                                                              const SizedBox(
-                                                                                height: appPadding,
-                                                                              ),
-                                                                              Row(
-                                                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                                                children: [
-                                                                                  InkWell(
-                                                                                      onTap: () {
-                                                                                        // Navigator.pop(context);
-                                                                                        setState(() {
-                                                                                          isCharging = true;
-                                                                                          deleteLangue(langues[i]);
-                                                                                        });
-                                                                                      },
-                                                                                      splashColor: Colors.grey.shade200,
-                                                                                      child: Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        width: 40,
-                                                                                        height: 30,
-                                                                                        decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: const Text(
-                                                                                          "Oui",
-                                                                                          style: TextStyle(color: textWhite),
-                                                                                        ),
-                                                                                      )),
-                                                                                  InkWell(
-                                                                                      onTap: () {
-                                                                                        Navigator.pop(context);
-                                                                                      },
-                                                                                      splashColor: Colors.grey.shade200,
-                                                                                      child: Container(
-                                                                                        alignment: Alignment.center,
-                                                                                        width: 40,
-                                                                                        height: 30,
-                                                                                        decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
-                                                                                        child: const Text(
-                                                                                          "Non",
-                                                                                          style: TextStyle(color: textWhite),
-                                                                                        ),
-                                                                                      )),
-                                                                                ],
-                                                                              )
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                            ));
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete_outline_rounded,
-                                                color: textWhite,
-                                              )),
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  EditLangueScreen
-                                                      .routeName, arguments: langues[i]);
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit_outlined,
-                                              color: textWhite,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )),
-                          )
+                        FutureBuilder(
+                            future: langues,
+                            builder: (context,
+                                AsyncSnapshot<List<Langue>> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                return ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, i) {
+                                      return SlideDownTween(
+                                        duration: Duration(
+                                            milliseconds: (i + 1) * 500),
+                                        offset: 40,
+                                        child: Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 8.0),
+                                            height: 50,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                color: third,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    snapshot.data![i].nom,
+                                                    style: const TextStyle(
+                                                        color: textWhite),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) =>
+                                                                        AlertDialog(
+                                                                          title:
+                                                                              const Text("Notification"),
+                                                                          content: isCharging == true
+                                                                              ? const Loader()
+                                                                              : SizedBox(
+                                                                                  height: 90,
+                                                                                  child: Column(
+                                                                                    children: [
+                                                                                      const Text(
+                                                                                        "Voulez vous supprimer la langue?",
+                                                                                        style: TextStyle(fontSize: 14),
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        height: appPadding,
+                                                                                      ),
+                                                                                      Row(
+                                                                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                                                        children: [
+                                                                                          InkWell(
+                                                                                              onTap: () {
+                                                                                                // Navigator.pop(context);
+                                                                                                setState(() {
+                                                                                                  isCharging = true;
+                                                                                                  deleteLangue(snapshot.data![i]);
+                                                                                                });
+                                                                                              },
+                                                                                              splashColor: Colors.grey.shade200,
+                                                                                              child: Container(
+                                                                                                alignment: Alignment.center,
+                                                                                                width: 40,
+                                                                                                height: 30,
+                                                                                                decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.circular(15)),
+                                                                                                child: const Text(
+                                                                                                  "Oui",
+                                                                                                  style: TextStyle(color: textWhite),
+                                                                                                ),
+                                                                                              )),
+                                                                                          InkWell(
+                                                                                              onTap: () {
+                                                                                                Navigator.pop(context);
+                                                                                              },
+                                                                                              splashColor: Colors.grey.shade200,
+                                                                                              child: Container(
+                                                                                                alignment: Alignment.center,
+                                                                                                width: 40,
+                                                                                                height: 30,
+                                                                                                decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(15)),
+                                                                                                child: const Text(
+                                                                                                  "Non",
+                                                                                                  style: TextStyle(color: textWhite),
+                                                                                                ),
+                                                                                              )),
+                                                                                        ],
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ),
+                                                                        ));
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons
+                                                                .delete_outline_rounded,
+                                                            color: textWhite,
+                                                          )),
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              EditLangueScreen
+                                                                  .routeName,
+                                                              arguments: snapshot
+                                                                  .data![i]);
+                                                        },
+                                                        icon: const Icon(
+                                                          Icons.edit_outlined,
+                                                          color: textWhite,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
+                                      );
+                                    });
+                              } else {
+                                return const Loader();
+                              }
+                            }),
                       ],
                     ),
                   ),

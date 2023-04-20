@@ -96,281 +96,293 @@ class _HomeScreenState extends State<HomeScreen>
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
         ),
-        body: cours == null || categories == null
+        body: categories == null
             ? const Loader()
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        // SlideDownTween(
-                        //   child: ClipPath(
-                        //     clipper: BottomClipper(),
-                        //     child: Container(
-                        //       width: size.width,
-                        //       height: 300,
-                        //       decoration: BoxDecoration(color: secondary),
-                        //     ),
-                        //   ),
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: appPadding, right: appPadding),
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: spacer + 5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SlideDownTween(
-                                    offset: 70,
-                                    child: OpacityTween(
-                                      begin: 0.0,
-                                      child: CustomHeading(
-                                          title: "Bienvenue ${user.nom} ",
-                                          subTitle:
-                                              "Que voulez vous apprendre?",
-                                          color: secondary),
+            : RefreshIndicator(
+                color: primary,
+                onRefresh: () {
+                  return cours =
+                      courseManagerService.getAllPublishedCourses(context);
+                },
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          // SlideDownTween(
+                          //   child: ClipPath(
+                          //     clipper: BottomClipper(),
+                          //     child: Container(
+                          //       width: size.width,
+                          //       height: 300,
+                          //       decoration: BoxDecoration(color: secondary),
+                          //     ),
+                          //   ),
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: appPadding, right: appPadding),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: spacer + 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SlideDownTween(
+                                      offset: 70,
+                                      child: OpacityTween(
+                                        begin: 0.0,
+                                        child: CustomHeading(
+                                            title: "Bienvenue ${user.nom} ",
+                                            subTitle:
+                                                "Que voulez vous apprendre?",
+                                            color: secondary),
+                                      ),
                                     ),
-                                  ),
-                                  SlideDownTween(
-                                    offset: 70,
-                                    child: OpacityTween(
-                                      begin: 0.0,
-                                      child: SizedBox(
-                                        height: spacer,
-                                        width: spacer,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.pushNamed(context,
-                                                EditProfileScreen.routeName);
-                                          },
-                                          child: CircleAvatar(
-                                            maxRadius: 30,
-                                            minRadius: 30,
-                                            backgroundColor: grey,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                              child: user.photo.isNotEmpty
-                                                  ? Image.network(
-                                                      user.photo,
-                                                    )
-                                                  : Image.asset(
-                                                      UserProfile['image']
-                                                          .toString(),
-                                                    ),
+                                    SlideDownTween(
+                                      offset: 70,
+                                      child: OpacityTween(
+                                        begin: 0.0,
+                                        child: SizedBox(
+                                          height: spacer,
+                                          width: spacer,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.pushNamed(context,
+                                                  EditProfileScreen.routeName);
+                                            },
+                                            child: CircleAvatar(
+                                              maxRadius: 30,
+                                              minRadius: 30,
+                                              backgroundColor: grey,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(100),
+                                                child: user.photo.isNotEmpty
+                                                    ? Image.network(
+                                                        user.photo,
+                                                      )
+                                                    : Image.asset(
+                                                        UserProfile['image']
+                                                            .toString(),
+                                                      ),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: spacer,
+                                ),
+                                const SlideDownTween(
+                                  offset: 70,
+                                  child: OpacityTween(
+                                    begin: 0.0,
+                                    child: CustomSearchField(
+                                      onTap: true,
+                                      hintField:
+                                          "Essayez le Developpement mobile",
+                                      backgroundColor: textWhite,
                                     ),
-                                  )
-                                ],
-                              ),
-                              const SizedBox(
-                                height: spacer,
-                              ),
-                              const SlideDownTween(
-                                offset: 70,
-                                child: OpacityTween(
-                                  begin: 0.0,
-                                  child: CustomSearchField(
-                                    onTap: true,
-                                    hintField:
-                                        "Essayez le Developpement mobile",
-                                    backgroundColor: textWhite,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: spacer - 30,
-                              ),
-                              const SlideDownTween(
-                                  offset: 70,
-                                  child: OpacityTween(
-                                      begin: 0.0, child: CustomCategoryCard())),
-                              const SizedBox(
-                                height: spacer,
-                              ),
-                              const SlideDownTween(
-                                  offset: 70,
-                                  child: OpacityTween(
-                                      begin: 0.0,
-                                      child: CustomPromotionCard())),
-                              const SizedBox(
-                                height: spacer,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: appPadding - 20,
-                                    right: appPadding - 20),
-                                child: CustomTitle(
-                                  title: "Cours populaires",
-                                  titreLien: "Voir plus",
-                                  route: AllCourseScreen.routeName,
-                                  arg: cours,
+                                const SizedBox(
+                                  height: spacer - 30,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: smallSpacer,
-                              ),
-                              SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: appPadding - 20,
-                                        right: appPadding - 10),
-                                    child: FutureBuilder(
-                                        future: cours,
-                                        builder: (context,
-                                            AsyncSnapshot<List<Cours>>
-                                                snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.done) {
-                                            return Wrap(
-                                              spacing: 10,
-                                              children: List.generate(
-                                                snapshot.data!.length,
-                                                (index) {
-                                                  return GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.pushNamed(
-                                                          context,
-                                                          DetailCourseScreen
-                                                              .routeName,
-                                                          arguments: snapshot
-                                                              .data![index]);
-
-                                                      Provider.of<CoursProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .set_cours(snapshot
-                                                              .data![index]);
-                                                    },
-                                                    child:
-                                                        CustomCourseCardExpand(
-                                                      thumbNail: Hero(
-                                                        tag: snapshot
-                                                            .data![index]
-                                                            .vignette,
-                                                        child: Image.network(
-                                                          snapshot.data![index]
-                                                              .vignette,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      videoAmount:
-                                                          CoursesJson[index]
-                                                              ['video'],
-                                                      title: snapshot
-                                                          .data![index].titre,
-                                                      userProfile: snapshot
-                                                          .data![index].photo,
-                                                      userName: snapshot
-                                                          .data![index].nom,
-                                                      price: snapshot
-                                                              .data![index]
-                                                              .prix
-                                                              .isEmpty
-                                                          ? "Gratuit"
-                                                          : snapshot
-                                                              .data![index]
-                                                              .prix,
-                                                      cours:
-                                                          snapshot.data![index],
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            );
-                                          } else {
-                                            return Loader();
-                                          }
-                                        })),
-                              ),
-                              const SizedBox(
-                                height: spacer - 20,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: appPadding - 20),
-                                child: CustomTitle(title: "Categories"),
-                              ),
-                              const SizedBox(
-                                height: smallSpacer,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: appPadding),
-                                child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: FutureBuilder(
-                                        future: categories,
-                                        builder: (context,
-                                            AsyncSnapshot<List<Categorie>>
-                                                snapshot) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.done) {
-                                            return Row(
-                                              children: List.generate(
+                                const SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                        begin: 0.0,
+                                        child: CustomCategoryCard())),
+                                const SizedBox(
+                                  height: spacer,
+                                ),
+                                const SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                        begin: 0.0,
+                                        child: CustomPromotionCard())),
+                                const SizedBox(
+                                  height: spacer,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: appPadding - 20,
+                                      right: appPadding - 20),
+                                  child: CustomTitle(
+                                    title: "Cours populaires",
+                                    titreLien: "Voir plus",
+                                    route: AllCourseScreen.routeName,
+                                    arg: cours,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: smallSpacer,
+                                ),
+                                SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: appPadding - 20,
+                                          right: appPadding - 10),
+                                      child: FutureBuilder(
+                                          future: cours,
+                                          builder: (context,
+                                              AsyncSnapshot<List<Cours>>
+                                                  snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              return Wrap(
+                                                spacing: 10,
+                                                children: List.generate(
                                                   snapshot.data!.length,
                                                   (index) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10,
-                                                          right: 10,
-                                                          top: 10,
-                                                          bottom: 5),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        const Color.fromRGBO(
-                                                            158, 158, 158, 1),
-                                                    onTap: () =>
+                                                    return GestureDetector(
+                                                      onTap: () {
                                                         Navigator.pushNamed(
                                                             context,
-                                                            CoursesByCategoryScreen
+                                                            DetailCourseScreen
                                                                 .routeName,
                                                             arguments: snapshot
-                                                                .data![index]),
-                                                    child:
-                                                        CustomCategoriesButton(
-                                                            title: snapshot
+                                                                .data![index]);
+
+                                                        Provider.of<CoursProvider>(
+                                                                context,
+                                                                listen: false)
+                                                            .set_cours(snapshot
+                                                                .data![index]);
+                                                      },
+                                                      child:
+                                                          CustomCourseCardExpand(
+                                                        thumbNail: Hero(
+                                                          tag: snapshot
+                                                              .data![index]
+                                                              .vignette,
+                                                          child: Image.network(
+                                                            snapshot
                                                                 .data![index]
-                                                                .nom
-                                                                .toUpperCase()),
-                                                  ),
-                                                );
-                                              }),
-                                            );
-                                          } else {
-                                            return Loader();
-                                          }
-                                        })),
-                              ),
-                              const SizedBox(
-                                height: spacer,
-                              ),
-                              // const Padding(
-                              //   padding: EdgeInsets.only(
-                              //       left: appPadding - 20,
-                              //       right: appPadding - 20),
-                              //   child: CustomTitle(title: "Cours Design"),
-                              // ),
-                              const SizedBox(
-                                height: smallSpacer,
-                              ),
-                            ],
+                                                                .vignette,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                        videoAmount:
+                                                            CoursesJson[index]
+                                                                ['video'],
+                                                        title: snapshot
+                                                            .data![index].titre,
+                                                        userProfile: snapshot
+                                                            .data![index].photo,
+                                                        userName: snapshot
+                                                            .data![index].nom,
+                                                        price: snapshot
+                                                                .data![index]
+                                                                .prix
+                                                                .isEmpty
+                                                            ? "Gratuit"
+                                                            : snapshot
+                                                                .data![index]
+                                                                .prix,
+                                                        cours: snapshot
+                                                            .data![index],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            } else {
+                                              return Loader();
+                                            }
+                                          })),
+                                ),
+                                const SizedBox(
+                                  height: spacer - 20,
+                                ),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.only(left: appPadding - 20),
+                                  child: CustomTitle(title: "Categories"),
+                                ),
+                                const SizedBox(
+                                  height: smallSpacer,
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: appPadding),
+                                  child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: FutureBuilder(
+                                          future: categories,
+                                          builder: (context,
+                                              AsyncSnapshot<List<Categorie>>
+                                                  snapshot) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              return Row(
+                                                children: List.generate(
+                                                    snapshot.data!.length,
+                                                    (index) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            top: 10,
+                                                            bottom: 5),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          const Color.fromRGBO(
+                                                              158, 158, 158, 1),
+                                                      onTap: () =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              CoursesByCategoryScreen
+                                                                  .routeName,
+                                                              arguments:
+                                                                  snapshot.data![
+                                                                      index]),
+                                                      child:
+                                                          CustomCategoriesButton(
+                                                              title: snapshot
+                                                                  .data![index]
+                                                                  .nom
+                                                                  .toUpperCase()),
+                                                    ),
+                                                  );
+                                                }),
+                                              );
+                                            } else {
+                                              return Loader();
+                                            }
+                                          })),
+                                ),
+                                const SizedBox(
+                                  height: spacer,
+                                ),
+                                // const Padding(
+                                //   padding: EdgeInsets.only(
+                                //       left: appPadding - 20,
+                                //       right: appPadding - 20),
+                                //   child: CustomTitle(title: "Cours Design"),
+                                // ),
+                                const SizedBox(
+                                  height: smallSpacer,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),

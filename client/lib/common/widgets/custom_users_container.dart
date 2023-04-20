@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/common/widgets/loader.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/user.dart';
@@ -50,7 +51,7 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
             totalStudents == null
         ? const Loader()
         : Container(
-          height: 60,
+            height: 60,
             margin: const EdgeInsets.only(bottom: 8.0),
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
@@ -59,10 +60,20 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(widget.user.photo),
-                ),
+                widget.user.photo.isNotEmpty
+                    ? CircleAvatar(
+                      radius: 20,
+                      backgroundImage: NetworkImage(widget.user.photo),
+                    )
+                    : ClipRRect(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(100)),
+                        child: Image.asset(
+                          UserProfile['image'].toString(),
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 8.0,
@@ -82,8 +93,10 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
                     ],
                   ),
                 ),
-
-                const Icon(Icons.arrow_forward_ios_outlined, size: 15,)
+                const Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: 15,
+                )
               ],
             ),
           );

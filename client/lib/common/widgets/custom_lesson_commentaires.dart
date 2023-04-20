@@ -4,12 +4,12 @@ import 'package:mbschool/features/commentaire/services/course_commentaire_servic
 import 'package:mbschool/models/commentaire.dart';
 
 class CustomLessonCommentaires extends StatefulWidget {
-  const CustomLessonCommentaires(
-      {Key? key,
-      this.icon = false,
-      required this.commentaire,
-      this.reponse = false, })
-      : super(key: key);
+  const CustomLessonCommentaires({
+    Key? key,
+    this.icon = false,
+    required this.commentaire,
+    this.reponse = false,
+  }) : super(key: key);
   final bool icon;
   final bool reponse;
   final Commentaire? commentaire;
@@ -55,10 +55,10 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    // Text(
+                    //   "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
+                    //   style: const TextStyle(fontWeight: FontWeight.bold),
+                    // ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(widget.commentaire!.intitule)),
@@ -82,13 +82,11 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                                         return DraggableScrollableSheet(
                                           expand: false,
                                           initialChildSize: 0.8,
-                                          builder: (_, controller) =>
-                                              Container(
+                                          builder: (_, controller) => Container(
                                             decoration: const BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.vertical(
-                                                      top: Radius.circular(
-                                                          20)),
+                                                      top: Radius.circular(20)),
                                               color: Colors.white,
                                             ),
                                             child:
@@ -123,13 +121,11 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                                         return DraggableScrollableSheet(
                                           expand: false,
                                           initialChildSize: 0.8,
-                                          builder: (_, controller) =>
-                                              Container(
+                                          builder: (_, controller) => Container(
                                             decoration: const BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.vertical(
-                                                      top: Radius.circular(
-                                                          20)),
+                                                      top: Radius.circular(20)),
                                               color: Colors.white,
                                             ),
                                             child:
@@ -141,8 +137,7 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                                         );
                                       });
                                 },
-                                child: Text(
-                                    "$lessonNumberReponses Reponse(s)",
+                                child: Text("$lessonNumberReponses Reponse(s)",
                                     style: const TextStyle(
                                       color: Colors.blueAccent,
                                     )),
@@ -158,6 +153,5 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
         ],
       ),
     );
-  
   }
 }

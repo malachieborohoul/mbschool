@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/commentaire/screens/course_reponse_commentaire_screen.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 import 'package:mbschool/models/commentaire.dart';
@@ -47,18 +48,28 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(widget.commentaire!.photo),
-              ),
+              widget.commentaire!.photo.isNotEmpty
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(widget.commentaire!.photo),
+                    )
+                  : ClipRRect(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(100)),
+                      child: Image.asset(
+                        UserProfile['image'].toString(),
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Text(
-                    //   "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
-                    //   style: const TextStyle(fontWeight: FontWeight.bold),
-                    // ),
+                    Text(
+                      "${widget.commentaire!.nom} ${widget.commentaire!.prenom}",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(widget.commentaire!.intitule)),

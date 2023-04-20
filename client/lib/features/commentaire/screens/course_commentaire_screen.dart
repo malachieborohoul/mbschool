@@ -5,6 +5,7 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 
 import 'package:mbschool/models/commentaire.dart';
@@ -119,13 +120,23 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                       const SizedBox(
                         height: 15,
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(userProvider.photo),
-                          ),
+                          userProvider.photo.isNotEmpty
+                              ? CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(userProvider.photo),
+                                )
+                              : ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(100)),
+                                  child: Image.asset(
+                                    UserProfile['image'].toString(),
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                ),
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -171,21 +182,6 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                           ),
                         ],
                       ),
-
-                      // TextFormField(
-                      //   onTap: () {
-                      //     showModalBottomSheet(
-                      //         context: context,
-                      //         builder: (context) {
-                      //           return Container();
-                      //         });
-                      //   },
-                      //   decoration: InputDecoration(
-                      //       hintText: "Ajouter un commentaire",
-                      //       focusedBorder: UnderlineInputBorder(
-                      //           borderSide: BorderSide(color: primary))),
-                      // ),
-
                       FutureBuilder(
                           future: lessonCommentaires,
                           builder: (context,
@@ -205,24 +201,6 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                                           )
                                         : Container();
                                   });
-                              //  List.generate(
-                              //     snapshot.data!.length,
-                              //     (i) => snapshot.data!.isNotEmpty
-                              //         ? CustomLessonCommentaires(
-                              //             icon: true,
-                              //             reponse: true,
-                              //             commentaire: snapshot.data![i],
-                              //           )
-                              //         : Container());
-                              // for (var i = 0; i < snapshot.data!.length; i++) {
-                              //   snapshot.data!.isNotEmpty
-                              //       ? CustomLessonCommentaires(
-                              //           icon: true,
-                              //           reponse: true,
-                              //           commentaire: snapshot.data![i],
-                              //         )
-                              //       : Container();
-                              // }
                             } else {
                               return const Loader();
                             }

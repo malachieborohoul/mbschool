@@ -619,7 +619,7 @@ class CourseManagerService {
     return isCourseHasExigence!;
   }
 
-    Future<bool> verifyCourseHasResultat(
+  Future<bool> verifyCourseHasResultat(
       BuildContext context, Cours cours) async {
     bool? isCourseHasResultat;
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -656,6 +656,8 @@ class CourseManagerService {
           'x-auth-token': userProvider.user.token,
         },
       );
+
+      print(usersRes);
 
       httpErrorHandle(
           response: usersRes,

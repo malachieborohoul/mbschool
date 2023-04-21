@@ -35,12 +35,9 @@ class _EditLangueScreenState extends State<EditLangueScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     void editLangue() {
-      langueService.editLangue(
-          context, widget.langue, nomLangueController.text, () {
+      langueService.editLangue(context, widget.langue, nomLangueController.text,
+          () {
         setState(() {
           isCharging = false;
           showSnackBar(context, "Langue modifiée");
@@ -52,8 +49,6 @@ class _EditLangueScreenState extends State<EditLangueScreen> {
         });
       });
     }
-
-    
 
     if (isCharging == false) {
       nomLangueController.text = widget.langue.nom;
@@ -94,8 +89,7 @@ class _EditLangueScreenState extends State<EditLangueScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          if (_editLangueFormKey.currentState!
-                              .validate()) {
+                          if (_editLangueFormKey.currentState!.validate()) {
                             setState(() {
                               isCharging = true;
                             });
@@ -112,12 +106,10 @@ class _EditLangueScreenState extends State<EditLangueScreen> {
                           child: const Text(
                             "Modifier langue",
                             style: TextStyle(
-                                color: textWhite,
-                                fontWeight: FontWeight.bold),
+                                color: textWhite, fontWeight: FontWeight.bold),
                           ),
                         ),
                       )
-                    
                     ],
                   ),
                 ),

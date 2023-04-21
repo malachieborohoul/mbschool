@@ -81,17 +81,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
     if (isCharging == false) {
-      nameController.text = user.nom.toUpperCase();
-      prenomController.text = user.prenom.toUpperCase();
-      phoneController.text = user.telephone.toUpperCase();
+      nameController.text = user.nom.toUpperCase().trim();
+      prenomController.text = user.prenom.toUpperCase().trim();
+      phoneController.text = user.telephone.toUpperCase().trim();
       sexeController.text = user.sexe.toUpperCase();
-      localisationController.text = user.localisation.toUpperCase();
+      localisationController.text = user.localisation.toUpperCase().trim();
     } else {
-      nameController.text = nameController.text;
-      prenomController.text = prenomController.text;
-      phoneController.text = phoneController.text;
-      sexeController.text = sexeController.text;
-      localisationController.text = localisationController.text;
+      nameController.text = nameController.text.trim();
+      prenomController.text = prenomController.text.trim();
+      phoneController.text = phoneController.text.trim();
+      sexeController.text = sexeController.text.trim();
+      localisationController.text = localisationController.text.trim();
     }
     // isCharging == false
     //     ? nameController.text = user.nom.toUpperCase()
@@ -101,7 +101,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Scaffold(
         backgroundColor: background,
         extendBodyBehindAppBar: true,
-        appBar:   const PreferredSize(
+        appBar: const PreferredSize(
             preferredSize: Size.fromHeight(40),
             child: CustomAppBar(
               backgroundColor: Colors.transparent,
@@ -127,8 +127,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: [
                           image != null
                               ? ClipRRect(
-                                  borderRadius:
-                                      const BorderRadius.all(Radius.circular(100)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(100)),
                                   child: Image.file(
                                     File(image!.path!),
                                     width: 100,
@@ -244,7 +244,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               width: 50.0,
                               // color: grey,
                               alignment: Alignment.center,
-                              child: const Icon(Icons.male_sharp, color: primary)),
+                              child:
+                                  const Icon(Icons.male_sharp, color: primary)),
                         ),
                         value: dropdownvalue,
                         items: items.map((String items) {

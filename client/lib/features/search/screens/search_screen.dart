@@ -26,7 +26,6 @@ List<Cours> cours = [];
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -188,16 +187,13 @@ class _CustomSearchState extends State<CustomSearch> {
 
   void searchCourses(String textField) async {
     cours = await _searchService.searchCourses(context, textField);
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return 
-    Container(
+    return Container(
       width: size.width,
       height: spacer,
       alignment: Alignment.center,
@@ -227,7 +223,6 @@ class _CustomSearchState extends State<CustomSearch> {
                 controller: _keyword,
                 onChanged: (text) {
                   searchCourses(text);
-                    
                 },
                 style: const TextStyle(fontSize: 15),
                 cursorColor: textBlack,
@@ -246,7 +241,6 @@ class _CustomSearchState extends State<CustomSearch> {
         ],
       ),
     );
-  
   }
 }
 

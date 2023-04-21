@@ -44,10 +44,10 @@ class _AuthScreenState extends State<AuthScreen> {
   void signUpUser() {
     authService.signUpUser(
       context: context,
-      name: nameController.text,
-      prenom: prenomController.text,
-      email: emailController.text,
-      password: passwordController.text,
+      name: nameController.text.trim(),
+      prenom: prenomController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
       onSuccess: () {
         setState(() {
           isCharging = false;
@@ -59,8 +59,8 @@ class _AuthScreenState extends State<AuthScreen> {
   void signInUser() {
     authService.signInUser(
         context: context,
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
         onSuccess: () {
           setState(() {
             isCharging = false;

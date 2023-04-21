@@ -123,9 +123,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     createCourse() {
       createCourseService.createCourse(
           context,
-          titreCoursController.text,
-          descriptionCoursController.text,
-          descriptionCourteCoursController.text,
+          titreCoursController.text.trim(),
+          descriptionCoursController.text.trim(),
+          descriptionCourteCoursController.text.trim(),
           id_categorie,
           id_niveau,
           id_langue,

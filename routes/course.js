@@ -71,7 +71,7 @@ courseRouter.get("/getAllCourses",  (req, res)=>{
   pool.query(queries.getAllCourses, (error, results)=>{
     if (error) throw error;
 
-    return res.json(results.rows);
+    return res.status(200).json(results.rows);
 
   })
 })
@@ -436,7 +436,7 @@ courseRouter.post('/rateCourse',auth,  (req, res)=>{
 
 
 // get all notation cours
-courseRouter.get("/getAllNotationCours/:id_cours", (req, res)=>{
+courseRouter.get("/getAllNotationCours/:id_cours",auth, (req, res)=>{
   pool.query(queries.getAllNotationCours,[req.params.id_cours], (error, results)=>{
     if (error) throw error;
 
@@ -457,7 +457,7 @@ courseRouter.get("/getTotalLecons/:id_cours", auth,  (req, res)=>{
 })
 
 // get section
-courseRouter.get("/getSection/:id_section",  (req, res)=>{
+courseRouter.get("/getSection/:id_section",auth,  (req, res)=>{
   pool.query(queries.getSection,[req.params.id_section], (error, results)=>{
     if (error) throw error;
 
@@ -468,7 +468,7 @@ courseRouter.get("/getSection/:id_section",  (req, res)=>{
 
 // edit section
 
-courseRouter.post('/editSection',  (req, res)=>{
+courseRouter.post('/editSection',auth,  (req, res)=>{
   const {id_section,titre }= req.body;
 
   pool.query(queries.editSection, [titre,id_section], (error, results)=>{
@@ -479,7 +479,7 @@ courseRouter.post('/editSection',  (req, res)=>{
 
 // delete section
 
-courseRouter.post('/deleteSection',  (req, res)=>{
+courseRouter.post('/deleteSection',auth,  (req, res)=>{
   const {id_section }= req.body;
 
   pool.query(queries.deleteSection, [id_section], (error, results)=>{
@@ -491,7 +491,7 @@ courseRouter.post('/deleteSection',  (req, res)=>{
 
 // edit lecon
 
-courseRouter.post('/editLecon',  (req, res)=>{
+courseRouter.post('/editLecon',auth,  (req, res)=>{
   const {id_lecon,titre,resume, id_cours,id_section,  url}= req.body;
 
   pool.query(queries.editLecon, [id_lecon,titre,resume, id_cours,id_section,  url], (error, results)=>{
@@ -502,7 +502,7 @@ courseRouter.post('/editLecon',  (req, res)=>{
 
 // delete lecon
 
-courseRouter.post('/deleteLecon',  (req, res)=>{
+courseRouter.post('/deleteLecon',auth,  (req, res)=>{
   const {id_lecon }= req.body;
 
   pool.query(queries.deleteLecon, [id_lecon], (error, results)=>{
@@ -514,7 +514,7 @@ courseRouter.post('/deleteLecon',  (req, res)=>{
 
 // delete cours
 
-courseRouter.post('/deleteCours',  (req, res)=>{
+courseRouter.post('/deleteCours',auth,  (req, res)=>{
   const {id_cours }= req.body;
 
   pool.query(queries.deleteCours, [id_cours], (error, results)=>{
@@ -526,7 +526,7 @@ courseRouter.post('/deleteCours',  (req, res)=>{
 
 // publish cours
 
-courseRouter.post('/publishCours',  (req, res)=>{
+courseRouter.post('/publishCours',auth,  (req, res)=>{
   const {id_cours }= req.body;
 
   pool.query(queries.publishCours, [id_cours], (error, results)=>{
@@ -538,7 +538,7 @@ courseRouter.post('/publishCours',  (req, res)=>{
 
 // deactivate cours
 
-courseRouter.post('/deactivateCours',  (req, res)=>{
+courseRouter.post('/deactivateCours',auth,  (req, res)=>{
   const {id_cours }= req.body;
 
   pool.query(queries.deactivateCours, [id_cours], (error, results)=>{
@@ -551,7 +551,7 @@ courseRouter.post('/deactivateCours',  (req, res)=>{
 
 // delete exigence
 
-courseRouter.post('/deleteExigence',  (req, res)=>{
+courseRouter.post('/deleteExigence',auth,  (req, res)=>{
   const {id_exigence }= req.body;
 
   pool.query(queries.deleteExigence, [id_exigence], (error, results)=>{
@@ -587,7 +587,7 @@ courseRouter.get("/getAllResultats/:id_cours",auth,  (req, res)=>{
 
 // delete resultat
 
-courseRouter.post('/deleteResultat',  (req, res)=>{
+courseRouter.post('/deleteResultat',auth,  (req, res)=>{
   const {id_resultat }= req.body;
 
   pool.query(queries.deleteResultat, [id_resultat], (error, results)=>{
@@ -599,7 +599,7 @@ courseRouter.post('/deleteResultat',  (req, res)=>{
 
 // search all the  users
 courseRouter.get("/searchUsers/:nom",  (req, res)=>{
-  pool.query(queries.searchUsers,[req.params.nom], (error, results)=>{
+  pool.query(queries.searchUsers,[req.params.nom],auth, (error, results)=>{
     if (error) throw error;
 
     return res.json(results.rows);
@@ -610,7 +610,7 @@ courseRouter.get("/searchUsers/:nom",  (req, res)=>{
 
 
 // get all taking courses
-courseRouter.get("/getAllTakingCourses/:id_users",  (req, res)=>{
+courseRouter.get("/getAllTakingCourses/:id_users",auth,  (req, res)=>{
   pool.query(queries.getAllTakingCourses,[req.params.id_users], (error, results)=>{
     if (error) throw error;
 
@@ -620,7 +620,7 @@ courseRouter.get("/getAllTakingCourses/:id_users",  (req, res)=>{
 })
 
 // get all teaching courses
-courseRouter.get("/getAllTeachingCourses/:id_users",  (req, res)=>{
+courseRouter.get("/getAllTeachingCourses/:id_users",auth,  (req, res)=>{
   pool.query(queries.getAllTeachingCourses,[req.params.id_users], (error, results)=>{
     if (error) throw error;
 
@@ -630,7 +630,7 @@ courseRouter.get("/getAllTeachingCourses/:id_users",  (req, res)=>{
 })
 
 // get total students
-courseRouter.get("/getTotalStudents/:id_users",  (req, res)=>{
+courseRouter.get("/getTotalStudents/:id_users", auth, (req, res)=>{
   pool.query(queries.getTotalStudents,[req.params.id_users], (error, results)=>{
     if (error) throw error;
 
@@ -640,11 +640,11 @@ courseRouter.get("/getTotalStudents/:id_users",  (req, res)=>{
 })
 
 // get all users
-courseRouter.get("/getAllUsers", (req, res)=>{
+courseRouter.get("/getAllUsers", auth,(req, res)=>{
   pool.query(queries.getAllUsers, (error, results)=>{
     if (error) throw error;
 
-    return res.json(results.rows);
+    return res.status(200).json(results.rows);
 
   })
 })

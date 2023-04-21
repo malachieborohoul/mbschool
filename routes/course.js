@@ -67,7 +67,7 @@ courseRouter.post("/createCourse", auth, (req, res)=>{
 
 
 // get all courses
-courseRouter.get("/getAllCourses",auth,  (req, res)=>{
+courseRouter.get("/getAllCourses",  (req, res)=>{
   pool.query(queries.getAllCourses, (error, results)=>{
     if (error) throw error;
 
@@ -640,7 +640,7 @@ courseRouter.get("/getTotalStudents/:id_users",  (req, res)=>{
 })
 
 // get all users
-courseRouter.get("/getAllUsers",  (req, res)=>{
+courseRouter.get("/getAllUsers", (req, res)=>{
   pool.query(queries.getAllUsers, (error, results)=>{
     if (error) throw error;
 

@@ -657,7 +657,6 @@ class CourseManagerService {
         },
       );
 
-      print(usersRes);
 
       httpErrorHandle(
           response: usersRes,

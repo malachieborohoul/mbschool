@@ -283,7 +283,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               begin: 0.2,
                               child:  CustomHeading(
                                   title: "Connectez-vous",
-                                  subTitle: "Bienvenue",
+                                  subTitle: "Bienvenue à vous",
                                   color: secondary),
                             ),
                           ),

@@ -4,23 +4,18 @@ import 'package:mbschool/common/animations/opacity_tween.dart';
 import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/custom_users_container.dart';
 import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/nodata.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/admin/users/screens/user_details_screen.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/search/services/search_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/user.dart';
-import 'package:mbschool/providers/search_user_provider.dart';
-import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
-  static const routeName = "users-screen";
+  static const routeName = "search-screen";
   const SearchScreen({Key? key}) : super(key: key);
 
   @override

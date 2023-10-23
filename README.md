@@ -1,5 +1,6 @@
 # mbschool
 Please Download the apk available in the apk folder<br>
+Please don't forget to star the repository
 MbSchool is a E-Learning mobile app developed with Flutter and Node JS REST api 
 
 4 main actors: <br>

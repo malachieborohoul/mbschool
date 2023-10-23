@@ -45,8 +45,7 @@ class SearchService {
     return coursList;
   }
 
-
-   Future<List<User>> searchUsers(BuildContext context, String nom) async {
+  Future<List<User>> searchUsers(BuildContext context, String nom) async {
     List<User> usersList = [];
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -78,5 +77,4 @@ class SearchService {
     }
     return usersList;
   }
-
 }

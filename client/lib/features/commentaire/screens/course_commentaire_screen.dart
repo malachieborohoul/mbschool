@@ -140,7 +140,8 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                           Flexible(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Form(
+                              child: 
+                              Form(
                                 key: _addCourseCommentaire,
                                 child: TextFormField(
                                   controller: _commentaireController,

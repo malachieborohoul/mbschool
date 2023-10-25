@@ -24,7 +24,7 @@ userRouter.post('/modifyRole', auth,  async(req, res)=>{
 
 })
 
-userRouter.post('/activateUser',  async(req, res)=>{
+userRouter.post('/activateUser', auth,  async(req, res)=>{
     const statut = 1;
     try {
         const {id_users}= req.body;

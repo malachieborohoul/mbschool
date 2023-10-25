@@ -41,7 +41,7 @@ userRouter.post('/activateUser', auth,  async(req, res)=>{
 
 })
 
-userRouter.post('/desactivateUser',  async(req, res)=>{
+userRouter.post('/desactivateUser',auth,  async(req, res)=>{
     const statut = 0;
     try {
         const {id_users}= req.body;
@@ -59,7 +59,7 @@ userRouter.post('/desactivateUser',  async(req, res)=>{
 })
 
 
-userRouter.post('/deleteUser',  async(req, res)=>{
+userRouter.post('/deleteUser',auth,  async(req, res)=>{
     try {
         const {id_users}= req.body;
 

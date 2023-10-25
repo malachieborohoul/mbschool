@@ -8,7 +8,7 @@ const userRouter = express.Router()
 
 
 
-userRouter.post('/modifyRole',  async(req, res)=>{
+userRouter.post('/modifyRole', auth,  async(req, res)=>{
     try {
         const { role, id_users}= req.body;
 

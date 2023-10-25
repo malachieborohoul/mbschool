@@ -67,7 +67,7 @@ courseRouter.post("/createCourse", auth, (req, res)=>{
 
 
 // get all courses
-courseRouter.get("/getAllCourses",  (req, res)=>{
+courseRouter.get("/getAllCourses",auth,  (req, res)=>{
   pool.query(queries.getAllCourses, (error, results)=>{
     if (error) throw error;
 

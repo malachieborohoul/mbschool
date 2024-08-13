@@ -1,0 +1,43 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.mbschool.app-mergeDebugResources-28:/values-te/values-te.xml",
+            "map": [
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/res/values-te/values-te.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,157,265,367,468,574,681,805",
+                        "endColumns": "101,107,101,100,105,106,123,100",
+                        "endOffsets": "152,260,362,463,569,676,800,901"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,18",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,157,265,367,468,574,681,1515",
+                        "endColumns": "101,107,101,100,105,106,123,100",
+                        "endOffsets": "152,260,362,463,569,676,800,1611"
+                    }
+                },
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/f3d95c9f6815a25ff92ab466d6816f50/transformed/jetified-media3-exoplayer-1.4.0/res/values-te/values-te.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,127,195,268,336,416,493,594,687",
+                        "endColumns": "71,67,72,67,79,76,100,92,77",
+                        "endOffsets": "122,190,263,331,411,488,589,682,760"
+                    },
+                    "to": {
+                        "startLines": "9,10,11,12,13,14,15,16,17",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "805,877,945,1018,1086,1166,1243,1344,1437",
+                        "endColumns": "71,67,72,67,79,76,100,92,77",
+                        "endOffsets": "872,940,1013,1081,1161,1238,1339,1432,1510"
+                    }
+                }
+            ]
+        }
+    ]
+}

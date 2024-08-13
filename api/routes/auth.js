@@ -107,43 +107,29 @@ authRouter.post('/api/signup', async (req, res)=> {
     }
 });
 
-// SIGNIN USER
-
-authRouter.post('/api/signin', async(req, res)=> {
+authRouter.post('/api/signin', async (req, res) => {
     try {
-        const {email, password} = req.body;
-        pool.query(queries.checkEmailExist,[email], async (error, results)=>{
-            const user=results.rows[0];
-            if(!results.rows.length){
-                return res.status(400).json({msg: "Cet identifiant n'existe pas"});
-            }
-            const isPass = await bcryptjs.compare(password, user.password);
-            if(!isPass){
-                return res.status(400).json({msg: "Mot de passe incorrecte"});
-            }
-            
-            const token = jwt.sign({id: user.id}, "passwordKey");
-            user.token = token;
-            return res.json(user);
-        } )
-
-        // const user = await User.findOne({email});
-
-        // if(!user){
-        //     return res.status(400).json({msg: "Cet identifiant n'existe pas"});
-        // }
-
-        // const isPass = await bcryptjs.compare(password, user.password);
-
-        // if(!isPass){
-        //     return res.status(400).json({msg: "Mot de passe incorrecte"});
-        // }
-
-        // const token = jwt.sign({id: user._id}, "passwordKey");
-        // res.json({token, ...user._doc});
+        const { email, password } = req.body;
+        
+        // Using async/await with pool.query
+        const { rows } = await pool.query(queries.checkEmailExist, [email]);
+        if (rows.length === 0) {
+            return res.status(400).json({ msg: "Cet identifiant n'existe pas" });
+        }
+        
+        const user = rows[0];
+        const isPass = await bcryptjs.compare(password, user.password);
+        if (!isPass) {
+            return res.status(400).json({ msg: "Mot de passe incorrecte" });
+        }
+        
+        const token = jwt.sign({ id: user.id }, "passwordKey");
+        user.token = token;
+        return res.json(user);
 
     } catch (e) {
-        return res.status(500).json({error: e.message});
+        console.error('Error during signin:', e);
+        return res.status(500).json({ error: e.message });
     }
 });
 

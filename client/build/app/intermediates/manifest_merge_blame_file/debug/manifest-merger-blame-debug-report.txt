@@ -1,7 +1,7 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.mbschool"
-4    android:versionCode="1"
+3    package="com.bsm.mbschool"
+4    android:versionCode="2"
 5    android:versionName="1.0.0" >
 6
 7    <uses-sdk
@@ -58,12 +58,12 @@
 40
 41    <permission
 41-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
-42        android:name="com.example.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+42        android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 42-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
 43        android:protectionLevel="signature" />
 43-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 44
-45    <uses-permission android:name="com.example.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+45    <uses-permission android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 45-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
 45-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
 46
@@ -75,7 +75,7 @@
 51        android:icon="@mipmap/ic_launcher"
 52        android:label="mbschool" >
 53        <activity
-54            android:name="com.example.mbschool.MainActivity"
+54            android:name="com.bsm.mbschool.MainActivity"
 55            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
 56            android:exported="true"
 57            android:hardwareAccelerated="true"
@@ -125,7 +125,7 @@
 94-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
 95            android:name="androidx.startup.InitializationProvider"
 95-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
-96            android:authorities="com.example.mbschool.androidx-startup"
+96            android:authorities="com.bsm.mbschool.androidx-startup"
 96-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
 97            android:exported="false" >
 97-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37

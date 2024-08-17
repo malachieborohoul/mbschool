@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.mbschool.app-mergeDebugResources-28:/values/values.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values/values.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/c683cde5b1f5377825fe27da54e1b718/transformed/fragment-1.7.1/res/values/values.xml",

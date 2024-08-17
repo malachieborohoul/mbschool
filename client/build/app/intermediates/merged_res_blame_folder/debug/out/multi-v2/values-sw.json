@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.mbschool.app-mergeDebugResources-28:/values-sw/values-sw.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-sw/values-sw.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/f3d95c9f6815a25ff92ab466d6816f50/transformed/jetified-media3-exoplayer-1.4.0/res/values-sw/values-sw.xml",

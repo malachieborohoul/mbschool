@@ -241,4 +241,62 @@ class AuthService {
       showSnackBar(context, e.toString());
     }
   }
+
+  //Resend code
+  void resendCode({
+    required BuildContext context,
+    
+    required String email,
+    required VoidCallback onSuccess,
+  }) async {
+    try {
+      User user = User(
+        id: "",
+        nom: "",
+        prenom: "",
+        email: email,
+        password: "",
+        role: '',
+        photo: '',
+        sexe: '',
+        localisation: '',
+        qualification: '',
+        numCompte: '',
+        cv: '',
+        token: '',
+        telephone: '',
+        verify_code: '',
+        statut_users: '',
+      );
+      http.Response res = await http.post(
+          Uri.parse(
+            '$uri/resendCode',
+          ),
+          body: user.toJson(),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          });
+
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+            await prefs.setString(
+                'x-auth-token', jsonDecode(res.body)['token']);
+            onSuccess();
+            showSnackBar(context, "Code envoyé");
+            Navigator.pushNamedAndRemoveUntil(
+                context, VerificationScreen.routeName, (route) => false);
+
+            // showSnackBar(context, "Votre compte a été créé avec success");
+          },
+          onFailed: () {
+            onSuccess();
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }

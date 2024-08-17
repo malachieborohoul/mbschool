@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-as/values-as.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-29:/values-as/values-as.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/res/values-as/values-as.xml",
@@ -11,6 +11,30 @@
                         "startOffsets": "55,156,259,367,472,576,676,805",
                         "endColumns": "100,102,107,104,103,99,128,100",
                         "endOffsets": "151,254,362,467,571,671,800,901"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,13",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,156,259,367,472,576,676,1233",
+                        "endColumns": "100,102,107,104,103,99,128,100",
+                        "endOffsets": "151,254,362,467,571,671,800,1329"
+                    }
+                },
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/res/values-as/values-as.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,163,269,377",
+                        "endColumns": "107,105,107,105",
+                        "endOffsets": "158,264,372,478"
+                    },
+                    "to": {
+                        "startLines": "9,10,11,12",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "805,913,1019,1127",
+                        "endColumns": "107,105,107,105",
+                        "endOffsets": "908,1014,1122,1228"
                     }
                 }
             ]

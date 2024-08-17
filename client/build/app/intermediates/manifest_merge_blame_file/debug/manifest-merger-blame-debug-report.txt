@@ -23,7 +23,7 @@
 21         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin.
 22    -->
 23    <queries>
-23-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:40:5-45:15
+23-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:40:5-60:15
 24        <intent>
 24-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:41:9-44:18
 25            <action android:name="android.intent.action.PROCESS_TEXT" />
@@ -34,152 +34,189 @@
 27-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
 27-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:19-48
 28        </intent>
-29        <intent>
-29-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-18:18
-30            <action android:name="android.intent.action.GET_CONTENT" />
-30-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-72
-30-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:21-69
-31
-32            <data android:mimeType="*/*" />
-32-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
-32-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:19-48
-33        </intent>
-34    </queries>
-35
-36    <uses-permission
-36-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-11:38
-37        android:name="android.permission.READ_EXTERNAL_STORAGE"
-37-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-64
-38        android:maxSdkVersion="32" />
-38-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:9-35
-39    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-39-->[androidx.media3:media3-common:1.4.0] /Users/bsm/.gradle/caches/transforms-3/1b55c7aeb92aac14f51fd97820368431/transformed/jetified-media3-common-1.4.0/AndroidManifest.xml:22:5-79
-39-->[androidx.media3:media3-common:1.4.0] /Users/bsm/.gradle/caches/transforms-3/1b55c7aeb92aac14f51fd97820368431/transformed/jetified-media3-common-1.4.0/AndroidManifest.xml:22:22-76
-40
-41    <permission
-41-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
-42        android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-42-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
-43        android:protectionLevel="signature" />
-43-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
-44
-45    <uses-permission android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-45-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
-45-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
-46
-47    <application
-48        android:name="android.app.Application"
-49        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-49-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
-50        android:debuggable="true"
-51        android:icon="@mipmap/ic_launcher"
-52        android:label="mbschool" >
-53        <activity
-54            android:name="com.bsm.mbschool.MainActivity"
-55            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-56            android:exported="true"
-57            android:hardwareAccelerated="true"
-58            android:launchMode="singleTop"
-59            android:taskAffinity=""
-60            android:theme="@style/LaunchTheme"
-61            android:windowSoftInputMode="adjustResize" >
-62
-63            <!--
-64                 Specifies an Android theme to apply to this Activity as soon as
-65                 the Android process has started. This theme is visible to the user
-66                 while the Flutter UI initializes. After that, this theme continues
-67                 to determine the Window background behind the Flutter UI.
-68            -->
-69            <meta-data
-70                android:name="io.flutter.embedding.android.NormalTheme"
-71                android:resource="@style/NormalTheme" />
-72
-73            <intent-filter>
-74                <action android:name="android.intent.action.MAIN" />
-75
-76                <category android:name="android.intent.category.LAUNCHER" />
-77            </intent-filter>
-78        </activity>
-79        <!--
-80             Don't delete the meta-data below.
-81             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-82        -->
-83        <meta-data
-84            android:name="flutterEmbedding"
-85            android:value="2" />
-86
-87        <uses-library
-87-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
-88            android:name="androidx.window.extensions"
-88-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
-89            android:required="false" />
-89-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
-90        <uses-library
-90-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
-91            android:name="androidx.window.sidecar"
-91-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
-92            android:required="false" />
-92-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
-93
-94        <provider
-94-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
-95            android:name="androidx.startup.InitializationProvider"
-95-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
-96            android:authorities="com.bsm.mbschool.androidx-startup"
-96-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
-97            android:exported="false" >
-97-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
-98            <meta-data
-98-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-99                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-99-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-100                android:value="androidx.startup" />
-100-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-101            <meta-data
-101-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
-102                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-102-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
-103                android:value="androidx.startup" />
-103-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
-104        </provider>
-105
-106        <receiver
-106-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
-107            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-107-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
-108            android:directBootAware="false"
-108-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
-109            android:enabled="true"
-109-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
-110            android:exported="true"
-110-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
-111            android:permission="android.permission.DUMP" >
-111-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
-112            <intent-filter>
-112-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
-113                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
-113-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
-114            </intent-filter>
-115            <intent-filter>
-115-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
-116                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-116-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
-116-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
-117            </intent-filter>
-118            <intent-filter>
-118-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
-119                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-119-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
-119-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
-120            </intent-filter>
-121            <intent-filter>
-121-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
-122                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
-122-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
-123            </intent-filter>
-124        </receiver>
-125    </application>
-126
-127</manifest>
+29
+30        <!-- If your app checks for SMS support -->
+31        <intent>
+31-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:47:9-50:18
+32            <action android:name="android.intent.action.VIEW" />
+32-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:13-65
+32-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:21-62
+33
+34            <data android:scheme="sms" />
+34-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
+35        </intent>
+36        <!-- If your app checks for call support -->
+37        <intent>
+37-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:52:9-55:18
+38            <action android:name="android.intent.action.VIEW" />
+38-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:13-65
+38-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:21-62
+39
+40            <data android:scheme="tel" />
+40-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
+41        </intent>
+42        <!-- If your application checks for inAppBrowserView launch mode support -->
+43        <intent>
+43-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:57:9-59:18
+44            <action android:name="android.support.customtabs.action.CustomTabsService" />
+44-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:58:13-90
+44-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:58:21-87
+45        </intent>
+46        <intent>
+46-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-18:18
+47            <action android:name="android.intent.action.GET_CONTENT" />
+47-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-72
+47-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:21-69
+48
+49            <data android:mimeType="*/*" />
+49-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
+49-->/Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:19-48
+50        </intent>
+51    </queries>
+52
+53    <uses-permission
+53-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-11:38
+54        android:name="android.permission.READ_EXTERNAL_STORAGE"
+54-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-64
+55        android:maxSdkVersion="32" />
+55-->[:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:11:9-35
+56    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+56-->[androidx.media3:media3-common:1.4.0] /Users/bsm/.gradle/caches/transforms-3/1b55c7aeb92aac14f51fd97820368431/transformed/jetified-media3-common-1.4.0/AndroidManifest.xml:22:5-79
+56-->[androidx.media3:media3-common:1.4.0] /Users/bsm/.gradle/caches/transforms-3/1b55c7aeb92aac14f51fd97820368431/transformed/jetified-media3-common-1.4.0/AndroidManifest.xml:22:22-76
+57
+58    <permission
+58-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
+59        android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+59-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
+60        android:protectionLevel="signature" />
+60-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
+61
+62    <uses-permission android:name="com.bsm.mbschool.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+62-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
+62-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
+63
+64    <application
+65        android:name="android.app.Application"
+66        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+66-->[androidx.core:core:1.13.1] /Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/AndroidManifest.xml:28:18-86
+67        android:debuggable="true"
+68        android:icon="@mipmap/ic_launcher"
+69        android:label="mbschool" >
+70        <activity
+71            android:name="com.bsm.mbschool.MainActivity"
+72            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+73            android:exported="true"
+74            android:hardwareAccelerated="true"
+75            android:launchMode="singleTop"
+76            android:taskAffinity=""
+77            android:theme="@style/LaunchTheme"
+78            android:windowSoftInputMode="adjustResize" >
+79
+80            <!--
+81                 Specifies an Android theme to apply to this Activity as soon as
+82                 the Android process has started. This theme is visible to the user
+83                 while the Flutter UI initializes. After that, this theme continues
+84                 to determine the Window background behind the Flutter UI.
+85            -->
+86            <meta-data
+87                android:name="io.flutter.embedding.android.NormalTheme"
+88                android:resource="@style/NormalTheme" />
+89
+90            <intent-filter>
+91                <action android:name="android.intent.action.MAIN" />
+92
+93                <category android:name="android.intent.category.LAUNCHER" />
+94            </intent-filter>
+95        </activity>
+96        <!--
+97             Don't delete the meta-data below.
+98             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+99        -->
+100        <meta-data
+101            android:name="flutterEmbedding"
+102            android:value="2" />
+103
+104        <activity
+104-->[:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-13:74
+105            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+105-->[:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-74
+106            android:exported="false"
+106-->[:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-37
+107            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+107-->[:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-71
+108
+109        <uses-library
+109-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:23:9-25:40
+110            android:name="androidx.window.extensions"
+110-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:24:13-54
+111            android:required="false" />
+111-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:25:13-37
+112        <uses-library
+112-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:26:9-28:40
+113            android:name="androidx.window.sidecar"
+113-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:27:13-51
+114            android:required="false" />
+114-->[androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:28:13-37
+115
+116        <provider
+116-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
+117            android:name="androidx.startup.InitializationProvider"
+117-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
+118            android:authorities="com.bsm.mbschool.androidx-startup"
+118-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
+119            android:exported="false" >
+119-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37
+120            <meta-data
+120-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+121                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+121-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+122                android:value="androidx.startup" />
+122-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+123            <meta-data
+123-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:29:13-31:52
+124                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+124-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:30:17-85
+125                android:value="androidx.startup" />
+125-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:31:17-49
+126        </provider>
+127
+128        <receiver
+128-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:34:9-52:20
+129            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+129-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:35:13-76
+130            android:directBootAware="false"
+130-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:36:13-44
+131            android:enabled="true"
+131-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:37:13-35
+132            android:exported="true"
+132-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:38:13-36
+133            android:permission="android.permission.DUMP" >
+133-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:39:13-57
+134            <intent-filter>
+134-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:40:13-42:29
+135                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:17-91
+135-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:41:25-88
+136            </intent-filter>
+137            <intent-filter>
+137-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:43:13-45:29
+138                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:17-85
+138-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:44:25-82
+139            </intent-filter>
+140            <intent-filter>
+140-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:46:13-48:29
+141                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:17-88
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:47:25-85
+142            </intent-filter>
+143            <intent-filter>
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:49:13-51:29
+144                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:17-95
+144-->[androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:50:25-92
+145            </intent-filter>
+146        </receiver>
+147    </application>
+148
+149</manifest>

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-zh-rTW/values-zh-rTW.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-29:/values-zh-rTW/values-zh-rTW.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/f3d95c9f6815a25ff92ab466d6816f50/transformed/jetified-media3-exoplayer-1.4.0/res/values-zh-rTW/values-zh-rTW.xml",
@@ -13,11 +13,11 @@
                         "endOffsets": "106,162,219,272,342,396,472,550,609"
                     },
                     "to": {
-                        "startLines": "9,10,11,12,13,14,15,16,17",
+                        "startLines": "10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "716,772,828,885,938,1008,1062,1138,1216",
+                        "startOffsets": "800,856,912,969,1022,1092,1146,1222,1300",
                         "endColumns": "55,55,56,52,69,53,75,77,58",
-                        "endOffsets": "767,823,880,933,1003,1057,1133,1211,1270"
+                        "endOffsets": "851,907,964,1017,1087,1141,1217,1295,1354"
                     }
                 },
                 {
@@ -30,11 +30,28 @@
                         "endOffsets": "142,241,335,429,522,615,711,812"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8,18",
+                        "startLines": "2,3,4,5,6,7,8,22",
                         "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,147,246,340,434,527,620,1275",
+                        "startOffsets": "55,147,246,340,434,527,620,1645",
                         "endColumns": "91,98,93,93,92,92,95,100",
-                        "endOffsets": "142,241,335,429,522,615,711,1371"
+                        "endOffsets": "142,241,335,429,522,615,711,1741"
+                    }
+                },
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/res/values-zh-rTW/values-zh-rTW.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,139,231,332",
+                        "endColumns": "83,91,100,92",
+                        "endOffsets": "134,226,327,420"
+                    },
+                    "to": {
+                        "startLines": "9,19,20,21",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "716,1359,1451,1552",
+                        "endColumns": "83,91,100,92",
+                        "endOffsets": "795,1446,1547,1640"
                     }
                 }
             ]

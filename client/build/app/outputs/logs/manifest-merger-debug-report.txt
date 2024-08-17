@@ -1,6 +1,8 @@
 -- Merging decision tree log ---
 application
 INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:3:5-34:19
+MERGED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-14:19
+MERGED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-14:19
 MERGED from [androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.window:window:1.2.0] /Users/bsm/.gradle/caches/transforms-3/d47b1192960df52846144d82ac9e1d6f/transformed/jetified-window-1.2.0/AndroidManifest.xml:22:5-29:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] /Users/bsm/.gradle/caches/transforms-3/d674cd90e13def17f77b3f8010d35e09/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:23:5-33:19
@@ -18,17 +20,19 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/bsm/
 	android:name
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
-INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
-INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
-INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
-MERGED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
+INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
+INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
+INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
+MERGED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
 MERGED from [:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/bsm/Documents/projects/flutter/mbschool/client/build/flutter_plugin_android_lifecycle/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:wakelock_plus] /Users/bsm/Documents/projects/flutter/mbschool/client/build/wakelock_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:package_info_plus] /Users/bsm/Documents/projects/flutter/mbschool/client/build/package_info_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:shared_preferences_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-16:12
 MERGED from [:video_player_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/video_player_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.browser:browser:1.8.0] /Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.media3:media3-extractor:1.4.0] /Users/bsm/.gradle/caches/transforms-3/22632b941f33449f9c3cf5ecd37e4f67/transformed/jetified-media3-extractor-1.4.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.media3:media3-container:1.4.0] /Users/bsm/.gradle/caches/transforms-3/39b58579f4dbbc8434c9b57a2569ba0e/transformed/jetified-media3-container-1.4.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.media3:media3-datasource:1.4.0] /Users/bsm/.gradle/caches/transforms-3/e7073f2d5febc682b137d9b828d86acf/transformed/jetified-media3-datasource-1.4.0/AndroidManifest.xml:17:1-22:12
@@ -62,10 +66,10 @@ MERGED from [androidx.datastore:datastore:1.0.0] /Users/bsm/.gradle/caches/trans
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /Users/bsm/.gradle/caches/transforms-3/166e5df34c1c015ef6ddeae137513a3f/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/bsm/.gradle/caches/transforms-3/4ee1d1c3643bd699aea17aa2adbcb7ee/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.2.0] /Users/bsm/.gradle/caches/transforms-3/e67a2d3f5080e81a9ca4ada76d6846fb/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/bsm/.gradle/caches/transforms-3/ccde1cd62bce8875804ca941f00d031f/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Users/bsm/.gradle/caches/transforms-3/29f31fad8048ff1a3fbe73f199fc2454/transformed/exifinterface-1.3.6/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/bsm/.gradle/caches/transforms-3/73778f1c206428361b6eebbb974be913/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window.extensions.core:core:1.0.0] /Users/bsm/.gradle/caches/transforms-3/052a56087b23de77791a629d260284c0/transformed/jetified-core-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Users/bsm/.gradle/caches/transforms-3/4d10c72f31024081b56fc5037069e011/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
 INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/debug/AndroidManifest.xml:1:1-7:12
@@ -73,15 +77,15 @@ INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/
 INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 	package
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
+		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
+		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-46:12
+		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:1-61:12
 		INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -92,7 +96,7 @@ MERGED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/sr
 	android:name
 		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:2:22-64
 queries
-ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:40:5-45:15
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:40:5-60:15
 MERGED from [:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:15
 MERGED from [:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:15
 intent#action:name:android.intent.action.PROCESS_TEXT+data:mimeType:text/plain
@@ -105,6 +109,20 @@ data
 ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:13-50
 	android:mimeType
 		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:43:19-48
+intent#action:name:android.intent.action.VIEW+data:scheme:sms
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:47:9-50:18
+action#android.intent.action.VIEW
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:13-65
+	android:name
+		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:48:21-62
+intent#action:name:android.intent.action.VIEW+data:scheme:tel
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:52:9-55:18
+intent#action:name:android.support.customtabs.action.CustomTabsService
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:57:9-59:18
+action#android.support.customtabs.action.CustomTabsService
+ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:58:13-90
+	android:name
+		ADDED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml:58:21-87
 uses-sdk
 INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/bsm/Documents/projects/flutter/mbschool/client/android/app/src/main/AndroidManifest.xml
@@ -119,8 +137,12 @@ MERGED from [:package_info_plus] /Users/bsm/Documents/projects/flutter/mbschool/
 MERGED from [:package_info_plus] /Users/bsm/Documents/projects/flutter/mbschool/client/build/package_info_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:shared_preferences_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:shared_preferences_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:video_player_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/video_player_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:video_player_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/video_player_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.browser:browser:1.8.0] /Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.browser:browser:1.8.0] /Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.media3:media3-extractor:1.4.0] /Users/bsm/.gradle/caches/transforms-3/22632b941f33449f9c3cf5ecd37e4f67/transformed/jetified-media3-extractor-1.4.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.media3:media3-extractor:1.4.0] /Users/bsm/.gradle/caches/transforms-3/22632b941f33449f9c3cf5ecd37e4f67/transformed/jetified-media3-extractor-1.4.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.media3:media3-container:1.4.0] /Users/bsm/.gradle/caches/transforms-3/39b58579f4dbbc8434c9b57a2569ba0e/transformed/jetified-media3-container-1.4.0/AndroidManifest.xml:20:5-44
@@ -187,14 +209,14 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/bsm/.gradle/caches/t
 MERGED from [androidx.startup:startup-runtime:1.1.1] /Users/bsm/.gradle/caches/transforms-3/4ee1d1c3643bd699aea17aa2adbcb7ee/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.tracing:tracing:1.2.0] /Users/bsm/.gradle/caches/transforms-3/e67a2d3f5080e81a9ca4ada76d6846fb/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.tracing:tracing:1.2.0] /Users/bsm/.gradle/caches/transforms-3/e67a2d3f5080e81a9ca4ada76d6846fb/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/bsm/.gradle/caches/transforms-3/ccde1cd62bce8875804ca941f00d031f/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/bsm/.gradle/caches/transforms-3/ccde1cd62bce8875804ca941f00d031f/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Users/bsm/.gradle/caches/transforms-3/29f31fad8048ff1a3fbe73f199fc2454/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.6] /Users/bsm/.gradle/caches/transforms-3/29f31fad8048ff1a3fbe73f199fc2454/transformed/exifinterface-1.3.6/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/bsm/.gradle/caches/transforms-3/73778f1c206428361b6eebbb974be913/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.2.0] /Users/bsm/.gradle/caches/transforms-3/73778f1c206428361b6eebbb974be913/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/bsm/.gradle/caches/transforms-3/24e34b9d4c847d7d7b31c7f4f2d990c0/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.window.extensions.core:core:1.0.0] /Users/bsm/.gradle/caches/transforms-3/052a56087b23de77791a629d260284c0/transformed/jetified-core-1.0.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.window.extensions.core:core:1.0.0] /Users/bsm/.gradle/caches/transforms-3/052a56087b23de77791a629d260284c0/transformed/jetified-core-1.0.0/AndroidManifest.xml:5:5-44
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] /Users/bsm/.gradle/caches/transforms-3/4d10c72f31024081b56fc5037069e011/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
@@ -219,6 +241,14 @@ action#android.intent.action.GET_CONTENT
 ADDED from [:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-72
 	android:name
 		ADDED from [:file_picker] /Users/bsm/Documents/projects/flutter/mbschool/client/build/file_picker/intermediates/merged_manifest/debug/AndroidManifest.xml:15:21-69
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-13:74
+	android:exported
+		ADDED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:12:13-37
+	android:theme
+		ADDED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:13:13-71
+	android:name
+		ADDED from [:url_launcher_android] /Users/bsm/Documents/projects/flutter/mbschool/client/build/url_launcher_android/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-74
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [androidx.media3:media3-common:1.4.0] /Users/bsm/.gradle/caches/transforms-3/1b55c7aeb92aac14f51fd97820368431/transformed/jetified-media3-common-1.4.0/AndroidManifest.xml:22:5-79
 MERGED from [androidx.media3:media3-exoplayer:1.4.0] /Users/bsm/.gradle/caches/transforms-3/f3d95c9f6815a25ff92ab466d6816f50/transformed/jetified-media3-exoplayer-1.4.0/AndroidManifest.xml:22:5-79

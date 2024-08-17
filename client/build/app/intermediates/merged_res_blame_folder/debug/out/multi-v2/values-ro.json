@@ -1,8 +1,25 @@
 {
     "logs": [
         {
-            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-ro/values-ro.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-29:/values-ro/values-ro.xml",
             "map": [
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/res/values-ro/values-ro.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,162,264,377",
+                        "endColumns": "106,101,112,102",
+                        "endOffsets": "157,259,372,475"
+                    },
+                    "to": {
+                        "startLines": "9,19,20,21",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "782,1584,1686,1799",
+                        "endColumns": "106,101,112,102",
+                        "endOffsets": "884,1681,1794,1897"
+                    }
+                },
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/res/values-ro/values-ro.xml",
                     "from": {
@@ -13,11 +30,11 @@
                         "endOffsets": "148,250,350,449,551,660,777,878"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8,18",
+                        "startLines": "2,3,4,5,6,7,8,22",
                         "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,355,454,556,665,1477",
+                        "startOffsets": "55,153,255,355,454,556,665,1902",
                         "endColumns": "97,101,99,98,101,108,116,100",
-                        "endOffsets": "148,250,350,449,551,660,777,1573"
+                        "endOffsets": "148,250,350,449,551,660,777,1998"
                     }
                 },
                 {
@@ -30,11 +47,11 @@
                         "endOffsets": "131,193,258,330,408,488,578,671,745"
                     },
                     "to": {
-                        "startLines": "9,10,11,12,13,14,15,16,17",
+                        "startLines": "10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "782,863,925,990,1062,1140,1220,1310,1403",
+                        "startOffsets": "889,970,1032,1097,1169,1247,1327,1417,1510",
                         "endColumns": "80,61,64,71,77,79,89,92,73",
-                        "endOffsets": "858,920,985,1057,1135,1215,1305,1398,1472"
+                        "endOffsets": "965,1027,1092,1164,1242,1322,1412,1505,1579"
                     }
                 }
             ]

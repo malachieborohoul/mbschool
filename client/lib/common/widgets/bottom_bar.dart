@@ -17,6 +17,7 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _pageIndex = 0;
+  late PageController _pageController;
 
   final List<Widget> _pages = [
     const HomeScreen(),
@@ -26,11 +27,38 @@ class _BottomBarState extends State<BottomBar> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _pageIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChanged(int index) {
+    setState(() => _pageIndex = index);
+    _refreshCurrentPage();
+  }
+
+  void _refreshCurrentPage() {
+    // Vous pouvez implémenter une logique de rafraîchissement ici
+    // Par exemple, si vos pages ont une méthode refresh(), vous pouvez l'appeler
+    if (_pages[_pageIndex] is RefreshableScreen) {
+      (_pages[_pageIndex] as RefreshableScreen).refresh();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _pageIndex,
+      body: PageView(
+        controller: _pageController,
         children: _pages,
+        onPageChanged: _onPageChanged,
+        physics: const NeverScrollableScrollPhysics(), // Désactive le balayage
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
       floatingActionButton: _buildFloatingActionButton(),
@@ -68,7 +96,10 @@ class _BottomBarState extends State<BottomBar> {
 
   Widget _buildNavItem(String iconPath, int index) {
     return GestureDetector(
-      onTap: () => setState(() => _pageIndex = index),
+      onTap: () {
+        _pageController.jumpToPage(index);
+        _onPageChanged(index);
+      },
       behavior: HitTestBehavior.opaque,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -125,3 +156,12 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 }
+
+// Interface pour les écrans rafraîchissables
+abstract class RefreshableScreen {
+  void refresh();
+}
+
+
+
+// Répétez le même modèle pour CourseScreen, FavoriteScreen, et AccountScreen 

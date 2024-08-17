@@ -1,4 +1,4 @@
-#Sat Aug 17 15:32:34 WAT 2024
+#Sat Aug 17 22:27:42 WAT 2024
 base.0=/Users/bsm/Documents/projects/flutter/mbschool/client/build/app/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/bsm/Documents/projects/flutter/mbschool/client/build/app/intermediates/dex/debug/mergeLibDexDebug/0/classes.dex
 base.2=/Users/bsm/Documents/projects/flutter/mbschool/client/build/app/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex

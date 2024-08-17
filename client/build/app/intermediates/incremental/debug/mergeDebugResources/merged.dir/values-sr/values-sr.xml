@@ -7,6 +7,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"Долазни позив"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"Позив је у току"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"Проверава се долазни позив"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Линк је копиран у привремену меморију"</string>
     <string name="exo_download_completed">Преузимање је завршено</string>
     <string name="exo_download_description">Преузми</string>
     <string name="exo_download_downloading">Преузима се</string>
@@ -16,5 +17,8 @@
     <string name="exo_download_paused_for_network">Преузимања чекају на мрежу</string>
     <string name="exo_download_paused_for_wifi">Преузимања чекају на WiFi</string>
     <string name="exo_download_removing">Преузимања се уклањају</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Копирај линк"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Отвори у прегледачу"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Дели линк"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

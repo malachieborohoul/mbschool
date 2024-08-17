@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-my/values-my.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-29:/values-my/values-my.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/res/values-my/values-my.xml",
@@ -13,11 +13,11 @@
                         "endOffsets": "153,257,360,462,567,673,792,893"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8,18",
+                        "startLines": "2,3,4,5,6,7,8,22",
                         "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,158,262,365,467,572,678,1517",
+                        "startOffsets": "55,158,262,365,467,572,678,1954",
                         "endColumns": "102,103,102,101,104,105,118,100",
-                        "endOffsets": "153,257,360,462,567,673,792,1613"
+                        "endOffsets": "153,257,360,462,567,673,792,2050"
                     }
                 },
                 {
@@ -30,11 +30,28 @@
                         "endOffsets": "125,197,270,339,421,496,597,692,770"
                     },
                     "to": {
-                        "startLines": "9,10,11,12,13,14,15,16,17",
+                        "startLines": "10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "797,872,944,1017,1086,1168,1243,1344,1439",
+                        "startOffsets": "906,981,1053,1126,1195,1277,1352,1453,1548",
                         "endColumns": "74,71,72,68,81,74,100,94,77",
-                        "endOffsets": "867,939,1012,1081,1163,1238,1339,1434,1512"
+                        "endOffsets": "976,1048,1121,1190,1272,1347,1448,1543,1621"
+                    }
+                },
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/res/values-my/values-my.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,164,270,385",
+                        "endColumns": "108,105,114,106",
+                        "endOffsets": "159,265,380,487"
+                    },
+                    "to": {
+                        "startLines": "9,19,20,21",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "797,1626,1732,1847",
+                        "endColumns": "108,105,114,106",
+                        "endOffsets": "901,1727,1842,1949"
                     }
                 }
             ]

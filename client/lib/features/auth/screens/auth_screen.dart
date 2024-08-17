@@ -15,7 +15,6 @@ import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
 
-
 enum Auth {
   sign_up,
   login,
@@ -40,6 +39,26 @@ class _AuthScreenState extends State<AuthScreen> {
   final _signInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+//Check fields filled
+
+  ValueNotifier<bool> allFieldsFilled = ValueNotifier<bool>(false);
+  ValueNotifier<bool> loginFieldsFilled = ValueNotifier<bool>(false);
+
+  void checkFields() {
+    bool isFilled = nameController.text.isNotEmpty &&
+        prenomController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
+    allFieldsFilled.value = isFilled;
+  }
+
+   void checkLoginFields() {
+    bool isFilled = 
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
+    loginFieldsFilled.value = isFilled;
+  }
 
   void signUpUser() {
     authService.signUpUser(
@@ -75,15 +94,30 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   void initState() {
-    Future.delayed( const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 3), () {
       const SplashScreen();
     });
+    nameController.addListener(checkFields);
+    prenomController.addListener(checkFields);
+
+    emailController.addListener(checkFields);
+    emailController.addListener(checkLoginFields);
+    passwordController.addListener(checkFields);
+    passwordController.addListener(checkLoginFields);
+
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    nameController.removeListener(checkFields);
+    prenomController.removeListener(checkFields);
+
+    emailController.removeListener(checkFields);
+    passwordController.removeListener(checkFields);
+    emailController.removeListener(checkLoginFields);
+    passwordController.removeListener(checkLoginFields);
     nameController.dispose();
     prenomController.dispose();
     emailController.dispose();
@@ -119,9 +153,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer,
                           ),
-                         const OpacityTween(
+                          const OpacityTween(
                             begin: 0.0,
-                            child:  CustomHeading(
+                            child: CustomHeading(
                                 title: "Inscrivez vous",
                                 subTitle: "Bienvenue",
                                 color: secondary),
@@ -144,6 +178,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           OpacityTween(
                             begin: 0.2,
                             child: CustomTextField(
+                              codeKey: 2,
                               prefixIcon: "user_icon.svg",
                               labelText: "Prenom ",
                               controller: prenomController,
@@ -156,6 +191,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           OpacityTween(
                             begin: 0.2,
                             child: CustomTextField(
+                              codeKey: 3,
                               prefixIcon: "email_icon.svg",
                               labelText: "Adresse email",
                               controller: emailController,
@@ -169,6 +205,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           OpacityTween(
                             begin: 0.2,
                             child: CustomTextField(
+                              codeKey: 4,
                               prefixIcon: "key_icon.svg",
                               labelText: "Mot de passe",
                               controller: passwordController,
@@ -182,28 +219,44 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer,
                           ),
-                          GestureDetector(
-                              onTap: () {
-                                if (_signUpFormKey.currentState!.validate()) {
-                                  setState(() {
-                                    isCharging = true;
-                                  });
-                                  signUpUser();
-                                }
-                              },
-                              child: OpacityTween(
-                                begin: 0.2,
-                                child: Column(
-                                  children: [
-                                    const CustomButtonBox(title: "S'inscrire"),
-                                    isCharging == true
-                                        ? const CircularProgressIndicator(
-                                            color: primary,
-                                          )
-                                        : const Text("")
-                                  ],
-                                ),
-                              )),
+                          ValueListenableBuilder<bool>(
+                              valueListenable: allFieldsFilled,
+                              builder: (context, allFilled, child) {
+                                return GestureDetector(
+                                    onTap: allFilled
+                                        ? !isCharging ?
+                                        () {
+                                            if (_signUpFormKey.currentState!
+                                                .validate()) {
+                                              setState(() {
+                                                isCharging = true;
+                                              });
+                                              signUpUser();
+                                            }
+                                          }:null
+                                        : null,
+                                    child: OpacityTween(
+                                      begin: 0.2,
+                                      child: Column(
+                                        children: [
+                                          allFilled
+                                              ? CustomButtonBox(
+                                                  title: "S'inscrire",
+                                                )
+                                              : CustomButtonBox(
+                                                  title: "S'inscrire",
+                                                  color: gray,
+                                                  textColor: grey,
+                                                ),
+                                          isCharging == true
+                                              ? const CircularProgressIndicator(
+                                                  color: primary,
+                                                )
+                                              : const Text("")
+                                        ],
+                                      ),
+                                    ));
+                              }),
                           const SizedBox(
                             height: spacer,
                           ),
@@ -226,7 +279,6 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                             ],
                           ),
-                       
                         ],
                       ),
                     ),
@@ -263,7 +315,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             offset: 40,
                             child: OpacityTween(
                               begin: 0.2,
-                              child:  CustomHeading(
+                              child: CustomHeading(
                                   title: "Connectez-vous",
                                   subTitle: "Bienvenue à vous",
                                   color: secondary),
@@ -278,6 +330,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             child: OpacityTween(
                               begin: 0.4,
                               child: CustomTextField(
+                                codeKey: 3,
                                 prefixIcon: "email_icon.svg",
                                 labelText: "Adresse email",
                                 controller: emailController,
@@ -294,6 +347,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             child: OpacityTween(
                               begin: 0.4,
                               child: CustomTextField(
+                                codeKey: 4,
                                 prefixIcon: "key_icon.svg",
                                 labelText: "Mot de passe",
                                 controller: passwordController,
@@ -305,33 +359,42 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: spacer,
                           ),
-                          GestureDetector(
-                              onTap: () {
-                                if (_signInFormKey.currentState!.validate()) {
-                                  setState(() {
-                                    isCharging = true;
-                                  });
-                                  signInUser();
-                                }
-                              },
-                              child: SlideDownTween(
-                                offset: 40,
-                                delay: 2.0,
-                                child: OpacityTween(
-                                  begin: 0.5,
-                                  child: Column(
-                                    children: [
-                                      const CustomButtonBox(
-                                          title: "Se connecter"),
-                                      isCharging == true
-                                          ? const CircularProgressIndicator(
-                                              color: primary,
-                                            )
-                                          : const Text("")
-                                    ],
-                                  ),
-                                ),
-                              )),
+                          ValueListenableBuilder<bool>(
+                            valueListenable: loginFieldsFilled,
+                            builder: (context, allFilled, child) {
+                              return GestureDetector(
+                              onTap: allFilled
+                                        ? !isCharging ?
+                                        () {
+                                            if (_signInFormKey.currentState!
+                                                .validate()) {
+                                              setState(() {
+                                                isCharging = true;
+                                              });
+                                              signInUser();
+                                            }
+                                          }:null
+                                        : null,
+                                  child: SlideDownTween(
+                                    offset: 40,
+                                    delay: 2.0,
+                                    child: OpacityTween(
+                                      begin: 0.5,
+                                      child: Column(
+                                        children: [
+                                          const CustomButtonBox(
+                                              title: "Se connecter"),
+                                          isCharging == true
+                                              ? const CircularProgressIndicator(
+                                                  color: primary,
+                                                )
+                                              : const Text("")
+                                        ],
+                                      ),
+                                    ),
+                                  ));
+                            }
+                          ),
                           const SizedBox(
                             height: spacer - 30,
                           ),
@@ -361,7 +424,6 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                             ),
                           ),
-                     
                         ],
                       ),
                     ),

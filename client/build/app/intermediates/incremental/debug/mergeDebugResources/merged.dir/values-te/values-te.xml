@@ -7,6 +7,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"ఇన్‌కమింగ్ కాల్"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"కాల్ కొనసాగుతోంది"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"ఇన్‌కమింగ్ కాల్‌ను స్క్రీన్ చేయండి"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"క్లిప్‌బోర్డ్‌కు లింక్ కాపీ చేయబడింది"</string>
     <string name="exo_download_completed">డౌన్‌లోడ్ పూర్తయింది</string>
     <string name="exo_download_description">డౌన్‌లోడ్ చేయి</string>
     <string name="exo_download_downloading">డౌన్‌లోడ్ చేస్తోంది</string>
@@ -16,5 +17,8 @@
     <string name="exo_download_paused_for_network">డౌన్‌లోడ్స్ నెట్‌వర్క్ కోసం చూస్తున్నాయి</string>
     <string name="exo_download_paused_for_wifi">డౌన్‌లోడ్‌లు WiFi కోసం చూస్తున్నాయి</string>
     <string name="exo_download_removing">డౌన్‌లోడ్‌లను తీసివేస్తోంది</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"లింక్‌ను కాపీ చేయండి"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"బ్రౌజర్‌లో తెరువు"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"లింక్‌ను షేర్ చేయి"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

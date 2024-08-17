@@ -90,255 +90,264 @@ class _HomeScreenState extends State<HomeScreen>
                   cours = courseManagerService.getAllPublishedCourses(context);
                   setState(() {});
                 },
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: appPadding, right: appPadding),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: spacer + 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SlideDownTween(
-                                      offset: 70,
-                                      child: OpacityTween(
-                                        begin: 0.0,
-                                        child: CustomHeading(
-                                          title: "Bienvenue ${user.nom} ",
-                                          subTitle:
-                                              "Que voulez-vous apprendre?",
-                                          color: secondary,
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: appPadding, right: appPadding),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: spacer + 5),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SlideDownTween(
+                                        offset: 70,
+                                        child: OpacityTween(
+                                          begin: 0.0,
+                                          child: CustomHeading(
+                                            title: "Bienvenue ${user.nom} ",
+                                            subTitle:
+                                                "Que voulez-vous apprendre?",
+                                            color: secondary,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SlideDownTween(
-                                      offset: 70,
-                                      child: OpacityTween(
-                                        begin: 0.0,
-                                        child: SizedBox(
-                                          height: spacer,
-                                          width: spacer,
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(context,
-                                                  EditProfileScreen.routeName);
-                                            },
-                                            child: CircleAvatar(
-                                              radius: 30,
-                                              backgroundColor: grey,
-                                              child: ClipOval(
-                                                child: user.photo.isNotEmpty
-                                                    ? Image.network(
-                                                        user.photo,
-                                                        width:
-                                                            60, 
-                                                        height:
-                                                            60, 
-                                                        fit: BoxFit
-                                                            .cover, // Assure que l'image couvre tout le cercle
-                                                      )
-                                                    : Image.asset(
-                                                        UserProfile['image']
-                                                            .toString(),
-                                                        width:
-                                                            60, 
-                                                        height:
-                                                            60, 
-                                                        fit: BoxFit
-                                                            .cover, // Assure que l'image couvre tout le cercle
-                                                      ),
+                                      SlideDownTween(
+                                        offset: 70,
+                                        child: OpacityTween(
+                                          begin: 0.0,
+                                          child: SizedBox(
+                                            height: spacer,
+                                            width: spacer,
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context,
+                                                    EditProfileScreen
+                                                        .routeName);
+                                              },
+                                              child: CircleAvatar(
+                                                radius: 30,
+                                                backgroundColor: grey,
+                                                child: ClipOval(
+                                                  child: user.photo.isNotEmpty
+                                                      ? Image.network(
+                                                          user.photo,
+                                                          width: 60,
+                                                          height: 60,
+                                                          fit: BoxFit
+                                                              .cover, // Assure que l'image couvre tout le cercle
+                                                        )
+                                                      : Image.asset(
+                                                          UserProfile['image']
+                                                              .toString(),
+                                                          width: 60,
+                                                          height: 60,
+                                                          fit: BoxFit
+                                                              .cover, // Assure que l'image couvre tout le cercle
+                                                        ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: spacer),
-                                const SlideDownTween(
-                                  offset: 70,
-                                  child: OpacityTween(
-                                    begin: 0.0,
-                                    child: CustomSearchField(
-                                      onTap: true,
-                                      hintField:
-                                          "Essayez le Développement mobile",
-                                      backgroundColor: textWhite,
+                                    ],
+                                  ),
+                                  const SizedBox(height: spacer),
+                                  const SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                      begin: 0.0,
+                                      child: CustomSearchField(
+                                        onTap: true,
+                                        hintField:
+                                            "Essayez le Développement mobile",
+                                        backgroundColor: textWhite,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: spacer - 30),
-                                const SlideDownTween(
-                                  offset: 70,
-                                  child: OpacityTween(
-                                      begin: 0.0, child: CustomCategoryCard()),
-                                ),
-                                const SizedBox(height: spacer),
-                                const SlideDownTween(
-                                  offset: 70,
-                                  child: OpacityTween(
-                                      begin: 0.0, child: CustomPromotionCard()),
-                                ),
-                                const SizedBox(height: spacer),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: appPadding - 20,
-                                      right: appPadding - 20),
-                                  child: CustomTitle(
-                                    title: "Cours populaires",
-                                    titreLien: "Voir plus",
-                                    route: AllCourseScreen.routeName,
-                                    arg: cours,
+                                  const SizedBox(height: spacer - 30),
+                                  const SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                        begin: 0.0,
+                                        child: CustomCategoryCard()),
                                   ),
-                                ),
-                                const SizedBox(height: smallSpacer),
-                                SingleChildScrollView(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  child: Padding(
+                                  const SizedBox(height: spacer),
+                                  const SlideDownTween(
+                                    offset: 70,
+                                    child: OpacityTween(
+                                        begin: 0.0,
+                                        child: CustomPromotionCard()),
+                                  ),
+                                  const SizedBox(height: spacer),
+                                  Padding(
                                     padding: const EdgeInsets.only(
                                         left: appPadding - 20,
-                                        right: appPadding - 10),
-                                    child: FutureBuilder(
-                                      future: cours,
-                                      builder: (context,
-                                          AsyncSnapshot<List<Cours>> snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.done) {
-                                          return Wrap(
-                                            spacing: 10,
-                                            children: List.generate(
-                                              snapshot.data!.length,
-                                              (index) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pushNamed(
-                                                      context,
-                                                      DetailCourseScreen
-                                                          .routeName,
-                                                      arguments:
-                                                          snapshot.data![index],
-                                                    );
+                                        right: appPadding - 20),
+                                    child: CustomTitle(
+                                      title: "Cours populaires",
+                                      titreLien: "Voir plus",
+                                      route: AllCourseScreen.routeName,
+                                      arg: cours,
+                                    ),
+                                  ),
+                                  const SizedBox(height: smallSpacer),
+                                  SingleChildScrollView(
+                                    physics: const BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: appPadding - 20,
+                                          right: appPadding - 10),
+                                      child: FutureBuilder(
+                                        future: cours,
+                                        builder: (context,
+                                            AsyncSnapshot<List<Cours>>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return Wrap(
+                                              spacing: 10,
+                                              children: List.generate(
+                                                snapshot.data!.length,
+                                                (index) {
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.pushNamed(
+                                                        context,
+                                                        DetailCourseScreen
+                                                            .routeName,
+                                                        arguments: snapshot
+                                                            .data![index],
+                                                      );
 
-                                                    Provider.of<CoursProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .set_cours(snapshot
-                                                            .data![index]);
-                                                  },
-                                                  child: CustomCourseCardExpand(
-                                                    thumbNail: Hero(
-                                                      tag: snapshot.data![index]
-                                                          .vignette,
-                                                      child: Image.network(
-                                                        snapshot.data![index]
+                                                      Provider.of<CoursProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .set_cours(snapshot
+                                                              .data![index]);
+                                                    },
+                                                    child:
+                                                        CustomCourseCardExpand(
+                                                      thumbNail: Hero(
+                                                        tag: snapshot
+                                                            .data![index]
                                                             .vignette,
-                                                        fit: BoxFit.cover,
+                                                        child: Image.network(
+                                                          snapshot.data![index]
+                                                              .vignette,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      videoAmount:
+                                                          CoursesJson[index]
+                                                              ['video'],
+                                                      title: snapshot
+                                                          .data![index].titre,
+                                                      userProfile: snapshot
+                                                          .data![index].photo,
+                                                      userName: snapshot
+                                                          .data![index].nom,
+                                                      price: snapshot
+                                                              .data![index]
+                                                              .prix
+                                                              .isEmpty
+                                                          ? "Gratuit"
+                                                          : snapshot
+                                                              .data![index]
+                                                              .prix,
+                                                      cours:
+                                                          snapshot.data![index],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          } else {
+                                            return const Loader();
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: spacer - 20),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: appPadding - 20),
+                                    child: CustomTitle(title: "Catégories"),
+                                  ),
+                                  const SizedBox(height: smallSpacer),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: appPadding),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: FutureBuilder(
+                                        future: categories,
+                                        builder: (context,
+                                            AsyncSnapshot<List<Categorie>>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            return Row(
+                                              children: List.generate(
+                                                snapshot.data!.length,
+                                                (index) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10,
+                                                            top: 10,
+                                                            bottom: 5),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          const Color.fromRGBO(
+                                                              158, 158, 158, 1),
+                                                      onTap: () =>
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              CoursesByCategoryScreen
+                                                                  .routeName,
+                                                              arguments:
+                                                                  snapshot.data![
+                                                                      index]),
+                                                      child:
+                                                          CustomCategoriesButton(
+                                                        title: snapshot
+                                                            .data![index].nom
+                                                            .toUpperCase(),
                                                       ),
                                                     ),
-                                                    videoAmount:
-                                                        CoursesJson[index]
-                                                            ['video'],
-                                                    title: snapshot
-                                                        .data![index].titre,
-                                                    userProfile: snapshot
-                                                        .data![index].photo,
-                                                    userName: snapshot
-                                                        .data![index].nom,
-                                                    price: snapshot.data![index]
-                                                            .prix.isEmpty
-                                                        ? "Gratuit"
-                                                        : snapshot
-                                                            .data![index].prix,
-                                                    cours:
-                                                        snapshot.data![index],
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        } else {
-                                          return const Loader();
-                                        }
-                                      },
+                                                  );
+                                                },
+                                              ),
+                                            );
+                                          } else {
+                                            return const Loader();
+                                          }
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: spacer - 20),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.only(left: appPadding - 20),
-                                  child: CustomTitle(title: "Catégories"),
-                                ),
-                                const SizedBox(height: smallSpacer),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: appPadding),
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: FutureBuilder(
-                                      future: categories,
-                                      builder: (context,
-                                          AsyncSnapshot<List<Categorie>>
-                                              snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.done) {
-                                          return Row(
-                                            children: List.generate(
-                                              snapshot.data!.length,
-                                              (index) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10,
-                                                          right: 10,
-                                                          top: 10,
-                                                          bottom: 5),
-                                                  child: InkWell(
-                                                    splashColor:
-                                                        const Color.fromRGBO(
-                                                            158, 158, 158, 1),
-                                                    onTap: () =>
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            CoursesByCategoryScreen
-                                                                .routeName,
-                                                            arguments: snapshot
-                                                                .data![index]),
-                                                    child:
-                                                        CustomCategoriesButton(
-                                                      title: snapshot
-                                                          .data![index].nom
-                                                          .toUpperCase(),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          );
-                                        } else {
-                                          return const Loader();
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: spacer),
-                              ],
+                                  const SizedBox(height: spacer),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

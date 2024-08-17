@@ -7,6 +7,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"Appel entrant"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"Appel en cours"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"Filtrer un appel entrant"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"Lien copié dans le presse-papiers"</string>
     <string name="exo_download_completed">Téléchargement terminé</string>
     <string name="exo_download_description">Télécharger</string>
     <string name="exo_download_downloading">Téléchargement en cours…</string>
@@ -16,5 +17,8 @@
     <string name="exo_download_paused_for_network">Téléchargements en attente du réseau</string>
     <string name="exo_download_paused_for_wifi">Téléchargements en attente du Wi-Fi</string>
     <string name="exo_download_removing">Suppression des téléchargements en cours…</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"Copier le lien"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"Ouvrir dans le navigateur"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"Partager le lien"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

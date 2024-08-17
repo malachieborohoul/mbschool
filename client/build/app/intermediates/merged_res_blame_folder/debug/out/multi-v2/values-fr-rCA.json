@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-28:/values-fr-rCA/values-fr-rCA.xml",
+            "outputFile": "com.bsm.mbschool.app-mergeDebugResources-29:/values-fr-rCA/values-fr-rCA.xml",
             "map": [
                 {
                     "source": "/Users/bsm/.gradle/caches/transforms-3/fac84cd5ecf1ec88a8c98571217c9350/transformed/core-1.13.1/res/values-fr-rCA/values-fr-rCA.xml",
@@ -13,11 +13,11 @@
                         "endOffsets": "148,250,349,451,555,659,773,874"
                     },
                     "to": {
-                        "startLines": "2,3,4,5,6,7,8,18",
+                        "startLines": "2,3,4,5,6,7,8,22",
                         "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,153,255,354,456,560,664,1508",
+                        "startOffsets": "55,153,255,354,456,560,664,1941",
                         "endColumns": "97,101,98,101,103,103,113,100",
-                        "endOffsets": "148,250,349,451,555,659,773,1604"
+                        "endOffsets": "148,250,349,451,555,659,773,2037"
                     }
                 },
                 {
@@ -30,11 +30,28 @@
                         "endOffsets": "124,189,267,339,422,498,595,688,780"
                     },
                     "to": {
-                        "startLines": "9,10,11,12,13,14,15,16,17",
+                        "startLines": "10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "778,852,917,995,1067,1150,1226,1323,1416",
+                        "startOffsets": "885,959,1024,1102,1174,1257,1333,1430,1523",
                         "endColumns": "73,64,77,71,82,75,96,92,91",
-                        "endOffsets": "847,912,990,1062,1145,1221,1318,1411,1503"
+                        "endOffsets": "954,1019,1097,1169,1252,1328,1425,1518,1610"
+                    }
+                },
+                {
+                    "source": "/Users/bsm/.gradle/caches/transforms-3/b4e4ef13627bf6f9133e3fb4635c024f/transformed/browser-1.8.0/res/values-fr-rCA/values-fr-rCA.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,162,264,383",
+                        "endColumns": "106,101,118,104",
+                        "endOffsets": "157,259,378,483"
+                    },
+                    "to": {
+                        "startLines": "9,19,20,21",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "778,1615,1717,1836",
+                        "endColumns": "106,101,118,104",
+                        "endOffsets": "880,1712,1831,1936"
                     }
                 }
             ]

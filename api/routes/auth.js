@@ -1,5 +1,6 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+const crypto = require('crypto');
 
 require("dotenv").config();
 const User = require("../models/user");
@@ -20,6 +21,14 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+function generateVerificationCode() {
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+        code += Math.floor(Math.random() * 10).toString();
+    }
+    return code;
+}
+
 // transporter.verify((error, success)=>{
 //     if(error){
 //         console.log(error)
@@ -37,7 +46,7 @@ authRouter.post('/api/signup', async (req, res)=> {
     try {
         const {nom, prenom, email, password} = req.body;
         const role = 1;
-        const verify_code=123457
+        const verify_code=generateVerificationCode()
         pool.query(queries.checkEmailExist,[email], async (error, results)=>{
             
             if(results.rows.length){
@@ -53,7 +62,7 @@ authRouter.post('/api/signup', async (req, res)=> {
                 if (error) throw error;
 
                 const token = jwt.sign({id: user.id}, "passwordKey");
-                const verify_code="123456"
+                 
                 user.token = token;
                 user.verify_code = verify_code;
 
@@ -186,6 +195,54 @@ authRouter.get("/", auth, async (req, res) => {
     })
   });
 
+
+    // Resend code
+    authRouter.post("/resendCode",  async(req, res)=>{
+        try {
+            const { email} = req.body;
+
+            const { rows } = await pool.query(queries.checkEmailExist, [email]);
+            if (rows.length === 0) {
+                return res.status(400).json({ msg: "Cet identifiant n'existe pas" });
+            }
+
+
+            
+            const user = rows[0];
+
+             verify_code=generateVerificationCode()
+            user.verify_code = verify_code;
+
+            // sendEmailVerification(user,res);
+            // return res.json();
+                
+            // res.status(200).json(user);
+
+            const mailOptions={
+                from: process.env.AUTH_EMAIL,
+                to: email,
+                subject: "Code de vérification",
+                text: verify_code
+            }
+            transporter.sendMail(mailOptions)
+                .then(()=>{
+                    // return res.json({
+                    //     message: "SUCCESS",
+                    //     message: "Message sent succesfully"
+                    // })
+                    res.status(200).json(user);
+                })
+                .catch((error)=>{
+                    console.log(error);
+                     res.status(400).json("Message non envoyé")
+                })
+       
+
+            
+        } catch (e) {
+            return res.status(500).json({error: e.message})
+        }
+      });
 
   const sendEmailVerification = ({email, verify_code}, res)=>{
     // const {to, subject, message}=req.body;

@@ -7,6 +7,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"შემომავალი ზარი"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"მიმდინარე ზარი"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"შემომავალი ზარების გაცხრილვა"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"გაცვლის ბუფერში კოპირებული ბმული"</string>
     <string name="exo_download_completed">ჩამოტვირთვა დასრულდა</string>
     <string name="exo_download_description">ჩამოტვირთვა</string>
     <string name="exo_download_downloading">მიმდინარეობს ჩამოტვირთვა</string>
@@ -16,5 +17,8 @@
     <string name="exo_download_paused_for_network">ჩამოტვირთვები ქსელს ელოდება</string>
     <string name="exo_download_paused_for_wifi">ჩამოტვირთვები Wi-Fi-ს ელოდება</string>
     <string name="exo_download_removing">მიმდინარეობს ჩამოტვირთვების ამოშლა</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"ბმულის კოპირება"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"ბრაუზერში გახსნა"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"ბმულის გაზიარება"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"999+"</string>
 </resources>

@@ -53,9 +53,7 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
         // ),
         child: Padding(
       padding: const EdgeInsets.all(appPadding - 20),
-      child: 
-      
-      ExpandablePanel(
+      child: ExpandablePanel(
           header: Column(
             children: [
               Row(
@@ -71,35 +69,36 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
           ),
           collapsed: Column(
             children: [
-              Row(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.green.shade200,
-                        borderRadius: const BorderRadius.all(Radius.circular(5))),
-                    child: const Center(
-                        child:
-                            Text("00:20:30", style: TextStyle(fontSize: 12))),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 20,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.red.shade200,
-                        borderRadius: const BorderRadius.all(Radius.circular(5))),
-                    child: const Center(
-                        child: Text(
-                      "10 leçons",
-                      style: TextStyle(fontSize: 12),
-                    )),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       height: 20,
+              //       width: 70,
+              //       decoration: BoxDecoration(
+              //           color: Colors.green.shade200,
+              //           borderRadius:
+              //               const BorderRadius.all(Radius.circular(5))),
+              //       child: const Center(
+              //           child: Text("", style: TextStyle(fontSize: 12))),
+              //     ),
+              //     const SizedBox(
+              //       width: 10,
+              //     ),
+              //     Container(
+              //       height: 20,
+              //       width: 70,
+              //       decoration: BoxDecoration(
+              //           color: Colors.red.shade200,
+              //           borderRadius:
+              //               const BorderRadius.all(Radius.circular(5))),
+              //       child: const Center(
+              //           child: Text(
+              //         "",
+              //         style: TextStyle(fontSize: 12),
+              //       )),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -107,35 +106,36 @@ class _CustomCourseCurriculumState extends State<CustomCourseCurriculum> {
           ),
           expanded: Column(
             children: [
-              Row(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.green.shade200,
-                        borderRadius: const BorderRadius.all(Radius.circular(5))),
-                    child: const Center(
-                        child:
-                            Text("00:20:30", style: TextStyle(fontSize: 12))),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    height: 20,
-                    width: 70,
-                    decoration: BoxDecoration(
-                        color: Colors.red.shade200,
-                        borderRadius: const BorderRadius.all(Radius.circular(5))),
-                    child: const Center(
-                        child: Text(
-                      "10 leçons",
-                      style: TextStyle(fontSize: 12),
-                    )),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       height: 20,
+              //       width: 70,
+              //       decoration: BoxDecoration(
+              //           color: Colors.green.shade200,
+              //           borderRadius:
+              //               const BorderRadius.all(Radius.circular(5))),
+              //       child: const Center(
+              //           child: Text("", style: TextStyle(fontSize: 12))),
+              //     ),
+              //     const SizedBox(
+              //       width: 10,
+              //     ),
+              //     Container(
+              //       height: 20,
+              //       width: 70,
+              //       decoration: BoxDecoration(
+              //           color: Colors.red.shade200,
+              //           borderRadius:
+              //               const BorderRadius.all(Radius.circular(5))),
+              //       child: const Center(
+              //           child: Text(
+              //         "",
+              //         style: TextStyle(fontSize: 12),
+              //       )),
+              //     ),
+              //   ],
+              // ),
               for (int i = 0; i < lecons.length; i++)
                 widget.isCourseEnrolled == true
                     ? InkWell(

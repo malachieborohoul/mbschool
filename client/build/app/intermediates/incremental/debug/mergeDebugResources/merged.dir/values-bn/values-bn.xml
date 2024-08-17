@@ -7,6 +7,7 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"ইনকামিং কল"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"চালু থাকা কল"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"ইনকামিং কল স্ক্রিনিং করা হচ্ছে"</string>
+    <string msgid="3260749812566568062" name="copy_toast_msg">"লিঙ্ক ক্লিপবোর্ডে কপি করা হয়েছে"</string>
     <string name="exo_download_completed">ডাউনলোড হয়ে গেছে</string>
     <string name="exo_download_description">ডাউনলোড করুন</string>
     <string name="exo_download_downloading">ডাউনলোড হচ্ছে</string>
@@ -16,5 +17,8 @@
     <string name="exo_download_paused_for_network">ডাউনলোড চালু করার জন্য নেটওয়ার্কের সাথে কানেক্ট হওয়ার অপেক্ষা করা হচ্ছে</string>
     <string name="exo_download_paused_for_wifi">ডাউনলোড চালু করার জন্য ওয়াই-ফাইয়ের সাথে কানেক্ট হওয়ার অপেক্ষা করা হচ্ছে</string>
     <string name="exo_download_removing">ডাউনলোড করা কন্টেন্ট সরিয়ে দেওয়া হচ্ছে</string>
+    <string msgid="4566929209979330987" name="fallback_menu_item_copy_link">"লিঙ্ক কপি করুন"</string>
+    <string msgid="3413186855122069269" name="fallback_menu_item_open_in_browser">"ব্রাউজারে খুলুন"</string>
+    <string msgid="7145444925855055364" name="fallback_menu_item_share_link">"লিঙ্ক শেয়ার করুন"</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"৯৯৯+"</string>
 </resources>

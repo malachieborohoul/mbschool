@@ -6,5 +6,5 @@ AccountService accountService = AccountService();
 AuthService authService = AuthService();
 CreateCourseService createCourseService = CreateCourseService();
 
-String uri = "http://192.168.1.236:3000";
-//String uri = "https://mbschool.onrender.com";
+//String uri = "http://192.168.1.236:3000";
+String uri = "https://mbschool.onrender.com";

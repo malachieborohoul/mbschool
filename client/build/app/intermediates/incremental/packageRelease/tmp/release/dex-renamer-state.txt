@@ -1,0 +1,4 @@
+#Tue Aug 20 12:35:20 WAT 2024
+base.0=/Users/bsm/Documents/projects/flutter/mbschool/client/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

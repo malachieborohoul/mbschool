@@ -2,6 +2,8 @@
 const mongoose = require("mongoose");
 const express = require('express');
 
+const cors = require('cors')
+
 
 const authRouter = require('./routes/auth');
 const accountRouter = require('./routes/account');
@@ -22,6 +24,8 @@ app.use(accountRouter);
 app.use(courseRouter);
 app.use(userRouter);
 app.use(adminRouter);
+app.use(cors())
+
 
 
 

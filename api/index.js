@@ -26,8 +26,7 @@ app.use(userRouter);
 app.use(adminRouter);
 
 const corsOptions = {
-    origin: 'http://localhost:4200', // or '*'
-    optionsSuccessStatus: 200,
+    origin: '*', // or '*'
   };
   
 app.use(cors(corsOptions))

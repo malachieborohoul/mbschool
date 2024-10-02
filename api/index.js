@@ -24,7 +24,13 @@ app.use(accountRouter);
 app.use(courseRouter);
 app.use(userRouter);
 app.use(adminRouter);
-app.use(cors())
+
+const corsOptions = {
+    origin: 'http://localhost:4200', // or '*'
+    optionsSuccessStatus: 200,
+  };
+  
+app.use(cors(corsOptions))
 
 
 

@@ -1,5 +1,9 @@
 # mbschool
-Please Download the apk available in the apk folder<br>
+
+## 📥 Download APK  
+
+Download the latest APK from the [Releases](https://github.com/malachieborohoul/mbschool/releases) section.  
+
 Please don't forget to star the repository
 MbSchool is a E-Learning mobile app developed with Flutter and Node JS REST api 
 

@@ -1,7 +1,19 @@
 # mbschool
-Please Download the apk available in the apk folder<br>
-Please don't forget to star the repository
-MbSchool is a E-Learning mobile app developed with Flutter and Node JS REST api 
+## 📥 Download APK  
+
+Download the latest APK from the [Releases](https://github.com/malachieborohoul/mbschool/releases) section.  
+
+## 🛠️ Built With  
+- 🎯 **Flutter** – Frontend UI & application logic.  
+- 🖥️ **Node.js** – Backend API handling.  
+- 🗄️ **PostgreSQL** – Database for storing business data.  
+- ☁️ **Supabase** – Cloud database services.  
+- 🔥 **Render** – Hosting for the backend services.  
+
+## ⭐ Support  
+If you find this project useful, please **star** the repository! ⭐  
+
+MbSchool is an E-Learning mobile app 
 
 4 main actors: <br>
 ➢ Visitor: this is the profile of the person accessing the application for the first time without an account.<br>
@@ -128,5 +140,6 @@ Validate the publication of a course <br>
   <img src="/client/assets/screenshots/Screenshot_2022.10.25_22.10.44.635.png" width="200px">
   <div>
 </div>
-
+    
+Made with ❤️ using **Flutter, Node.js, PostgreSQL, Supabase, and Render**.  
 

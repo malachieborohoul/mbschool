@@ -4,46 +4,46 @@ import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:video_player/video_player.dart';
 
-// class VideoPlayer extends StatefulWidget {
-//   final VideoPlayerController videoPlayerController;
-//   final bool isLoop;
-//   const VideoPlayer(
-//       {Key? key, required this.videoPlayerController, required this.isLoop})
-//       : super(key: key);
+class VideoPlayer extends StatefulWidget {
+  final VideoPlayerController videoPlayerController;
+  final bool isLoop;
+  const VideoPlayer(
+      {Key? key, required this.videoPlayerController, required this.isLoop})
+      : super(key: key);
 
-//   @override
-//   State<VideoPlayer> createState() => _VideoPlayerState();
-// }
+  @override
+  State<VideoPlayer> createState() => _VideoPlayerState();
+}
 
-// class _VideoPlayerState extends State<VideoPlayer> {
-//   ChewieController? chewieController;
-//   @override
-//   void initState() {
-//     chewieController = ChewieController(
-//       videoPlayerController: widget.videoPlayerController,
-//       looping: widget.isLoop,
-//       aspectRatio: 16 / 9,
-//       autoInitialize: true,
-//     );
-//     super.initState();
-//   }
+class _VideoPlayerState extends State<VideoPlayer> {
+  ChewieController? chewieController;
+  @override
+  void initState() {
+    chewieController = ChewieController(
+      videoPlayerController: widget.videoPlayerController,
+      looping: widget.isLoop,
+      aspectRatio: 16 / 9,
+      autoInitialize: true,
+    );
+    super.initState();
+  }
 
-//   @override
-//   void dispose() {
-//     chewieController!.dispose();
-//     super.dispose();
-//   }
+  @override
+  void dispose() {
+    chewieController!.dispose();
+    super.dispose();
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Chewie(
-//         controller: chewieController!,
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Chewie(
+        controller: chewieController!,
+      ),
+    );
+  }
+}
 
 class VideoDisplay extends StatefulWidget {
   final String videoUrl;
@@ -57,7 +57,7 @@ class _VideoDisplayState extends State<VideoDisplay> {
   late VideoPlayerController controller;
   ChewieController? chewieController;
   Future<void> loadVideoPlayer() async {
-    controller = VideoPlayerController.network(widget.videoUrl);
+    controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
     await Future.wait([controller.initialize()]);
 
     chewieController = ChewieController(

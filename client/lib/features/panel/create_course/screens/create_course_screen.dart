@@ -131,8 +131,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           id_langue,
           prixCoursController.text,
           isChecked,
-          vignette!, 
-          () {
+          vignette!, () {
         setState(() {
           isCharging = false;
           showSnackBar(context, "Le cours a été avec succès");
@@ -140,6 +139,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
         });
       });
     }
+
     final user = Provider.of<UserProvider>(context).user;
 
     return GestureDetector(
@@ -192,7 +192,8 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        const CustomTitlePanel(title: "Courte description du cours"),
+                        const CustomTitlePanel(
+                            title: "Courte description du cours"),
                         const SizedBox(
                           height: 15,
                         ),
@@ -376,11 +377,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                   ),
                                 ],
                               ),
-                           
                             ],
                           ),
                         ),
-                        
+
                         const SizedBox(
                           height: 15,
                         ),
@@ -427,8 +427,10 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                                 if (vignette == null) {
                                   showDialog(
                                       context: context,
-                                      builder: (context) => const AlertDialogError(
-                                          texte: "Veuillez choisir une image"));
+                                      builder: (context) =>
+                                          const AlertDialogError(
+                                              texte:
+                                                  "Veuillez choisir une image"));
                                 } else {
                                   setState(() {
                                     isCharging = true;

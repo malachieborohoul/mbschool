@@ -28,43 +28,67 @@ class CustomMyCoursesCard extends StatefulWidget {
 
 class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
   CourseManagerService courseManagerService = CourseManagerService();
-  String numberLecon="0";
-  String numberLeconDone="0";
+  int numberLecon = 0;
+  int numberLeconDone = 0;
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    getNumberLeconCours();
-    getNumberLeconCoursDone();
+    _loadData();
   }
 
-  void getNumberLeconCours() async {
-    numberLecon =
-        await courseManagerService.getNumberLeconCours(context, widget.cours);
-    setState(() {});
+  Future<void> _loadData() async {
+    try {
+      final futureLecon =
+          courseManagerService.getNumberLeconCours(context, widget.cours);
+      final futureLeconDone =
+          courseManagerService.getNumberLeconCoursDone(context, widget.cours);
+
+      final results = await Future.wait([futureLecon, futureLeconDone]);
+
+      setState(() {
+        numberLecon = int.tryParse(results[0]) ?? 0;
+        numberLeconDone = int.tryParse(results[1]) ?? 0;
+        isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading data: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
-  void getNumberLeconCoursDone() async {
-    numberLeconDone = await courseManagerService.getNumberLeconCoursDone(
-        context, widget.cours);
-    setState(() {});
+  int get progressPercentage {
+    if (numberLecon == 0) return 0;
+    return ((numberLeconDone / numberLecon) * 100).floor();
+  }
+
+  double get progressWidth {
+    var size = MediaQuery.of(context).size;
+    if (numberLecon == 0) return 0;
+    if (progressPercentage == 100)
+      return size.width - 30; // Ajustement pour 100%
+    return (progressPercentage / 100) *
+        (size.width - 30); // -30 pour le padding
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    // int poucentage = (((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor());
 
-    return
-         Container(
-            width: size.width,
-            height: size.width * .3,
-            padding: const EdgeInsets.all(15.0),
-            decoration: BoxDecoration(
-              color: textWhite,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Column(
+    return Container(
+      width: size.width,
+      height: size.width * .3,
+      padding: const EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+        color: textWhite,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
@@ -132,7 +156,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                         clipBehavior: Clip.none,
                         children: [
                           Container(
-                            width: size.width,
+                            width: size.width - 30,
                             height: 5.0,
                             decoration: BoxDecoration(
                               color: secondary.withOpacity(0.1),
@@ -140,7 +164,7 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                             ),
                           ),
                           Container(
-                            width:  numberLecon == "0"? 0: (((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()).toDouble()*2.1,
+                            width: progressWidth,
                             height: 7.0,
                             decoration: BoxDecoration(
                               color: primary,
@@ -161,8 +185,8 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                     Container(
                       width: 50,
                       alignment: Alignment.centerRight,
-                      child:  Text(
-                       numberLecon == "0"? "0": '${((100 * double.parse(numberLeconDone)) / double.parse(numberLecon)).floor()}%',
+                      child: Text(
+                        '$progressPercentage%',
                         style: const TextStyle(
                             fontSize: 13.0,
                             color: primary,
@@ -173,6 +197,6 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
                 ),
               ],
             ),
-          );
+    );
   }
 }

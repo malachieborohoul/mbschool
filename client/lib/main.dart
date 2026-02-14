@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:mbschool/constants/utils.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
 import 'package:mbschool/features/auth/services/auth_service.dart';
@@ -13,7 +12,6 @@ import 'package:mbschool/providers/section_provider.dart';
 import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:mbschool/router.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -53,20 +51,7 @@ class _MyAppState extends State<MyApp> {
     // initialization();
   }
 
-  getConnectivity() async {
-    InternetConnectionChecker().onStatusChange.listen((status) {
-      final hasInternet = status == InternetConnectionStatus.connected;
-      setState(() => this.hasInternet = hasInternet);
 
-      showSnackBar(context, "text");
-    });
-    // hasInternet = await InternetConnectionChecker().hasConnection;
-    final text = hasInternet ? "Internet" : "Pas d'internet";
-    final color = hasInternet ? Colors.green : Colors.red;
-    showSimpleNotification(
-        Text(text, style: const TextStyle(color: Colors.white, fontSize: 20)),
-        background: color);
-  }
 
   @override
   void dispose() {

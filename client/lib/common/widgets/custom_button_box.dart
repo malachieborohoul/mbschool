@@ -4,25 +4,26 @@ import 'package:mbschool/constants/colors.dart';
 class CustomButtonBox extends StatelessWidget {
   const CustomButtonBox({
     Key? key,
-    required this.title,
+    required this.title, this.color=primary,this.textColor=textWhite
   }) : super(key: key);
 
   final String title;
+  final Color color;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return 
-    Container(
+    return Container(
       width: size.width,
       height: 45.0,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: primary.withOpacity(0.7),
+        color: color.withOpacity(0.7),
         borderRadius: BorderRadius.circular(17.5),
         boxShadow: [
           BoxShadow(
-            color: primary.withOpacity(0.5),
+            color: color.withOpacity(0.5),
             spreadRadius: 0.0,
             blurRadius: 6.0,
             offset: const Offset(0, 2),
@@ -31,13 +32,12 @@ class CustomButtonBox extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: const TextStyle(
+        style:  TextStyle(
           fontSize: 14.0,
           fontWeight: FontWeight.w700,
-          color: textWhite,
+          color: textColor,
         ),
       ),
     );
-  
   }
 }

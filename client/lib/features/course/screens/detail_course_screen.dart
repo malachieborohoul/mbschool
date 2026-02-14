@@ -213,14 +213,16 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                   child: InkWell(
                                     onTap: () {
                                       showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              const AlertDialog(
-                                                backgroundColor: textBlack,
-                                                content: VideoDisplay(
-                                                    videoUrl:
-                                                        'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4'),
-                                              ));
+                                        context: context,
+                                        builder: (context) => Dialog(
+                                          insetPadding: EdgeInsets
+                                              .zero, // Supprime le padding par défaut
+                                          child: VideoDisplay(
+                                            videoUrl:
+                                                'https://res.cloudinary.com/dshli1qgh/video/upload/v1660467558/dogs%20/i7nluycv93dqouta4cmt.mp4',
+                                          ),
+                                        ),
+                                      );
                                     },
                                     splashColor: Colors.grey,
                                     child: const Icon(Icons.play_arrow),
@@ -333,77 +335,80 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                   child: OpacityTween(
                                     begin: 0.5,
                                     child: AlertDialog(
-                                      content: Column(
-                                        children: [
-                                          const Flexible(
-                                              child: Text(
-                                            "Voulez vous vous enrôler?",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        right: 25.0),
-                                                child: InkWell(
-                                                    onTap: () {
+                                      content: Container(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Flexible(
+                                                child: Text(
+                                              "Voulez vous vous enrôler?",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          right: 25.0),
+                                                  child: InkWell(
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Container(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        width: 40,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.red,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15)),
+                                                        child: const Text(
+                                                          "Non",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                      )),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
                                                       Navigator.pop(context);
-                                                    },
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      width: 40,
-                                                      height: 30,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.red,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15)),
-                                                      child: const Text(
-                                                        "Non",
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    )),
-                                              ),
-                                              InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    Navigator.pop(context);
 
-                                                    _isLoading = true;
-                                                    enrollToCourse();
-                                                  });
-                                                },
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  width: 40,
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.green,
-                                                      borderRadius:
-                                                          BorderRadius
-                                                              .circular(15)),
-                                                  child: const Text(
-                                                    "Oui",
-                                                    style: TextStyle(
-                                                        color: textWhite),
+                                                      _isLoading = true;
+                                                      enrollToCourse();
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    alignment: Alignment.center,
+                                                    width: 40,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.green,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15)),
+                                                    child: const Text(
+                                                      "Oui",
+                                                      style: TextStyle(
+                                                          color: textWhite),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

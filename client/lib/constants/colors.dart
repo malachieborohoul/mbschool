@@ -7,3 +7,4 @@ const Color background = Color.fromARGB(255, 245, 245, 245);
 const Color textWhite = Color(0xFFFFFFFF);
 const Color textBlack = Color(0xFF000000);
 const Color grey = Color(0xFF707070);
+const Color gray = Color.fromARGB(255, 202, 202, 202);

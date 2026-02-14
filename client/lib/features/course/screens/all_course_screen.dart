@@ -4,7 +4,6 @@ import 'package:mbschool/common/animations/slide_right_tween.dart';
 import 'package:mbschool/common/animations/slide_up_tween.dart';
 import 'package:mbschool/common/widgets/custom_app_bar.dart';
 import 'package:mbschool/common/widgets/custom_course_card.dart';
-
 import 'package:mbschool/common/widgets/loader.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
@@ -15,119 +14,117 @@ import 'package:provider/provider.dart';
 
 class AllCourseScreen extends StatefulWidget {
   static const routeName = '/all-course-screen';
-   AllCourseScreen({Key? key,  required this.cours}) : super(key: key);
-   List<Cours> cours =[];
+  final Future<List<Cours>> coursFuture;
+
+  AllCourseScreen({Key? key, required this.coursFuture}) : super(key: key);
 
   @override
   State<AllCourseScreen> createState() => _AllCourseScreenState();
 }
 
 class _AllCourseScreenState extends State<AllCourseScreen> {
-  // CourseManagerService courseManagerService = CourseManagerService();
-  // List<Cours> cours = [];
-  // @override
-  // void initState() {
-  //   getAllCourses();
+  late Future<List<Cours>> _coursFuture;
 
-  //   super.initState();
-  // }
-
-  // void getAllCourses() async {
-  //   cours = await courseManagerService.getAllCourses(context);
-  //   setState(() {});
-  // }
+  @override
+  void initState() {
+    super.initState();
+    _coursFuture = widget.coursFuture;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
       extendBodyBehindAppBar: true,
-      appBar:  const PreferredSize(
-          preferredSize: Size.fromHeight(40),
-          child: CustomAppBar(
-            backgroundColor: Colors.transparent,
-            action: true,
-            actionIcon: 'search_icon.svg',
-          )),
-      body: widget.cours == null
-          ? const Loader()
-          : widget.cours.isNotEmpty
-              ? getBody()
-              : const Center(child: Text("Pas d'informations")),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(40),
+        child: CustomAppBar(
+          backgroundColor: Colors.transparent,
+          action: true,
+          actionIcon: 'search_icon.svg',
+        ),
+      ),
+      body: FutureBuilder<List<Cours>>(
+        future: _coursFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Loader();
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Erreur: ${snapshot.error}"));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("Pas d'informations"));
+          } else {
+            return getBody(snapshot.data!);
+          }
+        },
+      ),
     );
   }
 
-  Widget getBody() {
-
+  Widget getBody(List<Cours> cours) {
     return Padding(
       padding: const EdgeInsets.all(appPadding),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: spacer,
-            ),
+            const SizedBox(height: spacer),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // const CustomHeading(
-                //     title: "Tous les cours",
-                //     subTitle: "Reprenons",
-                //     color: textBlack),
                 SlideUpTween(
                   offset: 40,
                   child: Text(
-                    "${widget.cours.length} Cours",
+                    "${cours.length} Cours",
                     style: const TextStyle(
                       fontSize: 20,
                       color: secondary,
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                )
+                ),
               ],
             ),
-            const SizedBox(
-              height: spacer,
-            ),
+            const SizedBox(height: spacer),
             Column(
-              children: List.generate(widget.cours.length, (index) {
+              children: List.generate(cours.length, (index) {
                 return SlideRightTween(
-                  duration: Duration(milliseconds: index* 500),
+                  duration: Duration(milliseconds: index * 500),
                   curve: Curves.easeInOutCubic,
                   offset: 80,
                   child: OpacityTween(
                     begin: 0,
                     child: Padding(
-                        padding: const EdgeInsets.only(bottom: 25),
-                        child: InkWell(
-                            onTap: () {
-                           
+                      padding: const EdgeInsets.only(bottom: 25),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            DetailCourseScreen.routeName,
+                            arguments: cours[index],
+                          );
 
-                                   Navigator.pushNamed(
-                                          context, DetailCourseScreen.routeName,
-                                          arguments: widget.cours[index]);
-    
-                                      Provider.of<CoursProvider>(context,
-                                              listen: false).set_cours(widget.cours[index]);
-                            },
-                            child: CustomCourseCardShrink(
-                                thumbNail: widget.cours[index].vignette,
-                                title: widget.cours[index].titre,
-                                nom: widget.cours[index].nom,
-                                prenom: widget.cours[index].prenom,
-                                price: widget.cours[index].prix.isEmpty
-                                    ? "Gratuit"
-                                    : widget.cours[index].prix))),
+                          Provider.of<CoursProvider>(context, listen: false)
+                              .set_cours(cours[index]);
+                        },
+                        child: CustomCourseCardShrink(
+                          thumbNail: cours[index].vignette,
+                          title: cours[index].titre,
+                          nom: cours[index].nom,
+                          prenom: cours[index].prenom,
+                          price: cours[index].prix.isEmpty
+                              ? "Gratuit"
+                              : cours[index].prix,
+                        ),
+                      ),
+                    ),
                   ),
                 );
               }),
-            )
+            ),
           ],
         ),
       ),
     );
-
   }
 }

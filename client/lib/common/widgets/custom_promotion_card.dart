@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mbschool/constants/colors.dart';
@@ -80,9 +79,10 @@ class CustomPromotionCard extends StatelessWidget {
           ),
           Positioned(
             top: 25.0,
-            left: 125.0,
+            right: 0,
+            left: 125,
             child: SizedBox(
-              height: size.width * .4,
+              height: size.width * .6,
               child: SvgPicture.asset(
                 Promotion['image'].toString(),
               ),

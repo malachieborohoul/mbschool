@@ -11,6 +11,7 @@ import 'package:mbschool/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatefulWidget {
   static const routeName = '/account';
@@ -28,6 +29,12 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
+    final Uri _url = Uri.parse('https://bsm-zeta.vercel.app/');
+    Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw Exception('Could not launch $_url');
+  }
+}
     return Scaffold(
       backgroundColor: background,
       extendBodyBehindAppBar: true,
@@ -186,13 +193,16 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
               SlideDownTween(
                 offset: 30,
-                child: Column(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: CunstomPlaceHolder(title: "A propos de nous"),
-                    )
-                  ],
+                child: GestureDetector(
+                  onTap: _launchUrl,
+                  child: Column(
+                    children: const [
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: CunstomPlaceHolder(title: "A propos de nous"),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(

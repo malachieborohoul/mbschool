@@ -194,7 +194,7 @@ double averageRate=0.0;
                   ),
                 ),
                 const SizedBox(height: 5),
-                 RatingBar.builder(
+                RatingBar.builder(
                     direction: Axis.horizontal,
                     itemSize: 15,
                     initialRating: averageRate,

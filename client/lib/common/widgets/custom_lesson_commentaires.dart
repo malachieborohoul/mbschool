@@ -73,89 +73,89 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.6,
                         child: Text(widget.commentaire!.intitule)),
-                    Row(
-                      children: [
-                        widget.icon == true
-                            ? IconButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                      useRootNavigator: true,
-                                      isScrollControlled: true,
-                                      isDismissible: true,
-                                      backgroundColor: Colors.transparent,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
-                                        ),
-                                      ),
-                                      context: context,
-                                      builder: (context) {
-                                        return DraggableScrollableSheet(
-                                          expand: false,
-                                          initialChildSize: 0.8,
-                                          builder: (_, controller) => Container(
-                                            decoration: const BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      top: Radius.circular(20)),
-                                              color: Colors.white,
-                                            ),
-                                            child:
-                                                CourseReponseCommentaireScreen(
-                                                    controller: controller,
-                                                    commentaire:
-                                                        widget.commentaire!),
-                                          ),
-                                        );
-                                      });
-                                },
-                                icon: const Icon(
-                                  Icons.message_outlined,
-                                  size: 17,
-                                ))
-                            : Container(),
-                        widget.reponse == true
-                            ? InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                      useRootNavigator: true,
-                                      isScrollControlled: true,
-                                      isDismissible: true,
-                                      backgroundColor: Colors.transparent,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(20),
-                                        ),
-                                      ),
-                                      context: context,
-                                      builder: (context) {
-                                        return DraggableScrollableSheet(
-                                          expand: false,
-                                          initialChildSize: 0.8,
-                                          builder: (_, controller) => Container(
-                                            decoration: const BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                      top: Radius.circular(20)),
-                                              color: Colors.white,
-                                            ),
-                                            child:
-                                                CourseReponseCommentaireScreen(
-                                                    controller: controller,
-                                                    commentaire:
-                                                        widget.commentaire!),
-                                          ),
-                                        );
-                                      });
-                                },
-                                child: Text("$lessonNumberReponses Reponse(s)",
-                                    style: const TextStyle(
-                                      color: Colors.blueAccent,
-                                    )),
-                              )
-                            : Container()
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     widget.icon == true
+                    //         ? IconButton(
+                    //             onPressed: () {
+                    //               showModalBottomSheet(
+                    //                   useRootNavigator: true,
+                    //                   isScrollControlled: true,
+                    //                   isDismissible: true,
+                    //                   backgroundColor: Colors.transparent,
+                    //                   shape: const RoundedRectangleBorder(
+                    //                     borderRadius: BorderRadius.vertical(
+                    //                       top: Radius.circular(20),
+                    //                     ),
+                    //                   ),
+                    //                   context: context,
+                    //                   builder: (context) {
+                    //                     return DraggableScrollableSheet(
+                    //                       expand: false,
+                    //                       initialChildSize: 0.8,
+                    //                       builder: (_, controller) => Container(
+                    //                         decoration: const BoxDecoration(
+                    //                           borderRadius:
+                    //                               BorderRadius.vertical(
+                    //                                   top: Radius.circular(20)),
+                    //                           color: Colors.white,
+                    //                         ),
+                    //                         child:
+                    //                             CourseReponseCommentaireScreen(
+                    //                                 controller: controller,
+                    //                                 commentaire:
+                    //                                     widget.commentaire!),
+                    //                       ),
+                    //                     );
+                    //                   });
+                    //             },
+                    //             icon: const Icon(
+                    //               Icons.message_outlined,
+                    //               size: 17,
+                    //             ))
+                    //         : Container(),
+                    //     widget.reponse == true
+                    //         ? InkWell(
+                    //             onTap: () {
+                    //               showModalBottomSheet(
+                    //                   useRootNavigator: true,
+                    //                   isScrollControlled: true,
+                    //                   isDismissible: true,
+                    //                   backgroundColor: Colors.transparent,
+                    //                   shape: const RoundedRectangleBorder(
+                    //                     borderRadius: BorderRadius.vertical(
+                    //                       top: Radius.circular(20),
+                    //                     ),
+                    //                   ),
+                    //                   context: context,
+                    //                   builder: (context) {
+                    //                     return DraggableScrollableSheet(
+                    //                       expand: false,
+                    //                       initialChildSize: 0.8,
+                    //                       builder: (_, controller) => Container(
+                    //                         decoration: const BoxDecoration(
+                    //                           borderRadius:
+                    //                               BorderRadius.vertical(
+                    //                                   top: Radius.circular(20)),
+                    //                           color: Colors.white,
+                    //                         ),
+                    //                         child:
+                    //                             CourseReponseCommentaireScreen(
+                    //                                 controller: controller,
+                    //                                 commentaire:
+                    //                                     widget.commentaire!),
+                    //                       ),
+                    //                     );
+                    //                   });
+                    //             },
+                    //             child: Text("$lessonNumberReponses Reponse(s)",
+                    //                 style: const TextStyle(
+                    //                   color: Colors.blueAccent,
+                    //                 )),
+                    //           )
+                    //         : Container()
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

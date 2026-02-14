@@ -44,7 +44,6 @@ class _CustomDetailCourseInfoHeaderState
       setState(() {
         widget.isCourseInFav = false;
         isCharging = false;
-
       });
       showSnackBar(context, "Cours retiré des favoris");
     });

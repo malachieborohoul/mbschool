@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:mbschool/common/widgets/alert_notification.dart';
@@ -13,7 +12,6 @@ import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
-
 
 class FilterCourseScreen extends StatefulWidget {
   const FilterCourseScreen({Key? key, required this.controller})
@@ -33,6 +31,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
   List<Categorie>? categories;
   List<Niveau>? niveaux;
   List<Cours> cours = [];
+  late Future<List<Cours>> filterCours;
 
   bool isChecked = false;
   int selectedCategory = 0;
@@ -66,11 +65,13 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
   void filterCourses(int id_categorie, id_niveau, id_langue) async {
     cours = await _filterService.filterCourses(
         context, id_categorie, id_niveau, id_langue);
+        filterCours =  _filterService.filterCourses(
+        context, id_categorie, id_niveau, id_langue);
     setState(() {
       Navigator.pop(context);
       Future.delayed(const Duration(milliseconds: 200), () {
         Navigator.pushNamed(context, AllCourseScreen.routeName,
-            arguments: cours);
+            arguments: filterCours);
       });
     });
   }
@@ -88,7 +89,6 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     // categories != null ? categories![0].id_categorie : "0";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
@@ -470,7 +470,6 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                     // SizedBox(
                     //   height: 15,
                     // ),
-                  
                   ],
                 ),
               ),

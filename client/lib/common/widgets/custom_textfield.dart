@@ -17,6 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.height = 50.0,
     this.keyboardType,
     this.iconColor,
+    this.codeKey = 1,
   }) : super(key: key);
   final String prefixIcon;
   final double iconHeight;
@@ -28,6 +29,7 @@ class CustomTextField extends StatefulWidget {
   final double height;
   final TextInputType? keyboardType;
   final Color? iconColor;
+  final int codeKey;
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -36,8 +38,7 @@ class CustomTextField extends StatefulWidget {
 class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       height: widget.height,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -83,8 +84,38 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
             ),
             validator: (val) {
-              if (val == null || val.isEmpty) {
-                return "Entrez votre ${widget.labelText}";
+              switch (widget.codeKey) {
+                case 1:
+                  if (val!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(val)) {
+                    return "Veuillez entrer le nom";
+                  } else {
+                    return null;
+                  }
+
+                case 2:
+                  if (val!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(val)) {
+                    return "Veuillez entrer le prenom";
+                  } else {
+                    return null;
+                  }
+                case 3:
+                  if (val!.isEmpty ||
+                      !RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(val)) {
+                    return "Veuillez entrer une adresse email valide";
+                  } else {
+                    return null;
+                  }
+
+                case 4:
+                  if (val!.isEmpty || !RegExp(r'.*').hasMatch(val)) {
+                    return "Please enter a correct password";
+                  } else if (val.length < 8) {
+                    return "Veuillez entrer au moins 8 charactères";
+                  } else {
+                    return null;
+                  }
+
+                default:
               }
               return null;
             },
@@ -92,6 +123,5 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ],
       ),
     );
- 
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+//import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:mbschool/constants/colors.dart';
 import 'package:mbschool/constants/padding.dart';
 import 'package:mbschool/datas/user_profile.dart';
@@ -50,7 +50,7 @@ class _CustomCourseReviewsState extends State<CustomCourseReviews> {
                         const SizedBox(
                           width: 10,
                         ),
-                        RatingBar.builder(
+                      /*  RatingBar.builder(
                             direction: Axis.horizontal,
                             itemSize: 15,
                             initialRating:
@@ -62,7 +62,7 @@ class _CustomCourseReviewsState extends State<CustomCourseReviews> {
                                 color: third,
                               );
                             },
-                            onRatingUpdate: (rating) {})
+                            onRatingUpdate: (rating) {})*/
                       ],
                     ),
                     SizedBox(

@@ -195,7 +195,10 @@ module.exports = cls => class IdealTreeBuilder extends cls {
     for (const node of this.idealTree.inventory.values()) {
       if (!node.optional) {
         try {
-          checkEngine(node.package, npmVersion, nodeVersion, this.options.force)
+          // if devEngines is present in the root node we ignore the engines check
+          if (!(node.isRoot && node.package.devEngines)) {
+            checkEngine(node.package, npmVersion, nodeVersion, this.options.force)
+          }
         } catch (err) {
           if (engineStrict) {
             throw err
@@ -444,7 +447,7 @@ module.exports = cls => class IdealTreeBuilder extends cls {
             .catch(/* istanbul ignore next */ () => null)
           if (st && st.isSymbolicLink()) {
             const target = await readlink(dir)
-            const real = resolve(dirname(dir), target).replace(/#/g, '%23')
+            const real = resolve(dirname(dir), target)
             tree.package.dependencies[name] = `file:${real}`
           } else {
             tree.package.dependencies[name] = '*'
@@ -519,12 +522,12 @@ module.exports = cls => class IdealTreeBuilder extends cls {
 
       const { name } = spec
       if (spec.type === 'file') {
-        spec = npa(`file:${relpath(path, spec.fetchSpec).replace(/#/g, '%23')}`, path)
+        spec = npa(`file:${relpath(path, spec.fetchSpec)}`, path)
         spec.name = name
       } else if (spec.type === 'directory') {
         try {
           const real = await realpath(spec.fetchSpec, this[_rpcache], this[_stcache])
-          spec = npa(`file:${relpath(path, real).replace(/#/g, '%23')}`, path)
+          spec = npa(`file:${relpath(path, real)}`, path)
           spec.name = name
         } catch {
           // TODO: create synthetic test case to simulate realpath failure

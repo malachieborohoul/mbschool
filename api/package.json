@@ -19,7 +19,7 @@
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^6.4.6",
-    "nodemailer": "^6.7.8",
+    "nodemailer": "^8.0.1",
     "npm": "^10.8.2",
     "pg": "^8.8.0"
   },

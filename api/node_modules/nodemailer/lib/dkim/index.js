@@ -12,7 +12,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 const DKIM_ALGO = 'sha256';
-const MAX_MESSAGE_SIZE = 128 * 1024; // buffer messages larger than this to disk
+const MAX_MESSAGE_SIZE = 2 * 1024 * 1024; // buffer messages larger than this to disk
 
 /*
 // Usage:
@@ -42,7 +42,9 @@ class DKIMSigner {
         this.chunks = [];
         this.chunklen = 0;
         this.readPos = 0;
-        this.cachePath = this.cacheDir ? path.join(this.cacheDir, 'message.' + Date.now() + '-' + crypto.randomBytes(14).toString('hex')) : false;
+        this.cachePath = this.cacheDir
+            ? path.join(this.cacheDir, 'message.' + Date.now() + '-' + crypto.randomBytes(14).toString('hex'))
+            : false;
         this.cache = false;
 
         this.headers = false;

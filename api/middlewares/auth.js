@@ -1,23 +1,45 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
-const auth = async (req, res, next)=>{
+const auth = async (req, res, next) => {
     try {
         const token = req.header('x-auth-token');
 
-        if(!token)
-            return res.status(401).json({msg: "Pas de token , access refusé"});
-            const verified = jwt.verify(token, "passwordKey");
+        // 1. Check if token exists
+        if (!token) {
+            return res.status(401).json({
+                status: 401,
+                success: false,
+                code: "AUTH_MISSING_TOKEN",
+                message: "Accès refusé, jeton manquant"
+            });
+        }
 
-            if(!verified)
-                return res.status(401).json({msg: 'Verification du token a échoué, autorisation refusée'});
+        // 2. Verify token (Use process.env for security)
+        const verified = jwt.verify(token, process.env.JWT_SECRET || "mbschool_2026_key");
 
-            req.user = verified.id;
-            req.token = token;
-            next();
+        if (!verified) {
+            return res.status(401).json({
+                status: 401,
+                success: false,
+                code: "AUTH_TOKEN_INVALID",
+                message: "La vérification du jeton a échoué"
+            });
+        }
+
+        // 3. Pass data to the next function
+        req.user = verified.id; // The user ID from the payload
+        req.token = token;
         
+        next();
     } catch (e) {
-        return res.status(500).json({error: e.message})
+        // If jwt.verify fails due to expiration or tampering, it hits this catch
+        return res.status(401).json({ 
+            status: 401, 
+            success: false,
+            code: "AUTH_SESSION_EXPIRED",
+            message: e.message 
+        });
     }
 }
 
-module.exports = auth
+module.exports = auth;

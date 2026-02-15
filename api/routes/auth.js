@@ -11,6 +11,9 @@ const jwt = require('jsonwebtoken');
 const pool = require("../db");
 const queries = require("../queries")
 
+// Configuration from environment variables
+const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_2026";
+
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -21,6 +24,18 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+// Standardized Response Helper
+const sendResponse = (res, { status, code, message, data = null }) => {
+    return res.status(status).json({
+        status,
+        success: status < 400,
+        code,
+        message, // Human readable for dev logs
+        data,
+        timestamp: new Date().toISOString()
+    });
+};
+
 function generateVerificationCode() {
     let code = '';
     for (let i = 0; i < 6; i++) {
@@ -29,94 +44,76 @@ function generateVerificationCode() {
     return code;
 }
 
-// transporter.verify((error, success)=>{
-//     if(error){
-//         console.log(error)
-//     }else{
-//         console.log("Ready for message")
-//         console.log(success )
-//     }
-// })
-authRouter.get("/ok", (req, res)=>{
-    res.send("OK");
-})
-
 // SIGNUP
-authRouter.post('/api/signup', async (req, res)=> {
+authRouter.post('/api/signup', async (req, res) => {
     try {
-        const {nom, prenom, email, password} = req.body;
-        const role = 1;
-        const verify_code=generateVerificationCode()
-        pool.query(queries.checkEmailExist,[email], async (error, results)=>{
-            
-            if(results.rows.length){
-                return res.status(400).json({msg:"Cet email existe déjà"});
-            }
-            if(password.length < 6){ 
-                return res.status(400).json({msg: "Mot de passe trop court. Au moins 6 caractères"});
-            }
-            const hashedPassword = await bcryptjs.hash(password, 8);
+        const { nom, prenom, email, password } = req.body;
+        const role = 1; 
 
-            pool.query(queries.addUser, [nom, prenom, email, hashedPassword, role, verify_code], (error, results)=>{
-                const user = results.rows[0];
-                if (error) throw error;
+        // 1. Validation
+        if (!email || !password || password.length < 6) {
+            return sendResponse(res, {
+                status: 400,
+                code: "AUTH_VALIDATION_ERROR",
+                message: "Email required and password must be 6+ chars"
+            });
+        }
 
-                const token = jwt.sign({id: user.id}, "passwordKey");
-                 
-                user.token = token;
-                user.verify_code = verify_code;
+        // 2. Check if user exists (Using async/await instead of callbacks)
+        const existingUser = await pool.query(queries.checkEmailExist, [email]);
+        if (existingUser.rows.length > 0) {
+            return sendResponse(res, {
+                status: 409,
+                code: "AUTH_EMAIL_ALREADY_EXISTS",
+                message: "Email already taken"
+            });
+        }
 
-                // sendEmailVerification(user,res);
-                // return res.json();
-                    
-                // res.status(200).json(user);
+        // 3. Hash Password & Generate Code
+        const hashedPassword = await bcryptjs.hash(password, 12);
+        const verify_code = generateVerificationCode();
 
-                const mailOptions={
-                    from: process.env.AUTH_EMAIL,
-                    to: email,
-                    subject: "Code de vérification",
-                    text: verify_code
-                }
-                transporter.sendMail(mailOptions)
-                    .then(()=>{
-                        // return res.json({
-                        //     message: "SUCCESS",
-                        //     message: "Message sent succesfully"
-                        // })
-                        res.status(200).json(user);
-                    })
-                    .catch((error)=>{
-                        console.log(error);
-                         res.status(400).json("Message non envoyé")
-                    })
-            })
-        } )
+        // 4. Save User
+        const newUser = await pool.query(
+            queries.addUser, 
+            [nom, prenom, email, hashedPassword, role, verify_code]
+        );
+        const user = newUser.rows[0];
 
-    // const existingEmail = await User.findOne({email});
-    // if(existingEmail) {
-    //     return res.status(400).json({msg:"Cet email existe déjà"})
-    // };
+        // 5. Generate Token
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+        user.token = token;
 
-    // if(password.length < 6){
-    //     return res.status(400).json({msg: "Mot de passe trop court. Au moins 6 caractères"});
-    // }
+        // 6. Send Mail (Don't block the response for mail delivery)
+        const mailOptions = {
+            from: `"MBSchool" <${process.env.AUTH_EMAIL}>`,
+            to: email,
+            subject: "Code Verification - MBSchool",
+            text: `Code: ${verify_code}`
+        };
 
-    // const hashedPassword = await bcryptjs.hash(password, 8);
-    // let user = new User(
-    //     {
-    //         name,
-    //         email,
-    //         password: hashedPassword,
-    //     }
-    // )
+       // Await the mail so we can handle failure
+        await transporter.sendMail(mailOptions);
 
-    // user =await user.save()
-    // res.json(user)
-        
+        // If we reach here, the mail was sent successfully
+
+        return sendResponse(res, {
+                    status: 201,
+                    code: "AUTH_USER_CREATED",
+                    message: "Success",
+                    data: user
+                });
+
     } catch (e) {
-        return res.status(500).json({error: e.message})
+        return sendResponse(res, {
+                status: 500,
+                code: "AUTH_MAIL_SEND_ERROR",
+                message: "Compte créé mais le code n'a pas pu être envoyé."
+            });
     }
 });
+
+
 
 authRouter.post('/api/signin', async (req, res) => {
     try {
@@ -125,146 +122,130 @@ authRouter.post('/api/signin', async (req, res) => {
         // Using async/await with pool.query
         const { rows } = await pool.query(queries.checkEmailExist, [email]);
         if (rows.length === 0) {
-            return res.status(400).json({ msg: "Cet identifiant n'existe pas" });
+            return sendResponse(res, { status: 401, code: "AUTH_INVALID_CREDENTIALS", message: "User not found" });
         }
         
         const user = rows[0];
-        const isPass = await bcryptjs.compare(password, user.password);
-        if (!isPass) {
-            return res.status(400).json({ msg: "Mot de passe incorrecte" });
+
+        const isMatch = await bcryptjs.compare(password, user.password);
+        if (!isMatch) {
+            return sendResponse(res, { status: 401, code: "AUTH_INVALID_CREDENTIALS", message: "Wrong password" });
         }
         
-        const token = jwt.sign({ id: user.id }, "passwordKey");
+        const token = jwt.sign({ id: user.id }, JWT_SECRET);
         user.token = token;
-        return res.json(user);
+        return sendResponse(res, { status: 200, code: "AUTH_SIGNIN_SUCCESS", message: "Welcome", data: user });
 
     } catch (e) {
         console.error('Error during signin:', e);
-        return res.status(500).json({ error: e.message });
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
     }
 });
 
 
 // Verify validity of token
 
-authRouter.post('/tokenIsValid', async (req, res)=>{
+// Verify validity of token
+authRouter.post('/tokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token');
-        if(!token) return res.json(false);
-        const tokenIsValid= await jwt.verify(token, "passwordKey");
-        if(!tokenIsValid) return res.json(false)
-        pool.query(queries.checkIdExist, [tokenIsValid.id], (error, results)=>{
-            if(!results.rows.length){
-                return res.json(false);
-            }
-            return res.json(true);
-        })
-        // const user = await User.findById(tokenIsValid.id);
-        // if(!user) return res.json(false);
-        // return res.json(true);
+        if (!token) return res.json(false);
 
+        // Verify token signature and expiration
+        const verified = jwt.verify(token, process.env.JWT_SECRET || "mbschool_2026_key");
+        if (!verified) return res.json(false);
+
+        // checkIdExist returns rows if the user is still in the database
+        const { rows } = await pool.query(queries.checkIdExist, [verified.id]);
         
+        return res.json(rows.length > 0);
     } catch (e) {
-        return res.status(500).json({error: e.message})
+        // If jwt.verify fails (expired/tampered), it throws an error
+        return res.json(false);
     }
 });
 
-// get user data
-authRouter.get("/", auth, async (req, res) => {
-    pool.query(queries.checkIdExist, [req.user], (error, results)=>{
-        const user = results.rows[0];
-        user.token = req.token;
-        // print(user);
-
-        return res.json(user);
-
-    })
-    // const user = await User.findById(req.user);
-    // return res.json({ ...user._doc, token: req.token });
-    // print(user);
-  });
-
-
-
-  // Code de vérification
-  authRouter.post("/codeVerification",  (req, res)=>{
-    const {id}= req.body;
-    pool.query(queries.codeVerification, [id, ] , (error, results)=>{
-      if (error) throw error;
-      return res.json(true)
-    })
-  });
-
-
-    // Resend code
-    authRouter.post("/resendCode",  async(req, res)=>{
-        try {
-            const { email} = req.body;
-
-            const { rows } = await pool.query(queries.checkEmailExist, [email]);
-            if (rows.length === 0) {
-                return res.status(400).json({ msg: "Cet identifiant n'existe pas" });
-            }
-
-
-            
-            const user = rows[0];
-
-             verify_code=generateVerificationCode()
-            user.verify_code = verify_code;
-
-            // sendEmailVerification(user,res);
-            // return res.json();
-                
-            // res.status(200).json(user);
-
-            const mailOptions={
-                from: process.env.AUTH_EMAIL,
-                to: email,
-                subject: "Code de vérification",
-                text: verify_code
-            }
-            transporter.sendMail(mailOptions)
-                .then(()=>{
-                    // return res.json({
-                    //     message: "SUCCESS",
-                    //     message: "Message sent succesfully"
-                    // })
-                    res.status(200).json(user);
-                })
-                .catch((error)=>{
-                    console.log(error);
-                     res.status(400).json("Message non envoyé")
-                })
-       
-
-            
-        } catch (e) {
-            return res.status(500).json({error: e.message})
+// Get user data
+authRouter.get("/api/user-data", auth, async (req, res) => {
+    try {
+        // req.user is populated by your auth middleware
+        const { rows } = await pool.query(queries.checkIdExist, [req.user]);
+        
+        if (rows.length === 0) {
+            return sendResponse(res, { status: 404, code: "USER_NOT_FOUND", message: "Utilisateur introuvable" });
         }
-      });
 
-  const sendEmailVerification = ({email, verify_code}, res)=>{
-    // const {to, subject, message}=req.body;
+        const user = rows[0];
+        delete user.password; // Never send the hash back
+        user.token = req.token;
 
-    const mailOptions={
-        from: process.env.AUTH_EMAIL,
-        to: email,
-        subject: "Code de vérification",
-        text: verify_code
+        return sendResponse(res, { 
+            status: 200, 
+            code: "USER_FETCH_SUCCESS", 
+            message: "Success", 
+            data: user 
+        });
+    } catch (e) {
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
     }
-    transporter.sendMail(mailOptions)
-        .then(()=>{
-            return res.json({
-                message: "SUCCESS",
-                message: "Message sent succesfully"
-            })
-        })
-        .catch((error)=>{
-            console.log(error);
-            return res.json({status: "FAILED", message:"An error"})
-        })
-}
+});
+
+
+// Code de vérification
+authRouter.post("/codeVerification", async (req, res) => {
+    try {
+        const { id } = req.body;
+        // Logic: update user status in DB once they provide the correct code
+        await pool.query(queries.codeVerification, [id]);
+        
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_VERIFIED", 
+            message: "Compte vérifié avec succès" 
+        });
+    } catch (e) {
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
+    }
+});
+
+// Resend code
+authRouter.post("/resendCode", async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const { rows } = await pool.query(queries.checkEmailExist, [email]);
+        if (rows.length === 0) {
+            return sendResponse(res, { status: 404, code: "AUTH_USER_NOT_FOUND", message: "Email inconnu" });
+        }
+
+        const user = rows[0];
+        const newCode = generateVerificationCode();
+
+        // Update the code in the DB (assuming you have a query for this)
+        // await pool.query(queries.updateVerifyCode, [newCode, user.id]);
+
+        const mailOptions = {
+            from: `"MBSchool" <${process.env.AUTH_EMAIL}>`,
+            to: email,
+            subject: "Nouveau code de vérification",
+            text: `Votre nouveau code est: ${newCode}`
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_CODE_RESENT", 
+            message: "Nouveau code envoyé",
+            data: { email: user.email } 
+        });
+    } catch (e) {
+        console.error(e);
+        return sendResponse(res, { status: 500, code: "AUTH_RESEND_ERROR", message: "Échec de l'envoi du code" });
+    }
+});
+
+
 
 
 

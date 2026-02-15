@@ -52,7 +52,7 @@ authRouter.post('/api/signup', async (req, res)=> {
             if(results.rows.length){
                 return res.status(400).json({msg:"Cet email existe déjà"});
             }
-            if(password.length < 6){
+            if(password.length < 6){ 
                 return res.status(400).json({msg: "Mot de passe trop court. Au moins 6 caractères"});
             }
             const hashedPassword = await bcryptjs.hash(password, 8);

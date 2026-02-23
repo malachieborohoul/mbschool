@@ -45,7 +45,7 @@ function generateVerificationCode() {
 }
 
 // SIGNUP
-authRouter.post('/api/signup', async (req, res) => {
+authRouter.post('/api/v1/signup', async (req, res) => {
     try {
         const { nom, prenom, email, password } = req.body;
         const role = 1; 
@@ -115,26 +115,61 @@ authRouter.post('/api/signup', async (req, res) => {
 
 
 
-authRouter.post('/api/signin', async (req, res) => {
+authRouter.post('/api/v1/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
         
-        // Using async/await with pool.query
+        // 1. Check if user exists
         const { rows } = await pool.query(queries.checkEmailExist, [email]);
         if (rows.length === 0) {
-            return sendResponse(res, { status: 401, code: "AUTH_INVALID_CREDENTIALS", message: "User not found" });
+            return sendResponse(res, { 
+                status: 401, 
+                code: "AUTH_INVALID_CREDENTIALS", 
+                message: "Identifiants incorrects" 
+            });
         }
         
         const user = rows[0];
 
+        // 2. Check password
         const isMatch = await bcryptjs.compare(password, user.password);
         if (!isMatch) {
-            return sendResponse(res, { status: 401, code: "AUTH_INVALID_CREDENTIALS", message: "Wrong password" });
+            return sendResponse(res, { 
+                status: 401, 
+                code: "AUTH_INVALID_CREDENTIALS", 
+                message: "Identifiants incorrects" 
+            });
+        }
+
+        // 3. CHECK VERIFICATION STATUS
+        // If the user is not verified, we STOP here.
+        if (user.verification_status === false || user.verification_status === 0) {
+            // We still send the user data (id, email) so the frontend 
+            // knows WHERE to send the new code, but we do NOT send a Token.
+            return sendResponse(res, { 
+                status: 403, 
+                code: "AUTH_USER_NOT_VERIFIED", 
+                message: "Compte non vérifié",
+                data: { 
+                    id: user.id, 
+                    email: user.email 
+                } 
+            });
         }
         
-        const token = jwt.sign({ id: user.id }, JWT_SECRET);
+        // 4. If verified, generate Token and finish Signin
+        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '30d' });
+        
+        // Cleanup sensitive data
+        delete user.password;
         user.token = token;
-        return sendResponse(res, { status: 200, code: "AUTH_SIGNIN_SUCCESS", message: "Welcome", data: user });
+
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_SIGNIN_SUCCESS", 
+            message: "Bienvenue", 
+            data: user 
+        });
 
     } catch (e) {
         console.error('Error during signin:', e);
@@ -146,7 +181,7 @@ authRouter.post('/api/signin', async (req, res) => {
 // Verify validity of token
 
 // Verify validity of token
-authRouter.post('/tokenIsValid', async (req, res) => {
+authRouter.post('/api/v1/tokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token');
         if (!token) return res.json(false);
@@ -166,7 +201,7 @@ authRouter.post('/tokenIsValid', async (req, res) => {
 });
 
 // Get user data
-authRouter.get("/api/user-data", auth, async (req, res) => {
+authRouter.get("/api/v1/user-data", auth, async (req, res) => {
     try {
         // req.user is populated by your auth middleware
         const { rows } = await pool.query(queries.checkIdExist, [req.user]);
@@ -192,7 +227,7 @@ authRouter.get("/api/user-data", auth, async (req, res) => {
 
 
 // Code de vérification
-authRouter.post("/codeVerification", async (req, res) => {
+authRouter.post("/api/v1/codeVerification", async (req, res) => {
     try {
         const { id } = req.body;
         // Logic: update user status in DB once they provide the correct code
@@ -208,8 +243,50 @@ authRouter.post("/codeVerification", async (req, res) => {
     }
 });
 
+
+// Verification of the 6-digit code
+authRouter.post("/api/v1/verify-signup", async (req, res) => {
+    try {
+        const { userId, typedCode } = req.body;
+
+        // 1. Fetch the code stored in the DB for this user
+        const { rows } = await pool.query(queries.verifyCodeUser, [userId]);
+
+        if (rows.length === 0) {
+            return sendResponse(res, { status: 404, code: "USER_NOT_FOUND", message: "Utilisateur non trouvé" });
+        }
+
+        const dbCode = rows[0].verify_code;
+
+        // 2. THE ACTUAL VERIFICATION
+        if (dbCode !== typedCode) {
+            return sendResponse(res, { 
+                status: 400, 
+                code: "AUTH_INVALID_CODE", 
+                message: "Le code est incorrect" 
+            });
+        }
+
+        // 3. If the code is correct, update the status to verified
+        // We also clear the verify_code so it can't be used again
+        await pool.query(
+            queries.codeVerification, 
+            [userId]
+        );
+        
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_VERIFIED", 
+            message: "Compte vérifié avec succès" 
+        });
+
+    } catch (e) {
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
+    }
+});
+
 // Resend code
-authRouter.post("/resendCode", async (req, res) => {
+authRouter.post("/api/v1/resend-code", async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -222,7 +299,7 @@ authRouter.post("/resendCode", async (req, res) => {
         const newCode = generateVerificationCode();
 
         // Update the code in the DB (assuming you have a query for this)
-        // await pool.query(queries.updateVerifyCode, [newCode, user.id]);
+         await pool.query(queries.updateVerifyCode, [newCode, user.id]);
 
         const mailOptions = {
             from: `"MBSchool" <${process.env.AUTH_EMAIL}>`,
@@ -247,6 +324,86 @@ authRouter.post("/resendCode", async (req, res) => {
 
 
 
+// POST /api/forgot-password
+authRouter.post('/api/v1/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const { rows } = await pool.query(queries.checkEmailExist, [email]);
+
+        if (rows.length === 0) {
+            // Standard security: don't confirm the email doesn't exist
+            return sendResponse(res, { status: 202, code: "AUTH_RESET_REQUESTED", message: "Accepted" });
+        }
+
+        const user = rows[0];
+        // Generate a simple 6-digit code for mobile convenience
+        const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Code expires in 15 minutes (shorter is safer for OTPs)
+        const expires = new Date(Date.now() + 15 * 60000); 
+
+        await pool.query(
+            queries.updateResetPasswordToken,
+            [resetCode, expires, user.id]
+        );
+
+        await transporter.sendMail({
+            from: `"MBSchool Support" <${process.env.AUTH_EMAIL}>`,
+            to: email,
+            subject: "Réinitialisation de votre mot de passe",
+            text: `Votre code de réinitialisation est : ${resetCode}. Il expire dans 15 minutes.`
+        });
+
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_RESET_CODE_SENT", 
+            message: "Code envoyé" 
+        });
+
+    } catch (e) {
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
+    }
+});
+
+
+// POST /api/reset-password
+authRouter.post('/api/v1/reset-password', async (req, res) => {
+    try {
+        const { email, code, newPassword } = req.body;
+
+        // 1. Find user with matching email, code, and valid expiration
+        const { rows } = await pool.query(
+            queries.findUserEmailCodeExpiry,
+            [email, code]
+        );
+
+        if (rows.length === 0) {
+            return sendResponse(res, { 
+                status: 400, 
+                code: "AUTH_INVALID_RESET_CODE", 
+                message: "Code invalide ou expiré" 
+            });
+        }
+
+        const userId = rows[0].id;
+        const hashedPassword = await bcryptjs.hash(newPassword, 12);
+
+        // 2. Update password and clear the reset fields
+        await pool.query(
+            queries.updatePasswordClearResetFields,
+            [hashedPassword, userId]
+        );
+
+        return sendResponse(res, { 
+            status: 200, 
+            code: "AUTH_PASSWORD_CHANGED", 
+            message: "Succès" 
+        });
+
+    } catch (e) {
+        return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
+    }
+});
 
 
   

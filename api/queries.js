@@ -1,4 +1,9 @@
 const checkEmailExist = "SELECT * FROM users WHERE email = $1";
+const updateResetPasswordToken = "UPDATE users SET reset_password_token = $1, reset_password_expires = $2 WHERE id = $3";
+const findUserEmailCodeExpiry = "SELECT id FROM users WHERE email = $1 AND reset_password_token = $2 AND reset_password_expires > NOW()";
+const updatePasswordClearResetFields = "UPDATE users SET password = $1, reset_password_token = NULL, reset_password_expires = NULL WHERE id = $2";
+const verifyCodeUser = "SELECT verify_code FROM users WHERE id = $1";
+const resetPassword = "SELECT * FROM users WHERE email = $1";
 const addUser = "INSERT INTO users (nom, prenom, email, password, role, verify_code) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
 const editUserProfile = 'UPDATE users SET nom = $1, photo = $2, prenom = $3, telephone = $4, sexe = $5, localisation = $6 WHERE id = $7;';
 const checkIdExist = "SELECT * FROM users WHERE id = $1";
@@ -36,7 +41,9 @@ const isCourseEnrolled = "SELECT * FROM cours_suivis WHERE users_id = $1 AND cou
 
 const getAllEnrolledCourses = "SELECT * FROM cours_suivis  JOIN cours ON cours_suivis.cours_id=cours.id_cours JOIN users ON cours.id_users=users.id WHERE cours_suivis.users_id=$1;";
 
-const codeVerification = "UPDATE users SET verify_code = '' WHERE id = $1;";
+// const codeVerification = "UPDATE users SET verify_code = '' WHERE id = $1;";
+const codeVerification = "UPDATE users SET verification_status = true, verify_code = NULL WHERE id = $1";
+const updateVerifyCode = "UPDATE users SET  verify_code = $1 WHERE id = $2";
 
 const markLessonAsDone = "INSERT INTO lecon_suivi(users_id, lecon_id) VALUES ($1, $2) RETURNING *;";
 
@@ -178,4 +185,10 @@ module.exports = {
     deactivateCours,
     verifyCourseHasExigence,
     verifyCourseHasResultat,
+    updateResetPasswordToken,
+    findUserEmailCodeExpiry,
+    updatePasswordClearResetFields,
+    verifyCodeUser,
+    resetPassword,
+    updateVerifyCode
 } 

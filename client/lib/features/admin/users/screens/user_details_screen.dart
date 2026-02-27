@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/features/admin/users/screens/modify_role.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/admin/users/services/users_manager_service.dart';
@@ -324,11 +324,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           )
         ],
       ),
-      body: courseTaking == null ||
-              courseTeaching == null ||
-              totalStudents == null
-          ? const Loader()
-          : SingleChildScrollView(
+      body: SingleChildScrollView(
               child: Column(
                 children: [
                   searchUserProvider.photo.isNotEmpty

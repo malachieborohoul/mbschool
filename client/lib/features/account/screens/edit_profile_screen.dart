@@ -2,13 +2,13 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield_second.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_second.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -247,7 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child:
                                   const Icon(Icons.male_sharp, color: primary)),
                         ),
-                        value: dropdownvalue,
+                        initialValue: dropdownvalue,
                         items: items.map((String items) {
                           return DropdownMenuItem(
                               value: items, child: Text(items));

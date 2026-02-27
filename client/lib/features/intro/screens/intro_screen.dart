@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/auth/screens/auth_screen.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/features/autht/screens/auth_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroScreen extends StatefulWidget {
-  const IntroScreen({Key? key}) : super(key: key);
+  const IntroScreen({super.key});
   static const routeName = "intro-screen";
 
   @override

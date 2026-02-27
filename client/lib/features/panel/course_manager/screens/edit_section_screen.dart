@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/edit_section_service.dart';
 import 'package:mbschool/models/section.dart';
@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class EditSectionScreen extends StatefulWidget {
   static const routeName = '/edit_section';
 
-  const EditSectionScreen({Key? key, required this.section}) : super(key: key);
+  const EditSectionScreen({super.key, required this.section});
   final Section section;
 
   @override
@@ -79,7 +79,7 @@ class _EditSectionScreenState extends State<EditSectionScreen> {
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: sections == null || isCharging == true
+      child: isCharging == true
           ? const Loader()
           : Scaffold(
               appBar: AppBar(

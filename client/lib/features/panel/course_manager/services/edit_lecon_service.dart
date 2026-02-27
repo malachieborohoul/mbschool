@@ -1,12 +1,11 @@
 import 'dart:convert';
 
-import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
@@ -28,18 +27,11 @@ class EditLeconService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final leconProvider =
         Provider.of<LeconProvider>(context, listen: false).lecon;
-    final cloudinary = CloudinaryPublic('dshli1qgh', 'lffwqjlm');
+    // final cloudinary = CloudinaryPublic('dshli1qgh', 'lffwqjlm');
     String url;
     try {
-      if (fichier != null) {
-        url = leconProvider.url;
-      } else {
-        CloudinaryResponse res = await cloudinary.uploadFile(
-            CloudinaryFile.fromFile(fichier.path!,
-                folder: titre.toLowerCase()));
-        url = res.secureUrl;
-      }
-
+      url = leconProvider.url;
+    
       http.Response resCreateLesson = await http.post(
         Uri.parse("$uri/editLecon"),
         headers: <String, String>{

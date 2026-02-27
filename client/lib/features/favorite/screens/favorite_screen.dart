@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/animations/slide_right_tween.dart';
-import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/custom_heading.dart';
+import 'package:mbschool/core/common/animations/slide_right_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/custom_heading.dart';
 
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/nodata.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/common/widgets/nodata.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/favorite/services/favorite_service.dart';
 import 'package:mbschool/models/cours.dart';
@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
   static const routeName = '/favorite';
-  const FavoriteScreen({Key? key}) : super(key: key);
+  const FavoriteScreen({super.key});
 
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();

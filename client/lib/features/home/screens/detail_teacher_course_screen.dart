@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
 
 import 'package:mbschool/models/cours.dart';
 
 class DetailTeacherCourseScreen extends StatefulWidget {
   static const routeName = 'detail-teacher-course-screen';
   final Cours cours;
-  const DetailTeacherCourseScreen({Key? key, required this.cours})
-      : super(key: key);
+  const DetailTeacherCourseScreen({super.key, required this.cours});
 
   @override
   State<DetailTeacherCourseScreen> createState() =>

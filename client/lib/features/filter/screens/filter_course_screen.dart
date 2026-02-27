@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/alert_notification.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/core/common/widgets/alert_notification.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
 
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/filter/services/filter_service.dart';
@@ -14,8 +14,7 @@ import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
 
 class FilterCourseScreen extends StatefulWidget {
-  const FilterCourseScreen({Key? key, required this.controller})
-      : super(key: key);
+  const FilterCourseScreen({super.key, required this.controller});
 
   final ScrollController? controller;
   static const routeName = '/filter-course-screen';
@@ -47,26 +46,26 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
     getAllCategorieData();
   }
 
-  getAllLangueData() async {
+  Future<void> getAllLangueData() async {
     langues = await createCourseService.getAllLangueData(context);
     setState(() {});
   }
 
-  getAllCategorieData() async {
+  Future<void> getAllCategorieData() async {
     categories = await createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
-  getAllNiveauData() async {
+  Future<void> getAllNiveauData() async {
     niveaux = await createCourseService.getAllNiveauData(context);
     setState(() {});
   }
 
-  void filterCourses(int id_categorie, id_niveau, id_langue) async {
+  void filterCourses(int idCategorie, idNiveau, idLangue) async {
     cours = await _filterService.filterCourses(
-        context, id_categorie, id_niveau, id_langue);
+        context, idCategorie, idNiveau, idLangue);
         filterCours =  _filterService.filterCourses(
-        context, id_categorie, id_niveau, id_langue);
+        context, idCategorie, idNiveau, idLangue);
     setState(() {
       Navigator.pop(context);
       Future.delayed(const Duration(milliseconds: 200), () {
@@ -182,9 +181,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                   selectedLangue);
                             }
                           },
-                          child: cours == null
-                              ? const Loader()
-                              : const Text(
+                          child: const Text(
                                   "Terminé",
                                   style: TextStyle(
                                       color: primary,

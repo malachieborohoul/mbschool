@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_right_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/animations/opacity_tween.dart';
+import 'package:mbschool/core/common/animations/slide_right_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/search/services/search_service.dart';
@@ -100,7 +100,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         alignment: Alignment.center,
                         child: SvgPicture.asset(
                           '${assetImg}search_icon.svg',
-                          color: secondary.withOpacity(0.5),
+                          colorFilter: ColorFilter.mode(secondary.withValues(alpha: 0.5), BlendMode.srcIn),
                           height: 15.0,
                         ),
                       ),
@@ -124,7 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               hintText: "Rechercher cours",
                               hintStyle: TextStyle(
                                 fontSize: 15,
-                                color: secondary.withOpacity(0.5),
+                                color: secondary.withValues(alpha:0.5),
                               ),
                               border: InputBorder.none,
                             ),
@@ -147,9 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
       body: isCharging == true
           ? const Loader()
-          : cours == null
-              ? Container()
-              : Padding(
+          : Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: ListView.builder(
                       itemCount: cours.length,

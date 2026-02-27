@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
-import 'package:mbschool/common/widgets/custom_lesson_reponse_commentaires.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_lesson_commentaires.dart';
+import 'package:mbschool/core/common/widgets/custom_lesson_reponse_commentaires.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 
 import 'package:mbschool/models/commentaire.dart';
@@ -18,8 +18,7 @@ import 'package:provider/provider.dart';
 
 class CourseReponseCommentaireScreen extends StatefulWidget {
   const CourseReponseCommentaireScreen(
-      {Key? key, required this.controller,  required this.commentaire})
-      : super(key: key);
+      {super.key, required this.controller,  required this.commentaire});
 
   final ScrollController? controller;
   final Commentaire commentaire;
@@ -81,9 +80,7 @@ class _CourseReponseCommentaireScreenState
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: lessonReponseCommentaires == null
-            ? const Loader()
-            : SingleChildScrollView(
+        body: SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
                   padding: const EdgeInsets.all(appPadding),

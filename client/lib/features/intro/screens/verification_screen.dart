@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'dart:async';
 
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/bottom_bar.dart';
-import 'package:mbschool/common/widgets/textbox_verification.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/widgets/bottom_bar.dart';
+import 'package:mbschool/core/common/widgets/textbox_verification.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/features/autht/services/auth_service.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({Key? key}) : super(key: key);
+  const VerificationScreen({super.key});
   static const routeName = 'verification-screen';
 
   @override
@@ -281,7 +281,7 @@ class _VerificationScreenState extends State<VerificationScreen>
                             height: 50,
                             decoration: BoxDecoration(
                               color:
-                                  !allFilled ? gray : primary.withOpacity(0.7),
+                                  !allFilled ? gray : primary.withValues(alpha:0.7),
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: Center(

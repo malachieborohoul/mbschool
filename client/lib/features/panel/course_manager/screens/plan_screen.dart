@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_animated_floating_buttons.dart';
-import 'package:mbschool/common/widgets/custom_course_section.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/core/common/widgets/custom_animated_floating_buttons.dart';
+import 'package:mbschool/core/common/widgets/custom_course_section.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
 
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/cours.dart';

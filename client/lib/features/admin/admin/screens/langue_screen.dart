@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
-import 'package:mbschool/common/widgets/custom_textfield_exigence.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_exigence.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/admin/admin/screens/edit_langue_screen.dart';
 import 'package:mbschool/features/admin/admin/services/langue_service.dart';
 import 'package:mbschool/features/panel/create_course/services/create_course_service.dart';
@@ -14,8 +14,8 @@ import 'package:mbschool/models/langue.dart';
 class LangueScreen extends StatefulWidget {
   static const routeName = 'langue-screen';
   const LangueScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<LangueScreen> createState() => _LangueScreenState();
@@ -78,8 +78,8 @@ class _LangueScreenState extends State<LangueScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: CustomAppBarPanel(texte: "langues"),
-        body: isCharging == true || langues == null
+        appBar: customAppBarPanel(texte: "langues"),
+        body: isCharging == true
             ? const Loader()
             : Form(
                 key: _addLangueFormKey,

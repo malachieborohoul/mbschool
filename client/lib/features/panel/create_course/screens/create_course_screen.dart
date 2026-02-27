@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/alert_dialog_error.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/alert_dialog_error.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_admin.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_teacher.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/langue.dart';
@@ -155,7 +155,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           elevation: 0,
           backgroundColor: primary,
         ),
-        body: langues == null || isCharging == true
+        body: isCharging == true
             ? const Loader()
             : SingleChildScrollView(
                 child: Padding(
@@ -228,7 +228,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une catégorie"),
-                            value: dropdownvalue_categorie,
+                            initialValue: dropdownvalue_categorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
                                 value: item.id_categorie,
@@ -269,7 +269,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner un niveau"),
-                            value: dropdownvalue_niveau,
+                            initialValue: dropdownvalue_niveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
                                 value: item.id_niveau,
@@ -310,7 +310,7 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une langue"),
-                            value: dropdownvalue_langue,
+                            initialValue: dropdownvalue_langue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
                                 value: item.id_langue,
@@ -388,9 +388,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                           children: [
                             Checkbox(
                                 fillColor:
-                                    MaterialStateProperty.resolveWith<Color>(
+                                    WidgetStateProperty.resolveWith<Color>(
                                         (states) {
-                                  if (states.contains(MaterialState.disabled)) {
+                                  if (states.contains(WidgetState.disabled)) {
                                     return primary;
                                   }
                                   return primary;

@@ -3,13 +3,13 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/modify_course_service.dart';
 
@@ -21,7 +21,7 @@ import 'package:mbschool/models/niveau.dart';
 class ModifyCourseScreen extends StatefulWidget {
   static const routeName = '/modify-course';
   final Cours cours;
-  const ModifyCourseScreen({Key? key, required this.cours}) : super(key: key);
+  const ModifyCourseScreen({super.key, required this.cours});
 
   @override
   State<ModifyCourseScreen> createState() => _ModifyCourseScreenState();
@@ -60,17 +60,17 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     prixCoursController.text = widget.cours.prix;
   }
 
-  getAllLangueData() async {
+  Future<void> getAllLangueData() async {
     langues = await createCourseService.getAllLangueData(context);
     setState(() {});
   }
 
-  getAllCategorieData() async {
+  Future<void> getAllCategorieData() async {
     categories = await createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
-  getAllNiveauData() async {
+  Future<void> getAllNiveauData() async {
     niveaux = await createCourseService.getAllNiveauData(context);
     setState(() {});
   }
@@ -114,10 +114,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
 
     // String dropdownvalue_langue = widget.cours.id_langue;
     // String dropdownvalue_categorie = widget.cours.id_categorie;
-    String? dropdownvalue_niveau;
+    String? dropdownvalueNiveau;
 
-    String? dropdownvalue_langue;
-    String? dropdownvalue_categorie;
+    String? dropdownvalueLangue;
+    String? dropdownvalueCategorie;
 
     String urlVignette = widget.cours.vignette;
 
@@ -193,10 +193,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
           elevation: 0,
           backgroundColor: primary,
         ),
-        body: langues == null ||
-                categories == null ||
-                niveaux == null ||
-                isCharging == true
+        body: isCharging == true
             ? const Loader()
             : SingleChildScrollView(
                 child: Padding(
@@ -268,7 +265,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une catégorie"),
-                            value: widget.cours.id_categorie,
+                            initialValue: widget.cours.id_categorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
                                 value: item.id_categorie,
@@ -277,9 +274,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_categorie = val!;
+                                dropdownvalueCategorie = val!;
                                 id_categorie =
-                                    int.parse(dropdownvalue_categorie!);
+                                    int.parse(dropdownvalueCategorie!);
 
                                 // titreCoursController.text =
                                 //     titreCoursController.text;
@@ -316,7 +313,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner un niveau"),
-                            value: widget.cours.id_niveau,
+                            initialValue: widget.cours.id_niveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
                                 value: item.id_niveau,
@@ -325,8 +322,8 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_niveau = val!;
-                                id_niveau = int.parse(dropdownvalue_niveau!);
+                                dropdownvalueNiveau = val!;
+                                id_niveau = int.parse(dropdownvalueNiveau!);
                               });
                             }),
                         const SizedBox(
@@ -356,7 +353,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une langue"),
-                            value: widget.cours.id_langue,
+                            initialValue: widget.cours.id_langue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
                                 value: item.id_langue,
@@ -365,8 +362,8 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_langue = val!;
-                                id_langue = int.parse(dropdownvalue_langue!);
+                                dropdownvalueLangue = val!;
+                                id_langue = int.parse(dropdownvalueLangue!);
                               });
                             }),
                         const SizedBox(

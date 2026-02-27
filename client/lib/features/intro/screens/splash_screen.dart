@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/bottom_bar.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/features/auth/screens/auth_screen.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/core/common/widgets/bottom_bar.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/features/autht/screens/auth_screen.dart';
+import 'package:mbschool/features/autht/services/auth_service.dart';
 import 'package:mbschool/features/intro/screens/intro_screen.dart';
 import 'package:mbschool/features/intro/screens/verification_screen.dart';
 import 'package:mbschool/models/user.dart';
@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

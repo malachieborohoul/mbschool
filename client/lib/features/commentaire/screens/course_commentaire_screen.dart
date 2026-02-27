@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/widgets/custom_lesson_commentaires.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 
 import 'package:mbschool/models/commentaire.dart';
@@ -81,9 +81,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: lessonCommentaires == null
-            ? const Loader()
-            : SingleChildScrollView(
+        body: SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
                   padding: const EdgeInsets.all(appPadding),

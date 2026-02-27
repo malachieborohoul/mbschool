@@ -2,13 +2,13 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/select_file_service.dart';
@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 class YoutubeLink extends StatefulWidget {
   static const routeName = '/youtube-link';
   final Cours cours;
-  const YoutubeLink({Key? key, required this.cours}) : super(key: key);
+  const YoutubeLink({super.key, required this.cours});
 
   @override
   State<YoutubeLink> createState() => _YoutubeLinkState();
@@ -177,7 +177,7 @@ class _YoutubeLinkState extends State<YoutubeLink> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            value: dropdownvalue_section,
+                            initialValue: dropdownvalue_section,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
                                 value: item.id_section,

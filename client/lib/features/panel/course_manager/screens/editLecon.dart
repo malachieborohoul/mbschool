@@ -1,14 +1,14 @@
-import 'dart:io';
+
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/screens/plan_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/edit_lecon_service.dart';
@@ -23,8 +23,7 @@ class EditLecon extends StatefulWidget {
   static const routeName = '/edit_lecon';
   final Lecon lecon;
   final Cours cours;
-  const EditLecon({Key? key, required this.lecon, required this.cours})
-      : super(key: key);
+  const EditLecon({super.key, required this.lecon, required this.cours});
 
   @override
   State<EditLecon> createState() => _EditLeconState();
@@ -146,7 +145,7 @@ class _EditLeconState extends State<EditLecon> {
         ),
         elevation: 1,
       ),
-      body: isCharging == true || sections == null
+      body: isCharging == true
           ? const Loader()
           : GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
@@ -204,7 +203,7 @@ class _EditLeconState extends State<EditLecon> {
                               ),
                             ),
                             hint: const Text("Selectionner une section"),
-                            value: dropdownvalue_section,
+                            initialValue: dropdownvalue_section,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
                                 value: item.id_section,

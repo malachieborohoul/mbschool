@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/animations/opacity_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
 
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/features/commentaire/screens/course_commentaire_screen.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 import 'package:mbschool/features/course/screens/rate_course_screen.dart';
@@ -24,8 +24,7 @@ class DetailLessonScreen extends StatefulWidget {
   static const routeName = 'detail-lesson-screen';
   final Lecon lecon;
   final Cours cours;
-  const DetailLessonScreen({Key? key, required this.lecon, required this.cours})
-      : super(key: key);
+  const DetailLessonScreen({super.key, required this.lecon, required this.cours});
 
   @override
   State<DetailLessonScreen> createState() => _DetailLessonScreenState();
@@ -44,7 +43,7 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   bool selected = false;
 
   List<Commentaire> lessonCommentaires = [];
-  var number_discussions;
+  int? numberDiscussions;
   final CourseCommentaireService _courseCommentaireService =
       CourseCommentaireService();
 
@@ -77,8 +76,8 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
   }
 
   void countAllLessonReponseAndCommentaires() async {
-    number_discussions = await _courseCommentaireService
-        .countAllLessonReponseAndCommentaires(context, widget.lecon);
+    numberDiscussions = (await _courseCommentaireService
+        .countAllLessonReponseAndCommentaires(context, widget.lecon)) as int?;
     setState(() {});
   }
 
@@ -144,7 +143,7 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
           child: CustomAppBar(
             backgroundColor: Colors.transparent,
           )),
-      body: number_discussions == null ||
+      body: numberDiscussions == null ||
               isLeconDone == null ||
               selected == true ||
               numberLecon == null ||
@@ -346,7 +345,7 @@ class _DetailLessonScreenState extends State<DetailLessonScreen>
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                              "Discussions $number_discussions"),
+                                              "Discussions $numberDiscussions"),
                                           const Icon(Icons.unfold_more_outlined)
                                         ],
                                       ),

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/intro/screens/splash_screen.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:mbschool/features/autht/services/auth_service.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';

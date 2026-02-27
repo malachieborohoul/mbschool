@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/custom_categories_button.dart';
-import 'package:mbschool/common/widgets/custom_category_card.dart';
-import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/custom_heading.dart';
-import 'package:mbschool/common/widgets/custom_promotion_card.dart';
-import 'package:mbschool/common/widgets/custom_search_field.dart';
-import 'package:mbschool/common/widgets/custom_title.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/courses_json.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/animations/opacity_tween.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_categories_button.dart';
+import 'package:mbschool/core/common/widgets/custom_category_card.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/custom_heading.dart';
+import 'package:mbschool/core/common/widgets/custom_promotion_card.dart';
+import 'package:mbschool/core/common/widgets/custom_search_field.dart';
+import 'package:mbschool/core/common/widgets/custom_title.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_admin.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_teacher.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/datas/courses_json.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
@@ -31,7 +31,7 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatefulWidget {
   static const routeName = '/home';
 
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -82,9 +82,7 @@ class _HomeScreenState extends State<HomeScreen>
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
         ),
-        body: categories == null
-            ? const Loader()
-            : RefreshIndicator(
+        body: RefreshIndicator(
                 color: primary,
                 onRefresh: () async {
                   cours = courseManagerService.getAllPublishedCourses(context);

@@ -8,15 +8,20 @@ import 'package:mbschool/features/autht/screens/auth_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class IntroScreen extends StatefulWidget {
-  const IntroScreen({super.key});
-  static const routeName = "intro-screen";
+class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+    static route() => PageRouteBuilder(pageBuilder: (_, animation, __) {
+        return FadeTransition(
+          opacity: animation,
+          child: const OnboardingScreen(),
+        );
+      });
 
   @override
-  State<IntroScreen> createState() => _IntroScreenState();
+  State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _IntroScreenState extends State<IntroScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   late PageController _pageController;
   int currentIndex = 0;
   SharedPreferences? prefs;

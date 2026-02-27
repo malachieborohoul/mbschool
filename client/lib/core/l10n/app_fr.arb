@@ -1,0 +1,32 @@
+{
+  "@@locale": "fr",
+  "appTitle": "MBSchool",
+  "lbl_welcome": "Bienvenue",
+  "lbl_log_in": "Se connecter",
+  "lbl_sign_up": "S'inscrire",
+  "lbl_email_address": "Adresse Email",
+  "lbl_password": "Mot de passe",
+  "lbl_first_name": "Prénom",
+  "lbl_last_name": "Nom",
+  "msg_forgot_password": "Mot de passe oublié ?",
+  "msg_by_submitting": "En soumettant, j'accepte les",
+  "msg_terms_conditions": "Conditions Générales",
+  "phone_ipt_invalidNum": "Numéro de téléphone invalide",
+  "phone_ipt_searchText": "Rechercher un pays",
+  "lbl_loading": "Chargement...",
+  "lbl_logout": "Se déconnecter",
+  "lbl_profile": "Profil",
+  "lbl_favorites": "Favoris",
+  "lbl_settings": "Paramètres",
+  "lbl_no_favorites": "Aucun favori trouvé",
+  "lbl_course_details": "Détails du cours",  
+  "msg_are_you_sure_you_want_to_logout": "Êtes-vous sûr de vouloir vous déconnecter ?",
+  "lbl_cancel": "Annuler",
+  "lbl_yes_logout": "Oui, se déconnecter",
+  "lbl_oops_something_went_wrong": "Oups ! Quelque chose a mal tourné." ,
+  "lbl_please_try_again": "Veuillez réessayer.",
+  "lbl_try_again": "Réessayer"
+
+
+
+}

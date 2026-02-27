@@ -2,16 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/core/common/widgets/bottom_bar.dart';
 import 'package:mbschool/core/constants/colors.dart';
-import 'package:mbschool/features/autht/screens/auth_screen.dart';
+import 'package:mbschool/core/utils/pref_utils.dart';
+import 'package:mbschool/features/auth/presentation/screens/auth_screen.dart';
 import 'package:mbschool/features/autht/services/auth_service.dart';
-import 'package:mbschool/features/intro/screens/intro_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:mbschool/models/user.dart';
-import 'package:mbschool/providers/user_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -46,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
     //     _animationController.forward();
     //   }
     // });
-    getUserData();
+  
 
     _animationController.forward();
     _animationController.addStatusListener((status) {
@@ -60,41 +57,35 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
   }
 
-  void getUserData() async {
+  void init() async {
+    await Future.delayed(Duration.zero);
+    // if (ModalRoute.of(context)!.settings.arguments != null) {
+    //   HomeController homeController = Get.find<HomeController>();
+    //   homeController.onChange(0.obs);
+    //   Get.toNamed(AppRoutes.homeCardSliderScreen);
+    //   return;
+    // }
 
-    userFuture = authService.getUserData(context);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('x-auth-token');
 
-    setState(() {
-      // print("token ${token} ");
-      // print("verify code: ${userProvider.user.verify_code} ");
-      // print("token pro: ${userProvider.user.token} ");
 
-      // print(numberEntry.count);
-      // print(introApp.num);
+    Timer(const Duration(milliseconds: 2000), () async {
+      // bool isLogin = await PrefUtils.getLogin();
+      bool isIntro = await PrefUtils.getIntro();
 
-      // print("token $userProvider");
-      // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
-      // } else {
-      //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-      // }
+      await Future.delayed(Duration.zero);
 
-      // if (token == null) {
-      //   Navigator.pushReplacementNamed(context, IntroScreen.routeName);
-      // } else {
-      //   if (userProvider.user.token.isNotEmpty &&
-      //       userProvider.user.verify_code.isNotEmpty) {
-      //     Navigator.pushReplacementNamed(
-      //         context, VerificationScreen.routeName);
-      //   } else if (userProvider.user.token.isEmpty &&
-      //       userProvider.user.verify_code.isEmpty) {
-      //     Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-      //   } else if (userProvider.user.token.isNotEmpty &&
-      //       userProvider.user.verify_code.isEmpty) {
-      //     Navigator.pushReplacementNamed(context, BottomBar.routeName);
-      //   } else {}
-      // }
+      Timer(const Duration(seconds: 3), () {
+        if (isIntro) {
+          debugPrint("💡Navigating to Onboarding Screen");
+          Navigator.push(context, OnboardingScreen.route());
+
+        }  else {
+           debugPrint("💡Navigating to LoadingScreen ");
+
+                    Navigator.push(context, AuthScreen.route());
+
+        }
+      });
     });
   }
 
@@ -106,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    // final userProvider = Provider.of<UserProvider>(context, listen: false);
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     //   String? token = prefs.getString('x-auth-token');
 
@@ -154,43 +145,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     return Scaffold(
       body: Center(
-          child: FutureBuilder(
-              future: userFuture,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (token == null) {
-                    Future.delayed(const Duration(milliseconds: 0), () {
-                      Navigator.pushReplacementNamed(
-                          context, IntroScreen.routeName);
-                    });
-                  } else {
-                    if (userProvider.user.token.isNotEmpty &&
-                        userProvider.user.verify_code.isNotEmpty) {
-                      Future.delayed(const Duration(milliseconds: 0), () {
-                        Navigator.pushReplacementNamed(
-                            context, VerificationScreen.routeName);
-                      });
-                    } else if (userProvider.user.token.isEmpty &&
-                        userProvider.user.verify_code.isEmpty) {
-                      Future.delayed(const Duration(milliseconds: 0), () {
-                        Navigator.pushReplacementNamed(
-                            context, AuthScreen.routeName);
-                      });
-                    } else if (userProvider.user.token.isNotEmpty &&
-                        userProvider.user.verify_code.isEmpty) {
-                      Future.delayed(const Duration(milliseconds: 0), () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return Panel();
-                        // }));
-                        Navigator.pushReplacementNamed(
-                            context, BottomBar.routeName);
-                      });
-                    }
-                  }
-                  return Container();
-                } else {
-                  return Column(
+          child: 
+          Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -209,9 +165,8 @@ class _SplashScreenState extends State<SplashScreen>
                       //   child: Loader(),
                       // )
                     ],
-                  );
-                }
-              })),
+                  )
+              ),
     );
   }
 }

@@ -1,0 +1,116 @@
+{
+  "@@locale": "en",
+    "appTitle": "MBSchool",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "lbl_welcome": "Welcome",
+  "@lbl_welcome": {
+    "description": "Welcome message displayed on the authentication screen"
+  },
+  "lbl_log_in": "Log In",
+  "@lbl_log_in": {
+    "description": "Text for the login tab and login button"
+  },
+  "lbl_sign_up": "Sign Up",
+  "@lbl_sign_up": {
+    "description": "Text for the registration tab and signup button"
+  },
+  "lbl_email_address": "Email Address",
+  "@lbl_email_address": {
+    "description": "Label for the email input field"
+  },
+  "lbl_password": "Password",
+  "@lbl_password": {
+    "description": "Label for the password input field"
+  },
+  "lbl_first_name": "First Name",
+  "@lbl_first_name": {
+    "description": "Label for the first name input field"
+  },
+  "lbl_last_name": "Last Name",
+  "@lbl_last_name": {
+    "description": "Label for the last name input field"
+  },
+  "msg_forgot_password": "Forgot Password?",
+  "@msg_forgot_password": {
+    "description": "Link text for password recovery"
+  },
+  "msg_by_submitting": "By submitting, I agree to the",
+  "@msg_by_submitting": {
+    "description": "Legal disclaimer prefix for terms of service"
+  },
+  "msg_terms_conditions": "Terms & Conditions",
+  "@msg_terms_conditions": {
+    "description": "Hyperlink text for the terms and conditions"
+  },
+  "phone_ipt_invalidNum": "Invalid phone number",
+  "@phone_ipt_invalidNum": {
+    "description": "Error message for incorrect phone format"
+  },
+  "phone_ipt_searchText": "Search for a country",
+  "@phone_ipt_searchText": {
+    "description": "Placeholder for the country picker search bar"
+  },
+
+  "lbl_loading": "Loading...",
+  "@lbl_loading": {
+    "description": "Loading message displayed during app initialization"
+  },
+
+
+  "lbl_logout": "Logout",
+  "@lbl_logout": {
+    "description": "Text for the logout button in the user profile"
+  },
+    "lbl_profile": "Profile",
+    "@lbl_profile": {
+    "description": "Label for the user profile section"
+    },
+    "lbl_favorites": "Favorites",
+    "@lbl_favorites": {
+    "description": "Label for the user's favorite courses section"
+    },
+    "lbl_settings": "Settings",
+    "@lbl_settings": {
+    "description": "Label for the application settings section"
+    },
+    "lbl_no_favorites": "No favorites found",
+    "@lbl_no_favorites": {
+    "description": "Message displayed when the user has no favorite courses"
+    },
+    "lbl_course_details": "Course Details",
+    "@lbl_course_details": {
+    "description": "Title for the course details screen"},
+
+    "msg_are_you_sure_you_want_to_logout": "Are you sure you want to logout?",
+    "@msg_are_you_sure_you_want_to_logout": {
+    "description": "Confirmation message when the user attempts to log out"
+    },
+
+    "lbl_yes_logout": "Yes, Logout",
+    "@lbl_yes_logout": {
+    "description": "Text for the confirmation button to proceed with logout"
+    },
+    "lbl_cancel": "Cancel",
+    "@lbl_cancel": {
+    "description": "Text for the cancel button in the logout confirmation dialog"
+    },
+    "lbl_oops_something_went_wrong": "Oops! Something went wrong.",
+    "@lbl_oops_something_went_wrong": {
+    "description": "Generic error message displayed when an unexpected error occurs"
+    },
+
+    "lbl_please_try_again": "Please try again.",
+    "@lbl_please_try_again": {
+    "description": "Message prompting the user to retry an action after an error"   
+    },
+
+    "lbl_try_again": "Try Again",
+    "@lbl_try_again": {
+    "description": "Text for the button that allows users to retry an action after an error"
+    }
+
+
+
+}

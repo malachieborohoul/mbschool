@@ -12,7 +12,7 @@ import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/global.dart';
 import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/core/constants/utils.dart';
-import 'package:mbschool/features/intro/screens/splash_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/splash_screen.dart';
 
 enum Auth {
   sign_up,

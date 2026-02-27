@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mbschool/core/common/animations/slide_transition_page.dart';
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
@@ -8,7 +9,12 @@ import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
-  static const routeName = '/bottom-bar';
+    static PageRouteBuilder<dynamic> route() => PageRouteBuilder(pageBuilder: (_, animation, __) {
+        return SlideTransitionPage(
+          page: const BottomBar(),
+          animation: animation,
+        );
+      });
   const BottomBar({super.key});
 
   @override

@@ -12,7 +12,7 @@ import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class NavigatorDrawerAdmin extends StatelessWidget {
-  const NavigatorDrawerAdmin({Key? key}) : super(key: key);
+  const NavigatorDrawerAdmin({super.key});
 
   void logOut(BuildContext context) {
     accountService.logOut(context);
@@ -84,7 +84,7 @@ class NavigatorDrawerAdmin extends StatelessWidget {
               leading: const Icon(Icons.home_outlined),
               title: const Text('Accueil'),
               onTap: () {
-                Navigator.pushNamed(context, BottomBar.routeName);
+                Navigator.push(context, BottomBar.route());
               },
             ),
             ListTile(

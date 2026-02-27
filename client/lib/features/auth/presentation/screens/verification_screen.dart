@@ -55,7 +55,7 @@ class _VerificationScreenState extends State<VerificationScreen>
           parent: _animationController, curve: Curves.easeInOutExpo),
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          Navigator.pushReplacementNamed(context, BottomBar.routeName);
+          Navigator.pushReplacement(context, BottomBar.route());
         }
       });
 

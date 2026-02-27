@@ -1,8 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mbschool/core/constants/utils.dart';
-import 'package:mbschool/features/intro/screens/splash_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/splash_screen.dart';
 import 'package:mbschool/features/autht/services/auth_service.dart';
+import 'package:mbschool/init_dependencies.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
@@ -14,7 +15,10 @@ import 'package:mbschool/providers/user_provider.dart';
 import 'package:mbschool/router.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+
+    WidgetsFlutterBinding.ensureInitialized();
+await initDependencies();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => UserProvider()),

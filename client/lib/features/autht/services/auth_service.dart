@@ -9,7 +9,7 @@ import 'package:mbschool/core/constants/error_handling.dart';
 import 'package:mbschool/core/constants/global.dart';
 import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/autht/screens/auth_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mbschool/models/user.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -100,8 +100,8 @@ class AuthService {
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
             onSuccess();
-            Navigator.pushNamedAndRemoveUntil(
-                context, BottomBar.routeName, (route) => false);
+            Navigator.pushAndRemoveUntil(
+                context, BottomBar.route(), (route) => false);
           },
           onFailed: () {
             onSuccess();

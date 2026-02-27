@@ -16,7 +16,7 @@ import 'package:mbschool/models/user.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = "search-screen";
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();

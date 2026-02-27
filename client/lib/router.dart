@@ -21,8 +21,7 @@ import 'package:mbschool/features/course/screens/rate_course_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
-import 'package:mbschool/features/intro/screens/intro_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/editLecon.dart';
 import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
@@ -182,12 +181,7 @@ return PageTransition(
           ),
           type: PageTransitionType.fade);
 
-    case IntroScreen.routeName:
-      return PageTransition(
-          settings: routeSettings,
-          child: const IntroScreen(),
-          curve: Curves.easeOut,
-          type: PageTransitionType.rightToLeft);
+
 
     case VerificationScreen.routeName:
       return PageTransition(

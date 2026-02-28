@@ -5,11 +5,11 @@ import 'package:mbschool/models/commentaire.dart';
 
 class CustomLessonCommentaires extends StatefulWidget {
   const CustomLessonCommentaires({
-    Key? key,
+    super.key,
     this.icon = false,
     required this.commentaire,
     this.reponse = false,
-  }) : super(key: key);
+  });
   final bool icon;
   final bool reponse;
   final Commentaire? commentaire;
@@ -55,7 +55,7 @@ class _CustomLessonCommentairesState extends State<CustomLessonCommentaires> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(100)),
                       child: Image.asset(
-                        UserProfile['image'].toString(),
+                        userProfile['image'].toString(),
                         width: 50,
                         height: 50,
                       ),

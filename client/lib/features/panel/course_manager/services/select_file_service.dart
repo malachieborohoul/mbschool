@@ -17,9 +17,9 @@ class SelectFileService {
       BuildContext context,
       String titre,
       String resume,
-      String id_cours,
-      int id_section,
-      int id_type_lecon,
+      String idCours,
+      int idSection,
+      int idTypeLecon,
       PlatformFile fichier,
       VoidCallback onSuccess) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -39,9 +39,9 @@ class SelectFileService {
               body: jsonEncode({
                 'titre': titre,
                 'resume': resume,
-                'id_cours': int.parse(id_cours),
-                'id_section': id_section,
-                'id_type_lecon': id_type_lecon,
+                'idCours': int.parse(idCours),
+                'idSection': idSection,
+                'idTypeLecon': idTypeLecon,
                 'url': url
               }));
 
@@ -76,9 +76,9 @@ class SelectFileService {
       BuildContext context,
       String titre,
       String resume,
-      String id_cours,
-      int id_section,
-      int id_type_lecon,
+      String idCours,
+      int idSection,
+      int idTypeLecon,
       String lienYoutube,
       VoidCallback onSuccess) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -94,9 +94,9 @@ class SelectFileService {
               body: jsonEncode({
                 'titre': titre,
                 'resume': resume,
-                'id_cours': int.parse(id_cours),
-                'id_section': id_section,
-                'id_type_lecon': id_type_lecon,
+                'idCours': int.parse(idCours),
+                'idSection': idSection,
+                'idTypeLecon': idTypeLecon,
                 'url': lienYoutube
               }));
 

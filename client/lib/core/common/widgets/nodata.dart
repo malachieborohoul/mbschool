@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/core/constants/utils.dart';
 
 class NoData extends StatelessWidget {
-  const NoData({Key? key}) : super(key: key);
+  const NoData({super.key});
 
   @override
   Widget build(BuildContext context) {

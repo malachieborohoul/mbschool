@@ -8,7 +8,7 @@ import 'package:mbschool/features/admin/users/services/users_manager_service.dar
 import 'package:mbschool/models/user.dart';
 
 class ModifyRole extends StatefulWidget {
-  const ModifyRole({Key? key, required this.user}) : super(key: key);
+  const ModifyRole({super.key, required this.user});
 
   final User user;
 

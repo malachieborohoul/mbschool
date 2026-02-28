@@ -1,9 +1,9 @@
 import 'package:mbschool/core/datas/category_list_json.dart';
 
-const List HomePageCategoryJson = [
+const List homePageCategoryJson = [
   {
     'icon': 'assets/images/code_icon.svg',
-    'title': 'Code',
+    'title': 'code',
   },
   {
     'icon': 'assets/images/brush_icon.svg',
@@ -16,10 +16,10 @@ const List HomePageCategoryJson = [
   
 ];
 
-const List CategoryJson = [
+const List categoryJson = [
   {
     'icon': 'assets/images/code_icon.svg',
-    'title': 'Code',
+    'title': 'code',
   },
   {
     'icon': 'assets/images/bag_icon.svg',
@@ -43,7 +43,7 @@ const List CategoryJson = [
   },
 ];
 
-const List CategoryJson2 = [
+const List categoryJson2 = [
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Photography & Video',
@@ -70,65 +70,65 @@ const List CategoryJson2 = [
   },
 ];
 
-const List AllCategories = [
+const List allCategories = [
   {
     'icon': 'assets/images/code_icon.svg',
-    'title': 'Code',
-    'data': Code,
+    'title': 'code',
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Finance & Accounting',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/brush_icon.svg',
     'title': 'Design',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Development',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Business',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'IT & Software',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Photography & Video',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Marketing',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Lifestyle',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Office Productivity',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Music',
-    'data': Code,
+    'data': code,
   },
   {
     'icon': 'assets/images/bag_icon.svg',
     'title': 'Personal Development',
-    'data': Code,
+    'data': code,
   },
 ];

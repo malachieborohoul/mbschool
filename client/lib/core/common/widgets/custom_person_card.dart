@@ -4,12 +4,12 @@ import 'package:mbschool/core/datas/user_profile.dart';
 
 class CustomPersonCard extends StatelessWidget {
   const CustomPersonCard({
-    Key? key,
+    super.key,
     required this.image,
     required this.name,
     required this.totalCourses,
     required this.totalStudents,
-  }) : super(key: key);
+  });
 
   final String image;
   final String name;
@@ -42,7 +42,7 @@ class CustomPersonCard extends StatelessWidget {
                     child: image.isNotEmpty
                         ? Image.network(image, fit: BoxFit.cover)
                         : Image.asset(
-                            UserProfile['image'].toString(),
+                            userProfile['image'].toString(),
                             width: 100,
                             height: 100,
                           ),

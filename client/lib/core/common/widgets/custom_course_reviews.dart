@@ -6,8 +6,7 @@ import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/models/notation_cours.dart';
 
 class CustomCourseReviews extends StatefulWidget {
-  const CustomCourseReviews({Key? key, required this.notationCours})
-      : super(key: key);
+  const CustomCourseReviews({super.key, required this.notationCours});
   final NotationCours notationCours;
   @override
   State<CustomCourseReviews> createState() => _CustomCourseReviewsState();
@@ -33,7 +32,7 @@ class _CustomCourseReviewsState extends State<CustomCourseReviews> {
                   : CircleAvatar(
                     backgroundColor: grey,
                       backgroundImage:
-                          AssetImage(UserProfile['image'].toString()),
+                          AssetImage(userProfile['image'].toString()),
                     ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),

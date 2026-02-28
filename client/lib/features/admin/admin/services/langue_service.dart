@@ -47,7 +47,7 @@ class LangueService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_langue': langue.id_langue}));
+              body: jsonEncode({'id_langue': langue.idLangue}));
 
       httpErrorHandle(
           response: resaddLangue,
@@ -72,7 +72,7 @@ class LangueService {
         },
         body: jsonEncode(
           {
-            'id_langue': langue.id_langue,
+            'id_langue': langue.idLangue,
             'nom': nom,
           },
         ),

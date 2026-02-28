@@ -6,15 +6,14 @@ class CustomTextFieldExigence extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
-  final maxLines;
+  final int maxLines;
   const CustomTextFieldExigence(
-      {Key? key,
+      {super.key,
       required this.hintText,
       required this.controller,
       this.keyboardType,
       this.maxLines =1
-      })
-      : super(key: key);
+      });
 
   @override
   Widget build(BuildContext context) {

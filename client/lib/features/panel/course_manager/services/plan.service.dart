@@ -24,7 +24,7 @@ class PlanService {
         },
         body: jsonEncode({
           'titre': titreSection,
-          'id_cours': double.parse(cours.id_cours),
+          'id_cours': double.parse(cours.idCours),
         }),
       );
 

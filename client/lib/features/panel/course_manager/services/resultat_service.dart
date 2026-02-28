@@ -21,7 +21,7 @@ class ResultatService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'titre': titre, 'id_cours': cours.id_cours}));
+              body: jsonEncode({'titre': titre, 'id_cours': cours.idCours}));
 
       httpErrorHandle(
           response: resAddResultat,
@@ -39,7 +39,7 @@ class ResultatService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response resultatRes = await http.get(
-        Uri.parse('$uri/getAllResultats/${cours.id_cours}'),
+        Uri.parse('$uri/getAllResultats/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -78,7 +78,7 @@ class ResultatService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_resultat': exigence.id_resultat}));
+              body: jsonEncode({'id_resultat': exigence.idResultat}));
 
       httpErrorHandle(
           response: resAddResultat,

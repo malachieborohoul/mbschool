@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 class Langue {
-  final String id_langue;
+  final String idLangue;
   final String nom;
 
 
   Langue(
-      {required this.id_langue,
+      {required this.idLangue,
       required this.nom,
  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_langue': id_langue,
+      'idLangue': idLangue,
       'nom': nom,
       
     };
@@ -20,7 +20,7 @@ class Langue {
 
   factory Langue.fromMap(Map<String, dynamic> map) {
     return Langue(
-      id_langue: map['id_langue'] ?? '',
+      idLangue: map['idLangue'] ?? '',
       nom: map['nom'] ?? '',
       
     );

@@ -13,7 +13,7 @@ import 'package:mbschool/models/notation_cours.dart';
 
 class CustomCourseCardExpand extends StatefulWidget {
   const CustomCourseCardExpand({
-    Key? key,
+    super.key,
     required this.thumbNail,
     required this.videoAmount,
     required this.title,
@@ -21,7 +21,7 @@ class CustomCourseCardExpand extends StatefulWidget {
     required this.userName,
     required this.price,
     required this.cours,
-  }) : super(key: key);
+  });
 
   final Widget thumbNail;
   final String videoAmount;
@@ -32,10 +32,10 @@ class CustomCourseCardExpand extends StatefulWidget {
   final Cours cours;
 
   @override
-  _CustomCourseCardExpandState createState() => _CustomCourseCardExpandState();
+  CustomCourseCardExpandState createState() => CustomCourseCardExpandState();
 }
 
-class _CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
+class CustomCourseCardExpandState extends State<CustomCourseCardExpand> {
   CourseManagerService courseManagerService = CourseManagerService();
   RateCourseService rateCourseService = RateCourseService();
 
@@ -161,7 +161,7 @@ double averageRate=0.0;
                             child: widget.userProfile.isNotEmpty? Image.network(
                               widget.userProfile,
                               fit: BoxFit.cover,
-                            ): Image.asset(UserProfile['image'].toString()),
+                            ): Image.asset(userProfile['image'].toString()),
                           ),
                         ),
                       ),
@@ -212,13 +212,13 @@ double averageRate=0.0;
 
 class CustomCourseCardShrink extends StatefulWidget {
   const CustomCourseCardShrink({
-    Key? key,
+    super.key,
     required this.thumbNail,
     required this.title,
     required this.nom,
     required this.prenom,
     required this.price,
-  }) : super(key: key);
+  });
 
   final String thumbNail;
   final String title;
@@ -227,10 +227,10 @@ class CustomCourseCardShrink extends StatefulWidget {
   final String price;
 
   @override
-  _CustomCourseCardShrinkState createState() => _CustomCourseCardShrinkState();
+  CustomCourseCardShrinkState createState() => CustomCourseCardShrinkState();
 }
 
-class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
+class CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -337,18 +337,17 @@ class _CustomCourseCardShrinkState extends State<CustomCourseCardShrink> {
 }
 
 class CustomFavoriteCourseCard extends StatefulWidget {
-  const CustomFavoriteCourseCard({Key? key, required this.cours})
-      : super(key: key);
+  const CustomFavoriteCourseCard({super.key, required this.cours});
 
   final Cours cours;
 
   @override
-  _CustomFavoriteCourseCardState createState() =>
-      _CustomFavoriteCourseCardState();
+  CustomFavoriteCourseCardState createState() =>
+      CustomFavoriteCourseCardState();
 }
 
-class _CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
-  CourseManagerService _courseManagerService = CourseManagerService();
+class CustomFavoriteCourseCardState extends State<CustomFavoriteCourseCard> {
+  final CourseManagerService _courseManagerService = CourseManagerService();
   void removeCoursToFavorite(Cours cours) {
     _courseManagerService.removeCoursToFavorite(context, cours, () {
       setState(() {});

@@ -95,7 +95,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                                 Provider.of<CoursProvider>(
                                                         context,
                                                         listen: false)
-                                                    .set_cours(
+                                                    .setCoursObject(
                                                         snapshot.data![index]);
                                               },
                                               child: CustomFavoriteCourseCard(

@@ -15,13 +15,13 @@ import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/auth/presentation/screens/splash_screen.dart';
 
 enum Auth {
-  sign_up,
+  signUp,
   login,
 }
 
 class AuthScreen extends StatefulWidget {
   static const routeName = '/auth';
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -33,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
   bool isCharging = false;
 
   TextEditingController cPasswordController = TextEditingController();
-  Auth _auth = Auth.sign_up;
+  Auth _auth = Auth.signUp;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -138,7 +138,7 @@ class _AuthScreenState extends State<AuthScreen> {
             elevation: 0,
             backgroundColor: Colors.transparent,
           ),
-          body: _auth == Auth.sign_up
+          body: _auth == Auth.signUp
               ?
               //SIGNUPSCREEN
               SingleChildScrollView(
@@ -411,7 +411,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      _auth = Auth.sign_up;
+                                      _auth = Auth.signUp;
                                       setState(() {});
                                     },
                                     child: const Text(

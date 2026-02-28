@@ -13,7 +13,6 @@ class UserModel extends User {
     required super.email,
     required super.password,
     required super.role,
-    required super.statut_users,
     required super.photo,
     required super.sexe,
     required super.localisation,
@@ -22,8 +21,7 @@ class UserModel extends User {
     required super.numCompte,
     required super.cv,
     required super.token,
-    required super.verify_code, 
-    required super.verification_status,
+    required super.statutUsers, required super.verifyCode, required super.verificationStatus,
 
 
    });
@@ -39,7 +37,7 @@ class UserModel extends User {
       'email': email,
       'password': password,
       'role': role,
-      'statut_users': statut_users,
+      'statut_users': statutUsers,
       'photo': photo,
       'sexe': sexe,
       'localisation': localisation,
@@ -48,8 +46,8 @@ class UserModel extends User {
       'numCompte': numCompte,
       'cv': cv,
       'token': token,
-      'verify_code': verify_code,
-      'verification_status': verification_status,
+      'verify_code': verifyCode,
+      'verification_status': verificationStatus,
     };
   }
 
@@ -61,7 +59,7 @@ class UserModel extends User {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       role: map['role'] ?? 0,
-      statut_users: map['statut_users'] ?? '',
+      statutUsers: map['statut_users'] ?? 0,
       photo: map['photo'] ?? '',
       sexe: map['sexe'] ?? '',
       localisation: map['localisation'] ?? '',
@@ -70,8 +68,8 @@ class UserModel extends User {
       numCompte: map['numCompte'] ?? '',
       cv: map['cv'] ?? '',
       token: map['token'] ?? '',
-      verify_code: map['verify_code'] ?? '',
-      verification_status: map['verification_status'] ?? false,
+      verifyCode: map['verify_code'] ?? '',
+      verificationStatus: map['verification_status'] ?? false,
     );
   }
 
@@ -88,7 +86,7 @@ class UserModel extends User {
     email: '_empty.email',
     password: '_empty.password',           
     role: '_empty.role',
-    statut_users: 0,
+    statutUsers: 0,
     photo: '_empty.photo',        
     sexe: '_empty.sexe',
     localisation: '_empty.localisation',
@@ -97,8 +95,8 @@ class UserModel extends User {
     numCompte: '_empty.numCompte',
     cv: '_empty.cv',
     token: '_empty.token',
-    verify_code: '_empty.verify_code',
-    verification_status: false,
+    verifyCode: '_empty.verify_code',
+    verificationStatus: false,
 
             );
 
@@ -108,7 +106,7 @@ class UserModel extends User {
     String? lastName,
     String? email,
     String? phone,
-    int? code_verify_status,
+    int? codeVerifyStatus,
     double? balance,
   
     String? avatar,
@@ -117,23 +115,23 @@ class UserModel extends User {
   }) {
     return UserModel(
       id: id ?? this.id,
-      nom: firstName ?? this.nom,   
-      prenom: lastName ?? this.prenom,
+      nom: firstName ?? nom,   
+      prenom: lastName ?? prenom,
       email: email ?? this.email,
       password: password,
       role: role,
-      statut_users: statut_users,
-      photo: avatar ?? this.photo,
+      statutUsers: statutUsers ,
+      photo: avatar ?? photo,
       sexe: sexe,
 
       localisation: localisation,
-      telephone: phone ?? this.telephone,
+      telephone: phone ?? telephone,
       qualification: qualification,
       numCompte: numCompte,
       cv: cv,
       token: token,
-      verify_code: verify_code, 
-      verification_status: verification_status,
+      verifyCode: verifyCode , 
+      verificationStatus: verificationStatus ,
     );
   }
 }

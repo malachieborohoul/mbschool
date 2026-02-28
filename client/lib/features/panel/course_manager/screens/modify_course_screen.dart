@@ -56,7 +56,7 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
 
     titreCoursController.text = widget.cours.titre;
     descriptionCoursController.text = widget.cours.description;
-    descriptionCourteCoursController.text = widget.cours.description_courte;
+    descriptionCourteCoursController.text = widget.cours.descriptionCourte;
     prixCoursController.text = widget.cours.prix;
   }
 
@@ -96,9 +96,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     descriptionCourteCoursController.dispose();
   }
 
-  int id_categorie = 0;
-  int id_niveau = 0;
-  int id_langue = 0;
+  int idCategorie = 0;
+  int idNiveau = 0;
+  int idLangue = 0;
 
   bool isCharging = false;
 
@@ -110,10 +110,10 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     //       return Text("data");
     //     });
 
-    // String dropdownvalue_niveau = widget.cours.id_niveau;
+    // String dropdownvalue_niveau = widget.cours.idNiveau;
 
-    // String dropdownvalue_langue = widget.cours.id_langue;
-    // String dropdownvalue_categorie = widget.cours.id_categorie;
+    // String dropdownvalue_langue = widget.cours.idLangue;
+    // String dropdownvalue_categorie = widget.cours.idCategorie;
     String? dropdownvalueNiveau;
 
     String? dropdownvalueLangue;
@@ -133,8 +133,8 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
     }
 
     if (descriptionCourteCoursController.text ==
-        widget.cours.description_courte) {
-      descriptionCourteCoursController.text = widget.cours.description_courte;
+        widget.cours.descriptionCourte) {
+      descriptionCourteCoursController.text = widget.cours.descriptionCourte;
     } else {
       descriptionCourteCoursController.text =
           descriptionCourteCoursController.text;
@@ -152,9 +152,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
             titreCoursController.text,
             descriptionCoursController.text,
             descriptionCourteCoursController.text,
-            id_categorie,
-            id_niveau,
-            id_langue,
+            idCategorie,
+            idNiveau,
+            idLangue,
             prixCoursController.text,
             urlVignette,
             widget.cours, () {
@@ -170,9 +170,9 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
             titreCoursController.text,
             descriptionCoursController.text,
             descriptionCourteCoursController.text,
-            id_categorie,
-            id_niveau,
-            id_langue,
+            idCategorie,
+            idNiveau,
+            idLangue,
             prixCoursController.text,
             vignette!,
             widget.cours, () {
@@ -265,17 +265,17 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une catégorie"),
-                            initialValue: widget.cours.id_categorie,
+                            initialValue: widget.cours.idCategorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
-                                value: item.id_categorie,
+                                value: item.idCategorie,
                                 child: Text(item.nom),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalueCategorie = val!;
-                                id_categorie =
+                                idCategorie =
                                     int.parse(dropdownvalueCategorie!);
 
                                 // titreCoursController.text =
@@ -313,17 +313,17 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner un niveau"),
-                            initialValue: widget.cours.id_niveau,
+                            initialValue: widget.cours.idNiveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
-                                value: item.id_niveau,
+                                value: item.idNiveau,
                                 child: Text(item.titre),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalueNiveau = val!;
-                                id_niveau = int.parse(dropdownvalueNiveau!);
+                                idNiveau = int.parse(dropdownvalueNiveau!);
                               });
                             }),
                         const SizedBox(
@@ -353,17 +353,17 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une langue"),
-                            initialValue: widget.cours.id_langue,
+                            initialValue: widget.cours.idLangue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
-                                value: item.id_langue,
+                                value: item.idLangue,
                                 child: Text(item.nom),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 dropdownvalueLangue = val!;
-                                id_langue = int.parse(dropdownvalueLangue!);
+                                idLangue = int.parse(dropdownvalueLangue!);
                               });
                             }),
                         const SizedBox(
@@ -455,26 +455,26 @@ class _ModifyCourseScreenState extends State<ModifyCourseScreen> {
                                 // } else {
                                 setState(() {
                                   isCharging = true;
-                                  if (id_categorie == 0) {
-                                    id_categorie =
-                                        int.parse(widget.cours.id_categorie);
+                                  if (idCategorie == 0) {
+                                    idCategorie =
+                                        int.parse(widget.cours.idCategorie);
                                   }
-                                  if (id_niveau == 0) {
-                                    id_niveau =
-                                        int.parse(widget.cours.id_niveau);
+                                  if (idNiveau == 0) {
+                                    idNiveau =
+                                        int.parse(widget.cours.idNiveau);
                                   }
-                                  if (id_langue == 0) {
-                                    id_langue =
-                                        int.parse(widget.cours.id_langue);
+                                  if (idLangue == 0) {
+                                    idLangue =
+                                        int.parse(widget.cours.idLangue);
                                   }
                                 });
                                 modifyCourse();
                                 // }
                                 //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
 
-                                // print("cat $id_categorie");
-                                // print("lan $id_langue");
-                                // print("niv $id_niveau");
+                                // print("cat $idCategorie");
+                                // print("lan $idLangue");
+                                // print("niv $idNiveau");
                               }
                             },
                             child: const CustomButtonBox(title: "Modifier")),

@@ -124,14 +124,14 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                                       arguments: snapshot.data![index]);
                                   Provider.of<CoursProvider>(context,
                                           listen: false)
-                                      .set_cours(snapshot.data![index]);
+                                      .setCoursObject(snapshot.data![index]);
                                 },
                                 child: CustomCourseCardExpand(
                                   thumbNail: Image.network(
                                     snapshot.data![index].vignette,
                                     fit: BoxFit.cover,
                                   ),
-                                  videoAmount: CoursesJson[index]['video'],
+                                  videoAmount: coursesJson[index]['video'],
                                   title: snapshot.data![index].titre,
                                   userProfile: snapshot.data![index].photo,
                                   userName: snapshot.data![index].nom,
@@ -212,7 +212,7 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                                 image: snapshot.data![index].photo,
                                 name: fullName,
                                 totalCourses:
-                                    snapshot.data![index].nombre_cours,
+                                    snapshot.data![index].nombreCours,
                                 totalStudents: "4");
                           });
                         },

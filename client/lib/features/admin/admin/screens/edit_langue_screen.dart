@@ -12,7 +12,7 @@ import 'package:mbschool/models/section.dart';
 class EditLangueScreen extends StatefulWidget {
   static const routeName = '/edit-langue-screen';
 
-  const EditLangueScreen({Key? key, required this.langue}) : super(key: key);
+  const EditLangueScreen({super.key, required this.langue});
   final Langue langue;
 
   @override

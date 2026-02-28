@@ -7,7 +7,7 @@ class User {
   final String email;
   final String password;
   final String role;
-  final String statut_users;
+  final String statutUsers;
   final String photo;
   final String sexe;
   final String localisation;
@@ -16,7 +16,7 @@ class User {
   final String numCompte;
   final String cv;
   final String token;
-  final String verify_code;
+  final String verifyCode;
 
   User( {
     required this.id,
@@ -25,7 +25,7 @@ class User {
     required this.email,
     required this.password,
     required this.role,
-    required this.statut_users,
+    required this.statutUsers,
     required this.photo,
     required this.sexe,
     required this.localisation,
@@ -34,7 +34,7 @@ class User {
     required this.numCompte,
     required this.cv,
     required this.token,
-    required this.verify_code,
+    required this.verifyCode,
   });
 
   Map<String, dynamic> toMap() {
@@ -45,7 +45,7 @@ class User {
       'email': email,
       'password': password,
       'role': role,
-      'statut_users': statut_users,
+      'statutUsers': statutUsers,
       'photo': photo,
       'sexe': sexe,
       'localisation': localisation,
@@ -54,7 +54,7 @@ class User {
       'numCompte': numCompte,
       'cv': cv,
       'token': token,
-      'verify_code': verify_code,
+      'verifyCode': verifyCode,
     };
   }
 
@@ -66,7 +66,7 @@ class User {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       role: map['role'] ?? 0,
-      statut_users: map['statut_users'] ?? '',
+      statutUsers: map['statutUsers'] ?? '',
       photo: map['photo'] ?? '',
       sexe: map['sexe'] ?? '',
       localisation: map['localisation'] ?? '',
@@ -75,7 +75,7 @@ class User {
       numCompte: map['numCompte'] ?? '',
       cv: map['cv'] ?? '',
       token: map['token'] ?? '',
-      verify_code: map['verify_code'] ?? '',
+      verifyCode: map['verifyCode'] ?? '',
     );
   }
 

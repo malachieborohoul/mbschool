@@ -1,34 +1,34 @@
 import 'dart:convert';
 
 class Cours {
-  final String id_cours;
+  final String idCours;
   final String titre;
   final String vignette;
   final double statut;
   final String description;
-  final String description_courte;
-  final String id_users;
+  final String descriptionCourte;
+  final String idUsers;
   final String nom;
   final String prenom;
   final String photo;
   final String prix;
-  final String id_categorie;
-  final String id_langue;
-  final String id_niveau;
+  final String idCategorie;
+  final String idLangue;
+  final String idNiveau;
   
 
   Cours( {
-    required this.id_cours,
+    required this.idCours,
     required this.titre,
     required this.vignette,
     required this.statut,
     required this.description,
-    required this.description_courte,
-    required this.id_users,
+    required this.descriptionCourte,
+    required this.idUsers,
     required this.prix,
-    required this.id_categorie,
-    required this.id_langue,
-    required this.id_niveau,
+    required this.idCategorie,
+    required this.idLangue,
+    required this.idNiveau,
     required this.nom, 
     required this.prenom, 
     required this.photo,
@@ -36,39 +36,39 @@ class Cours {
 
   Map<String, dynamic> toMap() {
     return {
-      'id_cours': id_cours,
+      'idCours': idCours,
       'titre': titre,
       'vignette': vignette,
       'statut': statut,
       'description': description,
-      'description_courte': description_courte,
-      'id_users': id_users,
+      'descriptionCourte': descriptionCourte,
+      'idUsers': idUsers,
       'nom': nom,
       'prenom': prenom,
       'photo': photo,
       'prix': prix,
-      'id_categorie': id_categorie,
-      'id_langue': id_langue,
-      'id_niveau': id_niveau,
+      'idCategorie': idCategorie,
+      'idLangue': idLangue,
+      'idNiveau': idNiveau,
     };
   }
 
   factory Cours.fromMap(Map<String, dynamic> map) {
     return Cours(
-      id_cours: map['id_cours'] ?? '',
+      idCours: map['idCours'] ?? '',
       titre: map['titre'] ?? '',
       vignette: map['vignette'] ?? '',
       statut: map['statut']?.toDouble() ?? 0.0,
       description: map['description'] ?? '',
-      description_courte: map['description_courte'] ?? '',
-      id_users: map['id_users'] ?? '',
+      descriptionCourte: map['descriptionCourte'] ?? '',
+      idUsers: map['idUsers'] ?? '',
       nom: map['nom'] ?? '',
       prenom: map['prenom'] ?? '',
       photo: map['photo'] ?? '',
       prix: map['prix'] ?? '',
-      id_categorie: map['id_categorie'] ?? '',
-      id_langue: map['id_langue'] ?? '',
-      id_niveau: map['id_niveau'] ?? '',
+      idCategorie: map['idCategorie'] ?? '',
+      idLangue: map['idLangue'] ?? '',
+      idNiveau: map['idNiveau'] ?? '',
 
     );
   }

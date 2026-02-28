@@ -17,8 +17,7 @@ import 'package:provider/provider.dart';
 
 class CourseCommentaireScreen extends StatefulWidget {
   const CourseCommentaireScreen(
-      {Key? key, required this.controller, required this.lecon})
-      : super(key: key);
+      {super.key, required this.controller, required this.lecon});
 
   final ScrollController? controller;
   final Lecon lecon;
@@ -130,7 +129,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(100)),
                                   child: Image.asset(
-                                    UserProfile['image'].toString(),
+                                    userProfile['image'].toString(),
                                     width: 50,
                                     height: 50,
                                   ),

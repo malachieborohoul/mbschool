@@ -16,7 +16,7 @@ class ModifyCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -40,14 +40,14 @@ class ModifyCourseService {
               body: jsonEncode({
                 'titre': titre,
                 'description': description,
-                'description_courte': description_courte,
+                'descriptionCourte': descriptionCourte,
                 'id_categorie': categorie,
                 'id_niveau': niveau,
                 'id_langue': langue,
                 'id_users': int.parse(userProvider.user.id),
                 'prix': prix,
                 'vignette': url,
-                'id_cours': int.parse(cours.id_cours)
+                'id_cours': int.parse(cours.idCours)
               }));
 
       httpErrorHandle(
@@ -64,7 +64,7 @@ class ModifyCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -84,14 +84,14 @@ class ModifyCourseService {
               body: jsonEncode({
                 'titre': titre,
                 'description': description,
-                'description_courte': description_courte,
+                'descriptionCourte': descriptionCourte,
                 'id_categorie': categorie,
                 'id_niveau': niveau,
                 'id_langue': langue,
                 'id_users': int.parse(userProvider.user.id),
                 'prix': prix,
                 'vignette': vignette,
-                'id_cours': int.parse(cours.id_cours)
+                'id_cours': int.parse(cours.idCours)
               }));
 
       httpErrorHandle(

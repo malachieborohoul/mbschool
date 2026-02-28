@@ -102,7 +102,7 @@ class _CourseScreenState extends State<CourseScreen> {
 
                                           Provider.of<CoursProvider>(context,
                                                   listen: false)
-                                              .set_cours(snapshot.data![index]);
+                                              .setCoursObject(snapshot.data![index]);
                                         },
                                         child: CustomMyCoursesCard(
                                           image: snapshot.data![index].vignette,

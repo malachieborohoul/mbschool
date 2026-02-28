@@ -62,7 +62,7 @@ void removeCourseFromFavorite(
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_cours": int.parse(cours.id_cours),
+            "id_cours": int.parse(cours.idCours),
           },
         ),
       );

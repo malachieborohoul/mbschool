@@ -26,7 +26,7 @@ class CourseEnrollmentService {
         body: jsonEncode(
           {
             "users_id": int.parse(userProvider.user.id),
-            "cours_id": int.parse(cours.id_cours),
+            "cours_id": int.parse(cours.idCours),
           },
         ),
       );
@@ -56,7 +56,7 @@ class CourseEnrollmentService {
               },
               body: jsonEncode({
                 "users_id": int.parse(userProvider.user.id),
-                "cours_id": int.parse(cours.id_cours)
+                "cours_id": int.parse(cours.idCours)
               }));
 
       httpErrorHandle(

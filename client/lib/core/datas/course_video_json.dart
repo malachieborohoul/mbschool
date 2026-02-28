@@ -1,4 +1,4 @@
-const List CourseVideoJson = [
+const List courseVideoJson = [
   {
     'title': 'Introduction and Setup',
     'videos': [

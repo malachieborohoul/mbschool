@@ -3,8 +3,7 @@ import 'package:mbschool/models/reponse_commentaire.dart';
 
 class CustomLessonReponseCommentaires extends StatefulWidget {
   const CustomLessonReponseCommentaires(
-      {Key? key, this.icon = false,  this.reponseCommentaire})
-      : super(key: key);
+      {super.key, this.icon = false,  this.reponseCommentaire});
   final bool icon;
   final ReponseCommentaire? reponseCommentaire;
 
@@ -39,7 +38,7 @@ class _CustomLessonReponseCommentairesState extends State<CustomLessonReponseCom
                     ),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.6,
-                        child: Text(widget.reponseCommentaire!.intitule_reponse)),
+                        child: Text(widget.reponseCommentaire!.intitulereponse)),
                     widget.icon == true
                         ? IconButton(
                             onPressed: () {

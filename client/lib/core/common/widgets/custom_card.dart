@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 import 'package:mbschool/core/common/widgets/loader.dart';
@@ -143,7 +145,7 @@ class _CustomCardState extends State<CustomCard> {
                       arguments: widget.cours);
 
                   Provider.of<CoursPlanProvider>(context, listen: false)
-                      .set_cours(widget.cours);
+                      .setCoursObject(widget.cours);
                 } else if (value == 2) {
                   Navigator.pushNamed(context, ModifyCourseScreen.routeName,
                       arguments: widget.cours);

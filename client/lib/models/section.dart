@@ -1,32 +1,32 @@
 import 'dart:convert';
 
 class Section {
-  final String id_section;
+  final String idSection;
   final String titre;
-  final String id_cours;
+  final String idCours;
 
 
   Section(
       {
-        required this.id_section,
+        required this.idSection,
       required this.titre,
-      required this.id_cours,
+      required this.idCours,
  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_section': id_section,
+      'idSection': idSection,
       'titre': titre,
-      'id_cours': id_cours,
+      'idCours': idCours,
       
     };
   }
 
   factory Section.fromMap(Map<String, dynamic> map) {
     return Section(
-      id_section: map['id_section'] ?? '',
+      idSection: map['idSection'] ?? '',
       titre: map['titre'] ?? '',
-      id_cours: map['id_cours'] ?? '',
+      idCours: map['idCours'] ?? '',
       
     );
   }

@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                               .cover, // Assure que l'image couvre tout le cercle
                                                         )
                                                       : Image.asset(
-                                                          UserProfile['image']
+                                                          userProfile['image']
                                                               .toString(),
                                                           width: 60,
                                                           height: 60,
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     offset: 70,
                                     child: OpacityTween(
                                         begin: 0.0,
-                                        child: CustomPromotionCard()),
+                                        child: CustompromotionCard()),
                                   ),
                                   const SizedBox(height: spacer),
                                   Padding(
@@ -232,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                       Provider.of<CoursProvider>(
                                                               context,
                                                               listen: false)
-                                                          .set_cours(snapshot
+                                                          .setCoursObject(snapshot
                                                               .data![index]);
                                                     },
                                                     child:
@@ -248,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                         ),
                                                       ),
                                                       videoAmount:
-                                                          CoursesJson[index]
+                                                          coursesJson[index]
                                                               ['video'],
                                                       title: snapshot
                                                           .data![index].titre,

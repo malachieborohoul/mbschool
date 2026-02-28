@@ -78,7 +78,7 @@ class PrefUtils {
     }
   }
 
-  static setIntro(bool value) async {
+  static Future<void> setIntro(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isIntro, value);
   }
@@ -87,7 +87,7 @@ class PrefUtils {
     return prefs.getBool(isIntro) ?? true;
   }
 
-  static setPendingVerification(bool value) async {
+  static Future<void> setPendingVerification(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isPendingVerification, value);
   }
@@ -97,7 +97,7 @@ class PrefUtils {
     return prefs.getBool(isPendingVerification) ;
   }
 
-  static setPendingPhone(String value) async {
+  static Future<void> setPendingPhone(String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(pendingPhone, value);
   }
@@ -107,7 +107,7 @@ class PrefUtils {
     return prefs.getString(pendingPhone) ;
   }
 
-    static setUserId(String value) async {
+    static Future<void> setUserId(String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(userId, value);
   }
@@ -120,7 +120,7 @@ class PrefUtils {
 
   
 
-  static setLogin(bool value) async {
+  static Future<void> setLogin(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(isLogin, value);
   }
@@ -130,17 +130,17 @@ class PrefUtils {
     return prefs.getBool(isLogin) ?? false;
   }
 
-  static getIsIntro() async {
+  static Future<bool> getIsIntro() async {
     bool intValue = _sharedPreferences!.getBool(isIntro) ?? true;
     return intValue;
   }
 
-  static getIsSignIn() async {
+  static Future<bool> getIsSignIn() async {
     return _sharedPreferences!.getBool(isLogin) ?? false;
   }
 
 //keep country flag
-   static setSelectedFlag(String value) async {
+   static Future<void> setSelectedFlag(String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(selectedFlag, value);
   }

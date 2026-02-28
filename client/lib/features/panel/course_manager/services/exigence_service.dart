@@ -23,7 +23,7 @@ class ExigenceService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'nom': nom, 'id_cours': cours.id_cours}));
+              body: jsonEncode({'nom': nom, 'id_cours': cours.idCours}));
 
       httpErrorHandle(
           response: resAddExigence,
@@ -41,7 +41,7 @@ class ExigenceService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response exigenceRes = await http.get(
-        Uri.parse('$uri/getAllExigences/${cours.id_cours}'),
+        Uri.parse('$uri/getAllExigences/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -80,7 +80,7 @@ class ExigenceService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_exigence': exigence.id_exigence}));
+              body: jsonEncode({'id_exigence': exigence.idExigence}));
 
       httpErrorHandle(
           response: resAddExigence,

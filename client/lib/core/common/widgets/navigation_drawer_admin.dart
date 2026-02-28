@@ -49,7 +49,7 @@ class NavigatorDrawerAdmin extends StatelessWidget {
                   child: Hero(
                     tag: 'profile-photo',
                     child: Image.asset(
-                      UserProfile['image'].toString(),
+                      userProfile['image'].toString(),
                       width: 100,
                       height: 100,
                     ),

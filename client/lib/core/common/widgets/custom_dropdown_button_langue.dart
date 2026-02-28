@@ -5,7 +5,7 @@ import 'package:mbschool/models/langue.dart';
 class CustomDropdownButtonLangue extends StatefulWidget {
   final List<Langue> items;
   
-  CustomDropdownButtonLangue({Key? key, required this.items,}) : super(key: key);
+  const CustomDropdownButtonLangue({super.key, required this.items,});
 
   @override
   State<CustomDropdownButtonLangue> createState() =>
@@ -18,7 +18,7 @@ class _CustomDropdownButtonLangueState extends State<CustomDropdownButtonLangue>
   Widget build(BuildContext context) {
     
    
-    String dropdownvalue = widget.items[0].id_langue;
+    String dropdownvalue = widget.items[0].idLangue;
     return DropdownButtonFormField(
         decoration: InputDecoration(
           filled: true,
@@ -37,7 +37,7 @@ class _CustomDropdownButtonLangueState extends State<CustomDropdownButtonLangue>
         initialValue: dropdownvalue,
         items: widget.items.map((Langue item) {
           return DropdownMenuItem(
-            value: item.id_langue,
+            value: item.idLangue,
             child: Text(item.nom),
           );
         }).toList(),

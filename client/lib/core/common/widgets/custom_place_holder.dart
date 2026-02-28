@@ -6,16 +6,15 @@ import 'package:mbschool/core/constants/utils.dart';
 
 class CunstomPlaceHolder extends StatefulWidget {
   const CunstomPlaceHolder(
-      {Key? key, required this.title, this.isSwitch = false})
-      : super(key: key);
+      {super.key, required this.title, this.isSwitch = false});
   final String title;
   final bool isSwitch;
 
   @override
-  _CunstomPlaceHolderState createState() => _CunstomPlaceHolderState();
+  CunstomPlaceHolderState createState() => CunstomPlaceHolderState();
 }
 
-class _CunstomPlaceHolderState extends State<CunstomPlaceHolder> {
+class CunstomPlaceHolderState extends State<CunstomPlaceHolder> {
   bool switchValue = false;
   @override
   Widget build(BuildContext context) {

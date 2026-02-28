@@ -5,8 +5,7 @@ class CustomCourseCurriculumLecon extends StatefulWidget {
   final Lecon lecon;
   final bool isCourseEnrolled;
   const CustomCourseCurriculumLecon(
-      {Key? key, required this.lecon, required this.isCourseEnrolled})
-      : super(key: key);
+      {super.key, required this.lecon, required this.isCourseEnrolled});
 
   @override
   State<CustomCourseCurriculumLecon> createState() =>

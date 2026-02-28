@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -41,8 +43,8 @@ class AuthService {
         cv: '',
         token: '',
         telephone: '',
-        verify_code: '',
-        statut_users: '',
+        verifyCode: '',
+        statutUsers: '',
       );
       http.Response res = await http.post(
           Uri.parse(
@@ -127,8 +129,8 @@ class AuthService {
         numCompte: "",
         cv: "",
         token: "",
-        verify_code: "",
-        statut_users: '');
+        verifyCode: '',
+        statutUsers: '');
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -265,8 +267,8 @@ class AuthService {
         cv: '',
         token: '',
         telephone: '',
-        verify_code: '',
-        statut_users: '',
+        verifyCode: '',
+        statutUsers: '',
       );
       http.Response res = await http.post(
           Uri.parse(

@@ -39,7 +39,7 @@ final class AuthForgotPasswordSuccess extends AuthState {}
 final class AuthSignUpWithPhoneSuccess extends AuthState {}
 final class AuthSignUpSuccess extends AuthState {
 
-  AuthSignUpSuccess();
+  const AuthSignUpSuccess();
 }
 
 

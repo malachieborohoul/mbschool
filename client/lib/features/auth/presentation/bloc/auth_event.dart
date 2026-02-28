@@ -10,7 +10,7 @@ sealed class AuthEvent extends Equatable {
 final class AuthInitApp extends AuthEvent {
   final BuildContext context;
 
-  AuthInitApp({required this.context});
+  const AuthInitApp({required this.context});
 
 
 }
@@ -45,7 +45,7 @@ final class AuthSignIn extends AuthEvent {
 final class AuthSignOut extends AuthEvent {
   final BuildContext context;
 
-  AuthSignOut({required this.context});
+  const AuthSignOut({required this.context});
 
  
 }
@@ -54,7 +54,7 @@ class AuthSignUpWithGoogle extends AuthEvent {}
 class AuthSignInWithOID extends AuthEvent {
   final BuildContext context;
 
-  AuthSignInWithOID({required this.context});
+  const AuthSignInWithOID({required this.context});
 }
 class AuthSignInWithGoogle extends AuthEvent {}
 
@@ -70,7 +70,7 @@ final class AuthIsUserLoggedIn extends AuthEvent {
 final class AuthCurrentUserApi extends AuthEvent {
   final BuildContext context;
 
-  AuthCurrentUserApi({required this.context});
+  const AuthCurrentUserApi({required this.context});
 
 }
 

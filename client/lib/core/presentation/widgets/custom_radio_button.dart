@@ -106,28 +106,33 @@ class CustomRadioButton extends StatelessWidget {
         style: textStyle ?? CustomTextStyles.bodyLargeBlack900,
       );
 
-  Widget get radioButtonWidget => SizedBox(
-        height: iconSize,
-        width: iconSize,
-        child: Theme(
-          data: ThemeData(
-            unselectedWidgetColor: appTheme.textfeild,
-          ),
-          child: Radio<String>(
-            // fillColor: MaterialStatePropertyAll(theme.colorScheme.primary),
-            activeColor: theme.colorScheme.primary,
-            visualDensity: const VisualDensity(
-              vertical: -4,
-              horizontal: -4,
-            ),
-            value: value ?? "",
-            groupValue: groupValue,
-            onChanged: (value) {
-              onChange(value!);
-            },
+Widget get radioButtonWidget => SizedBox(
+      height: iconSize,
+      width: iconSize,
+      child: Theme(
+        data: ThemeData(
+          // Note: In 2026, prefer using radioTheme over unselectedWidgetColor
+          radioTheme: RadioThemeData(
+            fillColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return theme.colorScheme.primary;
+              }
+              return appTheme.textfeild;
+            }),
           ),
         ),
-      );
+        child: Radio<String>(
+          activeColor: theme.colorScheme.primary,
+          visualDensity: const VisualDensity(
+            vertical: -4,
+            horizontal: -4,
+          ),
+          value: value ?? "",
+          // groupValue: groupValue, // DEPRECATED: Remove this
+          // onChanged: (val) => onChange(val!), // DEPRECATED: Remove this
+        ),
+      ),
+    );
 
   BoxDecoration get radioButtonDecoration =>
       BoxDecoration(color: backgroundColor);

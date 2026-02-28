@@ -5,7 +5,7 @@ class User {
   final String email;
   final String password;
   final String role;
-  final int statut_users;
+  final int statutUsers;
   final String photo;
   final String sexe;
   final String localisation;
@@ -14,8 +14,8 @@ class User {
   final String numCompte;
   final String cv;
   final String token;
-  final String verify_code;
-  final bool verification_status;
+  final String verifyCode;
+  final bool verificationStatus;
 
 
   User( {
@@ -25,7 +25,7 @@ class User {
     required this.email,
     required this.password,
     required this.role,
-    required this.statut_users,
+    required this.statutUsers,
     required this.photo,
     required this.sexe,
     required this.localisation,
@@ -34,7 +34,7 @@ class User {
     required this.numCompte,
     required this.cv,
     required this.token,
-    required this.verify_code,
-    required this.verification_status,
+    required this.verifyCode,
+    required this.verificationStatus,
   });
 }

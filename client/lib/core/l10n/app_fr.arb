@@ -25,7 +25,12 @@
   "lbl_yes_logout": "Oui, se déconnecter",
   "lbl_oops_something_went_wrong": "Oups ! Quelque chose a mal tourné." ,
   "lbl_please_try_again": "Veuillez réessayer.",
-  "lbl_try_again": "Réessayer"
+  "lbl_try_again": "Réessayer",
+  "err_field_required": "Ce champ est requis",
+  "err_invalid_name": "Veuillez entrer un nom valide",
+  "err_invalid_email": "Veuillez entrer une adresse email valide",
+  "err_password_short": "Le mot de passe doit comporter au moins 8 caractères"
+  
 
 
 

@@ -7,13 +7,13 @@ import 'package:mbschool/features/search/screens/search_screen.dart';
 
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
-    Key? key,
+    super.key,
     required this.hintField,
     this.backgroundColor,
     this.isFilter = false,
     this.onTap = false,
     this.controller,
-  }) : super(key: key);
+  });
 
   final String hintField;
   final Color? backgroundColor;
@@ -22,10 +22,10 @@ class CustomSearchField extends StatefulWidget {
   final TextEditingController? controller;
 
   @override
-  _CustomSearchFieldState createState() => _CustomSearchFieldState();
+  CustomSearchFieldState createState() => CustomSearchFieldState();
 }
 
-class _CustomSearchFieldState extends State<CustomSearchField> {
+class CustomSearchFieldState extends State<CustomSearchField> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;

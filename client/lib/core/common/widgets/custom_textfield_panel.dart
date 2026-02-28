@@ -6,15 +6,14 @@ class CustomTextFieldPanel extends StatelessWidget {
   final IconData prefixIcon;
   final TextEditingController? controller;
   final TextInputType? keyboardType;
-  final maxLines;
+  final int maxLines;
   const CustomTextFieldPanel(
-      {Key? key,
+      {super.key,
       required this.hintText,
       required this.prefixIcon,
       required this.controller,
       this.keyboardType,
-      this.maxLines = 1})
-      : super(key: key);
+      this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {

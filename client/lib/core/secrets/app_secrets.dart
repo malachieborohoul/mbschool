@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class AppSecrets {
   static const supabaseUrl = 'https://qnfuugllerhpnwftflcb.supabase.co';
   static const supabaseAnonKey =
@@ -19,7 +21,7 @@ static const webClientId =
   static const AUTH0_DOMAIN = "auth.wegoopay.com";
   static const AUTH0_REALM = "Wegoopay";
   static const AUTH0_CLIENT_ID = "wegoopay-mobile";
-  static const AUTH0_ISSUER = "https://${AUTH0_DOMAIN}/realms/${AUTH0_REALM}";
+  static const AUTH0_ISSUER = "https://$AUTH0_DOMAIN/realms/$AUTH0_REALM";
   static const BUNDLE_IDENTIFIER = "com.bsm.wenzo";
   static const AUTH0_REDIRECT_URI = "$BUNDLE_IDENTIFIER:/login-callback";
   static const REFRESH_TOKEN_KEY = "refresh_token";

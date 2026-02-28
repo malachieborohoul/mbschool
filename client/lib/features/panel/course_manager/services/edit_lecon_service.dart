@@ -20,8 +20,8 @@ class EditLeconService {
       Lecon lecon,
       String titre,
       String resume,
-      String id_cours,
-      int id_section,
+      String idCours,
+      int idSection,
       PlatformFile fichier,
       VoidCallback onSuccess) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -40,11 +40,11 @@ class EditLeconService {
         },
         body: jsonEncode(
           {
-            'id_lecon': int.parse(lecon.id_lecon),
+            'id_lecon': int.parse(lecon.idLecon),
             'titre': titre,
             'resume': resume,
-            'id_cours': int.parse(id_cours),
-            'id_section': id_section,
+            'idCours': int.parse(idCours),
+            'idSection': idSection,
             'url': url
           },
         ),
@@ -78,7 +78,7 @@ class EditLeconService {
         },
         body: jsonEncode(
           {
-            'id_lecon': int.parse(lecon.id_lecon),
+            'id_lecon': int.parse(lecon.idLecon),
           },
         ),
       );

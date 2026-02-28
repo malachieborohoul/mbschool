@@ -13,11 +13,11 @@ class CustomDetailCourseInfoHeader extends StatefulWidget {
   final double averageRate;
 
   const CustomDetailCourseInfoHeader({
-    Key? key,
+    super.key,
     required this.cours,
     required this.initialIsCourseInFav,
     required this.averageRate, required bool isCourseInFav,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomDetailCourseInfoHeader> createState() =>

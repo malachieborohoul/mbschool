@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   static const routeName = "user-details-screen";
-  const UserDetailsScreen({Key? key, required this.user}) : super(key: key);
+  const UserDetailsScreen({super.key, required this.user});
   final User user;
 
   @override
@@ -144,12 +144,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                   height: 90,
                                   child: Column(
                                     children: [
-                                      searchUserProvider.statut_users == "0"
+                                      searchUserProvider.statutUsers == "0"
                                           ? const Text(
                                               "Voulez vous activer l'utilisateur?",
                                               style: TextStyle(fontSize: 14),
                                             )
-                                          : searchUserProvider.statut_users ==
+                                          : searchUserProvider.statutUsers ==
                                                   "1"
                                               ? const Text(
                                                   "Voulez vous désactiver l'utilisateur?",
@@ -170,12 +170,12 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                                                 setState(() {
                                                   // deleteCours();
                                                   if (searchUserProvider
-                                                          .statut_users ==
+                                                          .statutUsers ==
                                                       "0") {
                                                     activateUser();
                                                   }
                                                   if (searchUserProvider
-                                                          .statut_users ==
+                                                          .statutUsers ==
                                                       "1") {
                                                     desactivateUser();
                                                   }
@@ -307,9 +307,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                 ),
                 PopupMenuItem(
                   value: 2,
-                  child: searchUserProvider.statut_users == "0"
+                  child: searchUserProvider.statutUsers == "0"
                       ? const Text("Activer l'utilisateur")
-                      : searchUserProvider.statut_users == "1"
+                      : searchUserProvider.statutUsers == "1"
                           ? const Text("Désactiver l'utilisateur")
                           : const Text(""),
                   onTap: () {},
@@ -337,7 +337,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                           width: double.infinity,
                           height: 200,
                           child: Image.asset(
-                            UserProfile['image'].toString(),
+                            userProfile['image'].toString(),
                             width: 50,
                             height: 50,
                           ),

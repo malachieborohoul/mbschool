@@ -97,7 +97,7 @@ class _VerificationScreenState extends State<VerificationScreen>
 
   void codeVerification(String code) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    if (code == userProvider.user.verify_code) {
+    if (code == userProvider.user.verifyCode) {
       _authService.codeVerification(
         context: context,
         codeVerification: code,

@@ -253,6 +253,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try Again'**
   String get lbl_try_again;
+
+  /// Generic error for empty fields
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get err_field_required;
+
+  /// Error for name regex failure
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid last name'**
+  String get err_invalid_name;
+
+  /// Error for email regex failure
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get err_invalid_email;
+
+  /// Error for short password
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get err_password_short;
 }
 
 class _AppLocalizationsDelegate

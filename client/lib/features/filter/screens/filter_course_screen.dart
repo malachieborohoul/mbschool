@@ -80,20 +80,20 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
     super.dispose();
   }
 
-  int id_categorie = 0;
-  int id_niveau = 0;
-  int id_langue = 0;
+  int idCategorie = 0;
+  int idNiveau = 0;
+  int idLangue = 0;
 
   bool isCharging = false;
 
   @override
   Widget build(BuildContext context) {
-    // categories != null ? categories![0].id_categorie : "0";
+    // categories != null ? categories![0].idCategorie : "0";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie);
-    // if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau);
-    // if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue);
+    // if (idCategorie == 0) idCategorie = int.parse(dropdownvalue_categorie);
+    // if (idNiveau == 0) idNiveau = int.parse(dropdownvalue_niveau);
+    // if (idLangue == 0) idLangue = int.parse(dropdownvalue_langue);
 
     return Container(
       // appBar: PreferredSize(
@@ -221,13 +221,13 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                     //     items: categories!.map((Categorie item) {
                     //       return DropdownMenuItem(
                     //         child: Text(item.nom.toUpperCase()),
-                    //         value: item.id_categorie,
+                    //         value: item.idCategorie,
                     //       );
                     //     }).toList(),
                     //     onChanged: (String? val) {
                     //       setState(() {
                     //         dropdownvalue_categorie = val!;
-                    //         // id_categorie =
+                    //         // idCategorie =
                     //         //     int.parse(dropdownvalue_categorie!);
                     //       });
                     //     }),
@@ -243,7 +243,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                               onTap: () {
                                 setState(() {
                                   selectedCategory =
-                                      int.parse(categories![i].id_categorie);
+                                      int.parse(categories![i].idCategorie);
                                 });
                               },
                               child: Container(
@@ -259,7 +259,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                     border: Border.all(
                                       color: selectedCategory ==
                                               int.parse(
-                                                  categories![i].id_categorie)
+                                                  categories![i].idCategorie)
                                           ? primary
                                           : Colors.grey.shade500,
                                     )),
@@ -268,7 +268,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                   style: TextStyle(
                                     color: selectedCategory ==
                                             int.parse(
-                                                categories![i].id_categorie)
+                                                categories![i].idCategorie)
                                         ? primary
                                         : Colors.grey.shade500,
                                     fontSize: 15.0,
@@ -298,7 +298,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                               onTap: () {
                                 setState(() {
                                   selectedNiveau =
-                                      int.parse(niveaux![i].id_niveau);
+                                      int.parse(niveaux![i].idNiveau);
                                 });
                               },
                               child: Container(
@@ -319,7 +319,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                         style: TextStyle(
                                           color: selectedNiveau ==
                                                   int.parse(
-                                                      niveaux![i].id_niveau)
+                                                      niveaux![i].idNiveau)
                                               ? primary
                                               : Colors.grey.shade600,
                                           fontSize: 15.0,
@@ -327,7 +327,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                         ),
                                       ),
                                       selectedNiveau ==
-                                              int.parse(niveaux![i].id_niveau)
+                                              int.parse(niveaux![i].idNiveau)
                                           ? const Icon(
                                               Icons.check,
                                               color: primary,
@@ -357,7 +357,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                               onTap: () {
                                 setState(() {
                                   selectedLangue =
-                                      int.parse(langues![i].id_langue);
+                                      int.parse(langues![i].idLangue);
                                 });
                               },
                               child: Container(
@@ -378,7 +378,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                         style: TextStyle(
                                           color: selectedLangue ==
                                                   int.parse(
-                                                      langues![i].id_langue)
+                                                      langues![i].idLangue)
                                               ? primary
                                               : Colors.grey.shade600,
                                           fontSize: 15.0,
@@ -386,7 +386,7 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                                         ),
                                       ),
                                       selectedLangue ==
-                                              int.parse(langues![i].id_langue)
+                                              int.parse(langues![i].idLangue)
                                           ? const Icon(
                                               Icons.check,
                                               color: primary,
@@ -416,13 +416,13 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                     //     items: niveaux!.map((Niveau item) {
                     //       return DropdownMenuItem(
                     //         child: Text(item.titre.toUpperCase()),
-                    //         value: item.id_niveau,
+                    //         value: item.idNiveau,
                     //       );
                     //     }).toList(),
                     //     onChanged: (String? val) {
                     //       setState(() {
                     //         dropdownvalue_niveau = val!;
-                    //         // id_niveau = int.parse(dropdownvalue_niveau);
+                    //         // idNiveau = int.parse(dropdownvalue_niveau);
                     //       });
                     //     }),
                     // SizedBox(
@@ -455,13 +455,13 @@ class _FilterCourseScreenState extends State<FilterCourseScreen> {
                     //     items: langues!.map((Langue item) {
                     //       return DropdownMenuItem(
                     //         child: Text(item.nom.toUpperCase()),
-                    //         value: item.id_langue,
+                    //         value: item.idLangue,
                     //       );
                     //     }).toList(),
                     //     onChanged: (String? val) {
                     //       setState(() {
                     //         dropdownvalue_langue = val!;
-                    //         // id_langue = int.parse(dropdownvalue_langue);
+                    //         // idLangue = int.parse(dropdownvalue_langue);
                     //       });
                     //     }),
                     // SizedBox(

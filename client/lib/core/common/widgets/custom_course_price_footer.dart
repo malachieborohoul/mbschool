@@ -10,11 +10,11 @@ CourseEnrollmentService courseEnrollmentService = CourseEnrollmentService();
 
 class CustomCoursePriceFooter extends StatelessWidget {
   const CustomCoursePriceFooter({
-    Key? key,
+    super.key,
     this.coursePrice = '',
     this.enrolled = false,
     required this.cours,
-  }) : super(key: key);
+  });
 
   final String coursePrice;
   final bool enrolled;

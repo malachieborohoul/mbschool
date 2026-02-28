@@ -72,16 +72,16 @@ class _YoutubeLinkState extends State<YoutubeLink> {
   }
 
   bool isCharging = false;
-  int id_section = 0;
+  int idSection = 0;
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue_section;
-    // String dropdownvalue_section =
-    //     sections != null ? sections[0].id_section : "";
+    String? dropdownvalueSection;
+    // String dropdownvalueSection =
+    //     sections != null ? sections[0].idSection : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
+    // if (idSection == 0) idSection = int.parse(dropdownvalueSection);
 
     final coursProvider =
         Provider.of<CoursPlanProvider>(context, listen: false).cours;
@@ -90,8 +90,8 @@ class _YoutubeLinkState extends State<YoutubeLink> {
           context,
           titreEditingController.text,
           resumeEditingController.text,
-          widget.cours.id_cours,
-          id_section,
+          widget.cours.idCours,
+          idSection,
           2,
           lienEditingController.text, () {
         setState(() {
@@ -177,18 +177,18 @@ class _YoutubeLinkState extends State<YoutubeLink> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            initialValue: dropdownvalue_section,
+                            initialValue: dropdownvalueSection,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
-                                value: item.id_section,
+                                value: item.idSection,
                                 child: Text(item.titre),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 //On ne peut pas envoyer cette valeur car elle prend à chaque compilation l'id du premier element
-                                dropdownvalue_section = val!;
-                                id_section = int.parse(dropdownvalue_section!);
+                                dropdownvalueSection = val!;
+                                idSection = int.parse(dropdownvalueSection!);
                               });
                             }),
 

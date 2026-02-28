@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
-    static route() => PageRouteBuilder(pageBuilder: (_, animation, __) {
+    static PageRouteBuilder<dynamic> route() => PageRouteBuilder(pageBuilder: (_, animation, __) {
         return FadeTransition(
           opacity: animation,
           child: const OnboardingScreen(),
@@ -108,7 +108,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget makePage(
-      {image, title, content, button = false, SharedPreferences? prefs}) {
+      {required String image, required String title, required String content, button = false, SharedPreferences? prefs}) {
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 50),
       child: Column(

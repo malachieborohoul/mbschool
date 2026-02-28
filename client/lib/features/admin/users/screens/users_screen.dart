@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class UsersScreen extends StatefulWidget {
   static const routeName = "users-screen";
-  const UsersScreen({Key? key}) : super(key: key);
+  const UsersScreen({super.key});
 
   @override
   State<UsersScreen> createState() => _UsersScreenState();
@@ -161,7 +161,7 @@ class _UsersScreenState extends State<UsersScreen> {
                                       arguments: snapshot.data![i]);
                                   Provider.of<SearchUserProvider>(context,
                                           listen: false)
-                                      .set_user(snapshot.data![i]);
+                                      .setUserObject(snapshot.data![i]);
                                 },
                                 child: CustomUsersContainer(
                                     user: snapshot.data![i]),

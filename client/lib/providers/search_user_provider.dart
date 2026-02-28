@@ -18,8 +18,8 @@ class SearchUserProvider extends ChangeNotifier {
           numCompte: '',
           cv: '',
           token: '', 
-          verify_code: '', 
-          statut_users: '');
+          verifyCode: '', 
+          statutUsers: '');
 
   User get user => _user;
 
@@ -28,7 +28,7 @@ class SearchUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void set_user(User user) {
+  void setUserObject(User user) {
     _user = user;
     notifyListeners();
   }

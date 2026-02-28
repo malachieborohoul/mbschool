@@ -1,4 +1,4 @@
-const Code = {
+const code = {
   'feature_course': [
     {
       'image':

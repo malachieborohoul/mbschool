@@ -1,4 +1,4 @@
-List AccountMenuJson = [
+List accountMenuJson = [
   {
     'title': 'Video Preferences',
     'categories': [

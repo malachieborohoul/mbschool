@@ -109,7 +109,16 @@
     "lbl_try_again": "Try Again",
     "@lbl_try_again": {
     "description": "Text for the button that allows users to retry an action after an error"
-    }
+    },
+
+    "err_field_required": "This field is required",
+  "@err_field_required": { "description": "Generic error for empty fields" },
+  "err_invalid_name": "Please enter a valid last name",
+  "@err_invalid_name": { "description": "Error for name regex failure" },
+  "err_invalid_email": "Please enter a valid email address",
+  "@err_invalid_email": { "description": "Error for email regex failure" },
+  "err_password_short": "Password must be at least 8 characters",
+  "@err_password_short": { "description": "Error for short password" }
 
 
 

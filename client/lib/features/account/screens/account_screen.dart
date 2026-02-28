@@ -15,7 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatefulWidget {
   static const routeName = '/account';
-  const AccountScreen({Key? key}) : super(key: key);
+  const AccountScreen({super.key});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -29,10 +29,10 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-    final Uri _url = Uri.parse('https://bsm-zeta.vercel.app/');
-    Future<void> _launchUrl() async {
-  if (!await launchUrl(_url)) {
-    throw Exception('Could not launch $_url');
+    final Uri url = Uri.parse('https://bsm-zeta.vercel.app/');
+    Future<void> launchUrli() async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
   }
 }
     return Scaffold(
@@ -114,7 +114,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 child: Hero(
                                   tag: 'profile-photo',
                                   child: Image.asset(
-                                    UserProfile['image'].toString(),
+                                    userProfile['image'].toString(),
                                     width: 100,
                                     height: 100,
                                   ),
@@ -194,7 +194,7 @@ class _AccountScreenState extends State<AccountScreen> {
               SlideDownTween(
                 offset: 30,
                 child: GestureDetector(
-                  onTap: _launchUrl,
+                  onTap: launchUrli,
                   child: Column(
                     children: const [
                       Padding(

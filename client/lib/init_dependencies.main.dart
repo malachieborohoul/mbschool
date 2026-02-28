@@ -23,7 +23,7 @@ Future<void> initDependencies() async {
   );
 
   serviceLocator
-    ..registerFactory<CustomHttpClient>(
+    .registerFactory<CustomHttpClient>(
       () => CustomHttpClient(
         serviceLocator(), // HttpClient
         serviceLocator(), // AuthRepository

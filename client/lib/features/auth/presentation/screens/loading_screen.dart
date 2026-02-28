@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbschool/core/common/widgets/bottom_bar.dart';
 import 'package:mbschool/core/common/widgets/loader.dart';
-import 'package:mbschool/core/l10n/app_localizations.dart';
 import 'package:mbschool/core/presentation/widgets/custom_error404.dart';
 import 'package:mbschool/core/utils/show_snackbar.dart';
 import 'package:mbschool/core/utils/size_utils.dart';
@@ -38,42 +38,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   }
 
-  // Future<void> _initializeAuthState() async {
-  //   try {
-  //     // Récupérer l'ID utilisateur depuis les préférences locales
-  //     // String? userId = await PrefUtils.getUserId();
-  //     // if (userId != null && userId.isNotEmpty) {
 
-  //     // } else {
-  //     // debugPrint("💡 Si pas d'ID utilisateur, redirection vers la page de connexion");
-
-  //     //   _navigateToLogin();
-  //     // }
-
-  //     debugPrint(
-  //         "💡From LoadingScreen - Déclencher l'événement pour vérifier si l'utilisateur est connecté ou numero non verifié");
-
-  //     context.read<AuthBloc>().add(AuthInitApp());
-  //     // context.read<AuthBloc>().add(AuthCurrentUserApi());
-  //   } catch (e) {
-  //     // Gérer les erreurs éventuelles et rediriger vers la connexion
-  //     debugPrint(
-  //         "❌ From LoadingScreen - Erreur d'initialisation de l'état local : $e");
-  //     _navigateToLogin();
-  //   }
-  // }
-
-  // void _navigateToLogin() {
-  //         Navigator.pushAndRemoveUntil(
-  //                         context,
-  //                         LoginScreen.route(),
-  //                         (Route<dynamic> route) => false, 
-  //                       );
-  // }
 
   @override
   Widget build(BuildContext context) {
-    var appLocalization = AppLocalizations.of(context);
+    // var appLocalization = AppLocalizations.of(context);
 
     return Scaffold(
         body:  
@@ -117,7 +86,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
             }
           },
           builder: (context, state) {
-            print(state);
+            if (kDebugMode) {
+              print(state);
+            }
             if(state is AuthLoading){
              return   Center(
             child: Loader(),

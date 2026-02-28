@@ -5,20 +5,20 @@ import 'package:mbschool/features/course/screens/all_course_screen.dart';
 
 class CustomTitle extends StatelessWidget {
   const CustomTitle({
-    Key? key,
+    super.key,
     required this.title,
     this.route = '/404',
     this.extend = true,
     this.fontSize = 20.0,
     this.arg, 
     this.titreLien = "",
-  }) : super(key: key);
+  });
 
   final String title;
   final String route;
   final bool extend;
   final double fontSize;
-  final arg;
+  final dynamic arg;
   final String titreLien;
   
 

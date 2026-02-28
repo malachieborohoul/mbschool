@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/utils/pref_utils.dart';
-import 'package:mbschool/features/auth/presentation/screens/auth_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/loading_screen.dart';
 import 'package:mbschool/features/autht/services/auth_service.dart';
 import 'package:mbschool/features/auth/presentation/screens/onboarding_screen.dart';
 import 'package:mbschool/models/user.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -34,16 +33,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-    // authService.getUserData(context);
-
-    // _animationController.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     _animationController.reverse();
-    //   } else if (status == AnimationStatus.dismissed) {
-    //     _animationController.forward();
-    //   }
-    // });
-  
+    init();
 
     _animationController.forward();
     _animationController.addStatusListener((status) {
@@ -59,13 +49,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   void init() async {
     await Future.delayed(Duration.zero);
-    // if (ModalRoute.of(context)!.settings.arguments != null) {
-    //   HomeController homeController = Get.find<HomeController>();
-    //   homeController.onChange(0.obs);
-    //   Get.toNamed(AppRoutes.homeCardSliderScreen);
-    //   return;
-    // }
-
 
 
     Timer(const Duration(milliseconds: 2000), () async {
@@ -78,12 +61,10 @@ class _SplashScreenState extends State<SplashScreen>
         if (isIntro) {
           debugPrint("💡Navigating to Onboarding Screen");
           Navigator.push(context, OnboardingScreen.route());
+        } else {
+          debugPrint("💡Navigating to LoadingScreen ");
 
-        }  else {
-           debugPrint("💡Navigating to LoadingScreen ");
-
-                    Navigator.push(context, AuthScreen.route());
-
+          Navigator.push(context, LoadingScreen.route());
         }
       });
     });
@@ -97,76 +78,25 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    // final userProvider = Provider.of<UserProvider>(context, listen: false);
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? token = prefs.getString('x-auth-token');
 
-    // void getUserData() async {
-    //   authService.getUserData(context);
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   String? token = prefs.getString('x-auth-token');
-
-    //   setState(() {
-    //     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-    //     print("token ${token} ");
-    //     print("verify code: ${userProvider.user.verify_code} ");
-
-    //     // print(numberEntry.count);
-    //     // print(introApp.num);
-
-    //     // print("token $userProvider");
-    //     Timer(Duration(seconds: 4), () {
-    //       // if (Provider.of<UserProvider>(context).user.token.isNotEmpty) {
-    //       // } else {
-    //       //   Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-    //       // }
-
-    //       if (token == null) {
-    //         Navigator.pushReplacementNamed(context, IntroScreen.routeName);
-    //       } else {
-    //         if (userProvider.user.token.isNotEmpty &&
-    //             userProvider.user.verify_code.isNotEmpty) {
-    //           Navigator.pushReplacementNamed(
-    //               context, VerificationScreen.routeName);
-    //         } else if (userProvider.user.token.isEmpty &&
-    //             userProvider.user.verify_code.isEmpty) {
-    //           Navigator.pushReplacementNamed(context, AuthScreen.routeName);
-    //         } else if (userProvider.user.token.isNotEmpty &&
-    //             userProvider.user.verify_code.isEmpty) {
-    //           Navigator.pushReplacementNamed(context, BottomBar.routeName);
-    //         } else {}
-    //       }
-    //     });
-    //   });
-    // }
-
-    // getUserData();
 
     return Scaffold(
       body: Center(
-          child: 
-          Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ScaleTransition(
-                        scale: _animation,
-                        child: const Text(
-                          "mbschool",
-                          style: TextStyle(
-                              color: primary,
-                              fontSize: 50,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 100.0),
-                      //   child: Loader(),
-                      // )
-                    ],
-                  )
-              ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ScaleTransition(
+            scale: _animation,
+            child: const Text(
+              "mbschool",
+              style: TextStyle(
+                  color: primary, fontSize: 50, fontWeight: FontWeight.w600),
+            ),
+          ),
+  
+        ],
+      )),
     );
   }
 }

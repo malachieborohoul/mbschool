@@ -10,8 +10,7 @@ import 'package:provider/provider.dart';
 
 class CustomCourseSection extends StatefulWidget {
   final Section sections;
-  const CustomCourseSection({Key? key, required this.sections})
-      : super(key: key);
+  const CustomCourseSection({super.key, required this.sections});
 
   @override
   State<CustomCourseSection> createState() => _CustomCourseSectionState();
@@ -63,7 +62,7 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
 
                                     Provider.of<SectionProvider>(context,
                                             listen: false)
-                                        .set_section(widget.sections);
+                                        .setSectionObject(widget.sections);
                                   }
                                 }, itemBuilder: (context) {
                                   return [
@@ -113,7 +112,7 @@ class _CustomCourseSectionState extends State<CustomCourseSection> {
 
                                     Provider.of<SectionProvider>(context,
                                             listen: false)
-                                        .set_section(widget.sections);
+                                        .setSectionObject(widget.sections);
                                   }
                                 }, itemBuilder: (context) {
                                   return [

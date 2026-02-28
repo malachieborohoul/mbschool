@@ -3,13 +3,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.prefixIcon,
     required this.labelText,
-    required this.controller,
+    this.controller, // Made optional to prevent null errors
     this.readOnlyField = false,
     this.isPassword = false,
     this.iconHeight = 17.0,
@@ -18,7 +19,8 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType,
     this.iconColor,
     this.codeKey = 1,
-  }) : super(key: key);
+  });
+
   final String prefixIcon;
   final double iconHeight;
   final String labelText;
@@ -32,18 +34,21 @@ class CustomTextField extends StatefulWidget {
   final int codeKey;
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  CustomTextFieldState createState() => CustomTextFieldState(); // Public State
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
+    // Access localizations for error messages
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       height: widget.height,
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: secondary.withValues(alpha:0.25), width: 0.5),
+          bottom: BorderSide(color: secondary.withValues(alpha: 0.25), width: 0.5),
         ),
       ),
       child: Row(
@@ -52,74 +57,62 @@ class _CustomTextFieldState extends State<CustomTextField> {
           Container(
             height: 50.0,
             width: 50.0,
-            // color: grey,
             alignment: Alignment.center,
             child: SvgPicture.asset(
               assetImg + widget.prefixIcon,
               height: widget.iconHeight,
-              colorFilter: ColorFilter.mode(widget.iconColor ?? secondary, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                widget.iconColor ?? secondary, 
+                BlendMode.srcIn,
+              ),
             ),
           ),
           const SizedBox(width: miniSpacer),
           Flexible(
-              child: TextFormField(
-            keyboardType: widget.keyboardType,
-            readOnly: widget.readOnlyField,
-            obscureText: widget.isPassword,
-            controller: widget.controller,
-            maxLines: widget.maxLine,
-            style: const TextStyle(
-              fontSize: 15.0,
-              color: secondary,
-              fontWeight: FontWeight.w500,
-            ),
-            cursorColor: secondary,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              labelText: widget.labelText,
-              labelStyle: TextStyle(
-                color: secondary.withValues(alpha:0.5),
+            child: TextFormField(
+              keyboardType: widget.keyboardType,
+              readOnly: widget.readOnlyField,
+              obscureText: widget.isPassword,
+              controller: widget.controller,
+              maxLines: widget.maxLine,
+              style: const TextStyle(
                 fontSize: 15.0,
-                height: 1,
+                color: secondary,
+                fontWeight: FontWeight.w500,
               ),
+              cursorColor: secondary,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                labelText: widget.labelText,
+                labelStyle: TextStyle(
+                  color: secondary.withValues(alpha: 0.5),
+                  fontSize: 15.0,
+                  height: 1,
+                ),
+              ),
+              validator: (val) {
+                if (val == null || val.isEmpty) {
+                  return l10n.err_field_required; // Generic "Required" message
+                }
+
+                switch (widget.codeKey) {
+                  case 1: // Last Name
+                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val) 
+                        ? l10n.err_invalid_name : null;
+                  case 2: // First Name
+                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val) 
+                        ? l10n.err_invalid_name : null;
+                  case 3: // Email
+                    return !RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(val)
+                        ? l10n.err_invalid_email : null;
+                  case 4: // Password
+                    return val.length < 8 ? l10n.err_password_short : null;
+                  default:
+                    return null;
+                }
+              },
             ),
-            validator: (val) {
-              switch (widget.codeKey) {
-                case 1:
-                  if (val!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(val)) {
-                    return "Veuillez entrer le nom";
-                  } else {
-                    return null;
-                  }
-
-                case 2:
-                  if (val!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(val)) {
-                    return "Veuillez entrer le prenom";
-                  } else {
-                    return null;
-                  }
-                case 3:
-                  if (val!.isEmpty ||
-                      !RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(val)) {
-                    return "Veuillez entrer une adresse email valide";
-                  } else {
-                    return null;
-                  }
-
-                case 4:
-                  if (val!.isEmpty || !RegExp(r'.*').hasMatch(val)) {
-                    return "Please enter a correct password";
-                  } else if (val.length < 8) {
-                    return "Veuillez entrer au moins 8 charactères";
-                  } else {
-                    return null;
-                  }
-
-                default:
-              }
-              return null;
-            },
-          )),
+          ),
         ],
       ),
     );

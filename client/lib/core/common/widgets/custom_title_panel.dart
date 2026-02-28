@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class CustomTitlePanel extends StatelessWidget {
   final String title;
-  const CustomTitlePanel({Key? key, required this.title}) : super(key: key);
+  const CustomTitlePanel({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

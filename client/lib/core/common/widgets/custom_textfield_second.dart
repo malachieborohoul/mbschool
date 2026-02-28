@@ -6,7 +6,7 @@ import 'package:mbschool/core/constants/utils.dart';
 
 class CustomTextFieldSecond extends StatefulWidget {
   const CustomTextFieldSecond({
-    Key? key,
+    super.key,
     required this.prefixIcon,
     required this.labelText,
     required this.controller,
@@ -17,7 +17,7 @@ class CustomTextFieldSecond extends StatefulWidget {
     this.height = 50.0,
     this.keyboardType,
     this.iconColor,
-  }) : super(key: key);
+  });
   final String prefixIcon;
   final double iconHeight;
   final String labelText;
@@ -30,10 +30,10 @@ class CustomTextFieldSecond extends StatefulWidget {
   final Color? iconColor;
 
   @override
-  _CustomTextFieldSecondState createState() => _CustomTextFieldSecondState();
+  CustomTextFieldSecondState createState() => CustomTextFieldSecondState();
 }
 
-class _CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
+class CustomTextFieldSecondState extends State<CustomTextFieldSecond> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

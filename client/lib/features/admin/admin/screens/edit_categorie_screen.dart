@@ -12,7 +12,7 @@ import 'package:mbschool/models/section.dart';
 class EditCategorieScreen extends StatefulWidget {
   static const routeName = '/edit-categorie-screen';
 
-  const EditCategorieScreen({Key? key, required this.categorie}) : super(key: key);
+  const EditCategorieScreen({super.key, required this.categorie});
   final Categorie categorie;
 
   @override

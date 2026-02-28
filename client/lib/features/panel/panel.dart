@@ -5,7 +5,7 @@ import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/global.dart';
 
 class Panel extends StatefulWidget {
-  const Panel({Key? key}) : super(key: key);
+  const Panel({super.key});
 
   @override
   State<Panel> createState() => _PanelState();

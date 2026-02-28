@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mbschool/core/constants/colors.dart';
 
 class TextBoxVerification extends StatefulWidget {
-  const TextBoxVerification({Key? key, required this.controller}) : super(key: key);
+  const TextBoxVerification({super.key, required this.controller});
   final TextEditingController controller;
 
   @override

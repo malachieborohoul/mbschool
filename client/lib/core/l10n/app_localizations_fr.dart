@@ -87,4 +87,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lbl_try_again => 'Réessayer';
+
+  @override
+  String get err_field_required => 'Ce champ est requis';
+
+  @override
+  String get err_invalid_name => 'Veuillez entrer un nom valide';
+
+  @override
+  String get err_invalid_email => 'Veuillez entrer une adresse email valide';
+
+  @override
+  String get err_password_short =>
+      'Le mot de passe doit comporter au moins 8 caractères';
 }

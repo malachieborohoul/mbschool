@@ -184,10 +184,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       debugPrint("💡From getUsers $token");
 
       // Gestion d'erreur si le token ne peut pas être récupéré
-      if (token == null)
+      if (token == null) {
         throw ServerException(
           message: "User is not authenticated",
         );
+      }
 
       Map<String, String> authHeaders = {
         'Authorization': 'Bearer $token',
@@ -209,9 +210,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
         // Récupérer le nouveau token après rafraîchissement
         final newToken = await getAccessToken();
-        if (newToken == null)
+        if (newToken == null) {
           throw ServerException(message: "User is not authenticated");
-        ;
+        }
+        
 
         // Mise à jour du header avec le nouveau token
         authHeaders['Authorization'] = 'Bearer $newToken';
@@ -243,8 +245,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     http.Response? response;
 
     return errorHandler(() async {
-      debugPrint("💡From AuthRemoteDataSource email -  ${email} ");
-      debugPrint("💡From AuthRemoteDataSource password -  ${password} ");
+      debugPrint("💡From AuthRemoteDataSource email -  $email ");
+      debugPrint("💡From AuthRemoteDataSource password -  $password ");
 
       response = await http.post(
           Uri.parse(
@@ -276,7 +278,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           final user = UserModel.fromJson(res.body);
 
           //If email not verified delete refresh token from secure storage
-          if (!user.verification_status) {
+          if (!user.verificationStatus) {
             await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
           }
           return user;
@@ -360,11 +362,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   void printTokenParts(String token) {
     final parts = token.split('.');
     if (parts.length == 3) {
-      print("Header: ${parts[0]}");
-      print("Payload: ${parts[1]}");
-      print("Signature: ${parts[2]}");
+      if (kDebugMode) {
+        print("Header: ${parts[0]}");
+      }
+      if (kDebugMode) {
+        print("Payload: ${parts[1]}");
+      }
+      if (kDebugMode) {
+        print("Signature: ${parts[2]}");
+      }
     } else {
-      print("Invalid JWT format.");
+      if (kDebugMode) {
+        print("Invalid JWT format.");
+      }
     }
   }
 
@@ -374,7 +384,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       // debugPrint("💡From Authremote accessToken -  ${result.accessToken}  ");
 
-      print(result.accessToken);
+      if (kDebugMode) {
+        print(result.accessToken);
+      }
 
       //Store refresh token
       await secureStorage.write(

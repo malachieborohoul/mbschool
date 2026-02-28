@@ -4,8 +4,8 @@ import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/core/datas/promotion.dart';
 
-class CustomPromotionCard extends StatelessWidget {
-  const CustomPromotionCard({Key? key}) : super(key: key);
+class CustompromotionCard extends StatelessWidget {
+  const CustompromotionCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class CustomPromotionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Promotion['title'].toString(),
+                  promotion['title'].toString(),
                   style: const TextStyle(
                     fontSize: 25.0,
                     color: textWhite,
@@ -40,7 +40,7 @@ class CustomPromotionCard extends StatelessWidget {
                 SizedBox(
                   width: size.width * .425,
                   child: Text(
-                    Promotion['subTitle'].toString(),
+                    promotion['subTitle'].toString(),
                     style: const TextStyle(
                       fontSize: 15.0,
                       color: textWhite,
@@ -84,7 +84,7 @@ class CustomPromotionCard extends StatelessWidget {
             child: SizedBox(
               height: size.width * .6,
               child: SvgPicture.asset(
-                Promotion['image'].toString(),
+                promotion['image'].toString(),
               ),
             ),
           ),

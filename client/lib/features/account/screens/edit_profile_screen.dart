@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/editProfil';
-  const EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -26,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController sexeController = TextEditingController();
   TextEditingController localisationController = TextEditingController();
-  final _editUserProfileFormKey = GlobalKey<FormState>();
+  final _edituserProfileFormKey = GlobalKey<FormState>();
 
   bool isCharging = false;
 
@@ -58,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //   });
   // }
 
-  void editUserProfile() {
+  void edituserProfile() {
     accountService.editUserProfile(
         context,
         nameController.text,
@@ -113,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Padding(
             padding: const EdgeInsets.all(appPadding),
             child: Form(
-              key: _editUserProfileFormKey,
+              key: _edituserProfileFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -154,7 +154,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       child: Hero(
                                         tag: 'profile-photo',
                                         child: Image.asset(
-                                          UserProfile['image'].toString(),
+                                          userProfile['image'].toString(),
                                           width: 80,
                                           height: 80,
                                         ),
@@ -263,11 +263,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        if (_editUserProfileFormKey.currentState!.validate()) {
+                        if (_edituserProfileFormKey.currentState!.validate()) {
                           setState(() {
                             isCharging = true;
                           });
-                          editUserProfile();
+                          edituserProfile();
                         }
                       },
                       child: Column(

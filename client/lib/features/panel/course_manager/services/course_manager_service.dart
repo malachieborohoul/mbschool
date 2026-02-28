@@ -123,7 +123,7 @@ class CourseManagerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response sectionRes = await http.get(
-        Uri.parse('$uri/getAllSections/${cours.id_cours}'),
+        Uri.parse('$uri/getAllSections/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -158,7 +158,7 @@ class CourseManagerService {
     try {
       http.Response leconRes = await http.get(
         Uri.parse(
-            '$uri/getAllLecons/${section.id_cours}/${section.id_section}'),
+            '$uri/getAllLecons/${section.idCours}/${section.idSection}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -192,7 +192,7 @@ class CourseManagerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response coursRes = await http.get(
-        Uri.parse('$uri/getAllCoursesByCategory/${categorie.id_categorie}'),
+        Uri.parse('$uri/getAllCoursesByCategory/${categorie.idCategorie}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -268,7 +268,7 @@ class CourseManagerService {
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_cours": int.parse(cours.id_cours),
+            "idCours": int.parse(cours.idCours),
           },
         ),
       );
@@ -301,7 +301,7 @@ class CourseManagerService {
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_cours": int.parse(cours.id_cours),
+            "idCours": int.parse(cours.idCours),
           },
         ),
       );
@@ -331,7 +331,7 @@ class CourseManagerService {
               },
               body: jsonEncode({
                 "id_users": int.parse(userProvider.user.id),
-                "id_cours": int.parse(cours.id_cours)
+                "idCours": int.parse(cours.idCours)
               }));
 
       httpErrorHandle(
@@ -364,7 +364,7 @@ class CourseManagerService {
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_lecon": int.parse(lecon.id_lecon),
+            "idLecon": int.parse(lecon.idLecon),
           },
         ),
       );
@@ -393,7 +393,7 @@ class CourseManagerService {
           },
           body: jsonEncode({
             "users_id": int.parse(userProvider.user.id),
-            "lecon_id": int.parse(lecon.id_lecon)
+            "lecon_id": int.parse(lecon.idLecon)
           }));
 
       httpErrorHandle(
@@ -421,7 +421,7 @@ class CourseManagerService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({"cours_id": int.parse(cours.id_cours)}));
+              body: jsonEncode({"cours_id": int.parse(cours.idCours)}));
 
       httpErrorHandle(
         response: numLeconRes,
@@ -450,7 +450,7 @@ class CourseManagerService {
                 'x-auth-token': userProvider.user.token,
               },
               body: jsonEncode({
-                "cours_id": int.parse(cours.id_cours),
+                "cours_id": int.parse(cours.idCours),
                 "users_id": int.parse(userProvider.user.id),
               }));
 
@@ -473,7 +473,7 @@ class CourseManagerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response leconRes = await http.get(
-        Uri.parse('$uri/getTotalLecons/${int.parse(cours.id_cours)}'),
+        Uri.parse('$uri/getTotalLecons/${int.parse(cours.idCours)}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -515,7 +515,7 @@ class CourseManagerService {
         },
         body: jsonEncode(
           {
-            'id_cours': int.parse(cours.id_cours),
+            'idCours': int.parse(cours.idCours),
           },
         ),
       );
@@ -547,7 +547,7 @@ class CourseManagerService {
         },
         body: jsonEncode(
           {
-            'id_cours': int.parse(cours.id_cours),
+            'idCours': int.parse(cours.idCours),
           },
         ),
       );
@@ -576,7 +576,7 @@ class CourseManagerService {
         },
         body: jsonEncode(
           {
-            'id_cours': int.parse(cours.id_cours),
+            'idCours': int.parse(cours.idCours),
           },
         ),
       );
@@ -599,7 +599,7 @@ class CourseManagerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response usersRes = await http.get(
-        Uri.parse('$uri/verifyCourseHasExigence/${cours.id_cours}'),
+        Uri.parse('$uri/verifyCourseHasExigence/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -625,7 +625,7 @@ class CourseManagerService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response usersRes = await http.get(
-        Uri.parse('$uri/verifyCourseHasResultat/${cours.id_cours}'),
+        Uri.parse('$uri/verifyCourseHasResultat/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

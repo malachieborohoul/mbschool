@@ -28,7 +28,7 @@ Future<T> errorHandler<T>(Future<T> Function() callback) async {
           code: e.code,
           statusCode: e.details?['error'] ?? "");
     } catch (e) {
-      debugPrint("💡From errorHandler - errors ${e } ");
+      debugPrint("💡From errorHandler - errors $e  ");
       debugPrint("💡From errorHandler -  ${e is ServerException } ");
 
       if (e is ServerException) {

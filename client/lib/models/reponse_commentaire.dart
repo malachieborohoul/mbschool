@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class ReponseCommentaire {
-  final String id_reponse;
+  final String idReponse;
 
-  final String intitule_reponse;
+  final String intitulereponse;
   
 
   // final String created_at
@@ -12,8 +12,8 @@ class ReponseCommentaire {
   final String photo;
 
   ReponseCommentaire({
-    required this.id_reponse,
-    required this.intitule_reponse,
+    required this.idReponse,
+    required this.intitulereponse,
 
     // required this.created_at,
     required this.nom,
@@ -23,8 +23,8 @@ class ReponseCommentaire {
 
   Map<String, dynamic> toMap() {
     return {
-      'id_reponse': id_reponse,
-      'intitule_reponse': intitule_reponse,
+      'idReponse': idReponse,
+      'intitulereponse': intitulereponse,
 
       // 'created_at': created_at,
       'nom': nom,
@@ -35,8 +35,8 @@ class ReponseCommentaire {
 
   factory ReponseCommentaire.fromMap(Map<String, dynamic> map) {
     return ReponseCommentaire(
-      id_reponse: map['id_reponse'] ?? '',
-      intitule_reponse: map['intitule_reponse'] ?? '',
+      idReponse: map['idReponse'] ?? '',
+      intitulereponse: map['intitulereponse'] ?? '',
 
       // created_at: map['created_at'] ?? '',
       nom: map['nom'] ?? '',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mbschool/core/common/arguments/course_lesson_arguments.dart';
 import 'package:mbschool/core/constants/colors.dart';
-import 'package:mbschool/features/panel/course_manager/screens/editLecon.dart';
+import 'package:mbschool/features/panel/course_manager/screens/edit_lecon.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 
 class CustomCourseLecon extends StatefulWidget {
   final Lecon lecon;
-  const CustomCourseLecon({Key? key, required this.lecon}) : super(key: key);
+  const CustomCourseLecon({super.key, required this.lecon});
 
   @override
   State<CustomCourseLecon> createState() => _CustomCourseLeconState();
@@ -39,7 +39,7 @@ class _CustomCourseLeconState extends State<CustomCourseLecon> {
                   InkWell(
                       onTap: () {
                         Provider.of<LeconProvider>(context, listen: false)
-                            .set_lecon(widget.lecon);
+                            .setLeconObject(widget.lecon);
                         Navigator.pushNamed(context, EditLecon.routeName,
                             arguments: CourseLessonArguments(coursProvider, widget.lecon));
                       },

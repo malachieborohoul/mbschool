@@ -5,7 +5,7 @@ import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/user.dart';
 
 class CustomUsersContainer extends StatefulWidget {
-  const CustomUsersContainer({Key? key, required this.user}) : super(key: key);
+  const CustomUsersContainer({super.key, required this.user});
   final User user;
 
   @override
@@ -64,7 +64,7 @@ class _CustomUsersContainerState extends State<CustomUsersContainer> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(100)),
                         child: Image.asset(
-                          UserProfile['image'].toString(),
+                          userProfile['image'].toString(),
                           width: 50,
                           height: 50,
                         ),

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbschool/core/common/cubits/app_user/app_user_cubit.dart';
@@ -184,7 +185,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       Failure l, Emitter<AuthState> emit, BuildContext context) async {
     // var appLocalization = AppLocalizations.of(context);
 
-    print("_emitFailure" + l.message);
+    if (kDebugMode) {
+      print("_emitFailure${l.message}");
+    }
     //  if(l.error=="invalid_grant"){
     //       emit(DepositsLoggedOut());
 

@@ -15,11 +15,10 @@ class CustomCourseCurriculum extends StatefulWidget {
   final Cours cours;
   final bool isCourseEnrolled;
   const CustomCourseCurriculum(
-      {Key? key,
+      {super.key,
       required this.section,
       required this.cours,
-      this.isCourseEnrolled = false})
-      : super(key: key);
+      this.isCourseEnrolled = false});
 
   @override
   State<CustomCourseCurriculum> createState() => _CustomCourseCurriculumState();

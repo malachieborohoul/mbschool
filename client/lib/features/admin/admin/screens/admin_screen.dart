@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class AdminScreen extends StatefulWidget {
   static const routeName = 'admin-screen';
-  const AdminScreen({Key? key}) : super(key: key);
+  const AdminScreen({super.key});
 
   @override
   State<AdminScreen> createState() => _AdminScreenState();

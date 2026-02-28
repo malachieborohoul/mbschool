@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 class Niveau {
-  final String id_niveau;
+  final String idNiveau;
   final String titre;
 
 
   Niveau(
-      {required this.id_niveau,
+      {required this.idNiveau,
       required this.titre,
  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_niveau': id_niveau,
+      'idNiveau': idNiveau,
       'titre': titre,
       
     };
@@ -20,7 +20,7 @@ class Niveau {
 
   factory Niveau.fromMap(Map<String, dynamic> map) {
     return Niveau(
-      id_niveau: map['id_niveau'] ?? '',
+      idNiveau: map['idNiveau'] ?? '',
       titre: map['titre'] ?? '',
       
     );

@@ -27,7 +27,7 @@ class EditSectionService {
         },
         body: jsonEncode(
           {
-            'id_section': int.parse(section.id_section),
+            'id_section': int.parse(section.idSection),
             'titre': titre,
           },
         ),
@@ -62,7 +62,7 @@ class EditSectionService {
         },
         body: jsonEncode(
           {
-            'id_section': int.parse(section.id_section),
+            'id_section': int.parse(section.idSection),
           },
         ),
       );

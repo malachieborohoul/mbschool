@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 
 class SelectFile extends StatefulWidget {
   static const routeName = '/select-file';
-  final codeFile;
+  final dynamic codeFile;
   final Cours cours;
   const SelectFile({super.key, this.codeFile, required this.cours});
 
@@ -72,16 +72,16 @@ class _SelectFileState extends State<SelectFile> {
   }
 
   bool isCharging = false;
-  int id_section = 0;
+  int idSection = 0;
 
   @override
   Widget build(BuildContext context) {
     String? dropdownvalueSection;
      
-        //sections != null ? sections[0].id_section : "";
+        //sections != null ? sections[0].idSection : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
+    // if (idSection == 0) idSection = int.parse(dropdownvalue_section);
 
    final coursProvider =
         Provider.of<CoursPlanProvider>(context, listen: false).cours;
@@ -90,8 +90,8 @@ class _SelectFileState extends State<SelectFile> {
           context,
           titreEditingController.text,
           resumeEditingController.text,
-          widget.cours.id_cours,
-          id_section,
+          widget.cours.idCours,
+          idSection,
           widget.codeFile == 1 ? 1 : 2,
           widget.codeFile == 1 ? video! : document!, () {
         setState(() {
@@ -181,7 +181,7 @@ class _SelectFileState extends State<SelectFile> {
                             initialValue: dropdownvalueSection,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
-                                value: item.id_section,
+                                value: item.idSection,
                                 child: Text(item.titre),
                               );
                             }).toList(),
@@ -189,7 +189,7 @@ class _SelectFileState extends State<SelectFile> {
                               setState(() {
                                 //On ne peut pas envoyer cette valeur car elle prend à chaque compilation l'id du premier element
                                 dropdownvalueSection = val!;
-                                id_section = int.parse(dropdownvalueSection!);
+                                idSection = int.parse(dropdownvalueSection!);
                               });
                             }),
 

@@ -105,7 +105,7 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
                           );
 
                           Provider.of<CoursProvider>(context, listen: false)
-                              .set_cours(cours[index]);
+                              .setCoursObject(cours[index]);
                         },
                         child: CustomCourseCardShrink(
                           thumbNail: cours[index].vignette,

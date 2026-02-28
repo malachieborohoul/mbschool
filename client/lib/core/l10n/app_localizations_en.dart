@@ -86,4 +86,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lbl_try_again => 'Try Again';
+
+  @override
+  String get err_field_required => 'This field is required';
+
+  @override
+  String get err_invalid_name => 'Please enter a valid last name';
+
+  @override
+  String get err_invalid_email => 'Please enter a valid email address';
+
+  @override
+  String get err_password_short => 'Password must be at least 8 characters';
 }

@@ -121,7 +121,7 @@ class CreateCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -147,7 +147,7 @@ class CreateCourseService {
                 body: jsonEncode({
                   'titre': titre,
                   'description': description,
-                  'description_courte': description_courte,
+                  'descriptionCourte': descriptionCourte,
                   'id_categorie': categorie,
                   'id_niveau': niveau,
                   'id_langue': langue,

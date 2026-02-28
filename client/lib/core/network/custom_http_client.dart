@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:mbschool/core/error/exceptions.dart';
@@ -61,7 +61,9 @@ class CustomHttpClient {
 
       if (response.statusCode == 200) {
         response.stream.transform(utf8.decoder).listen((val) {
-          print(val);
+          if (kDebugMode) {
+            print(val);
+          }
         });
 
         // return value;
@@ -96,7 +98,9 @@ class CustomHttpClient {
 
         if (retryResponse.statusCode == 200) {
           retryResponse.stream.transform(utf8.decoder).listen((val) {
-            print(val);
+            if (kDebugMode) {
+              print(val);
+            }
           });
 
           return "ok";
@@ -116,7 +120,7 @@ class CustomHttpClient {
       throw ServerException(message: e.message ?? 'Something went wrong! Code ${e.code}', statusCode: e.code, code: e.details['error']);
     } catch (e) {
       if (e is ServerException) {
-        throw e;
+        rethrow;
       } else {
         throw ServerException(message: 'Unknown error ${e.runtimeType}');
       }

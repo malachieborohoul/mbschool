@@ -1,5 +1,3 @@
-
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -74,7 +72,7 @@ class _EditLeconState extends State<EditLecon> {
   }
 
   bool isCharging = false;
-  int id_section = 0;
+  int idSection = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +82,11 @@ class _EditLeconState extends State<EditLecon> {
         Provider.of<LeconProvider>(context, listen: false).lecon;
     final coursProvider =
         Provider.of<CoursPlanProvider>(context, listen: false).cours;
-    String? dropdownvalue_section;
-    // sections != null ? sections[0].id_section : "";
+    String? dropdownvalueSection;
+    // sections != null ? sections[0].idSection : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_section == 0) id_section = int.parse(dropdownvalue_section);
+    // if (idSection == 0) idSection = int.parse(dropdownvalueSection);
 
     void editLecon() {
       editLeconService.editLecon(
@@ -96,8 +94,8 @@ class _EditLeconState extends State<EditLecon> {
           leconProvider,
           titreEditingController.text,
           resumeEditingController.text,
-          widget.cours.id_cours,
-          int.parse(dropdownvalue_section!),
+          widget.cours.idCours,
+          int.parse(dropdownvalueSection!),
           video!, () {
         setState(() {
           isCharging = false;
@@ -128,7 +126,7 @@ class _EditLeconState extends State<EditLecon> {
     if (isCharging == false) {
       titreEditingController.text = leconProvider.titre;
       resumeEditingController.text = leconProvider.resume;
-      dropdownvalue_section = leconProvider.id_section;
+      dropdownvalueSection = leconProvider.idSection;
     } else {
       titreEditingController.text = titreEditingController.text;
       resumeEditingController.text = resumeEditingController.text;
@@ -203,18 +201,18 @@ class _EditLeconState extends State<EditLecon> {
                               ),
                             ),
                             hint: const Text("Selectionner une section"),
-                            initialValue: dropdownvalue_section,
+                            initialValue: dropdownvalueSection,
                             items: sections.map((Section item) {
                               return DropdownMenuItem(
-                                value: item.id_section,
+                                value: item.idSection,
                                 child: Text(item.titre),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
                                 //On ne peut pas envoyer cette valeur car elle prend à chaque compilation l'id du premier element
-                                dropdownvalue_section = val!;
-                                // id_section = int.parse(dropdownvalue_section);
+                                dropdownvalueSection = val!;
+                                // idSection = int.parse(dropdownvalueSection);
                               });
                             }),
 

@@ -16,7 +16,7 @@ class CustomCategoryCard extends StatelessWidget {
       alignment: Alignment.center,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(HomePageCategoryJson.length, (index) {
+        children: List.generate(homePageCategoryJson.length, (index) {
           
          
           return GestureDetector(
@@ -59,13 +59,13 @@ class CustomCategoryCard extends StatelessWidget {
                       ],
                     ),
                     child: SvgPicture.asset(
-                      HomePageCategoryJson[index]['icon'],
+                      homePageCategoryJson[index]['icon'],
                       colorFilter: ColorFilter.mode(textWhite, BlendMode.srcIn),
                       width: 15.0,
                     ),
                   ),
                   Text(
-                    HomePageCategoryJson[index]['title'],
+                    homePageCategoryJson[index]['title'],
                     style: const TextStyle(
                       color: secondary,
                       fontSize: 15.0,

@@ -1,4 +1,4 @@
-const List CoursesJson = [
+const List coursesJson = [
   {
     'image':
         'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=987&q=80',
@@ -71,7 +71,7 @@ const List CoursesJson = [
   },
 ];
 
-const List MyCoursesJson = [
+const List myCoursesJson = [
   {
     'image':
         'https://images.unsplash.com/photo-1575089976121-8ed7b2a54265?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=987&q=80',

@@ -14,9 +14,9 @@ class PlanScreen extends StatefulWidget {
   static const routeName = '/plan_cours';
   final Cours cours;
   const PlanScreen({
-    Key? key,
+    super.key,
     required this.cours,
-  }) : super(key: key);
+  });
 
   @override
   State<PlanScreen> createState() => _PlanScreenState();

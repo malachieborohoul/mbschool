@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/padding.dart';
@@ -6,14 +7,14 @@ import 'package:mbschool/models/cours.dart';
 
 class CustomMyCoursesCard extends StatefulWidget {
   const CustomMyCoursesCard({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.instructor,
     required this.videoAmount,
     this.percentage = 0,
     required this.cours,
-  }) : super(key: key);
+  });
 
   final String image;
   final String title;
@@ -23,10 +24,10 @@ class CustomMyCoursesCard extends StatefulWidget {
   final Cours cours;
 
   @override
-  _CustomMyCoursesCardState createState() => _CustomMyCoursesCardState();
+  CustomMyCoursesCardState createState() => CustomMyCoursesCardState();
 }
 
-class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
+class CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
   CourseManagerService courseManagerService = CourseManagerService();
   int numberLecon = 0;
   int numberLeconDone = 0;
@@ -53,7 +54,9 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
         isLoading = false;
       });
     } catch (e) {
-      print('Error loading data: $e');
+      if (kDebugMode) {
+        print('Error loading data: $e');
+      }
       setState(() {
         isLoading = false;
       });
@@ -68,8 +71,9 @@ class _CustomMyCoursesCardState extends State<CustomMyCoursesCard> {
   double get progressWidth {
     var size = MediaQuery.of(context).size;
     if (numberLecon == 0) return 0;
-    if (progressPercentage == 100)
+    if (progressPercentage == 100) {
       return size.width - 30; // Ajustement pour 100%
+    }
     return (progressPercentage / 100) *
         (size.width - 30); // -30 pour le padding
   }

@@ -21,7 +21,7 @@ import 'package:provider/provider.dart';
 
 class CreateCourseScreen extends StatefulWidget {
   static const routeName = '/create_course';
-  const CreateCourseScreen({Key? key}) : super(key: key);
+  const CreateCourseScreen({super.key});
 
   @override
   State<CreateCourseScreen> createState() => _CreateCourseScreenState();
@@ -56,17 +56,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     getAllCategorieData();
   }
 
-  getAllLangueData() async {
+  Future<void> getAllLangueData() async {
     langues = await createCourseService.getAllLangueData(context);
     setState(() {});
   }
 
-  getAllCategorieData() async {
+  Future<void> getAllCategorieData() async {
     categories = await createCourseService.getAllCategorieData(context);
     setState(() {});
   }
 
-  getAllNiveauData() async {
+  Future<void> getAllNiveauData() async {
     niveaux = await createCourseService.getAllNiveauData(context);
     setState(() {});
   }
@@ -92,33 +92,33 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
     descriptionCourteCoursController.dispose();
   }
 
-  int id_categorie = 0;
-  int id_niveau = 0;
-  int id_langue = 0;
+  int idCategorie = 0;
+  int idNiveau = 0;
+  int idLangue = 0;
 
   bool isCharging = false;
 
   @override
   Widget build(BuildContext context) {
-    String? dropdownvalue_niveau;
+    String? dropdownvalueNiveau;
 
-    String? dropdownvalue_langue;
-    String? dropdownvalue_categorie;
+    String? dropdownvalueLangue;
+    String? dropdownvalueCategorie;
     // return ListView.builder(
     //     itemCount: langues!.length,
     //     itemBuilder: (BuildContext context, int i) {
     //       return Text("data");
     //     });
-    // String dropdownvalue_niveau = niveaux != null ? niveaux[0].id_niveau : "";
+    // String dropdownvalueNiveau = niveaux != null ? niveaux[0].idNiveau : "";
 
-    // String dropdownvalue_langue = langues != null ? langues[0].id_langue : "";
-    // String dropdownvalue_categorie =
-    //     categories != null ? categories[0].id_categorie : "";
+    // String dropdownvalueLangue = langues != null ? langues[0].idLangue : "";
+    // String dropdownvalueCategorie =
+    //     categories != null ? categories[0].idCategorie : "";
 
     //Si dans le droplist rien n'a été choisi zero sera envoyé or zero ne figure pas comme id dans la table parente donc
-    // if (id_categorie == 0) id_categorie = int.parse(dropdownvalue_categorie);
-    // if (id_niveau == 0) id_niveau = int.parse(dropdownvalue_niveau);
-    // if (id_langue == 0) id_langue = int.parse(dropdownvalue_langue);
+    // if (idCategorie == 0) idCategorie = int.parse(dropdownvalueCategorie);
+    // if (idNiveau == 0) idNiveau = int.parse(dropdownvalueNiveau);
+    // if (idLangue == 0) idLangue = int.parse(dropdownvalueLangue);
 
     createCourse() {
       createCourseService.createCourse(
@@ -126,9 +126,9 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
           titreCoursController.text.trim(),
           descriptionCoursController.text.trim(),
           descriptionCourteCoursController.text.trim(),
-          id_categorie,
-          id_niveau,
-          id_langue,
+          idCategorie,
+          idNiveau,
+          idLangue,
           prixCoursController.text,
           isChecked,
           vignette!, () {
@@ -228,18 +228,18 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une catégorie"),
-                            initialValue: dropdownvalue_categorie,
+                            initialValue: dropdownvalueCategorie,
                             items: categories.map((Categorie item) {
                               return DropdownMenuItem(
-                                value: item.id_categorie,
+                                value: item.idCategorie,
                                 child: Text(item.nom.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_categorie = val!;
-                                id_categorie =
-                                    int.parse(dropdownvalue_categorie!);
+                                dropdownvalueCategorie = val!;
+                                idCategorie =
+                                    int.parse(dropdownvalueCategorie!);
                               });
                             }),
                         const SizedBox(
@@ -269,17 +269,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner un niveau"),
-                            initialValue: dropdownvalue_niveau,
+                            initialValue: dropdownvalueNiveau,
                             items: niveaux.map((Niveau item) {
                               return DropdownMenuItem(
-                                value: item.id_niveau,
+                                value: item.idNiveau,
                                 child: Text(item.titre.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_niveau = val!;
-                                id_niveau = int.parse(dropdownvalue_niveau!);
+                                dropdownvalueNiveau = val!;
+                                idNiveau = int.parse(dropdownvalueNiveau!);
                               });
                             }),
                         const SizedBox(
@@ -310,17 +310,17 @@ class _CreateCourseScreenState extends State<CreateCourseScreen> {
                               ),
                             ),
                             hint: const Text("Sélectionner une langue"),
-                            initialValue: dropdownvalue_langue,
+                            initialValue: dropdownvalueLangue,
                             items: langues.map((Langue item) {
                               return DropdownMenuItem(
-                                value: item.id_langue,
+                                value: item.idLangue,
                                 child: Text(item.nom.toUpperCase()),
                               );
                             }).toList(),
                             onChanged: (String? val) {
                               setState(() {
-                                dropdownvalue_langue = val!;
-                                id_langue = int.parse(dropdownvalue_langue!);
+                                dropdownvalueLangue = val!;
+                                idLangue = int.parse(dropdownvalueLangue!);
                               });
                             }),
                         const SizedBox(

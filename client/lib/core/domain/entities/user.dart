@@ -1,11 +1,11 @@
 class User {
-  final int id;
+  final String id;
   final String nom;
   final String prenom;
   final String email;
   final String password;
   final String role;
-  final int statutUsers;
+  final String statutUsers;
   final String photo;
   final String sexe;
   final String localisation;

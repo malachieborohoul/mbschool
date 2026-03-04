@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbschool/core/common/cubits/app_user/app_user_cubit.dart';
 import 'package:mbschool/core/domain/entities/user.dart';
 import 'package:mbschool/core/error/failures.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
 import 'package:mbschool/core/secrets/app_secrets.dart';
 import 'package:mbschool/features/auth/domain/usecases/init_app.dart';
 import 'package:mbschool/features/auth/domain/usecases/sign_in.dart';
 import 'package:mbschool/features/auth/domain/usecases/sign_up.dart';
 import 'package:mbschool/features/auth/domain/usecases/user_current_user.dart';
 import 'package:mbschool/features/auth/domain/usecases/user_sign_out.dart';
-
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -47,14 +47,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignIn>(_onAuthSignIn);
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthCurrentUserApi>(_onCurrentUserApi);
-
   }
 
   void _onInitApp(AuthInitApp event, Emitter<AuthState> emit) async {
     final res = await _initApp();
 
     res.fold((l) {
-    // var appLocalization = AppLocalizations.of(event.context);
+      // var appLocalization = AppLocalizations.of(event.context);
 
       // if(l.error=="invalid_grant"){
       //   emit(AuthSignOutSuccess());
@@ -62,22 +61,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       // }else{
 
       // }
-          _emitFailure(l, emit, event.context);
+      _emitFailure(l, emit, event.context);
 
-
-    //   print("From AuthBloc _onInitApp" + l.errorCode);
-    //   if (l.errorCode == "500" &&
-    //     l.error == "INTERNAL_SERVER_ERROR") {
-    //   emit(AuthSignOutSuccess());
-    // } else {
-    //   if (l.error == AppSecrets.ERROR_NETWORK) {
-    //     emit(AuthFailure(appLocalization!.no_internet_connection));
-    //   } else {
-    //     emit(AuthFailure(appLocalization!.msg_error_occurred));
-    //   }
-    // };
+      //   print("From AuthBloc _onInitApp" + l.errorCode);
+      //   if (l.errorCode == "500" &&
+      //     l.error == "INTERNAL_SERVER_ERROR") {
+      //   emit(AuthSignOutSuccess());
+      // } else {
+      //   if (l.error == AppSecrets.ERROR_NETWORK) {
+      //     emit(AuthFailure(appLocalization!.no_internet_connection));
+      //   } else {
+      //     emit(AuthFailure(appLocalization!.msg_error_occurred));
+      //   }
+      // };
     }, (r) {
-      if (r.id == 0) {
+      if (r.id == '0') {
         emit(AuthLoggedOut());
       } else {
         _emitAuthSuccess(r, emit);
@@ -113,23 +111,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 
-
-
   void _onAuthSignIn(AuthSignIn event, Emitter<AuthState> emit) async {
-    // var appLocalization = AppLocalizations.of(event.context);
+    final appLocalization = AppLocalizations.of(event.context);
 
     final res = await _signIn(
         SignInParams(email: event.email, password: event.password));
 
     res.fold((l) {
       if (l.code == AppSecrets.ERROR_NETWORK) {
-        // emit(AuthFailure(appLocalization!.no_internet_connection));
+        emit(AuthFailure(appLocalization!.no_internet_connection));
       } else {
-        if (l.statusCode == "400" &&
-            l.code == AppSecrets.AUTH_INVALID_CREDENTIALS) {
-          // emit(AuthFailure(appLocalization!.msg_login_failure));
+        if (l.code == AppSecrets.AUTH_INVALID_CREDENTIALS) {
+          emit(AuthFailure(appLocalization!.msg_invalid_email_or_password));
+        } else if (l.code == AppSecrets.AUTH_USER_NOT_VERIFIED) {
+          emit(AuthNotVeried());
         } else {
-          // emit(AuthFailure(appLocalization!.msg_error_occurred));
+          emit(AuthFailure(appLocalization!.msg_error_occurred));
         }
       }
     }, (r) {
@@ -141,28 +138,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
   }
 
-  
-
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
-    // var appLocalization = AppLocalizations.of(event.context);
+    var appLocalization = AppLocalizations.of(event.context);
 
     final res = await _signUp(SignUpParams(
         name: event.name,
         prenom: event.prenom,
         email: event.email,
-        password: event.password  
-        
-        ));
+        password: event.password));
 
-    res.fold((l){
-          if (l.code == AppSecrets.ERROR_NETWORK) {
+    res.fold((l) {
+      if (l.code == AppSecrets.ERROR_NETWORK) {
         // emit(AuthFailure(appLocalization!.no_internet_connection));
       } else {
         if (l.statusCode == "400" &&
-            l.code == AppSecrets.AUTH_USERNAME_OR_EMAIL_ALREADY_EXISTS) {
-          // emit(AuthFailure(appLocalization!.msg_username_or_email_already_exists));
+            l.code == AppSecrets.AUTH_EMAIL_ALREADY_EXISTS) {
+          emit(AuthFailure(
+              appLocalization!.msg_username_or_email_already_exists));
         } else {
-          // emit(AuthFailure(appLocalization!.msg_error_occurred));
+          emit(AuthFailure(appLocalization!.msg_error_occurred));
         }
       }
     }, (r) {
@@ -172,7 +166,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       // emit(AuthSignUpSuccess());
       // _appUserCubit.updateUser(r);
-    emit(AuthSignUpSuccess());
+      emit(AuthSignUpSuccess());
     });
   }
 
@@ -183,7 +177,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _emitFailure(
       Failure l, Emitter<AuthState> emit, BuildContext context) async {
-    // var appLocalization = AppLocalizations.of(context);
+    var appLocalization = AppLocalizations.of(context);
 
     if (kDebugMode) {
       print("_emitFailure${l.message}");
@@ -196,18 +190,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     //      emit(DepositsFailure(l.message));
     //     }
 
-    if (l.statusCode == "400" &&
-        l.code == AppSecrets.AUTH_INVALID_CREDENTIALS) {
-      emit(AuthSignOutSuccess());
+    if (l.code == AppSecrets.ERROR_NETWORK) {
+      emit(AuthFailure(appLocalization!.no_internet_connection));
     } else {
-      if (l.code == AppSecrets.ERROR_NETWORK) {
-        // emit(AuthFailure(appLocalization!.no_internet_connection));
-      } else {
-        // emit(AuthFailure(appLocalization!.msg_error_occurred));
+      if (l.code == AppSecrets.AUTH_INVALID_CREDENTIALS) {
+        emit(AuthFailure(appLocalization!.msg_invalid_email_or_password));
+      } else if (l.code == AppSecrets.AUTH_USER_NOT_VERIFIED) {
+        emit(AuthNotVeried());
+      } 
+      else if (l.code == AppSecrets.AUTH_SESSION_EXPIRED) {
+        emit(AuthSignOutSuccess());
+      } 
+      
+      else {
+        emit(AuthFailure(appLocalization!.msg_error_occurred));
       }
     }
   }
-
 
   //  void _emitAuthPendingVerification(User user, Emitter<AuthState> emit) async {
   //         debugPrint("💡From Bloc -  _emitAuthPendingVerification  Code d'erreur : ${user}");
@@ -215,6 +214,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   //   _appUserCubit.updateUser(user);
   //   emit(AuthPendingVerification(user));
   // }
-
-
 }

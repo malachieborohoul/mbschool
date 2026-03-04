@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:mbschool/core/domain/entities/user.dart';
 
-
-
-
 class UserModel extends User {
-  UserModel( {
+  UserModel({
     required super.id,
     required super.nom,
     required super.prenom,
@@ -21,13 +18,10 @@ class UserModel extends User {
     required super.numCompte,
     required super.cv,
     required super.token,
-    required super.statutUsers, required super.verifyCode, required super.verificationStatus,
-
-
-   });
-  
-  
-  
+    required super.statutUsers,
+    required super.verifyCode,
+    required super.verificationStatus,
+  });
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,13 +47,13 @@ class UserModel extends User {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-  id: map['id'] ?? '',
+      id: map['id'] ?? '',
       nom: map['nom'] ?? '',
       prenom: map['prenom'] ?? '',
       email: map['email'] ?? '',
       password: map['password'] ?? '',
-      role: map['role'] ?? 0,
-      statutUsers: map['statut_users'] ?? 0,
+      role: map['role'] ?? '',
+      statutUsers: map['statut_users'] ?? '',
       photo: map['photo'] ?? '',
       sexe: map['sexe'] ?? '',
       localisation: map['localisation'] ?? '',
@@ -78,60 +72,57 @@ class UserModel extends User {
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  
-   UserModel.empty(): this(
-    id: 0,
-    nom: '_empty.nom',
-    prenom: '_empty.prenom',
-    email: '_empty.email',
-    password: '_empty.password',           
-    role: '_empty.role',
-    statutUsers: 0,
-    photo: '_empty.photo',        
-    sexe: '_empty.sexe',
-    localisation: '_empty.localisation',
-    telephone: '_empty.telephone',
-    qualification: '_empty.qualification',      
-    numCompte: '_empty.numCompte',
-    cv: '_empty.cv',
-    token: '_empty.token',
-    verifyCode: '_empty.verify_code',
-    verificationStatus: false,
-
-            );
+  UserModel.empty()
+      : this(
+          id: '0',
+          nom: '_empty.nom',
+          prenom: '_empty.prenom',
+          email: '_empty.email',
+          password: '_empty.password',
+          role: '_empty.role',
+          statutUsers: '_empty.statutUsers',
+          photo: '_empty.photo',
+          sexe: '_empty.sexe',
+          localisation: '_empty.localisation',
+          telephone: '_empty.telephone',
+          qualification: '_empty.qualification',
+          numCompte: '_empty.numCompte',
+          cv: '_empty.cv',
+          token: '_empty.token',
+          verifyCode: '_empty.verify_code',
+          verificationStatus: false,
+        );
 
   UserModel copyWith({
-    int? id,
+    String? id,
     String? firstName,
     String? lastName,
     String? email,
     String? phone,
     int? codeVerifyStatus,
     double? balance,
-  
     String? avatar,
     String? currency,
-     DateTime? updatedAt,
+    DateTime? updatedAt,
   }) {
     return UserModel(
       id: id ?? this.id,
-      nom: firstName ?? nom,   
+      nom: firstName ?? nom,
       prenom: lastName ?? prenom,
       email: email ?? this.email,
       password: password,
       role: role,
-      statutUsers: statutUsers ,
+      statutUsers: statutUsers,
       photo: avatar ?? photo,
       sexe: sexe,
-
       localisation: localisation,
       telephone: phone ?? telephone,
       qualification: qualification,
       numCompte: numCompte,
       cv: cv,
       token: token,
-      verifyCode: verifyCode , 
-      verificationStatus: verificationStatus ,
+      verifyCode: verifyCode,
+      verificationStatus: verificationStatus,
     );
   }
 }

@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mbschool/core/common/animations/opacity_tween.dart';
@@ -8,23 +7,22 @@ import 'package:mbschool/core/common/animations/slide_down_tween.dart';
 import 'package:mbschool/core/common/animations/slide_transition_page.dart';
 import 'package:mbschool/core/common/widgets/custom_button_box.dart';
 import 'package:mbschool/core/common/widgets/custom_heading.dart';
-import 'package:mbschool/core/common/widgets/custom_textfield.dart';
-
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
 import 'package:mbschool/core/utils/loader_dialog.dart';
 import 'package:mbschool/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:mbschool/features/auth/presentation/screens/splash_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/home_screen_test.dart';
+import 'package:mbschool/features/auth/presentation/screens/verification_screen.dart';
+import 'package:mbschool/features/auth/presentation/widgets/build_text_field.dart';
 
-enum Auth {
-  signUp,
-  login,
-}
+enum Auth { signUp, login }
 
 class AuthScreen extends StatefulWidget {
-    static PageRouteBuilder<dynamic> route() => PageRouteBuilder(pageBuilder: (_, animation, __) {
- return SlideTransitionPage(
+  static PageRouteBuilder<dynamic> route() =>
+      PageRouteBuilder(pageBuilder: (_, animation, __) {
+        return SlideTransitionPage(
           page: const AuthScreen(),
           animation: animation,
         );
@@ -36,417 +34,236 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController prenomController = TextEditingController();
-  bool isCharging = false;
+  // Controllers
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController prenomController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  TextEditingController cPasswordController = TextEditingController();
+  // Keys & State
   Auth _auth = Auth.signUp;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
-//Check fields filled
-
-  ValueNotifier<bool> allFieldsFilled = ValueNotifier<bool>(false);
-  ValueNotifier<bool> loginFieldsFilled = ValueNotifier<bool>(false);
-
-  void checkFields() {
-    bool isFilled = nameController.text.isNotEmpty &&
-        prenomController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
-    allFieldsFilled.value = isFilled;
-  }
-
-   void checkLoginFields() {
-    bool isFilled = 
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
-    loginFieldsFilled.value = isFilled;
-  }
-
-
-
+  // Notifiers
+  final ValueNotifier<bool> allFieldsFilled = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> loginFieldsFilled = ValueNotifier<bool>(false);
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      const SplashScreen();
-    });
-    nameController.addListener(checkFields);
-    prenomController.addListener(checkFields);
-
-    emailController.addListener(checkFields);
-    emailController.addListener(checkLoginFields);
-    passwordController.addListener(checkFields);
-    passwordController.addListener(checkLoginFields);
-
     super.initState();
+    nameController.addListener(_checkSignUpFields);
+    prenomController.addListener(_checkSignUpFields);
+    emailController.addListener(_checkAllFields);
+    passwordController.addListener(_checkAllFields);
+  }
+
+  void _checkSignUpFields() => _checkAllFields();
+
+  void _checkAllFields() {
+    allFieldsFilled.value = nameController.text.isNotEmpty &&
+        prenomController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
+
+    loginFieldsFilled.value =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
   }
 
   @override
   void dispose() {
-    super.dispose();
-    nameController.removeListener(checkFields);
-    prenomController.removeListener(checkFields);
-
-    emailController.removeListener(checkFields);
-    passwordController.removeListener(checkFields);
-    emailController.removeListener(checkLoginFields);
-    passwordController.removeListener(checkLoginFields);
     nameController.dispose();
     prenomController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    cPasswordController.dispose();
+    allFieldsFilled.dispose();
+    loginFieldsFilled.dispose();
+    super.dispose();
+  }
+
+  // Common Bloc Listener Logic
+  void _onAuthStateChanged(BuildContext context, AuthState state) {
+    if (state is AuthLoading) {
+      showLoaderDialog(context);
+    } else {
+      closeLoaderDialog(context);
+      if (state is AuthSuccess) {
+        debugPrint("💡 Auth Success");
+        Navigator.pushReplacement(context, HomeScreenTest.route());
+      } else if(state is AuthNotVeried) {
+        debugPrint("💡 Auth Not Verified - Navigating to CodeVerificationTestScreen");
+        Navigator.pushReplacement(
+              context, VerificationScreen.route());   
+
+      }
+      else if (state is AuthFailure) {
+        showSnackBar(context, state.message); 
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // final numberEntry =Provider.of<NumberEntryProvider>(context, listen: false);
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) return const Scaffold();
 
-    //   print(numberEntry.count);
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
+    // The Secret to the Status Bar visibility:
+    final double topPadding = MediaQuery.of(context).viewPadding.top;
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark, // Ensures clock/battery are visible
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Scaffold(
           backgroundColor: background,
           extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset: true,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: topPadding + appPadding, // Dynamic top spacing
+                left: appPadding,
+                right: appPadding,
+                bottom: appPadding,
+              ),
+              child: _auth == Auth.signUp
+                  ? _buildSignUpView(l10n)
+                  : _buildLoginView(l10n),
+            ),
           ),
-          body: _auth == Auth.signUp
-              ?
-              //SIGNUPSCREEN
-              SingleChildScrollView(
-                  child: BlocListener<AuthBloc, AuthState>(
-                       listener: (context, state) {
-                if (state is AuthLoading) {
-                  showLoaderDialog(context);
-                } else {
-                  closeLoaderDialog(context);
-                  if (state is AuthPendingVerification) {
-                    // Navigator.pushReplacement(
-                    //     context, CodeVerificationScreen.route());
-                  } else if (state is AuthSignInWithOIDSuccess) {
-                    debugPrint("💡 From AuthScreen AuthSignInWithOIDSuccess");
-                    // Navigator.pushReplacement(
-                    // context, CodeVerificationTestScreen.route(""));
-                  } else if (state is AuthSuccess) {
-                    debugPrint("💡 From AuthScreen AuthSuccess  ok");
-                    // Navigator.pushReplacement(context, CreatePinScreen.route());
-                  } else if (state is AuthFailure) {
-                    debugPrint("💡 From AuthScreen ${state.message}");
-                    debugPrint("💡 From AuthScreen ${state.errorCode}");
-                      showSnackBar(context, state.message);
-                      // showSnackBar(context, appLocalization.msg_login_failure);
+        ),
+      ),
+    );
+  }
 
-                  }
-                }
-              },
-                    child: Padding(
-                      padding: const EdgeInsets.all(appPadding),
-                      child: Form(
-                        key: _signUpFormKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: spacer,
-                            ),
-                            const OpacityTween(
-                              begin: 0.0,
-                              child: CustomHeading(
-                                  title: "Inscrivez vous",
-                                  subTitle: "Bienvenue",
-                                  color: secondary),
-                            ),
-                            const SizedBox(
-                              height: spacer,
-                            ),
-                            OpacityTween(
-                              begin: 0.2,
-                              child: CustomTextField(
-                                prefixIcon: "user_icon.svg",
-                                labelText: "Nom ",
-                                controller: nameController,
-                                iconColor: primary,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            OpacityTween(
-                              begin: 0.2,
-                              child: CustomTextField(
-                                codeKey: 2,
-                                prefixIcon: "user_icon.svg",
-                                labelText: "Prenom ",
-                                controller: prenomController,
-                                iconColor: primary,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            OpacityTween(
-                              begin: 0.2,
-                              child: CustomTextField(
-                                codeKey: 3,
-                                prefixIcon: "email_icon.svg",
-                                labelText: "Adresse email",
-                                controller: emailController,
-                                iconColor: primary,
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            OpacityTween(
-                              begin: 0.2,
-                              child: CustomTextField(
-                                codeKey: 4,
-                                prefixIcon: "key_icon.svg",
-                                labelText: "Mot de passe",
-                                controller: passwordController,
-                                iconColor: primary,
-                                isPassword: true,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            const SizedBox(
-                              height: spacer,
-                            ),
-                            ValueListenableBuilder<bool>(
-                                valueListenable: allFieldsFilled,
-                                builder: (context, allFilled, child) {
-                                  return GestureDetector(
-                                      onTap: (){
-                                           if (_signUpFormKey.currentState!
-                                                    .validate()) {
-                                                   context.read<AuthBloc>().add(
-                                   AuthSignUp(context: context, name: nameController.text, prenom: prenomController.text, email: emailController.text, password: passwordController.text));
-                                                }
-                                      },
-                                             
-                                           
-                                         
-                                      child: OpacityTween(
-                                        begin: 0.2,
-                                        child: Column(
-                                          children: [
-                                            allFilled
-                                                ? CustomButtonBox(
-                                                    title: "S'inscrire",
-                                                  )
-                                                : CustomButtonBox(
-                                                    title: "S'inscrire",
-                                                    color: gray,
-                                                    textColor: grey,
-                                                  ),
-                                         
-                                          ],
-                                        ),
-                                      ));
-                                }),
-                            const SizedBox(
-                              height: spacer,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "Vous avez déjà un compte ?",
-                                  style: TextStyle(
-                                      color: secondary.withValues(alpha: 0.5)),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _auth = Auth.login;
-                                    setState(() {});
-                                  },
-                                  child: const Text(
-                                    "Connectez vous",
-                                    style: TextStyle(color: primary),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              :
-              //LOGINSCREEN
-              SingleChildScrollView(
-                  child: BlocListener<AuthBloc, AuthState>(
-                          listener: (context, state) {
-                if (state is AuthLoading) {
-                  showLoaderDialog(context);
-                } else {
-                  closeLoaderDialog(context);
-                  if (state is AuthPendingVerification) {
-                    // Navigator.pushReplacement(
-                    //     context, CodeVerificationScreen.route());
-                  } else if (state is AuthSignInWithOIDSuccess) {
-                    debugPrint("💡 From AuthScreen AuthSignInWithOIDSuccess");
-                    // Navigator.pushReplacement(
-                    // context, CodeVerificationTestScreen.route(""));
-                  } else if (state is AuthSuccess) {
-                    debugPrint("💡 From AuthScreen AuthSuccess  ok");
-                    // Navigator.pushReplacement(context, CreatePinScreen.route());
-                  } else if (state is AuthFailure) {
-                    debugPrint("💡 From AuthScreen ${state.message}");
-                    debugPrint("💡 From AuthScreen ${state.errorCode}");
-                      showSnackBar(context, state.message);
-                      // showSnackBar(context, appLocalization.msg_login_failure);
+  Widget _buildSignUpView(AppLocalizations l10n) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: _onAuthStateChanged,
+      child: Form(
+        key: _signUpFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            OpacityTween(
+              begin: 0.0,
+              child: CustomHeading(
+                  title: l10n.lbl_sign_up_here,
+                  subTitle: l10n.lbl_welcome_back,
+                  color: secondary),
+            ),
+            const SizedBox(height: spacer),
+            buildTextField(
+                l10n.lbl_last_name, "user_icon.svg", nameController, 1),
+            buildTextField(
+                l10n.lbl_first_name, "user_icon.svg", prenomController, 2),
+            buildTextField(
+                l10n.lbl_email_address, "email_icon.svg", emailController, 3,
+                type: TextInputType.emailAddress),
+            buildTextField(
+                l10n.lbl_password, "key_icon.svg", passwordController, 4,
+                isPass: true),
+            const SizedBox(height: spacer),
+            ValueListenableBuilder<bool>(
+              valueListenable: allFieldsFilled,
+              builder: (context, isFilled, _) => GestureDetector(
+                onTap: isFilled
+                    ? () {
+                        if (_signUpFormKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(AuthSignUp(
+                                context: context,
+                                name: nameController.text,
+                                prenom: prenomController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ));
+                        }
+                      }
+                    : null,
+                child: CustomButtonBox(
+                  title: l10n.lbl_sign_up,
+                  color: isFilled ? primary : gray,
+                  textColor: isFilled ? textWhite : grey,
+                ),
+              ),
+            ),
+            const SizedBox(height: spacer),
+            _buildToggleAuth(l10n.lbl_already_have_an_account,
+                l10n.lbl_log_in_here, Auth.login),
+          ],
+        ),
+      ),
+    );
+  }
 
-                  }
-                }
-              },
-                    child: Padding(
-                      padding: const EdgeInsets.all(appPadding),
-                      child: Form(
-                        key: _signInFormKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SlideDownTween(
-                              offset: 40,
-                              delay: 1.0,
-                              child: OpacityTween(
-                                begin: 0,
-                                child: Center(
-                                    child: SvgPicture.asset(
-                                  "${assetImg}login_image.svg",
-                                  width: 250,
-                                  height: 250,
-                                )),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            const SlideDownTween(
-                              delay: 1.4,
-                              offset: 40,
-                              child: OpacityTween(
-                                begin: 0.2,
-                                child: CustomHeading(
-                                    title: "Connectez-vous",
-                                    subTitle: "Bienvenue à vous",
-                                    color: secondary),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            SlideDownTween(
-                              offset: 50,
-                              delay: 1.6,
-                              child: OpacityTween(
-                                begin: 0.4,
-                                child: CustomTextField(
-                                  codeKey: 3,
-                                  prefixIcon: "email_icon.svg",
-                                  labelText: "Adresse email",
-                                  controller: emailController,
-                                  iconColor: primary,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer - 40,
-                            ),
-                            SlideDownTween(
-                              offset: 50,
-                              delay: 1.6,
-                              child: OpacityTween(
-                                begin: 0.4,
-                                child: CustomTextField(
-                                  codeKey: 4,
-                                  prefixIcon: "key_icon.svg",
-                                  labelText: "Mot de passe",
-                                  controller: passwordController,
-                                  iconColor: primary,
-                                  isPassword: true,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: spacer,
-                            ),
-                            ValueListenableBuilder<bool>(
-                              valueListenable: loginFieldsFilled,
-                              builder: (context, allFilled, child) {
-                                return GestureDetector(
-                                onTap: allFilled
-                                          ? !isCharging ?
-                                          () {
-                                              if (_signInFormKey.currentState!
-                                                  .validate()) {
-                                                                                               context.read<AuthBloc>().add(
-                                                                                                AuthSignIn(context: context, email: emailController.text, password: passwordController.text));
-                                              }
-                                            }:null
-                                          : null,
-                                    child: SlideDownTween(
-                                      offset: 40,
-                                      delay: 2.0,
-                                      child: OpacityTween(
-                                        begin: 0.5,
-                                        child: Column(
-                                          children: [
-                                            const CustomButtonBox(
-                                                title: "Se connecter"),
-                                       
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                              }
-                            ),
-                            const SizedBox(
-                              height: spacer - 30,
-                            ),
-                            SlideDownTween(
-                              offset: 40,
-                              delay: 2.0,
-                              child: OpacityTween(
-                                begin: 0.6,
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "Vous n'avez pas de compte ?",
-                                      style: TextStyle(
-                                          color: secondary.withValues(alpha: 0.5)),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        _auth = Auth.signUp;
-                                        setState(() {});
-                                      },
-                                      child: const Text(
-                                        "Inscrivez vous",
-                                        style: TextStyle(color: primary),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )),
+  Widget _buildLoginView(AppLocalizations l10n) {
+    return BlocListener<AuthBloc, AuthState>(
+      listener: _onAuthStateChanged,
+      child: Form(
+        key: _signInFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SlideDownTween(
+              delay: 1.0,
+              offset: 1,
+              child: Center(
+                  child: SvgPicture.asset("${assetImg}login_image.svg",
+                      width: 200)),
+            ),
+            const SizedBox(height: spacer),
+            CustomHeading(
+                title: l10n.lbl_log_in,
+                subTitle: l10n.lbl_welcome_back,
+                color: secondary),
+            const SizedBox(height: spacer),
+            buildTextField(
+                l10n.lbl_email_address, "email_icon.svg", emailController, 3),
+            buildTextField(
+                l10n.lbl_password, "key_icon.svg", passwordController, 4,
+                isPass: true),
+            const SizedBox(height: spacer),
+            ValueListenableBuilder<bool>(
+              valueListenable: loginFieldsFilled,
+              builder: (context, isFilled, _) => GestureDetector(
+                onTap: isFilled
+                    ? () {
+                        if (_signInFormKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(AuthSignIn(
+                                context: context,
+                                email: emailController.text,
+                                password: passwordController.text,
+                              ));
+                        }
+                      }
+                    : null,
+                child: CustomButtonBox(
+                  title: l10n.lbl_log_in,
+                  color: isFilled ? primary : gray,
+                ),
+              ),
+            ),
+            const SizedBox(height: spacer),
+            _buildToggleAuth(
+                l10n.lbl_no_account_yet, l10n.lbl_sign_up_here, Auth.signUp),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper UI Widgets to keep code clean
+
+  Widget _buildToggleAuth(String msg, String action, Auth target) {
+    return Row(
+      children: [
+        Text(msg, style: TextStyle(color: secondary.withValues(alpha: 0.5))),
+        const SizedBox(width: 5),
+        GestureDetector(
+          onTap: () => setState(() => _auth = target),
+          child: Text(action,
+              style: TextStyle(color: primary, fontWeight: FontWeight.bold)),
+        ),
+      ],
     );
   }
 }

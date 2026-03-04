@@ -83,18 +83,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       //Check if it's for the first time
       if (secureRefreshToken == null) {
+        debugPrint("💡 From AuthRemoteDataSourceImpl-init secureRefreshToken=$secureRefreshToken");
         return UserModel.empty();
       }
 
+        debugPrint("💡 From AuthRemoteDataSourceImpl-init refresh token");
+
       http.Response response = await http.post(
           Uri.parse(
-            '${AppSecrets.baseUrl}/token-refresh',
+            '${AppSecrets.baseUrl}/auth/token-refresh',
           ),
           headers: {
             'Content-Type': 'application/json',
           },
           body: jsonEncode({
             "refreshToken": secureRefreshToken,
+
           }));
       // Parse the body once here
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -102,7 +106,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       if (response.statusCode == 200) {
         debugPrint(
             "💡From AuthRemoteDataSource refreshToken -  ${response.body} ");
-        final result = AuthTokenModel.fromJson(response.body);
+        final result = AuthTokenModel.fromMap(responseBody['data']);
         //Set local variables
         final res = await _setLocalVariables(result);
 
@@ -130,27 +134,39 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   Future<UserModel> getCurrentUser(AuthToken result) async {
-    http.Response? res;
+    http.Response? response;
     try {
       Map<String, String> headers = {
-        'Authorization': 'Bearer ${result.accessToken}',
+        'x-auth-token': '${result.accessToken}',
         'Content-Type': 'application/json',
       };
 
-      res = await http.get(Uri.parse('${AppSecrets.baseUrl}/user-data'),
+      response = await http.get(Uri.parse('${AppSecrets.baseUrl}/auth/user-data'),
           headers: headers);
 
-      debugPrint("💡 From Authremote getCurrentUser: ${res.body}");
+      debugPrint("💡 From Authremote getCurrentUser: ${response.body}");
 
-      debugPrint("💡From Authremote getCurrentUser -  ${res.body}");
+      debugPrint("💡From Authremote getCurrentUser -  ${response.body}");
 
-      return UserModel.fromJson(res.body);
+      final Map<String, dynamic> responseBody = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        debugPrint("💡 User data fetched successfully");
+        // Accessing responseBody['data'] as per your sendResponse helper
+        return UserModel.fromMap(responseBody['data']);
+      } else {
+        throw ServerException(
+          message: responseBody['message'] ?? "Utilisateur introuvable",
+          statusCode: response.statusCode.toString(),
+          code: responseBody['code'] ?? "USER_NOT_FOUND",
+        );
+      }
     } catch (e) {
       debugPrint("💡From Authremote getCurrentUser - error $e  ");
 
       throw ServerException(
         message: e.toString(),
-        statusCode: res?.statusCode.toString() ?? '500',
+        statusCode: response?.statusCode.toString() ?? '500',
         code: 'CONNECTION_ERROR',
       );
     }
@@ -213,7 +229,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         if (newToken == null) {
           throw ServerException(message: "User is not authenticated");
         }
-        
 
         // Mise à jour du header avec le nouveau token
         authHeaders['Authorization'] = 'Bearer $newToken';
@@ -250,49 +265,39 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       response = await http.post(
           Uri.parse(
-            '${AppSecrets.baseUrl}/auth/login',
+            '${AppSecrets.baseUrl}/auth/signin',
           ),
           headers: {
             'Content-Type': 'application/json',
           },
-          body: jsonEncode({"username": email, "password": password}));
+          body: jsonEncode({"email": email, "password": password}));
+
+      // Decode the response body once
+    final Map<String, dynamic> responseBody = jsonDecode(response!.body);
 
       if (response!.statusCode == 200) {
         debugPrint("💡From AuthRemoteDataSource signIn -  ${response!.body} ");
-        final result = AuthTokenModel.fromJson(response!.body);
-        //Set local variables
-        final res = await _setLocalVariables(result);
+       final result = AuthTokenModel.fromMap(responseBody['data']);
+        // Save tokens to local storage
+      final res = await _setLocalVariables(result);
 
-        Map<String, String> headers = {
-          'Authorization': 'Bearer ${result.accessToken}',
-          'Content-Type': 'application/json',
-        };
-
-        if (res == true) {
-          http.Response res = await http.get(
-              Uri.parse('${AppSecrets.baseUrl}/auth/connectedUser'),
-              headers: headers);
-
-          debugPrint("💡From Authremote getCurrentUserApi -  ${res.body}");
-
-          final user = UserModel.fromJson(res.body);
-
-          //If email not verified delete refresh token from secure storage
-          if (!user.verificationStatus) {
-            await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
-          }
-          return user;
-        }
-
-        throw ServerException(message: 'Failed to signIn');
+      if (res == true) {
+        // Return user from the 'data' field
+        return UserModel.fromMap(responseBody['data']);
+      }
+      
+      throw ServerException(message: "Impossible de sauvegarder les données locales");
       } else {
         debugPrint(
             "💡From AuthRemoteDataSource signIn -  ${response!.statusCode} ");
 
-        throw ServerException(
-            message: "",
-            statusCode: response!.statusCode.toString(),
-            code: response!.body);
+      // FIX 3: Deserialization for ServerException
+      // We extract the standardized fields from your Node.js sendResponse helper
+      throw ServerException(
+        message: responseBody ['message'] ?? "Erreur d'authentification",
+        statusCode: response!.statusCode.toString(),
+        code: responseBody['code'] ?? "AUTH_ERROR",
+      );
 
         // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');
       }
@@ -435,7 +440,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       //       issuer: AppSecrets.AUTH0_ISSUER, refreshToken: refreshToken),
       // );
 
-       response = await http.post(
+      response = await http.post(
           Uri.parse(
             '${AppSecrets.baseUrl}/auth/refresh',
           ),
@@ -453,7 +458,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         //Set local variables
         return await _setLocalVariables(result);
       } else {
-        throw ServerException(message:  'Ooopsss!', statusCode: response.statusCode.toString(), code: response.body);
+        throw ServerException(
+            message: 'Ooopsss!',
+            statusCode: response.statusCode.toString(),
+            code: response.body);
 
         // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');
       }
@@ -496,10 +504,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         debugPrint(
             "💡From AuthRemoteDataSource signOut -  ${response.body} ${response.statusCode.toString()} ");
         throw ServerException(
-          
-           message: response.body,
-        statusCode: response.statusCode.toString(),
-        code: 'CONNECTION_ERROR',
+          message: response.body,
+          statusCode: response.statusCode.toString(),
+          code: 'CONNECTION_ERROR',
         );
 
         // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');

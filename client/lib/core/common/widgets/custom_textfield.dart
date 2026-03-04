@@ -48,7 +48,8 @@ class CustomTextFieldState extends State<CustomTextField> {
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: secondary.withValues(alpha: 0.25), width: 0.5),
+          bottom:
+              BorderSide(color: secondary.withValues(alpha: 0.25), width: 0.5),
         ),
       ),
       child: Row(
@@ -62,7 +63,7 @@ class CustomTextFieldState extends State<CustomTextField> {
               assetImg + widget.prefixIcon,
               height: widget.iconHeight,
               colorFilter: ColorFilter.mode(
-                widget.iconColor ?? secondary, 
+                widget.iconColor ?? secondary,
                 BlendMode.srcIn,
               ),
             ),
@@ -97,14 +98,19 @@ class CustomTextFieldState extends State<CustomTextField> {
 
                 switch (widget.codeKey) {
                   case 1: // Last Name
-                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val) 
-                        ? l10n.err_invalid_name : null;
+                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val)
+                        ? l10n.err_invalid_name
+                        : null;
                   case 2: // First Name
-                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val) 
-                        ? l10n.err_invalid_name : null;
+                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val)
+                        ? l10n.err_invalid_name
+                        : null;
                   case 3: // Email
-                    return !RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(val)
-                        ? l10n.err_invalid_email : null;
+                    return !RegExp(
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+                            .hasMatch(val)
+                        ? l10n.err_invalid_email
+                        : null;
                   case 4: // Password
                     return val.length < 8 ? l10n.err_password_short : null;
                   default:

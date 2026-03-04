@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mbschool/core/common/widgets/bottom_bar.dart';
 import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
 import 'package:mbschool/core/presentation/widgets/custom_error404.dart';
 import 'package:mbschool/core/utils/show_snackbar.dart';
 import 'package:mbschool/core/utils/size_utils.dart';
 import 'package:mbschool/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:mbschool/features/auth/presentation/screens/auth_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/home_screen_test.dart';
 
 
 class LoadingScreen extends StatefulWidget {
@@ -34,7 +35,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     debugPrint(
           "💡From LoadingScreen - Déclencher l'événement pour vérifier si l'utilisateur est connecté ou numero non verifié");
 
-      context.read<AuthBloc>().add(AuthInitApp(context: context));
+        context.read<AuthBloc>().add(AuthInitApp(context: context));
 
   }
 
@@ -42,7 +43,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var appLocalization = AppLocalizations.of(context);
+    var appLocalization = AppLocalizations.of(context);
 
     return Scaffold(
         body:  
@@ -55,9 +56,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
               // Navigator.pushReplacement(
               //       context, CodeVerificationTestScreen.route(""));
               // Navigator.pushReplacement(context, CreatePinScreen.route());
-              Navigator.pushAndRemoveUntil(
+              // Navigator.pushAndRemoveUntil(
+              //   context,
+              //   BottomBar.route(),
+              //   (Route<dynamic> route) => false,
+              // );
+
+               Navigator.pushAndRemoveUntil(
                 context,
-                BottomBar.route(),
+                HomeScreenTest.route(),
                 (Route<dynamic> route) => false,
               );
             
@@ -71,7 +78,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 state is AuthSignOutSuccess
                
                 ) {
-                    showSnackBar(context, "Session expired",
+                    showSnackBar(context, appLocalization!.msg_session_expired,
                                   );
               debugPrint("💡 From LoadingScreen - Rediriger vers LoginScreen");
               Navigator.pushAndRemoveUntil(

@@ -52,10 +52,9 @@ class _AuthScreenState extends State<AuthScreen> {
     allFieldsFilled.value = isFilled;
   }
 
-   void checkLoginFields() {
-    bool isFilled = 
-        emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
+  void checkLoginFields() {
+    bool isFilled =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     loginFieldsFilled.value = isFilled;
   }
 
@@ -135,9 +134,9 @@ class _AuthScreenState extends State<AuthScreen> {
           backgroundColor: background,
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-          ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: SizedBox()),
           body: _auth == Auth.signUp
               ?
               //SIGNUPSCREEN
@@ -223,16 +222,17 @@ class _AuthScreenState extends State<AuthScreen> {
                               builder: (context, allFilled, child) {
                                 return GestureDetector(
                                     onTap: allFilled
-                                        ? !isCharging ?
-                                        () {
-                                            if (_signUpFormKey.currentState!
-                                                .validate()) {
-                                              setState(() {
-                                                isCharging = true;
-                                              });
-                                              signUpUser();
-                                            }
-                                          }:null
+                                        ? !isCharging
+                                            ? () {
+                                                if (_signUpFormKey.currentState!
+                                                    .validate()) {
+                                                  setState(() {
+                                                    isCharging = true;
+                                                  });
+                                                  signUpUser();
+                                                }
+                                              }
+                                            : null
                                         : null,
                                     child: OpacityTween(
                                       begin: 0.2,
@@ -264,7 +264,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               Text(
                                 "Vous avez déjà un compte ?",
                                 style: TextStyle(
-                                    color: secondary.withValues(alpha:0.5)),
+                                    color: secondary.withValues(alpha: 0.5)),
                               ),
                               GestureDetector(
                                 onTap: () {
@@ -359,41 +359,41 @@ class _AuthScreenState extends State<AuthScreen> {
                             height: spacer,
                           ),
                           ValueListenableBuilder<bool>(
-                            valueListenable: loginFieldsFilled,
-                            builder: (context, allFilled, child) {
-                              return GestureDetector(
-                              onTap: allFilled
-                                        ? !isCharging ?
-                                        () {
-                                            if (_signInFormKey.currentState!
-                                                .validate()) {
-                                              setState(() {
-                                                isCharging = true;
-                                              });
-                                              signInUser();
-                                            }
-                                          }:null
+                              valueListenable: loginFieldsFilled,
+                              builder: (context, allFilled, child) {
+                                return GestureDetector(
+                                    onTap: allFilled
+                                        ? !isCharging
+                                            ? () {
+                                                if (_signInFormKey.currentState!
+                                                    .validate()) {
+                                                  setState(() {
+                                                    isCharging = true;
+                                                  });
+                                                  signInUser();
+                                                }
+                                              }
+                                            : null
                                         : null,
-                                  child: SlideDownTween(
-                                    offset: 40,
-                                    delay: 2.0,
-                                    child: OpacityTween(
-                                      begin: 0.5,
-                                      child: Column(
-                                        children: [
-                                          const CustomButtonBox(
-                                              title: "Se connecter"),
-                                          isCharging == true
-                                              ? const CircularProgressIndicator(
-                                                  color: primary,
-                                                )
-                                              : const Text("")
-                                        ],
+                                    child: SlideDownTween(
+                                      offset: 40,
+                                      delay: 2.0,
+                                      child: OpacityTween(
+                                        begin: 0.5,
+                                        child: Column(
+                                          children: [
+                                            const CustomButtonBox(
+                                                title: "Se connecter"),
+                                            isCharging == true
+                                                ? const CircularProgressIndicator(
+                                                    color: primary,
+                                                  )
+                                                : const Text("")
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ));
-                            }
-                          ),
+                                    ));
+                              }),
                           const SizedBox(
                             height: spacer - 30,
                           ),
@@ -407,7 +407,8 @@ class _AuthScreenState extends State<AuthScreen> {
                                   Text(
                                     "Vous n'avez pas de compte ?",
                                     style: TextStyle(
-                                        color: secondary.withValues(alpha:0.5)),
+                                        color:
+                                            secondary.withValues(alpha: 0.5)),
                                   ),
                                   GestureDetector(
                                     onTap: () {

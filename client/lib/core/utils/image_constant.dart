@@ -296,6 +296,6 @@ class ImageConstant {
   static String recentEight = '$imagePath/recentEight.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
-  static String error404 = 'assets/images/error404.png';
+  static String error404 = 'assets/images/error_handle.png';
   static String nodata = 'assets/images/nodata.png';
 }

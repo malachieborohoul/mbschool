@@ -45,7 +45,7 @@ function generateVerificationCode() {
 }
 
 // SIGNUP
-authRouter.post('/api/v1/signup', async (req, res) => {
+authRouter.post('/api/v1/auth/signup', async (req, res) => {
     try {
         const { nom, prenom, email, password } = req.body;
         const role = 1; 
@@ -115,7 +115,7 @@ authRouter.post('/api/v1/signup', async (req, res) => {
 
 
 
-authRouter.post('/api/v1/signin', async (req, res) => {
+authRouter.post('/api/v1/auth/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
         
@@ -167,7 +167,7 @@ authRouter.post('/api/v1/signin', async (req, res) => {
         const refreshToken = jwt.sign(
             { id: user.id }, 
             process.env.JWT_REFRESH_SECRET, // Use a DIFFERENT secret for refresh tokens
-            { expiresIn: '1m' } // Long-lived (30 days) 
+            { expiresIn: '5m' } // Long-lived (30 days) 
         );
         // Cleanup sensitive data
         delete user.password;
@@ -191,7 +191,7 @@ authRouter.post('/api/v1/signin', async (req, res) => {
 // Verify validity of token
 
 // Verify validity of token
-authRouter.post('/api/v1/tokenIsValid', async (req, res) => {
+authRouter.post('/api/v1/auth/tokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token');
         if (!token) return res.json(false);
@@ -211,7 +211,7 @@ authRouter.post('/api/v1/tokenIsValid', async (req, res) => {
 });
 
 // Get user data
-authRouter.get("/api/v1/user-data", auth, async (req, res) => {
+authRouter.get("/api/v1/auth/user-data", auth, async (req, res) => {
     try {
         // req.user is populated by your auth middleware
         const { rows } = await pool.query(queries.checkIdExist, [req.user]);
@@ -237,7 +237,7 @@ authRouter.get("/api/v1/user-data", auth, async (req, res) => {
 
 
 // Code de vérification
-authRouter.post("/api/v1/codeVerification", async (req, res) => {
+authRouter.post("/api/v1/auth/codeVerification", async (req, res) => {
     try {
         const { id } = req.body;
         // Logic: update user status in DB once they provide the correct code
@@ -255,7 +255,7 @@ authRouter.post("/api/v1/codeVerification", async (req, res) => {
 
 
 // Verification of the 6-digit code
-authRouter.post("/api/v1/verify-signup", async (req, res) => {
+authRouter.post("/api/v1/auth/verify-signup", async (req, res) => {
     try {
         const { userId, typedCode } = req.body;
 
@@ -296,7 +296,7 @@ authRouter.post("/api/v1/verify-signup", async (req, res) => {
 });
 
 // Resend code
-authRouter.post("/api/v1/resend-code", async (req, res) => {
+authRouter.post("/api/v1/auth/resend-code", async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -335,7 +335,7 @@ authRouter.post("/api/v1/resend-code", async (req, res) => {
 
 
 // POST /api/forgot-password
-authRouter.post('/api/v1/forgot-password', async (req, res) => {
+authRouter.post('/api/v1/auth/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
         const { rows } = await pool.query(queries.checkEmailExist, [email]);
@@ -377,7 +377,7 @@ authRouter.post('/api/v1/forgot-password', async (req, res) => {
 
 
 // POST /api/reset-password
-authRouter.post('/api/v1/reset-password', async (req, res) => {
+authRouter.post('/api/v1/auth/reset-password', async (req, res) => {
     try {
         const { email, code, newPassword } = req.body;
 
@@ -417,7 +417,7 @@ authRouter.post('/api/v1/reset-password', async (req, res) => {
 
 
 // POST /api/v1/token-refresh
-authRouter.post('/api/v1/token-refresh', async (req, res) => {
+authRouter.post('/api/v1/auth/token-refresh', async (req, res) => {
     try {
         const { refreshToken } = req.body;
 

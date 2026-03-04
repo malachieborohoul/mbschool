@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:async';
 
 import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/animations/slide_transition_page.dart';
 import 'package:mbschool/core/common/widgets/bottom_bar.dart';
 import 'package:mbschool/core/common/widgets/textbox_verification.dart';
 import 'package:mbschool/core/constants/colors.dart';
@@ -13,6 +14,13 @@ import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class VerificationScreen extends StatefulWidget {
+    static PageRouteBuilder<dynamic> route() =>
+      PageRouteBuilder(pageBuilder: (_, animation, __) {
+        return SlideTransitionPage(
+          page: const VerificationScreen(),
+          animation: animation,
+        );
+      });
   const VerificationScreen({super.key});
   static const routeName = 'verification-screen';
 

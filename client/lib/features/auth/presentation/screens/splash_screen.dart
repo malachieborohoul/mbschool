@@ -81,6 +81,11 @@ class _SplashScreenState extends State<SplashScreen>
 
 
     return Scaffold(
+      appBar:   AppBar(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            leading: SizedBox()
+          ),
       body: Center(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

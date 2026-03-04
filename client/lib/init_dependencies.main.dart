@@ -6,6 +6,17 @@ Future<void> initDependencies() async {
   _initAuth();
 
 
+    final secureStorage = FlutterSecureStorage(
+      // aOptions: const AndroidOptions(
+      //   encryptedSharedPreferences: true
+      // ),
+      // iOptions: IOSOptions(
+      //   accessibility: KeychainAccessibility.first_unlock
+      // )
+      );
+
+
+  serviceLocator.registerLazySingleton(() => secureStorage);
 
 
   serviceLocator.registerFactory(() => InternetConnection());

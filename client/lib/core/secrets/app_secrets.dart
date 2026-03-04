@@ -10,8 +10,8 @@ static const webClientId =
   static const iosClientId =
           '403048485258-udp33m5ub27vpav7dh8n8s35tfd9n0de.apps.googleusercontent.com';
 
-  // static const baseUrl = 'https://api.wegoopay.com';
-  static const baseUrl = 'http://localhost:3000/api/v1';
+  static const baseUrl = 'https://api.wegoopay.com';
+  // static const baseUrl = 'http://10.52.1.198:3000/api/v1';
 
 //   static const AUTH0_DOMAIN = "dev-ksc4vops6wh6w7mo.us.auth0.com";
 //   static const AUTH0_CLIENT_ID = "FupNAKxgjgSizgDv1YbZ1nAyBSgJbc2I";
@@ -45,7 +45,17 @@ static const webClientId =
 
 //AUTH_ERRORS
 static const AUTH_INVALID_CREDENTIALS = "AUTH_INVALID_CREDENTIALS";
-static const AUTH_USERNAME_OR_EMAIL_ALREADY_EXISTS = "AUTH_USERNAME_OR_EMAIL_ALREADY_EXISTS";
+static const AUTH_USER_NOT_VERIFIED = "AUTH_USER_NOT_VERIFIED";
+static const AUTH_EMAIL_ALREADY_EXISTS = "AUTH_EMAIL_ALREADY_EXISTS";
+static const AUTH_USER_CREATED = "AUTH_USER_CREATED";
+static const AUTH_MAIL_SEND_ERROR = "AUTH_MAIL_SEND_ERROR";
+static const AUTH_SIGNIN_SUCCESS = "AUTH_SIGNIN_SUCCESS";
+static const USER_FETCH_SUCCESS = "USER_FETCH_SUCCESS";
+static const AUTH_VERIFIED = "AUTH_VERIFIED";
+static const AUTH_INVALID_CODE = "AUTH_INVALID_CODE";
+static const AUTH_SESSION_EXPIRED = "AUTH_SESSION_EXPIRED";
+
+
 
 //Withdraw_ERRORS
 static const INSUFFICIENT_BALANCE = "INSUFFICIENT_BALANCE";

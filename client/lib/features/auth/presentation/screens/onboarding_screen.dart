@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mbschool/core/common/widgets/custom_button_box.dart';
 import 'package:mbschool/core/constants/colors.dart';
 import 'package:mbschool/core/constants/utils.dart';
-import 'package:mbschool/features/autht/screens/auth_screen.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
+import 'package:mbschool/core/utils/pref_utils.dart';
+import 'package:mbschool/features/auth/presentation/screens/auth_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,23 +47,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var appLocalization = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: textWhite,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: textWhite,
+            leading: SizedBox(),
+
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20, top: 20),
             child: GestureDetector(
               onTap: () {
-                prefs!.setString('x-auth-token', '');
+                PrefUtils.setIntro(false);
+                // prefs!.setString('x-auth-token', '');
 
-                Navigator.pushReplacementNamed(context, AuthScreen.routeName);
+                Navigator.pushReplacement(context, AuthScreen.route());
               },
-              child: const Text(
-                "Sauter",
-                style: TextStyle(
+              child: Text(
+                appLocalization!.skip,
+                style: const TextStyle(
                     color: primary,
                     fontSize: 15,
                     fontWeight: FontWeight.w600),
@@ -83,15 +89,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             children: [
               makePage(
                 image: "intro_one.png",
-                title: "Rendre l'Apprentissage Accessible Partout",
-                content: "Gagnez du temps en rassemblant vos outils de classe",
+                title: appLocalization.intro_title_1,
+                 content: appLocalization.intro_desc_1,
+                 appLocalization: appLocalization,  
               ),
               makePage(
                   image: "intro_two.png",
-                  title: "Une plateforme d'apprentissage en ligne",
-                  content:
-                      "Gagnez du temps en rassemblant vos outils de classe",
+                  title: appLocalization.intro_title_2,
+                  content: appLocalization.intro_desc_2,
                   button: true,
+                  appLocalization: appLocalization,
                   prefs: prefs),
             ],
           ),
@@ -108,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget makePage(
-      {required String image, required String title, required String content, button = false, SharedPreferences? prefs}) {
+      {required String image, required String title, required String content, button = false, SharedPreferences? prefs, AppLocalizations? appLocalization}) {
     return Container(
       padding: const EdgeInsets.only(left: 50, right: 50, bottom: 50),
       child: Column(
@@ -149,12 +156,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     //     .setCount(1);
 
                     // introApp.num = 1;
-                    prefs!.setString('x-auth-token', '');
+                PrefUtils.setIntro(false);
 
-                    Navigator.pushReplacementNamed(
-                        context, AuthScreen.routeName);
+                    // prefs!.setString('x-auth-token', '');
+
+                    Navigator.pushReplacement(context, AuthScreen.route());
                   },
-                  child: const CustomButtonBox(title: "Commençons"))
+                  child:  CustomButtonBox(title: appLocalization!.lbl_get_started)),
         ],
       ),
     );

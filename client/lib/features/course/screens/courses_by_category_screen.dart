@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_categories_button.dart';
-import 'package:mbschool/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_categories_button.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
 
-import 'package:mbschool/common/widgets/custom_person_card.dart';
-import 'package:mbschool/common/widgets/custom_title.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/core/common/widgets/custom_person_card.dart';
+import 'package:mbschool/core/common/widgets/custom_title.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/global.dart';
 
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/courses_json.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/datas/courses_json.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
 import 'package:mbschool/models/categorie.dart';
@@ -22,8 +22,7 @@ import 'package:provider/provider.dart';
 class CoursesByCategoryScreen extends StatefulWidget {
   static const routeName = 'courses-by-category-screen';
   final Categorie categorie;
-  const CoursesByCategoryScreen({Key? key, required this.categorie})
-      : super(key: key);
+  const CoursesByCategoryScreen({super.key, required this.categorie});
 
   @override
   State<CoursesByCategoryScreen> createState() =>
@@ -58,7 +57,7 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
     setState(() {});
   }
 
-  getAllCategorieData() {
+  void getAllCategorieData() {
     categories = createCourseService.getAllCategorieData(context);
     setState(() {});
   }
@@ -125,14 +124,14 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                                       arguments: snapshot.data![index]);
                                   Provider.of<CoursProvider>(context,
                                           listen: false)
-                                      .set_cours(snapshot.data![index]);
+                                      .setCoursObject(snapshot.data![index]);
                                 },
                                 child: CustomCourseCardExpand(
                                   thumbNail: Image.network(
                                     snapshot.data![index].vignette,
                                     fit: BoxFit.cover,
                                   ),
-                                  videoAmount: CoursesJson[index]['video'],
+                                  videoAmount: coursesJson[index]['video'],
                                   title: snapshot.data![index].titre,
                                   userProfile: snapshot.data![index].photo,
                                   userName: snapshot.data![index].nom,
@@ -213,7 +212,7 @@ class _CoursesByCategoryScreenState extends State<CoursesByCategoryScreen>
                                 image: snapshot.data![index].photo,
                                 name: fullName,
                                 totalCourses:
-                                    snapshot.data![index].nombre_cours,
+                                    snapshot.data![index].nombreCours,
                                 totalStudents: "4");
                           });
                         },

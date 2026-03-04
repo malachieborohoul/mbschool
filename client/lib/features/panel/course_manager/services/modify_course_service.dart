@@ -4,9 +4,9 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +16,7 @@ class ModifyCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -40,14 +40,14 @@ class ModifyCourseService {
               body: jsonEncode({
                 'titre': titre,
                 'description': description,
-                'description_courte': description_courte,
+                'descriptionCourte': descriptionCourte,
                 'id_categorie': categorie,
                 'id_niveau': niveau,
                 'id_langue': langue,
                 'id_users': int.parse(userProvider.user.id),
                 'prix': prix,
                 'vignette': url,
-                'id_cours': int.parse(cours.id_cours)
+                'id_cours': int.parse(cours.idCours)
               }));
 
       httpErrorHandle(
@@ -64,7 +64,7 @@ class ModifyCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -84,14 +84,14 @@ class ModifyCourseService {
               body: jsonEncode({
                 'titre': titre,
                 'description': description,
-                'description_courte': description_courte,
+                'descriptionCourte': descriptionCourte,
                 'id_categorie': categorie,
                 'id_niveau': niveau,
                 'id_langue': langue,
                 'id_users': int.parse(userProvider.user.id),
                 'prix': prix,
                 'vignette': vignette,
-                'id_cours': int.parse(cours.id_cours)
+                'id_cours': int.parse(cours.idCours)
               }));
 
       httpErrorHandle(

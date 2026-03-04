@@ -1,45 +1,45 @@
 import 'dart:convert';
 
 class Lecon {
-  final String id_lecon;
+  final String idLecon;
   final String titre;
   final String url;
   final String resume;
-  final String id_cours;
-  final String id_section;
-  final String id_type_lecon;
+  final String idCours;
+  final String idSection;
+  final String idTypeLecon;
 
   Lecon({
-    required this.id_lecon,
+    required this.idLecon,
     required this.titre,
     required this.url,
     required this.resume,
-    required this.id_cours,
-    required this.id_section,
-    required this.id_type_lecon,
+    required this.idCours,
+    required this.idSection,
+    required this.idTypeLecon,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_lecon': id_lecon,
+      'idLecon': idLecon,
       'titre': titre,
       'url': url,
       'resume': resume,
-      'id_cours': id_cours,
-      'id_section':id_section,
-      'id_type_lecon':id_type_lecon,
+      'idCours': idCours,
+      'idSection':idSection,
+      'idTypeLecon':idTypeLecon,
     };
   }
 
   factory Lecon.fromMap(Map<String, dynamic> map) {
     return Lecon(
-      id_lecon: map['id_lecon'] ?? '',
+      idLecon: map['idLecon'] ?? '',
       titre: map['titre'] ?? '',
       url: map['url'] ?? '',
       resume: map['resume'] ?? '',
-      id_cours: map['id_cours'] ?? '',
-      id_section: map['id_section'] ?? '',
-      id_type_lecon: map['id_type_lecon'] ?? '',
+      idCours: map['idCours'] ?? '',
+      idSection: map['idSection'] ?? '',
+      idTypeLecon: map['idTypeLecon'] ?? '',
     );
   }
 

@@ -1,0 +1,320 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'dart:async';
+
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/animations/slide_transition_page.dart';
+import 'package:mbschool/core/common/widgets/bottom_bar.dart';
+import 'package:mbschool/core/common/widgets/textbox_verification.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/features/autht/services/auth_service.dart';
+import 'package:mbschool/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+
+class VerificationScreen extends StatefulWidget {
+    static PageRouteBuilder<dynamic> route() =>
+      PageRouteBuilder(pageBuilder: (_, animation, __) {
+        return SlideTransitionPage(
+          page: const VerificationScreen(),
+          animation: animation,
+        );
+      });
+  const VerificationScreen({super.key});
+  static const routeName = 'verification-screen';
+
+  @override
+  State<VerificationScreen> createState() => _VerificationScreenState();
+}
+
+class _VerificationScreenState extends State<VerificationScreen>
+    with SingleTickerProviderStateMixin {
+  final _codeVerificationFormKey = GlobalKey<FormState>();
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controller3 = TextEditingController();
+  final TextEditingController _controller4 = TextEditingController();
+  final TextEditingController _controller5 = TextEditingController();
+  final TextEditingController _controller6 = TextEditingController();
+
+  final AuthService _authService = AuthService();
+
+  late final AnimationController _animationController;
+  late final Animation<double> _scaleAnimation;
+
+  ValueNotifier<bool> allFieldsFilled = ValueNotifier<bool>(false);
+
+  bool _selected = false;
+  bool _isCountingDown = false;
+  int _countDown = 30;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 750),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 30).animate(
+      CurvedAnimation(
+          parent: _animationController, curve: Curves.easeInOutExpo),
+    )..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          Navigator.pushReplacement(context, BottomBar.route());
+        }
+      });
+
+    _controller1.addListener(checkFields);
+    _controller2.addListener(checkFields);
+    _controller3.addListener(checkFields);
+    _controller4.addListener(checkFields);
+    _controller5.addListener(checkFields);
+    _controller6.addListener(checkFields);
+  }
+
+  void checkFields() {
+    bool isFilled = _controller1.text.isNotEmpty &&
+        _controller2.text.isNotEmpty &&
+        _controller3.text.isNotEmpty &&
+        _controller4.text.isNotEmpty &&
+        _controller5.text.isNotEmpty &&
+        _controller6.text.isNotEmpty;
+    allFieldsFilled.value = isFilled;
+  }
+
+  void _startCountDown() {
+    setState(() {
+      _isCountingDown = true;
+      _countDown = 30;
+    });
+
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_countDown > 0) {
+          _countDown--;
+        } else {
+          _isCountingDown = false;
+          _timer?.cancel();
+        }
+      });
+    });
+  }
+
+  void codeVerification(String code) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    if (code == userProvider.user.verifyCode) {
+      _authService.codeVerification(
+        context: context,
+        codeVerification: code,
+        onSuccess: () {
+          setState(() {
+            _selected = !_selected;
+          });
+          _animationController.forward();
+        },
+      );
+    } else {
+      showSnackBar(context, "Code incorrecte");
+    }
+  }
+
+  void resendCode() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    _authService.resendCode(context: context, email: userProvider.user.email, onSuccess: () {});
+  }
+
+  @override
+  void dispose() {
+    _controller1.removeListener(checkFields);
+    _controller2.removeListener(checkFields);
+    _controller3.removeListener(checkFields);
+    _controller4.removeListener(checkFields);
+    _controller5.removeListener(checkFields);
+    _controller6.removeListener(checkFields);
+    _controller1.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
+    _controller4.dispose();
+    _controller5.dispose();
+    _controller6.dispose();
+    _animationController.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: Padding(
+          padding: const EdgeInsets.all(appPadding),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SlideDownTween(
+                  delay: 1,
+                  offset: 60,
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    child:
+                        Image.asset("${assetImg}verification.png", width: 250),
+                  ),
+                ),
+                const SlideDownTween(
+                  delay: 1.2,
+                  offset: 50,
+                  child: Text(
+                    "Vérification",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SlideDownTween(
+                  delay: 1.4,
+                  offset: 40,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: const TextSpan(
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: grey,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      children: [
+                        TextSpan(
+                          text:
+                              "Entrez le code vérification qui vous a été envoyé ",
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 35),
+                SlideDownTween(
+                  delay: 1.6,
+                  offset: 30,
+                  child: Form(
+                    key: _codeVerificationFormKey,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextBoxVerification(controller: _controller1),
+                        const SizedBox(width: 5),
+                        TextBoxVerification(controller: _controller2),
+                        const SizedBox(width: 5),
+                        TextBoxVerification(controller: _controller3),
+                        const SizedBox(width: 5),
+                        TextBoxVerification(controller: _controller4),
+                        const SizedBox(width: 5),
+                        TextBoxVerification(controller: _controller5),
+                        const SizedBox(width: 5),
+                        TextBoxVerification(controller: _controller6),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SlideDownTween(
+                  delay: 1.8,
+                  offset: 20,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: grey,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Vous n'avez pas reçu le code ? ",
+                        ),
+                        TextSpan(
+                          text: _isCountingDown
+                              ? "$_countDown secondes"
+                              : "Renvoyer le code",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: _isCountingDown ? grey : primary,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = _isCountingDown
+                                ? null
+                                : () {
+                                    // Logique pour renvoyer le code
+                                    resendCode();
+                                    _startCountDown();
+                                    // Ajoutez ici la logique pour renvoyer réellement le code
+                                  },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                ValueListenableBuilder<bool>(
+                  valueListenable: allFieldsFilled,
+                  builder: (context, allFilled, child) {
+                    return GestureDetector(
+                      onTap: !allFilled
+                          ? null
+                          : () {
+                              if (_codeVerificationFormKey.currentState!
+                                  .validate()) {
+                                String code = _controller1.text +
+                                    _controller2.text +
+                                    _controller3.text +
+                                    _controller4.text +
+                                    _controller5.text +
+                                    _controller6.text;
+                                codeVerification(code);
+                              }
+                            },
+                      child: SlideDownTween(
+                        delay: 2,
+                        offset: 10,
+                        child: ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInCirc,
+                            width: _selected ? 50 : 350,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color:
+                                  !allFilled ? gray : primary.withValues(alpha:0.7),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: Center(
+                              child: _selected
+                                  ? Container()
+                                  : const Text(
+                                      "Vérifier",
+                                      style: TextStyle(
+                                        color: textWhite,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/alert_notification.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_course_curriculum.dart';
-import 'package:mbschool/common/widgets/custom_course_price_footer.dart';
-import 'package:mbschool/common/widgets/custom_course_reviews.dart';
-import 'package:mbschool/common/widgets/custom_detail_course_info_header.dart';
+import 'package:mbschool/core/common/animations/opacity_tween.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/widgets/alert_notification.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_course_curriculum.dart';
+import 'package:mbschool/core/common/widgets/custom_course_price_footer.dart';
+import 'package:mbschool/core/common/widgets/custom_course_reviews.dart';
+import 'package:mbschool/core/common/widgets/custom_detail_course_info_header.dart';
 
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/nodata.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/common/widgets/nodata.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/features/course/services/video_settings_service.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -30,7 +30,7 @@ import 'package:provider/provider.dart';
 class DetailCourseScreen extends StatefulWidget {
   static const routeName = 'detail-course-screen';
   final Cours cours;
-  const DetailCourseScreen({Key? key, required this.cours}) : super(key: key);
+  const DetailCourseScreen({super.key, required this.cours});
 
   @override
   State<DetailCourseScreen> createState() => _DetailCourseScreenState();
@@ -160,11 +160,11 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                             height: 40.0,
                             width: 40.0,
                             decoration: BoxDecoration(
-                              color: primary.withOpacity(0.7),
+                              color: primary.withValues(alpha:0.7),
                               borderRadius: BorderRadius.circular(100.0),
                               boxShadow: [
                                 BoxShadow(
-                                  color: primary.withOpacity(0.5),
+                                  color: primary.withValues(alpha:0.5),
                                   spreadRadius: 0.0,
                                   blurRadius: 6.0,
                                   offset: const Offset(0, 2),
@@ -174,7 +174,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
                               '${assetImg}arrow_left_icon.svg',
-                              color: textWhite,
+                              colorFilter: ColorFilter.mode(textWhite, BlendMode.srcIn),
                             ),
                           ),
                         ),
@@ -246,7 +246,7 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                             child: CustomDetailCourseInfoHeader(
                               cours: coursProvider,
                               isCourseInFav: isCourseInFav!,
-                              averageRate: averageRate,
+                              averageRate: averageRate, initialIsCourseInFav: false,
                             ))),
                     const Padding(
                       padding: EdgeInsets.only(
@@ -335,80 +335,78 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
                                   child: OpacityTween(
                                     begin: 0.5,
                                     child: AlertDialog(
-                                      content: Container(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            const Flexible(
-                                                child: Text(
-                                              "Voulez vous vous enrôler?",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 25.0),
-                                                  child: InkWell(
-                                                      onTap: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child: Container(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        width: 40,
-                                                        height: 30,
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.red,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                        child: const Text(
-                                                          "Non",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                      )),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          const Flexible(
+                                              child: Text(
+                                            "Voulez vous vous enrôler?",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        right: 25.0),
+                                                child: InkWell(
+                                                    onTap: () {
                                                       Navigator.pop(context);
-
-                                                      _isLoading = true;
-                                                      enrollToCourse();
-                                                    });
-                                                  },
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    width: 40,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15)),
-                                                    child: const Text(
-                                                      "Oui",
-                                                      style: TextStyle(
-                                                          color: textWhite),
-                                                    ),
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      width: 40,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      15)),
+                                                      child: const Text(
+                                                        "Non",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    )),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  setState(() {
+                                                    Navigator.pop(context);
+                                      
+                                                    _isLoading = true;
+                                                    enrollToCourse();
+                                                  });
+                                                },
+                                                child: Container(
+                                                  alignment: Alignment.center,
+                                                  width: 40,
+                                                  height: 30,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.green,
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(15)),
+                                                  child: const Text(
+                                                    "Oui",
+                                                    style: TextStyle(
+                                                        color: textWhite),
                                                   ),
                                                 ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -431,10 +429,10 @@ class _DetailCourseScreenState extends State<DetailCourseScreen>
 
 class LeconTabBarView extends StatefulWidget {
   const LeconTabBarView({
-    Key? key,
+    super.key,
     required this.sections,
     required this.isCourseEnrolled,
-  }) : super(key: key);
+  });
   final List<Section> sections;
   final bool isCourseEnrolled;
 
@@ -469,7 +467,7 @@ class _LeconTabBarViewState extends State<LeconTabBarView> {
 }
 
 class InfosTabBarView extends StatefulWidget {
-  const InfosTabBarView({Key? key, required this.exigences}) : super(key: key);
+  const InfosTabBarView({super.key, required this.exigences});
   final List<Exigence> exigences;
 
   @override
@@ -562,9 +560,9 @@ class _InfosTabBarViewState extends State<InfosTabBarView> {
 
 class ReviewsTabBarView extends StatefulWidget {
   const ReviewsTabBarView({
-    Key? key,
+    super.key,
     required this.notationCours,
-  }) : super(key: key);
+  });
   final List<NotationCours> notationCours;
 
   @override

@@ -1,15 +1,14 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
   final bool isLoop;
   const VideoPlayer(
-      {Key? key, required this.videoPlayerController, required this.isLoop})
-      : super(key: key);
+      {super.key, required this.videoPlayerController, required this.isLoop});
 
   @override
   State<VideoPlayer> createState() => _VideoPlayerState();
@@ -47,7 +46,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
 class VideoDisplay extends StatefulWidget {
   final String videoUrl;
-  const VideoDisplay({Key? key, required this.videoUrl}) : super(key: key);
+  const VideoDisplay({super.key, required this.videoUrl});
 
   @override
   State<VideoDisplay> createState() => _VideoDisplayState();

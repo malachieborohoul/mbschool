@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
 import 'package:mbschool/features/admin/users/services/users_manager_service.dart';
 import 'package:mbschool/models/user.dart';
 
 class ModifyRole extends StatefulWidget {
-  const ModifyRole({Key? key, required this.user}) : super(key: key);
+  const ModifyRole({super.key, required this.user});
 
   final User user;
 

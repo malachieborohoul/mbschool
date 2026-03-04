@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/exigence.dart';
@@ -23,7 +23,7 @@ class ExigenceService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'nom': nom, 'id_cours': cours.id_cours}));
+              body: jsonEncode({'nom': nom, 'id_cours': cours.idCours}));
 
       httpErrorHandle(
           response: resAddExigence,
@@ -41,7 +41,7 @@ class ExigenceService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response exigenceRes = await http.get(
-        Uri.parse('$uri/getAllExigences/${cours.id_cours}'),
+        Uri.parse('$uri/getAllExigences/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -80,7 +80,7 @@ class ExigenceService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_exigence': exigence.id_exigence}));
+              body: jsonEncode({'id_exigence': exigence.idExigence}));
 
       httpErrorHandle(
           response: resAddExigence,

@@ -1,0 +1,278 @@
+{
+  "@@locale": "en",
+    "appTitle": "MBSchool",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "lbl_welcome": "Welcome",
+  "@lbl_welcome": {
+    "description": "Welcome message displayed on the authentication screen"
+  },
+  "lbl_log_in": "Log In",
+  "@lbl_log_in": {
+    "description": "Text for the login tab and login button"
+  },
+  "lbl_sign_up": "Sign Up",
+  "@lbl_sign_up": {
+    "description": "Text for the registration tab and signup button"
+  },
+  "lbl_email_address": "Email Address",
+  "@lbl_email_address": {
+    "description": "Label for the email input field"
+  },
+  "lbl_password": "Password",
+  "@lbl_password": {
+    "description": "Label for the password input field"
+  },
+  "lbl_first_name": "First Name",
+  "@lbl_first_name": {
+    "description": "Label for the first name input field"
+  },
+  "lbl_last_name": "Last Name",
+  "@lbl_last_name": {
+    "description": "Label for the last name input field"
+  },
+  "msg_forgot_password": "Forgot Password?",
+  "@msg_forgot_password": {
+    "description": "Link text for password recovery"
+  },
+  "msg_by_submitting": "By submitting, I agree to the",
+  "@msg_by_submitting": {
+    "description": "Legal disclaimer prefix for terms of service"
+  },
+  "msg_terms_conditions": "Terms & Conditions",
+  "@msg_terms_conditions": {
+    "description": "Hyperlink text for the terms and conditions"
+  },
+  "phone_ipt_invalidNum": "Invalid phone number",
+  "@phone_ipt_invalidNum": {
+    "description": "Error message for incorrect phone format"
+  },
+  "phone_ipt_searchText": "Search for a country",
+  "@phone_ipt_searchText": {
+    "description": "Placeholder for the country picker search bar"
+  },
+
+  "lbl_loading": "Loading...",
+  "@lbl_loading": {
+    "description": "Loading message displayed during app initialization"
+  },
+
+
+  "lbl_logout": "Logout",
+  "@lbl_logout": {
+    "description": "Text for the logout button in the user profile"
+  },
+    "lbl_profile": "Profile",
+    "@lbl_profile": {
+    "description": "Label for the user profile section"
+    },
+    "lbl_favorites": "Favorites",
+    "@lbl_favorites": {
+    "description": "Label for the user's favorite courses section"
+    },
+    "lbl_settings": "Settings",
+    "@lbl_settings": {
+    "description": "Label for the application settings section"
+    },
+    "lbl_no_favorites": "No favorites found",
+    "@lbl_no_favorites": {
+    "description": "Message displayed when the user has no favorite courses"
+    },
+    "lbl_course_details": "Course Details",
+    "@lbl_course_details": {
+    "description": "Title for the course details screen"},
+
+    "msg_are_you_sure_you_want_to_logout": "Are you sure you want to logout?",
+    "@msg_are_you_sure_you_want_to_logout": {
+    "description": "Confirmation message when the user attempts to log out"
+    },
+
+    "lbl_yes_logout": "Yes, Logout",
+    "@lbl_yes_logout": {
+    "description": "Text for the confirmation button to proceed with logout"
+    },
+    "lbl_cancel": "Cancel",
+    "@lbl_cancel": {
+    "description": "Text for the cancel button in the logout confirmation dialog"
+    },
+    "lbl_oops_something_went_wrong": "Oops! Something went wrong.",
+    "@lbl_oops_something_went_wrong": {
+    "description": "Generic error message displayed when an unexpected error occurs"
+    },
+
+    "lbl_please_try_again": "Please try again.",
+    "@lbl_please_try_again": {
+    "description": "Message prompting the user to retry an action after an error"   
+    },
+
+    "lbl_try_again": "Try Again",
+    "@lbl_try_again": {
+    "description": "Text for the button that allows users to retry an action after an error"
+    },
+
+    "err_field_required": "This field is required",
+  "@err_field_required": { "description": "Generic error for empty fields" },
+  "err_invalid_name": "Please enter a valid last name",
+  "@err_invalid_name": { "description": "Error for name regex failure" },
+  "err_invalid_email": "Please enter a valid email address",
+  "@err_invalid_email": { "description": "Error for email regex failure" },
+  "err_password_short": "Password must be at least 8 characters",
+  "@err_password_short": { "description": "Error for short password" },
+  "no_internet_connection": "No internet connection",
+  "@no_internet_connection": {
+    "description": "Error message displayed when there is no internet connection" },
+    "msg_error_occurred": "An error occurred",
+    "@msg_error_occurred": {
+    "description": "Generic error message for unexpected errors" }  ,
+
+    "skip": "Skip",
+    "@skip": {
+    "description": "Text for the button that allows users to skip the onboarding process" },
+
+    "intro_title_1": "Making Learning Accessible Everywhere",
+    "@intro_title_1": {
+    "description": "Title for the first onboarding screen, emphasizing accessibility of learning" },
+    "intro_desc_1": "Access a vast library of online courses anytime, anywhere.",
+    "@intro_desc_1": {
+    "description": "Description for the first onboarding screen, highlighting the ability to access a wide range of online courses anytime and anywhere" },
+    "intro_title_2": "Personalized Learning for Your Needs",
+    "@intro_title_2": {
+    "description": "Title for the second onboarding screen, emphasizing personalized learning experience" },
+    "intro_desc_2": "Receive personalized course recommendations based on your interests and learning history.",
+    "@intro_desc_2": {
+    "description": "Description for the second onboarding screen, highlighting personalized course recommendations based on user interests and learning history" },
+    "intro_title_3": "Progress Tracking and Rewards",
+    "@intro_title_3": {
+    "description": "Title for the third onboarding screen, emphasizing progress tracking and rewards" },
+    "intro_desc_3": "Track your learning progress, set goals, and celebrate your achievements with our progress tracking dashboard.",
+    "@intro_desc_3": {
+    "description": "Description for the third onboarding screen, highlighting the ability to track learning progress, set goals, and celebrate achievements with a progress tracking dashboard" } ,
+
+    "lbl_get_started": "Get Started",
+    "@lbl_get_started": {
+    "description": "Text for the button that takes users to the authentication screen after onboarding" },
+    "lbl_welcome_back": "Welcome back!",
+    "@lbl_welcome_back": {
+    "description": "Welcome message displayed on the login screen for returning users" },
+    "msg_please_log_in_to_continue": "Please log in to continue",
+    "@msg_please_log_in_to_continue": {
+    "description": "Message prompting users to log in to access the app's features" },
+    "lbl_dont_have_an_account": "Don't have an account?",
+    "@lbl_dont_have_an_account": {
+    "description": "Text prompting users to sign up if they don't have an account" },
+    "lbl_already_have_an_account": "Already have an account?",
+    "@lbl_already_have_an_account": {
+    "description": "Text prompting users to log in if they already have an account" },
+    "lbl_sign_up_here": "Sign up here",
+    "@lbl_sign_up_here": {
+    "description": "Text for the hyperlink that takes users to the registration screen" },
+    "lbl_log_in_here": "Log in here",     
+    "@lbl_log_in_here": {
+    "description": "Text for the hyperlink that takes users to the login screen" }  ,
+    "lbl_no_account_yet": "Don't have an account yet?",
+    "@lbl_no_account_yet": {
+    "description": "Text prompting users to sign up if they don't have an account, used in both login and registration screens" } ,
+    "msg_username_or_email_already_exists": "Username or email already exists",
+    "@msg_username_or_email_already_exists": {
+    "description": "Error message displayed when a user tries to register with an email or username that already exists in the system" } ,
+    "msg_registration_successful": "Registration successful! You can now log in.",  
+    "@msg_registration_successful": {
+    "description": "Success message displayed after a user successfully registers, prompting them to log in," } ,
+    "msg_login_failure": "Login failed. Please check your credentials and try again.",
+    "@msg_login_failure": {
+    "description": "Error message displayed when a user fails to log in due to incorrect credentials  " } ,
+    "msg_logout_successful": "Logout successful. See you soon!",
+    "@msg_logout_successful": {
+    "description": "Success message displayed after a user successfully logs out" } ,
+    "msg_password_reset_email_sent": "Password reset email sent. Please check your inbox.",
+    "@msg_password_reset_email_sent": {
+    "description": "Success message displayed after a user requests a password reset, indicating that an    email has been sent with instructions" } ,
+    "msg_password_reset_successful": "Password reset successful. You can now log in with your new password",
+    "@msg_password_reset_successful": {
+    "description": "Success message displayed after a user successfully resets their password, prompting them to log in with the new password" } ,
+    "msg_password_reset_failure": "Password reset failed. Please check your email and try again.",
+    "@msg_password_reset_failure": {
+    "description": "Error message displayed when a user fails to reset their password, possibly due to an invalid email or server error" } ,
+    "msg_network_error": "Network error. Please check your internet connection and try again.",
+    "@msg_network_error": {
+    "description": "Error message displayed when there is a network issue preventing the user from completing an action, such as logging in or registering" } ,
+    "msg_unexpected_error": "An unexpected error occurred. Please try again later.",
+    "@msg_unexpected_error": {
+    "description": "Generic error message displayed when an unexpected error occurs that doesn't fit other specific error categories" } ,
+    "msg_invalid_email_or_password": "Invalid email or password. Please try again.",
+    "@msg_invalid_email_or_password": {
+    "description": "Error message displayed when a user enters an incorrect email or password during login    " } ,
+    "msg_account_created_successfully": "Account created successfully! You can now log in.",
+    "@msg_account_created_successfully": {
+    "description": "Success message displayed after a user successfully creates an account, prompting them to log in" } ,
+    "msg_account_creation_failed": "Account creation failed. Please try again.",
+    "@msg_account_creation_failed": {
+    "description": "Error message displayed when a user fails to create an account, possibly due to server error or validation issues" } ,
+    "msg_account_not_verified": "Your account is not verified. Please check your email for the verification link.",
+    "@msg_account_not_verified": {
+    "description": "Error message displayed when a user tries to log in but their account has not been verified yet, prompting them to check their email for the verification link" } ,
+    "msg_verification_email_sent": "Verification email sent. Please check your inbox.",
+    "@msg_verification_email_sent": {
+    "description": "Success message displayed after a user requests a verification email, indicating that an email has been sent with instructions" } ,
+    "msg_account_verified": "Account verified successfully! You can now log in.",
+    "@msg_account_verified": {
+    "description": "Success message displayed after a user successfully verifies their account, prompting them to log in" } ,
+    "msg_invalid_verification_code": "Invalid verification code. Please try again.",
+    "@msg_invalid_verification_code": {
+    "description": "Error message displayed when a user enters an incorrect verification code during account verification" } ,
+    "msg_email_already_exists": "Email already exists. Please use a different email or log in.",
+    "@msg_email_already_exists": {
+    "description": "Error message displayed when a user tries to register with an email that already  exists in the system, prompting them to use a different email or log in if they already have an account" } ,
+    "msg_mail_send_error": "Error sending email. Please try again later.",
+    "@msg_mail_send_error": {
+    "description": "Error message displayed when there is an issue sending an email, such as during password reset or account verification, prompting the user to try again later" } ,
+    "msg_signin_success": "Sign in successful! Welcome back.",
+    "@msg_signin_success": {
+    "description": "Success message displayed after a user successfully signs in, welcoming them back to the app" },
+    "ipt_val_firstName_empty": "First name cannot be empty",
+    "@ipt_val_firstName_empty": {
+    "description": "Error message displayed when the first name field is left empty during registration"  },      
+    "ipt_val_lastName_empty": "Last name cannot be empty",
+    "@ipt_val_lastName_empty": {
+    "description": "Error message displayed when the last name field is left empty during registration"
+    },
+    "ipt_val_email_empty": "Email cannot be empty",
+    "@ipt_val_email_empty": {
+    "description": "Error message displayed when the email field is left empty during registration or login"  },
+    "ipt_val_password_empty": "Password cannot be empty",
+    "@ipt_val_password_empty": {
+    "description": "Error message displayed when the password field is left empty during registration or login"  },
+    "ipt_val_email_invalid": "Please enter a valid email address",
+    "@ipt_val_email_invalid": {
+    "description": "Error message displayed when the email entered does not match a valid email format during registration or login"  },
+    "ipt_val_password_strong": "Password must be at least 8 characters, include an uppercase letter, a lowercase letter, a number, and a special character",
+    "@ipt_val_password_strong": {
+    "description": "Error message displayed when the password entered does not meet the strength requirements during registration"  },
+    "ipt_val_lastName_min_length" : "Last name must be at least 2 characters",
+    "@ipt_val_lastName_min_length" : {            
+    "description": "Error message displayed when the last name entered is shorter than 2 characters during registration"  },  
+    "ipt_val_firstName_min_length" : "First name must be at least 2 characters",
+    "@ipt_val_firstName_min_length" : {            
+    "description": "Error message displayed when the first name entered is shorter than 2 characters          during registration"  },
+    "ipt_val_lastName_max_length" : "Last name cannot exceed 50 characters",
+    "@ipt_val_lastName_max_length" : {            
+    "description": "Error message displayed when the last name entered exceeds 50 characters during registration"  },
+    "ipt_val_firstName_max_length" : "First name cannot exceed 50 characters",
+    "@ipt_val_firstName_max_length" : {            
+    "description": "Error message displayed when the first name entered exceeds 50 characters during registration"  }   ,
+    "msg_session_expired": "Your session has expired. Please log in again to continue.",
+    "@msg_session_expired": {
+    "description": "Error message displayed when a user's session has expired, prompting them to log in again to continue using the app"  } 
+    
+    
+  
+
+
+
+    
+
+
+
+
+}

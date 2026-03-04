@@ -5,17 +5,17 @@ import 'package:mbschool/models/cours.dart';
 
 class CoursPlanProvider extends ChangeNotifier {
   Cours _cours = Cours(
-      id_cours: "",
+      idCours: "",
       titre: "",
       vignette: "",
       statut: 0.0,
       description: "",
-      description_courte: "",
-      id_users: "",
+      descriptionCourte: "",
+      idUsers: "",
       prix: "",
-      id_categorie: "",
-      id_langue: "",
-      id_niveau: "",
+      idCategorie: "",
+      idLangue: "",
+      idNiveau: "",
       nom: "",
       prenom: "",
       photo: "");
@@ -27,7 +27,7 @@ class CoursPlanProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void set_cours(Cours cours) {
+  void setCoursObject(Cours cours) {
     _cours = cours;
     notifyListeners();
   }

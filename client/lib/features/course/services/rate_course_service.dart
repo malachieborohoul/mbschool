@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/notation_cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -27,7 +27,7 @@ class RateCourseService {
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_cours": int.parse(cours.id_cours),
+            "id_cours": int.parse(cours.idCours),
             "rating": rating,
             "testimonial": testimonial,
           },
@@ -51,7 +51,7 @@ class RateCourseService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response notationRes = await http.get(
-        Uri.parse('$uri/getAllNotationCours/${int.parse(cours.id_cours)}'),
+        Uri.parse('$uri/getAllNotationCours/${int.parse(cours.idCours)}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,

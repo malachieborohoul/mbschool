@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/custom_lesson_commentaires.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/widgets/custom_lesson_commentaires.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/features/commentaire/services/course_commentaire_service.dart';
 
 import 'package:mbschool/models/commentaire.dart';
@@ -17,8 +17,7 @@ import 'package:provider/provider.dart';
 
 class CourseCommentaireScreen extends StatefulWidget {
   const CourseCommentaireScreen(
-      {Key? key, required this.controller, required this.lecon})
-      : super(key: key);
+      {super.key, required this.controller, required this.lecon});
 
   final ScrollController? controller;
   final Lecon lecon;
@@ -81,9 +80,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: lessonCommentaires == null
-            ? const Loader()
-            : SingleChildScrollView(
+        body: SingleChildScrollView(
                 controller: widget.controller,
                 child: Padding(
                   padding: const EdgeInsets.all(appPadding),
@@ -132,7 +129,7 @@ class _CourseCommentaireScreenState extends State<CourseCommentaireScreen> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(100)),
                                   child: Image.asset(
-                                    UserProfile['image'].toString(),
+                                    userProfile['image'].toString(),
                                     width: 50,
                                     height: 50,
                                   ),

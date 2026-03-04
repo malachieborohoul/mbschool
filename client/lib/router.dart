@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/arguments/course_lesson_arguments.dart';
-import 'package:mbschool/common/arguments/select_file_arguments.dart';
-import 'package:mbschool/common/widgets/bottom_bar.dart';
+import 'package:mbschool/core/common/arguments/course_lesson_arguments.dart';
+import 'package:mbschool/core/common/arguments/select_file_arguments.dart';
 import 'package:mbschool/features/account/screens/account_screen.dart';
 import 'package:mbschool/features/account/screens/edit_profile_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/admin_screen.dart';
@@ -11,7 +10,7 @@ import 'package:mbschool/features/admin/admin/screens/edit_langue_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/langue_screen.dart';
 import 'package:mbschool/features/admin/users/screens/user_details_screen.dart';
 import 'package:mbschool/features/admin/users/screens/users_screen.dart';
-import 'package:mbschool/features/auth/screens/auth_screen.dart';
+import 'package:mbschool/features/autht/screens/auth_screen.dart';
 import 'package:mbschool/features/course/screens/all_course_screen.dart';
 import 'package:mbschool/features/course/screens/course_screen.dart';
 import 'package:mbschool/features/course/screens/courses_by_category_screen.dart';
@@ -21,10 +20,9 @@ import 'package:mbschool/features/course/screens/rate_course_screen.dart';
 import 'package:mbschool/features/favorite/screens/favorite_screen.dart';
 import 'package:mbschool/features/filter/screens/filter_course_screen.dart';
 import 'package:mbschool/features/home/screens/detail_teacher_course_screen.dart';
-import 'package:mbschool/features/intro/screens/intro_screen.dart';
-import 'package:mbschool/features/intro/screens/verification_screen.dart';
+import 'package:mbschool/features/auth/presentation/screens/verification_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/course_manager_screen.dart';
-import 'package:mbschool/features/panel/course_manager/screens/editLecon.dart';
+import 'package:mbschool/features/panel/course_manager/screens/edit_lecon.dart';
 import 'package:mbschool/features/panel/course_manager/screens/edit_section_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/exigence_screen.dart';
 import 'package:mbschool/features/panel/course_manager/screens/modify_course_screen.dart';
@@ -44,9 +42,7 @@ import 'models/user.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
-    case BottomBar.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const BottomBar());
+ 
     case CourseScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const CourseScreen());
@@ -182,12 +178,7 @@ return PageTransition(
           ),
           type: PageTransitionType.fade);
 
-    case IntroScreen.routeName:
-      return PageTransition(
-          settings: routeSettings,
-          child: const IntroScreen(),
-          curve: Curves.easeOut,
-          type: PageTransitionType.rightToLeft);
+
 
     case VerificationScreen.routeName:
       return PageTransition(

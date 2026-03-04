@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_admin.dart';
-import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_admin.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_teacher.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/features/admin/admin/screens/categorie_screen.dart';
 import 'package:mbschool/features/admin/admin/screens/langue_screen.dart';
 import 'package:mbschool/features/panel/course_manager/services/course_manager_service.dart';
@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class AdminScreen extends StatefulWidget {
   static const routeName = 'admin-screen';
-  const AdminScreen({Key? key}) : super(key: key);
+  const AdminScreen({super.key});
 
   @override
   State<AdminScreen> createState() => _AdminScreenState();

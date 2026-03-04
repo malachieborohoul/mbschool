@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 
 import 'package:mbschool/models/langue.dart';
 
@@ -47,7 +47,7 @@ class LangueService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_langue': langue.id_langue}));
+              body: jsonEncode({'id_langue': langue.idLangue}));
 
       httpErrorHandle(
           response: resaddLangue,
@@ -72,7 +72,7 @@ class LangueService {
         },
         body: jsonEncode(
           {
-            'id_langue': langue.id_langue,
+            'id_langue': langue.idLangue,
             'nom': nom,
           },
         ),

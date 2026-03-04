@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/resultat.dart';
 import 'package:mbschool/providers/user_provider.dart';
@@ -21,7 +21,7 @@ class ResultatService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'titre': titre, 'id_cours': cours.id_cours}));
+              body: jsonEncode({'titre': titre, 'id_cours': cours.idCours}));
 
       httpErrorHandle(
           response: resAddResultat,
@@ -39,7 +39,7 @@ class ResultatService {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response resultatRes = await http.get(
-        Uri.parse('$uri/getAllResultats/${cours.id_cours}'),
+        Uri.parse('$uri/getAllResultats/${cours.idCours}'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
@@ -78,7 +78,7 @@ class ResultatService {
                 'Content-Type': 'application/json; charset=UTF-8',
                 'x-auth-token': userProvider.user.token,
               },
-              body: jsonEncode({'id_resultat': exigence.id_resultat}));
+              body: jsonEncode({'id_resultat': exigence.idResultat}));
 
       httpErrorHandle(
           response: resAddResultat,

@@ -2,19 +2,19 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_button_box.dart';
-import 'package:mbschool/common/widgets/custom_textfield_second.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/datas/user_profile.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_button_box.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_second.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/datas/user_profile.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const routeName = '/editProfil';
-  const EditProfileScreen({Key? key}) : super(key: key);
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -26,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController sexeController = TextEditingController();
   TextEditingController localisationController = TextEditingController();
-  final _editUserProfileFormKey = GlobalKey<FormState>();
+  final _edituserProfileFormKey = GlobalKey<FormState>();
 
   bool isCharging = false;
 
@@ -58,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   //   });
   // }
 
-  void editUserProfile() {
+  void edituserProfile() {
     accountService.editUserProfile(
         context,
         nameController.text,
@@ -113,7 +113,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Padding(
             padding: const EdgeInsets.all(appPadding),
             child: Form(
-              key: _editUserProfileFormKey,
+              key: _edituserProfileFormKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -154,7 +154,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       child: Hero(
                                         tag: 'profile-photo',
                                         child: Image.asset(
-                                          UserProfile['image'].toString(),
+                                          userProfile['image'].toString(),
                                           width: 80,
                                           height: 80,
                                         ),
@@ -247,7 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               child:
                                   const Icon(Icons.male_sharp, color: primary)),
                         ),
-                        value: dropdownvalue,
+                        initialValue: dropdownvalue,
                         items: items.map((String items) {
                           return DropdownMenuItem(
                               value: items, child: Text(items));
@@ -263,11 +263,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   GestureDetector(
                       onTap: () {
-                        if (_editUserProfileFormKey.currentState!.validate()) {
+                        if (_edituserProfileFormKey.currentState!.validate()) {
                           setState(() {
                             isCharging = true;
                           });
-                          editUserProfile();
+                          edituserProfile();
                         }
                       },
                       child: Column(

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 class NotationCours {
-  final String id_notation_cours;
+  final String idNotationCours;
   final String testimonial;
-  final String id_cours;
-  final String id_users;
+  final String idCours;
+  final String idUsers;
   final String nom;
   final String prenom;
   final String note;
@@ -13,10 +13,10 @@ class NotationCours {
 
   NotationCours(
       {
-        required this.id_notation_cours,
+        required this.idNotationCours,
       required this.testimonial,
-      required this.id_cours,
-      required this.id_users,
+      required this.idCours,
+      required this.idUsers,
       required this.note,
       required this.nom,
       required this.prenom,
@@ -25,10 +25,10 @@ class NotationCours {
 
   Map<String, dynamic> toMap() {
     return {
-      'id_notation_cours': id_notation_cours,
+      'idNotationCours': idNotationCours,
       'testimonial': testimonial,
-      'id_cours': id_cours,
-      'id_users': id_users,
+      'idCours': idCours,
+      'idUsers': idUsers,
       'note': note,
       'nom': nom,
       'prenom': prenom,
@@ -39,10 +39,10 @@ class NotationCours {
 
   factory NotationCours.fromMap(Map<String, dynamic> map) {
     return NotationCours(
-      id_notation_cours: map['id_notation_cours'] ?? '',
+      idNotationCours: map['idNotationCours'] ?? '',
       testimonial: map['testimonial'] ?? '',
-      id_cours: map['id_cours'] ?? '',
-      id_users: map['id_users'] ?? '',
+      idCours: map['idCours'] ?? '',
+      idUsers: map['idUsers'] ?? '',
       note: map['note'] ?? '',
       nom: map['nom'] ?? '',
       prenom: map['prenom'] ?? '',

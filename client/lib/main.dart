@@ -1,8 +1,16 @@
-
 import 'package:flutter/material.dart';
-import 'package:mbschool/constants/utils.dart';
-import 'package:mbschool/features/intro/screens/splash_screen.dart';
-import 'package:mbschool/features/auth/services/auth_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mbschool/core/common/cubits/app_user/app_user_cubit.dart';
+import 'package:mbschool/core/constants/utils.dart';
+import 'package:mbschool/core/l10n/app_localizations.dart';
+import 'package:mbschool/core/l10n/l10n.dart';
+import 'package:mbschool/core/utils/size_utils.dart';
+import 'package:mbschool/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:mbschool/features/auth/presentation/providers/language_provider.dart';
+import 'package:mbschool/features/auth/presentation/screens/splash_screen.dart';
+import 'package:mbschool/features/autht/services/auth_service.dart';
+import 'package:mbschool/init_dependencies.dart';
 import 'package:mbschool/providers/course_plan_provider.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:mbschool/providers/lecon_provider.dart';
@@ -13,10 +21,15 @@ import 'package:mbschool/providers/tabbar_provider.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:mbschool/router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
   runApp(MultiProvider(
     providers: [
+          ChangeNotifierProvider(create: (_) => LanguageProvider()),
+
       ChangeNotifierProvider(create: (context) => UserProvider()),
       ChangeNotifierProvider(create: (context) => SearchUserProvider()),
       ChangeNotifierProvider(create: (context) => CoursPlanProvider()),
@@ -26,12 +39,20 @@ void main() {
       ChangeNotifierProvider(create: (context) => SectionProvider()),
       ChangeNotifierProvider(create: (context) => LeconProvider()),
     ],
-    child: const MyApp(),
+    child: MultiBlocProvider(
+      // Ajoutez vos Blocs/Cubits ici
+      providers: [
+        BlocProvider(create: (_) => serviceLocator<AppUserCubit>()),
+        BlocProvider(create: (_) => serviceLocator<AuthBloc>()),
+        // BlocProvider(create: (_) => serviceLocator<HomeBloc>()),
+      ],
+      child: const MyApp(),
+    ),
   ));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -51,54 +72,61 @@ class _MyAppState extends State<MyApp> {
     // initialization();
   }
 
-
-
   @override
   void dispose() {
     super.dispose();
+    _initializeLanguage();
   }
-  // void getUserData() async {
-  //   userList = await authService.getUserData(context);
-  // }
 
-  // void initialization() async {
-  // This is where you can initialize the resources needed by your app while
-  // the splash screen is displayed.  Remove the following example because
-  // delaying the user experience is a bad design practice!
-  // ignore_for_file: avoid_print
-  //   MaterialApp(
-  //     home: Scaffold(
-  //       body: Text("MBSCHOOL"),
-  //     ),
-  //   );
-  //   print('ready in 3...');
-  //   await Future.delayed(const Duration(seconds: 1));
-  //   print('ready in 2...');
-  //   await Future.delayed(const Duration(seconds: 1));
-  //   print('ready in 1...');
-  //   await Future.delayed(const Duration(seconds: 1));
-  //   print('go!');
-  //   FlutterNativeSplash.remove();
-  // }
+  Future<void> _initializeLanguage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? globalLanguage = prefs.getInt("globalLanguage");
+
+    if (globalLanguage == null) {
+      await prefs.setInt("globalLanguage", 0);
+      globalLanguage = 0;
+    }
+
+    // Assurez-vous que le widget est monté avant de changer l'état
+    if (mounted) {
+      Provider.of<LanguageProvider>(context, listen: false)
+          .setLanguage(globalLanguage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-    return MaterialApp(
-        // ERROR HANDLED BY FLUTTER
-        builder: (context, widget) {
-          Widget error = Image.asset("${assetImg}error_handle.png");
-          if (widget is Scaffold || widget is Navigator) {
-            error = Scaffold(body: Center(child: error));
-          }
-          ErrorWidget.builder = (errorDetails) => error;
-          if (widget != null) return widget;
-          throw ('widget is null');
+    return Sizer(builder: (context, orientation, deviceType) {
+      return Consumer<LanguageProvider>(
+        builder: (context, languageProvider, child) {
+          return MaterialApp(
+              // ERROR HANDLED BY FLUTTER
+              builder: (context, widget) {
+                Widget error = Image.asset("${assetImg}error_handle.png");
+                if (widget is Scaffold || widget is Navigator) {
+                  error = Scaffold(body: Center(child: error));
+                }
+                ErrorWidget.builder = (errorDetails) => error;
+                if (widget != null) return widget;
+                throw ('widget is null');
+              },
+              locale: languageProvider.language == 0
+                ? const Locale('en')
+                : const Locale('fr'),
+            supportedLocales: L10n.all,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
+            ],
+              theme: ThemeData(fontFamily: "WorkSans"),
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: (setting) => generateRoute(setting),
+              home: const SplashScreen());
         },
-        theme: ThemeData(fontFamily: "WorkSans"),
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: (setting) => generateRoute(setting),
-        home: const SplashScreen());
+      );
+    });
   }
 }
 

@@ -4,9 +4,9 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +17,9 @@ class SelectFileService {
       BuildContext context,
       String titre,
       String resume,
-      String id_cours,
-      int id_section,
-      int id_type_lecon,
+      String idCours,
+      int idSection,
+      int idTypeLecon,
       PlatformFile fichier,
       VoidCallback onSuccess) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -39,9 +39,9 @@ class SelectFileService {
               body: jsonEncode({
                 'titre': titre,
                 'resume': resume,
-                'id_cours': int.parse(id_cours),
-                'id_section': id_section,
-                'id_type_lecon': id_type_lecon,
+                'idCours': int.parse(idCours),
+                'idSection': idSection,
+                'idTypeLecon': idTypeLecon,
                 'url': url
               }));
 
@@ -76,9 +76,9 @@ class SelectFileService {
       BuildContext context,
       String titre,
       String resume,
-      String id_cours,
-      int id_section,
-      int id_type_lecon,
+      String idCours,
+      int idSection,
+      int idTypeLecon,
       String lienYoutube,
       VoidCallback onSuccess) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -94,9 +94,9 @@ class SelectFileService {
               body: jsonEncode({
                 'titre': titre,
                 'resume': resume,
-                'id_cours': int.parse(id_cours),
-                'id_section': id_section,
-                'id_type_lecon': id_type_lecon,
+                'idCours': int.parse(idCours),
+                'idSection': idSection,
+                'idTypeLecon': idTypeLecon,
                 'url': lienYoutube
               }));
 

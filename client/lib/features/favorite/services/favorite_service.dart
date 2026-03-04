@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +62,7 @@ void removeCourseFromFavorite(
         body: jsonEncode(
           {
             "id_users": int.parse(userProvider.user.id),
-            "id_cours": int.parse(cours.id_cours),
+            "id_cours": int.parse(cours.idCours),
           },
         ),
       );

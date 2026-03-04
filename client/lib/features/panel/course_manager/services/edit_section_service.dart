@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 
 import 'package:mbschool/models/section.dart';
 import 'package:mbschool/providers/section_provider.dart';
@@ -27,7 +27,7 @@ class EditSectionService {
         },
         body: jsonEncode(
           {
-            'id_section': int.parse(section.id_section),
+            'id_section': int.parse(section.idSection),
             'titre': titre,
           },
         ),
@@ -62,7 +62,7 @@ class EditSectionService {
         },
         body: jsonEncode(
           {
-            'id_section': int.parse(section.id_section),
+            'id_section': int.parse(section.idSection),
           },
         ),
       );

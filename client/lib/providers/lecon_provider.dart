@@ -5,13 +5,13 @@ import 'package:mbschool/models/lecon.dart';
 
 class LeconProvider extends ChangeNotifier {
   Lecon _lecon = Lecon(
-      id_lecon: "",
+      idLecon: "",
       titre: "",
       url: "",
       resume: "",
-      id_cours: "",
-      id_section: "",
-      id_type_lecon: "");
+      idCours: "",
+      idSection: "",
+      idTypeLecon: "");
   Lecon get lecon => _lecon;
 
   void setLecon(String lecon) {
@@ -19,7 +19,7 @@ class LeconProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void set_lecon(Lecon lecon) {
+  void setLeconObject(Lecon lecon) {
     _lecon = lecon;
     notifyListeners();
   }

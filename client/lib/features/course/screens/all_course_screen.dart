@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/animations/opacity_tween.dart';
-import 'package:mbschool/common/animations/slide_right_tween.dart';
-import 'package:mbschool/common/animations/slide_up_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/common/widgets/custom_course_card.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
+import 'package:mbschool/core/common/animations/opacity_tween.dart';
+import 'package:mbschool/core/common/animations/slide_right_tween.dart';
+import 'package:mbschool/core/common/animations/slide_up_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/common/widgets/custom_course_card.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
 import 'package:mbschool/features/course/screens/detail_course_screen.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/providers/course_provider.dart';
@@ -16,7 +16,7 @@ class AllCourseScreen extends StatefulWidget {
   static const routeName = '/all-course-screen';
   final Future<List<Cours>> coursFuture;
 
-  AllCourseScreen({Key? key, required this.coursFuture}) : super(key: key);
+  const AllCourseScreen({super.key, required this.coursFuture});
 
   @override
   State<AllCourseScreen> createState() => _AllCourseScreenState();
@@ -105,7 +105,7 @@ class _AllCourseScreenState extends State<AllCourseScreen> {
                           );
 
                           Provider.of<CoursProvider>(context, listen: false)
-                              .set_cours(cours[index]);
+                              .setCoursObject(cours[index]);
                         },
                         child: CustomCourseCardShrink(
                           thumbNail: cours[index].vignette,

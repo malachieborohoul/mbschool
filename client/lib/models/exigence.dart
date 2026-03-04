@@ -1,32 +1,32 @@
 import 'dart:convert';
 
 class Exigence {
-  final String id_exigence;
+  final String idExigence;
   final String nom;
-  final String id_cours;
+  final String idCours;
 
 
   Exigence(
       {
-        required this.id_exigence,
+        required this.idExigence,
       required this.nom,
-      required this.id_cours,
+      required this.idCours,
  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_exigence': id_exigence,
+      'idExigence': idExigence,
       'nom': nom,
-      'id_cours': id_cours,
+      'idCours': idCours,
       
     };
   }
 
   factory Exigence.fromMap(Map<String, dynamic> map) {
     return Exigence(
-      id_exigence: map['id_exigence'] ?? '',
+      idExigence: map['idExigence'] ?? '',
       nom: map['nom'] ?? '',
-      id_cours: map['id_cours'] ?? '',
+      idCours: map['idCours'] ?? '',
       
     );
   }

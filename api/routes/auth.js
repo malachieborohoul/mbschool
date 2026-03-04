@@ -45,7 +45,7 @@ function generateVerificationCode() {
 }
 
 // SIGNUP
-authRouter.post('/api/v1/signup', async (req, res) => {
+authRouter.post('/api/v1/auth/signup', async (req, res) => {
     try {
         const { nom, prenom, email, password } = req.body;
         const role = 1; 
@@ -115,7 +115,7 @@ authRouter.post('/api/v1/signup', async (req, res) => {
 
 
 
-authRouter.post('/api/v1/signin', async (req, res) => {
+authRouter.post('/api/v1/auth/signin', async (req, res) => {
     try {
         const { email, password } = req.body;
         
@@ -157,15 +157,25 @@ authRouter.post('/api/v1/signin', async (req, res) => {
             });
         }
         
-        // 4. If verified, generate Token and finish Signin
-        const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '30d' });
-        
+      // 4. If verified, generate BOTH tokens
+        const accessToken = jwt.sign(
+            { id: user.id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1m' } // Short-lived (1 hour)
+        );
+
+        const refreshToken = jwt.sign(
+            { id: user.id }, 
+            process.env.JWT_REFRESH_SECRET, // Use a DIFFERENT secret for refresh tokens
+            { expiresIn: '5m' } // Long-lived (30 days) 
+        );
         // Cleanup sensitive data
         delete user.password;
-        user.token = token;
+        user.accessToken = accessToken;
+        user.refreshToken = refreshToken;
 
         return sendResponse(res, { 
-            status: 200, 
+            status: 200,  
             code: "AUTH_SIGNIN_SUCCESS", 
             message: "Bienvenue", 
             data: user 
@@ -181,7 +191,7 @@ authRouter.post('/api/v1/signin', async (req, res) => {
 // Verify validity of token
 
 // Verify validity of token
-authRouter.post('/api/v1/tokenIsValid', async (req, res) => {
+authRouter.post('/api/v1/auth/tokenIsValid', async (req, res) => {
     try {
         const token = req.header('x-auth-token');
         if (!token) return res.json(false);
@@ -201,7 +211,7 @@ authRouter.post('/api/v1/tokenIsValid', async (req, res) => {
 });
 
 // Get user data
-authRouter.get("/api/v1/user-data", auth, async (req, res) => {
+authRouter.get("/api/v1/auth/user-data", auth, async (req, res) => {
     try {
         // req.user is populated by your auth middleware
         const { rows } = await pool.query(queries.checkIdExist, [req.user]);
@@ -227,7 +237,7 @@ authRouter.get("/api/v1/user-data", auth, async (req, res) => {
 
 
 // Code de vérification
-authRouter.post("/api/v1/codeVerification", async (req, res) => {
+authRouter.post("/api/v1/auth/codeVerification", async (req, res) => {
     try {
         const { id } = req.body;
         // Logic: update user status in DB once they provide the correct code
@@ -245,7 +255,7 @@ authRouter.post("/api/v1/codeVerification", async (req, res) => {
 
 
 // Verification of the 6-digit code
-authRouter.post("/api/v1/verify-signup", async (req, res) => {
+authRouter.post("/api/v1/auth/verify-signup", async (req, res) => {
     try {
         const { userId, typedCode } = req.body;
 
@@ -286,7 +296,7 @@ authRouter.post("/api/v1/verify-signup", async (req, res) => {
 });
 
 // Resend code
-authRouter.post("/api/v1/resend-code", async (req, res) => {
+authRouter.post("/api/v1/auth/resend-code", async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -325,7 +335,7 @@ authRouter.post("/api/v1/resend-code", async (req, res) => {
 
 
 // POST /api/forgot-password
-authRouter.post('/api/v1/forgot-password', async (req, res) => {
+authRouter.post('/api/v1/auth/forgot-password', async (req, res) => {
     try {
         const { email } = req.body;
         const { rows } = await pool.query(queries.checkEmailExist, [email]);
@@ -367,7 +377,7 @@ authRouter.post('/api/v1/forgot-password', async (req, res) => {
 
 
 // POST /api/reset-password
-authRouter.post('/api/v1/reset-password', async (req, res) => {
+authRouter.post('/api/v1/auth/reset-password', async (req, res) => {
     try {
         const { email, code, newPassword } = req.body;
 
@@ -402,6 +412,55 @@ authRouter.post('/api/v1/reset-password', async (req, res) => {
 
     } catch (e) {
         return sendResponse(res, { status: 500, code: "SERVER_ERROR", message: e.message });
+    }
+});
+
+
+// POST /api/v1/token-refresh
+authRouter.post('/api/v1/auth/token-refresh', async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+
+        if (!refreshToken) {
+            return sendResponse(res, { status: 401, code: "AUTH_REFRESH_TOKEN_REQUIRED", message: "Refresh token manquant" });
+        }
+
+        // 1. Verify the Refresh Token using the REFRESH secret
+        const verified = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET );
+
+        // 2. Optional but recommended: Check if the user still exists in DB
+        const { rows } = await pool.query(queries.checkIdExist, [verified.id]);
+        if (rows.length === 0) {
+            return sendResponse(res, { status: 403, code: "AUTH_USER_NOT_FOUND", message: "Utilisateur introuvable" });
+        }
+
+        const user = rows[0];
+
+        // 3. Generate a NEW Access Token (1 hour)
+        const newAccessToken = jwt.sign(
+            { id: user.id }, 
+            process.env.JWT_SECRET , 
+            { expiresIn: '1m' }
+        );
+
+        // 4. Return only the new Access Token
+        return sendResponse(res, {
+            status: 200,
+            code: "AUTH_TOKEN_REFRESHED",
+            message: "Token renouvelé",
+            data: {
+                accessToken: newAccessToken,
+                refreshToken: refreshToken // Optionally return the same refresh token if you want to allow reuse until it expires  
+            }
+        });
+
+    } catch (e) {
+        // If the Refresh Token itself is expired (after 30 days)
+        return sendResponse(res, { 
+            status: 403, 
+            code: "AUTH_SESSION_EXPIRED", 
+            message: "Session expirée, veuillez vous reconnecter" 
+        });
     }
 });
 

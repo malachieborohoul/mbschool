@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/widgets/navigation_drawer_teacher.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/global.dart';
+import 'package:mbschool/core/common/widgets/navigation_drawer_teacher.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/global.dart';
 
 class Panel extends StatefulWidget {
-  const Panel({Key? key}) : super(key: key);
+  const Panel({super.key});
 
   @override
   State<Panel> createState() => _PanelState();

@@ -1,24 +1,24 @@
 import 'dart:convert';
 
 class Categorie {
-  final String id_categorie;
+  final String idCategorie;
   final String nom;
 
   Categorie({
-    required this.id_categorie,
+    required this.idCategorie,
     required this.nom,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_categorie': id_categorie,
+      'idCategorie': idCategorie,
       'nom': nom,
     };
   }
 
   factory Categorie.fromMap(Map<String, dynamic> map) {
     return Categorie(
-      id_categorie: map['id_categorie'] ?? '',
+      idCategorie: map['idCategorie'] ?? '',
       nom: map['nom'] ?? '',
     );
   }

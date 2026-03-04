@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/animations/slide_up_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/animations/slide_up_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/course/services/rate_course_service.dart';
 import 'package:mbschool/providers/course_provider.dart';
 import 'package:provider/provider.dart';
 
 class RateCourseScreen extends StatefulWidget {
-  const RateCourseScreen({Key? key}) : super(key: key);
+  const RateCourseScreen({super.key});
   static const routeName = 'rate-course-screen';
 
   @override
@@ -188,7 +188,7 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                     child: TextFormField(
                                       controller: testimonialController,
                                       validator: (value) {
-                                        if (value!.isEmpty || value == null) {
+                                        if (value!.isEmpty) {
                                           return "Veuillez saisir un témoignage";
                                         }
                                         return null;
@@ -237,11 +237,11 @@ class _RateCourseScreenState extends State<RateCourseScreen>
                                 height: 45.0,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: primary.withOpacity(0.7),
+                                  color: primary.withValues(alpha: 0.7),
                                   borderRadius: BorderRadius.circular(50),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: primary.withOpacity(0.5),
+                                      color: primary.withValues(alpha:0.5),
                                       spreadRadius: 0.0,
                                       blurRadius: 6.0,
                                       offset: const Offset(0, 2),

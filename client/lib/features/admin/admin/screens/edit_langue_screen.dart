@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mbschool/common/widgets/custom_textfield_panel.dart';
-import 'package:mbschool/common/widgets/custom_title_panel.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_panel.dart';
+import 'package:mbschool/core/common/widgets/custom_title_panel.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/admin/admin/screens/langue_screen.dart';
 import 'package:mbschool/features/admin/admin/services/langue_service.dart';
 import 'package:mbschool/models/langue.dart';
@@ -12,7 +12,7 @@ import 'package:mbschool/models/section.dart';
 class EditLangueScreen extends StatefulWidget {
   static const routeName = '/edit-langue-screen';
 
-  const EditLangueScreen({Key? key, required this.langue}) : super(key: key);
+  const EditLangueScreen({super.key, required this.langue});
   final Langue langue;
 
   @override
@@ -58,7 +58,7 @@ class _EditLangueScreenState extends State<EditLangueScreen> {
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: sections == null || isCharging == true
+      child: isCharging == true
           ? const Loader()
           : Scaffold(
               appBar: AppBar(

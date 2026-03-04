@@ -4,9 +4,9 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/categorie.dart';
 import 'package:mbschool/models/langue.dart';
 import 'package:mbschool/models/niveau.dart';
@@ -121,7 +121,7 @@ class CreateCourseService {
       BuildContext context,
       String titre,
       String description,
-      String description_courte,
+      String descriptionCourte,
       int categorie,
       int niveau,
       int langue,
@@ -147,7 +147,7 @@ class CreateCourseService {
                 body: jsonEncode({
                   'titre': titre,
                   'description': description,
-                  'description_courte': description_courte,
+                  'descriptionCourte': descriptionCourte,
                   'id_categorie': categorie,
                   'id_niveau': niveau,
                   'id_langue': langue,

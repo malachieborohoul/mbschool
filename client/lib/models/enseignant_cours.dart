@@ -1,40 +1,40 @@
 import 'dart:convert';
 
 class EnseignantCours {
-  final String id_users;
+  final String idUsers;
   final String nom;
   final String prenom;
   final String photo;
-  final String nombre_cours;
+  final String nombreCours;
 
 
   EnseignantCours(
       {
-        required this.id_users,
+        required this.idUsers,
       required this.nom,
       required this.prenom,
       required this.photo,
-      required this.nombre_cours,
+      required this.nombreCours,
  });
 
   Map<String, dynamic> toMap() {
     return {
-      'id_users': id_users,
+      'idUsers': idUsers,
       'nom': nom,
       'prenom': prenom,
       'photo': photo,
-      'nombre_cours': nombre_cours,
+      'nombreCours': nombreCours,
       
     };
   }
 
   factory EnseignantCours.fromMap(Map<String, dynamic> map) {
     return EnseignantCours(
-      id_users: map['id_users'] ?? '',
+      idUsers: map['idUsers'] ?? '',
       nom: map['nom'] ?? '',
       prenom: map['prenom'] ?? '',
       photo: map['photo'] ?? '',
-      nombre_cours: map['nombre_cours'] ?? '',
+      nombreCours: map['nombreCours'] ?? '',
       
     );
   }

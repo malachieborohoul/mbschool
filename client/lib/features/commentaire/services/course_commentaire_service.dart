@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:mbschool/constants/error_handling.dart';
-import 'package:mbschool/constants/global.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/constants/error_handling.dart';
+import 'package:mbschool/core/constants/global.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/models/commentaire.dart';
 import 'package:mbschool/models/lecon.dart';
 import 'package:mbschool/models/reponse_commentaire.dart';
@@ -30,7 +30,7 @@ class CourseCommentaireService {
           {
             "intitule": intitule,
             "users_id": int.parse(userProvider.user.id),
-            "lecon_id": int.parse(lecon.id_lecon),
+            "lecon_id": int.parse(lecon.idLecon),
           },
         ),
       );
@@ -65,7 +65,7 @@ class CourseCommentaireService {
           {
             "intitule": intitule,
             "users_id": int.parse(userProvider.user.id),
-            "commentaire_id": int.parse(commentaire.id_commentaire),
+            "commentaire_id": int.parse(commentaire.idCommentaire),
           },
         ),
       );
@@ -90,7 +90,7 @@ class CourseCommentaireService {
     try {
       http.Response commentaireRes = await http.get(
           Uri.parse(
-              "$uri/getAllLessonCommentaires/${int.parse(lecon.id_lecon)}"),
+              "$uri/getAllLessonCommentaires/${int.parse(lecon.idLecon)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -127,7 +127,7 @@ class CourseCommentaireService {
     try {
       http.Response commentaireRes = await http.get(
           Uri.parse(
-              "$uri/getAllLessonNumberReponses/${int.parse(commentaire.id_commentaire)}"),
+              "$uri/getAllLessonNumberReponses/${int.parse(commentaire.idCommentaire)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -156,7 +156,7 @@ class CourseCommentaireService {
     try {
       http.Response commentaireRes = await http.get(
           Uri.parse(
-              "$uri/getAllLessonReponseCommentaires/${int.parse(commentaire.id_commentaire)}"),
+              "$uri/getAllLessonReponseCommentaires/${int.parse(commentaire.idCommentaire)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -189,11 +189,11 @@ class CourseCommentaireService {
   Future<String> countAllLessonReponseAndCommentaires(
       BuildContext context, Lecon lecon) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    String number_discussions = "";
+    String numberDiscussions = "";
     try {
       http.Response commentaireRes = await http.get(
           Uri.parse(
-              "$uri/countAllLessonReponseAndCommentaires/${int.parse(lecon.id_lecon)}"),
+              "$uri/countAllLessonReponseAndCommentaires/${int.parse(lecon.idLecon)}"),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token,
@@ -203,7 +203,7 @@ class CourseCommentaireService {
           response: commentaireRes,
           context: context,
           onSuccess: () {
-            number_discussions = jsonDecode(commentaireRes.body);
+            numberDiscussions = jsonDecode(commentaireRes.body);
           },
           onFailed: () {});
 
@@ -211,7 +211,7 @@ class CourseCommentaireService {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-    return number_discussions;
+    return numberDiscussions;
   }
 
   void markLessonAsDone(
@@ -230,7 +230,7 @@ class CourseCommentaireService {
         body: jsonEncode(
           {
             "users_id": int.parse(userProvider.user.id),
-            "lecon_id": int.parse(lecon.id_lecon),
+            "lecon_id": int.parse(lecon.idLecon),
           },
         ),
       );

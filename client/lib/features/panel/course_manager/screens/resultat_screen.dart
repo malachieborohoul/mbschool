@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:mbschool/common/animations/slide_down_tween.dart';
-import 'package:mbschool/common/widgets/custom_app_bar_panel.dart';
+import 'package:mbschool/core/common/animations/slide_down_tween.dart';
+import 'package:mbschool/core/common/widgets/custom_app_bar_panel.dart';
 
-import 'package:mbschool/common/widgets/custom_textfield_exigence.dart';
-import 'package:mbschool/common/widgets/loader.dart';
-import 'package:mbschool/constants/colors.dart';
-import 'package:mbschool/constants/padding.dart';
-import 'package:mbschool/constants/utils.dart';
+import 'package:mbschool/core/common/widgets/custom_textfield_exigence.dart';
+import 'package:mbschool/core/common/widgets/loader.dart';
+import 'package:mbschool/core/constants/colors.dart';
+import 'package:mbschool/core/constants/padding.dart';
+import 'package:mbschool/core/constants/utils.dart';
 import 'package:mbschool/features/panel/course_manager/services/resultat_service.dart';
 import 'package:mbschool/models/cours.dart';
 import 'package:mbschool/models/resultat.dart';
@@ -15,7 +15,7 @@ import 'package:mbschool/models/resultat.dart';
 class ResultatScreen extends StatefulWidget {
   static const routeName = 'resultat-screen';
   final Cours cours;
-  const ResultatScreen({Key? key, required this.cours}) : super(key: key);
+  const ResultatScreen({super.key, required this.cours});
 
   @override
   State<ResultatScreen> createState() => _ResultatScreenState();
@@ -75,8 +75,8 @@ class _ResultatScreenState extends State<ResultatScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: CustomAppBarPanel(texte: "Resultats"),
-        body: isCharging == true || resultats == null
+        appBar: customAppBarPanel(texte: "Resultats"),
+        body: isCharging == true
             ? const Loader()
             : Form(
                 key: _addResultatFormKey,

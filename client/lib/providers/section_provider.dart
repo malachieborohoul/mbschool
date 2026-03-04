@@ -5,9 +5,9 @@ import 'package:mbschool/models/section.dart';
 
 class SectionProvider extends ChangeNotifier {
   Section _section = Section(
-    id_section: "",
+    idSection: "",
     titre: "",
-    id_cours: "",
+    idCours: "",
   );
   Section get section => _section;
 
@@ -16,7 +16,7 @@ class SectionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void set_section(Section section) {
+  void setSectionObject(Section section) {
     _section = section;
     notifyListeners();
   }

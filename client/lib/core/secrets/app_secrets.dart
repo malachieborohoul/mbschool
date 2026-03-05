@@ -10,7 +10,7 @@ static const webClientId =
   static const iosClientId =
           '403048485258-udp33m5ub27vpav7dh8n8s35tfd9n0de.apps.googleusercontent.com';
 
-  static const baseUrl = 'https://api.wegoopay.com';
+  static const baseUrl = 'https://mbschool.onrender.com/api/v1';
   // static const baseUrl = 'http://10.52.1.198:3000/api/v1';
 
 //   static const AUTH0_DOMAIN = "dev-ksc4vops6wh6w7mo.us.auth0.com";

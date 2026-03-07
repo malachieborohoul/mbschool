@@ -29,3 +29,29 @@ Layout Stability: Fixed LateInitializationError by ensuring SizeUtils initialize
 Secure Storage: Fixed token persistence logic to prevent unauthorized access after app restarts.
 
 
+[1.0.0+4] — 2026-03-07
+Official Internal Release
+Production Stability & UI Enhancement
+
+🚀 New Features
+Enhanced Password Security: Integrated a visibility toggle (eye icon) in the CustomTextField component to improve user experience during authentication.
+
+Production Build Success: Successfully generated and verified the signed Android App Bundle (.aab) after resolving keystore conflicts.
+
+Account Protection: Verified account identity and successfully published to the Internal Testing track, successfully bypassing the March 9 dormancy deadline.
+
+🛠 Technical Updates
+Input Validation Logic: Centralized form validation using codeKey patterns for names, emails, and passwords with full localization support.
+
+UI Layout Robustness: Refactored CustomTextField to use minHeight constraints instead of fixed heights, preventing layout overflows when validation errors are displayed.
+
+Package Name Rollback: Fully restored the project identity to com.bsm.mbschool to ensure continuity with existing Play Store credentials.
+
+Gradle Optimization: Cleaned the plugins block in build.gradle.kts to resolve build-time dependency injection errors.
+
+🩹 Fixes
+Network Connectivity: Resolved the "No internet connection" error in release builds by correctly configuring INTERNET permissions and HTTPS traffic requirements in the Android Manifest.
+
+Keystore Pathing: Eliminated trailing space issues in key.properties that prevented Gradle from locating the .jks file.
+
+State Management: Optimized CustomTextFieldState to handle internal visibility states independently of parent widget rebuilds.

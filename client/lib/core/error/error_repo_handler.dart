@@ -10,7 +10,7 @@ ResultFuture<T> errorRepoHandler<T> (Future<T> Function() fn,
   ConnectionChecker connectionChecker,)async{
 try {
       if (!await (connectionChecker.isConnected)) {
-        return left(Failure(message:  'Pas de connexion internet', statusCode: AppSecrets.ERROR_NETWORK));
+        return left(Failure(message:  'Pas de connexion internet', code: AppSecrets.ERROR_NETWORK));
       }
       final res = await fn();
 

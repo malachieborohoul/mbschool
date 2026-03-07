@@ -10,7 +10,7 @@ class CustomTextField extends StatefulWidget {
     super.key,
     required this.prefixIcon,
     required this.labelText,
-    this.controller, // Made optional to prevent null errors
+    this.controller,
     this.readOnlyField = false,
     this.isPassword = false,
     this.iconHeight = 17.0,
@@ -34,17 +34,27 @@ class CustomTextField extends StatefulWidget {
   final int codeKey;
 
   @override
-  CustomTextFieldState createState() => CustomTextFieldState(); // Public State
+  CustomTextFieldState createState() => CustomTextFieldState();
 }
 
 class CustomTextFieldState extends State<CustomTextField> {
+  // 1. Add a state variable to toggle password visibility
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with the value passed from the widget
+    _obscureText = widget.isPassword;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Access localizations for error messages
     final l10n = AppLocalizations.of(context)!;
 
     return Container(
-      height: widget.height,
+      // 2. Adjust height to wrap content if error text appears
+      constraints: BoxConstraints(minHeight: widget.height),
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border(
@@ -73,9 +83,11 @@ class CustomTextFieldState extends State<CustomTextField> {
             child: TextFormField(
               keyboardType: widget.keyboardType,
               readOnly: widget.readOnlyField,
-              obscureText: widget.isPassword,
+              // 3. Use the local state variable here
+              obscureText: _obscureText,
               controller: widget.controller,
-              maxLines: widget.maxLine,
+              // Password fields should usually be maxLines: 1
+              maxLines: widget.isPassword ? 1 : widget.maxLine,
               style: const TextStyle(
                 fontSize: 15.0,
                 color: secondary,
@@ -90,28 +102,41 @@ class CustomTextFieldState extends State<CustomTextField> {
                   fontSize: 15.0,
                   height: 1,
                 ),
+                // 4. Add the suffix icon (the eye button)
+                suffixIcon: widget.isPassword
+                    ? IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: secondary.withValues(alpha: 0.5),
+                          size: 20,
+                        ),
+                      )
+                    : null,
               ),
               validator: (val) {
                 if (val == null || val.isEmpty) {
-                  return l10n.err_field_required; // Generic "Required" message
+                  return l10n.err_field_required;
                 }
-
                 switch (widget.codeKey) {
-                  case 1: // Last Name
+                  case 1:
+                  case 2:
                     return !RegExp(r'^[a-z A-Z]+$').hasMatch(val)
                         ? l10n.err_invalid_name
                         : null;
-                  case 2: // First Name
-                    return !RegExp(r'^[a-z A-Z]+$').hasMatch(val)
-                        ? l10n.err_invalid_name
-                        : null;
-                  case 3: // Email
+                  case 3:
                     return !RegExp(
                                 r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
                             .hasMatch(val)
                         ? l10n.err_invalid_email
                         : null;
-                  case 4: // Password
+                  case 4:
                     return val.length < 8 ? l10n.err_password_short : null;
                   default:
                     return null;

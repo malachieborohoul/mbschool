@@ -478,39 +478,43 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return false;
       }
 
+       await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
+
+        return true;
+
       // final response = await appAuth.token(
       //   TokenRequest(AppSecrets.AUTH0_CLIENT_ID, AppSecrets.AUTH0_REDIRECT_URI,
       //       issuer: AppSecrets.AUTH0_ISSUER, refreshToken: refreshToken),
       // );
 
-      http.Response response = await http.post(
-          Uri.parse(
-            '${AppSecrets.baseUrl}/auth/logout',
-          ),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: jsonEncode({
-            "refreshToken": refreshToken,
-          }));
+      // http.Response response = await http.post(
+      //     Uri.parse(
+      //       '${AppSecrets.baseUrl}/auth/logout',
+      //     ),
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //     body: jsonEncode({
+      //       "refreshToken": refreshToken,
+      //     }));
 
-      if (response.statusCode == 200) {
-        debugPrint("💡From AuthRemoteDataSource signOut -  ${response.body} ");
+      // if (response.statusCode == 200) {
+      //   debugPrint("💡From AuthRemoteDataSource signOut -  ${response.body} ");
 
-        await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
+      //   await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
 
-        return true;
-      } else {
-        debugPrint(
-            "💡From AuthRemoteDataSource signOut -  ${response.body} ${response.statusCode.toString()} ");
-        throw ServerException(
-          message: response.body,
-          statusCode: response.statusCode.toString(),
-          code: 'CONNECTION_ERROR',
-        );
+      //   return true;
+      // } else {
+      //   debugPrint(
+      //       "💡From AuthRemoteDataSource signOut -  ${response.body} ${response.statusCode.toString()} ");
+      //   throw ServerException(
+      //     message: response.body,
+      //     statusCode: response.statusCode.toString(),
+      //     code: 'CONNECTION_ERROR',
+      //   );
 
-        // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');
-      }
+      //   // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');
+      // }
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbschool/core/common/widgets/loader.dart';
 import 'package:mbschool/core/l10n/app_localizations.dart';
@@ -45,73 +46,75 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     var appLocalization = AppLocalizations.of(context);
 
-    return Scaffold(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+    value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
         body:  
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthLoggedIn || state is AuthSuccess) {
+                        debugPrint(" ✅ From LoadingScreen - ");
         
-        BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthLoggedIn || state is AuthSuccess) {
-                    debugPrint(" ✅ From LoadingScreen - ");
-
-              // Navigator.pushReplacement(
-              //       context, CodeVerificationTestScreen.route(""));
-              // Navigator.pushReplacement(context, CreatePinScreen.route());
-              // Navigator.pushAndRemoveUntil(
-              //   context,
-              //   BottomBar.route(),
-              //   (Route<dynamic> route) => false,
-              // );
-
-               Navigator.pushAndRemoveUntil(
-                context,
-                HomeScreenTest.route(),
-                (Route<dynamic> route) => false,
+                  // Navigator.pushReplacement(
+                  //       context, CodeVerificationTestScreen.route(""));
+                  // Navigator.pushReplacement(context, CreatePinScreen.route());
+                  // Navigator.pushAndRemoveUntil(
+                  //   context,
+                  //   BottomBar.route(),
+                  //   (Route<dynamic> route) => false,
+                  // );
+        
+                   Navigator.pushAndRemoveUntil(
+                    context,
+                    HomeScreenTest.route(),
+                    (Route<dynamic> route) => false,
+                  );
+                
+                } else if (state is AuthInitial ||
+                    state is AuthLoggedOut
+                    ) {
+                  debugPrint("💡 From LoadingScreen - Rediriger vers LoginScreen");
+                 Navigator.pushReplacement(context, AuthScreen.route());
+                }
+                else if (
+                    state is AuthSignOutSuccess
+                   
+                    ) {
+                        showSnackBar(context, appLocalization!.msg_session_expired,
+                                      );
+                  debugPrint("💡 From LoadingScreen - Rediriger vers LoginScreen");
+                  Navigator.pushAndRemoveUntil(
+                              context,
+                              AuthScreen.route(),
+                              (Route<dynamic> route) => false, 
+                            );
+                }
+                else if(state is AuthFailure){
+                  showSnackBar(context, state.message);
+                }
+              },
+              builder: (context, state) {
+                if (kDebugMode) {
+                  print(state);
+                }
+                if(state is AuthLoading){
+                 return   Center(
+                child: Loader(),
               );
-            
-            } else if (state is AuthInitial ||
-                state is AuthLoggedOut
-                ) {
-              debugPrint("💡 From LoadingScreen - Rediriger vers LoginScreen");
-             Navigator.pushReplacement(context, AuthScreen.route());
-            }
-            else if (
-                state is AuthSignOutSuccess
-               
-                ) {
-                    showSnackBar(context, appLocalization!.msg_session_expired,
-                                  );
-              debugPrint("💡 From LoadingScreen - Rediriger vers LoginScreen");
-              Navigator.pushAndRemoveUntil(
-                          context,
-                          AuthScreen.route(),
-                          (Route<dynamic> route) => false, 
-                        );
-            }
-            else if(state is AuthFailure){
-              showSnackBar(context, state.message,
-                                  const Color.fromARGB(255, 194, 72, 64));
-            }
-          },
-          builder: (context, state) {
-            if (kDebugMode) {
-              print(state);
-            }
-            if(state is AuthLoading){
-             return   Center(
-            child: Loader(),
-          );
-            }else
-            if(state is AuthFailure){
-               return Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 20.h),
-                  child: CustomError404(onPressed: () {
-                     context.read<AuthBloc>().add(AuthInitApp(context: context));
-                  }),
-                );
-            }else{
-              return SizedBox.shrink();
-            }
-          },
-        ));
+                }else
+                if(state is AuthFailure){
+                   return Padding(
+                      padding:  EdgeInsets.symmetric(horizontal: 20.h),
+                      child: CustomError404(onPressed: () {
+                         context.read<AuthBloc>().add(AuthInitApp(context: context));
+                      }),
+                    );
+                }else{
+                  return SizedBox.shrink();
+                }
+              },
+            ))
+      
+    );
   }
 }

@@ -76,7 +76,8 @@
   "ipt_val_firstName_min_length" : "Le prénom doit comporter au moins 2 caractères",
   "ipt_val_lastName_max_length" : "Le nom de famille ne peut pas dépasser 50 caractères",
   "ipt_val_firstName_max_length" : "Le prénom ne peut pas dépasser 50 caractères",
-  "msg_session_expired": "Votre session a expiré. Veuillez vous reconnecter pour continuer."  
+  "msg_session_expired": "Votre session a expiré. Veuillez vous reconnecter pour continuer."  ,
+  "lbl_welcome_to_mbschool": "Bienvenue à MBSchool !"
 
   
 

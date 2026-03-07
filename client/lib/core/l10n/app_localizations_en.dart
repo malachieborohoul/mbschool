@@ -265,4 +265,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get msg_session_expired =>
       'Your session has expired. Please log in again to continue.';
+
+  @override
+  String get lbl_welcome_to_mbschool => 'Welcome to MBSchool!';
 }

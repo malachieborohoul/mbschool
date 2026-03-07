@@ -559,6 +559,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your session has expired. Please log in again to continue.'**
   String get msg_session_expired;
+
+  /// Welcome message displayed on the home screen after a successful login
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to MBSchool!'**
+  String get lbl_welcome_to_mbschool;
 }
 
 class _AppLocalizationsDelegate

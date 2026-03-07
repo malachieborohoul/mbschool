@@ -263,7 +263,10 @@
     "description": "Error message displayed when the first name entered exceeds 50 characters during registration"  }   ,
     "msg_session_expired": "Your session has expired. Please log in again to continue.",
     "@msg_session_expired": {
-    "description": "Error message displayed when a user's session has expired, prompting them to log in again to continue using the app"  } 
+    "description": "Error message displayed when a user's session has expired, prompting them to log in again to continue using the app"  } ,
+    "lbl_welcome_to_mbschool": "Welcome to MBSchool!",
+    "@lbl_welcome_to_mbschool": {
+    "description": "Welcome message displayed on the home screen after a successful login"  } 
     
     
   

@@ -90,14 +90,12 @@ class _AuthScreenState extends State<AuthScreen> {
       if (state is AuthSuccess) {
         debugPrint("💡 Auth Success");
         Navigator.pushReplacement(context, HomeScreenTest.route());
-      } else if(state is AuthNotVeried) {
-        debugPrint("💡 Auth Not Verified - Navigating to CodeVerificationTestScreen");
-        Navigator.pushReplacement(
-              context, VerificationScreen.route());   
-
-      }
-      else if (state is AuthFailure) {
-        showSnackBar(context, state.message); 
+      } else if (state is AuthNotVeried) {
+        debugPrint(
+            "💡 Auth Not Verified - Navigating to CodeVerificationTestScreen");
+        Navigator.pushReplacement(context, VerificationScreen.route());
+      } else if (state is AuthFailure) {
+        showSnackBar(context, state.message);
       }
     }
   }
@@ -204,8 +202,7 @@ class _AuthScreenState extends State<AuthScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SlideDownTween(
-              delay: 1.0,
-              offset: 1,
+              offset: 10,
               child: Center(
                   child: SvgPicture.asset("${assetImg}login_image.svg",
                       width: 200)),

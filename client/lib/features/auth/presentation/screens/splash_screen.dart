@@ -60,11 +60,11 @@ class _SplashScreenState extends State<SplashScreen>
       Timer(const Duration(seconds: 3), () {
         if (isIntro) {
           debugPrint("💡Navigating to Onboarding Screen");
-          Navigator.push(context, OnboardingScreen.route());
+          Navigator.pushReplacement(context, OnboardingScreen.route());
         } else {
           debugPrint("💡Navigating to LoadingScreen ");
 
-          Navigator.push(context, LoadingScreen.route());
+          Navigator.pushReplacement(context, LoadingScreen.route());
         }
       });
     });

@@ -17,18 +17,22 @@ const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "super_refresh_secr
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth:{
+    port: 587, // Switch to 587 for better cloud compatibility
+    secure: false, // Must be false for port 587
+    auth: {
         user: process.env.AUTH_EMAIL,
         pass: process.env.AUTH_PASS
     },
-//     tls: {
-//     // This prevents the "Self-signed certificate" or "Unauthorized" errors on Render
-//     rejectUnauthorized: false
-//   },
-//   family: 4 // Forces IPv4 to avoid the ENETUNREACH error you had earlier
-}) 
+    // CRITICAL: Forces IPv4 to fix the ENETUNREACH error on Render
+    family: 4, 
+    tls: {
+        // Essential for preventing connection rejection on Render
+        rejectUnauthorized: false
+    },
+    // Recommended timeouts for cloud environments
+    connectionTimeout: 10000, 
+    greetingTimeout: 10000
+});
 
 // Standardized Response Helper
 const sendResponse = (res, { status, code, message, data = null }) => {

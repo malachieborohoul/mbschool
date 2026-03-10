@@ -10,9 +10,10 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken');
 const pool = require("../db");
 const queries = require("../queries")
-
+ 
 // Configuration from environment variables
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_2026";
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "super_refresh_secret_key_2026";
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -22,12 +23,12 @@ const transporter = nodemailer.createTransport({
         user: process.env.AUTH_EMAIL,
         pass: process.env.AUTH_PASS
     },
-    tls: {
-    // This prevents the "Self-signed certificate" or "Unauthorized" errors on Render
-    rejectUnauthorized: false
-  },
-  family: 4 // Forces IPv4 to avoid the ENETUNREACH error you had earlier
-})
+//     tls: {
+//     // This prevents the "Self-signed certificate" or "Unauthorized" errors on Render
+//     rejectUnauthorized: false
+//   },
+//   family: 4 // Forces IPv4 to avoid the ENETUNREACH error you had earlier
+}) 
 
 // Standardized Response Helper
 const sendResponse = (res, { status, code, message, data = null }) => {
@@ -48,7 +49,7 @@ function generateVerificationCode() {
     }
     return code;
 }
-
+ 
 // SIGNUP
 authRouter.post('/api/v1/auth/signup', async (req, res) => {
     try {

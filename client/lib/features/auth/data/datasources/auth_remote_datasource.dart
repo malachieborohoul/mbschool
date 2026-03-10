@@ -83,11 +83,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       //Check if it's for the first time
       if (secureRefreshToken == null) {
-        debugPrint("💡 From AuthRemoteDataSourceImpl-init secureRefreshToken=$secureRefreshToken");
+        debugPrint(
+            "💡 From AuthRemoteDataSourceImpl-init secureRefreshToken=$secureRefreshToken");
         return UserModel.empty();
       }
 
-        debugPrint("💡 From AuthRemoteDataSourceImpl-init refresh token");
+      debugPrint("💡 From AuthRemoteDataSourceImpl-init refresh token");
 
       http.Response response = await http.post(
           Uri.parse(
@@ -98,7 +99,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           },
           body: jsonEncode({
             "refreshToken": secureRefreshToken,
-
           }));
       // Parse the body once here
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -141,7 +141,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'Content-Type': 'application/json',
       };
 
-      response = await http.get(Uri.parse('${AppSecrets.baseUrl}/auth/user-data'),
+      response = await http.get(
+          Uri.parse('${AppSecrets.baseUrl}/auth/user-data'),
           headers: headers);
 
       debugPrint("💡 From Authremote getCurrentUser: ${response.body}");
@@ -273,31 +274,32 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           body: jsonEncode({"email": email, "password": password}));
 
       // Decode the response body once
-    final Map<String, dynamic> responseBody = jsonDecode(response!.body);
+      final Map<String, dynamic> responseBody = jsonDecode(response!.body);
 
       if (response!.statusCode == 200) {
         debugPrint("💡From AuthRemoteDataSource signIn -  ${response!.body} ");
-       final result = AuthTokenModel.fromMap(responseBody['data']);
+        final result = AuthTokenModel.fromMap(responseBody['data']);
         // Save tokens to local storage
-      final res = await _setLocalVariables(result);
+        final res = await _setLocalVariables(result);
 
-      if (res == true) {
-        // Return user from the 'data' field
-        return UserModel.fromMap(responseBody['data']);
-      }
-      
-      throw ServerException(message: "Impossible de sauvegarder les données locales");
+        if (res == true) {
+          // Return user from the 'data' field
+          return UserModel.fromMap(responseBody['data']);
+        }
+
+        throw ServerException(
+            message: "Impossible de sauvegarder les données locales");
       } else {
         debugPrint(
             "💡From AuthRemoteDataSource signIn -  ${response!.statusCode} ");
 
-      // FIX 3: Deserialization for ServerException
-      // We extract the standardized fields from your Node.js sendResponse helper
-      throw ServerException(
-        message: responseBody ['message'] ?? "Erreur d'authentification",
-        statusCode: response!.statusCode.toString(),
-        code: responseBody['code'] ?? "AUTH_ERROR",
-      );
+        // FIX 3: Deserialization for ServerException
+        // We extract the standardized fields from your Node.js sendResponse helper
+        throw ServerException(
+          message: responseBody['message'] ?? "Erreur d'authentification",
+          statusCode: response!.statusCode.toString(),
+          code: responseBody['code'] ?? "AUTH_ERROR",
+        );
 
         // throw ServerException('Error: ${res.statusCode} - ${res.reasonPhrase}');
       }
@@ -316,7 +318,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return errorHandler(() async {
       response = await http.post(
           Uri.parse(
-            '${AppSecrets.baseUrl}/auth/register',
+            '${AppSecrets.baseUrl}/auth/signup',
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -327,6 +329,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             "email": email,
             "password": password
           }));
+
+      final Map<String, dynamic> responseBody = jsonDecode(response!.body);
+
 
       if (response!.statusCode == 200) {
         debugPrint("💡From AuthRemoteDataSource signUp -  ${response!.body} ");
@@ -478,9 +483,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return false;
       }
 
-       await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
+      await secureStorage.delete(key: AppSecrets.REFRESH_TOKEN_KEY);
 
-        return true;
+      return true;
 
       // final response = await appAuth.token(
       //   TokenRequest(AppSecrets.AUTH0_CLIENT_ID, AppSecrets.AUTH0_REDIRECT_URI,

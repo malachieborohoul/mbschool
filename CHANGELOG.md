@@ -55,3 +55,13 @@ Network Connectivity: Resolved the "No internet connection" error in release bui
 Keystore Pathing: Eliminated trailing space issues in key.properties that prevented Gradle from locating the .jks file.
 
 State Management: Optimized CustomTextFieldState to handle internal visibility states independently of parent widget rebuilds.
+
+
+[1.0.0+5] — 2026-03-10
+Authentication Recovery Fix
+
+Fix: Resolved AUTH_RESEND_ERROR by implementing a TLS bypass for unauthorized certificates in production.
+
+Update: Forced a cache-cleared redeploy on Render to ensure new EMAIL_PASS credentials are active.
+
+Security: Successfully whitelisted the production server IP via Google's DisplayUnlockCaptcha.

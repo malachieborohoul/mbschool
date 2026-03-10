@@ -21,7 +21,12 @@ const transporter = nodemailer.createTransport({
     auth:{
         user: process.env.AUTH_EMAIL,
         pass: process.env.AUTH_PASS
-    }
+    },
+    tls: {
+    // This prevents the "Self-signed certificate" or "Unauthorized" errors on Render
+    rejectUnauthorized: false
+  },
+  family: 4 // Forces IPv4 to avoid the ENETUNREACH error you had earlier
 })
 
 // Standardized Response Helper

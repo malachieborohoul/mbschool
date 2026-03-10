@@ -25,7 +25,7 @@ const transporter = nodemailer.createTransport({
     refreshToken: process.env.OAUTH2_REFRESH_TOKEN, // From OAuth Playground
   },
 });
-
+  
 // Standardized Response Helper
 const sendResponse = (res, { status, code, message, data = null }) => {
     return res.status(status).json({

@@ -1,48 +1,45 @@
-const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 
-const oAuth2Client = new google.auth.OAuth2(
-  process.env.OAUTH2_CLIENT_ID,
-  process.env.OAUTH2_CLIENT_SECRET,
-  "https://developers.google.com/oauthplayground"
-);
-
-oAuth2Client.setCredentials({ refresh_token: process.env.OAUTH2_REFRESH_TOKEN });
-
 const sendEmail = async (options) => {
+  const oAuth2Client = new google.auth.OAuth2(
+    process.env.OAUTH2_CLIENT_ID,
+    process.env.OAUTH2_CLIENT_SECRET,
+    "https://developers.google.com/oauthplayground"
+  );
+
+  oAuth2Client.setCredentials({ refresh_token: process.env.OAUTH2_REFRESH_TOKEN });
+
+  const gmail = google.gmail({ version: 'v1', auth: oAuth2Client });
+
+  // Create the email structure in Base64 (Google API requirement)
+  const utf8Subject = `=?utf-8?B?${Buffer.from(options.subject).toString('base64')}?=`;
+  const messageParts = [
+    `From: MbSchool <${process.env.AUTH_EMAIL}>`,
+    `To: ${options.email}`,
+    'Content-Type: text/html; charset=utf-8',
+    'MIME-Version: 1.0',
+    `Subject: ${utf8Subject}`,
+    '',
+    options.html || options.message,
+  ];
+  const message = messageParts.join('\n');
+
+  const encodedMessage = Buffer.from(message)
+    .toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+
   try {
-    const { token: accessToken } = await oAuth2Client.getAccessToken();
-
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // Use STARTTLS
-      auth: {
-        type: 'OAuth2',
-        user: process.env.AUTH_EMAIL,
-        clientId: process.env.OAUTH2_CLIENT_ID,
-        clientSecret: process.env.OAUTH2_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH2_REFRESH_TOKEN,
-        accessToken: accessToken,
+    const res = await gmail.users.messages.send({
+      userId: 'me',
+      requestBody: {
+        raw: encodedMessage,
       },
-      // CRITICAL: This stops the ENETUNREACH error by forcing IPv4
-      family: 4, 
-      tls: {
-        rejectUnauthorized: false
-      }
     });
-
-    const mailOptions = {
-      from: `MbSchool <${process.env.AUTH_EMAIL}>`,
-      to: options.email,
-      subject: options.subject,
-      text: options.message,
-      html: options.html,
-    };
-
-    return await transporter.sendMail(mailOptions);
+    return res.data;
   } catch (error) {
-    console.error("Gmail API/SMTP Error:", error);
+    console.error("Gmail API HTTP Error:", error);
     throw error;
   }
 };

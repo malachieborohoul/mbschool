@@ -16,22 +16,14 @@ const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_2026";
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "super_refresh_secret_key_2026";
 
 const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587, // Switch to 587 for better cloud compatibility
-    secure: false, // Must be false for port 587
-    auth: {
-        user: process.env.AUTH_EMAIL,
-        pass: process.env.AUTH_PASS
-    },
-    // CRITICAL: Forces IPv4 to fix the ENETUNREACH error on Render
-    family: 4, 
-    tls: {
-        // Essential for preventing connection rejection on Render
-        rejectUnauthorized: false
-    },
-    // Recommended timeouts for cloud environments
-    connectionTimeout: 10000, 
-    greetingTimeout: 10000
+  service: 'gmail',
+  auth: {
+    type: 'OAuth2',
+    user: process.env.AUTH_EMAIL,              // Your Gmail address
+    clientId: process.env.OAUTH2_CLIENT_ID,         // From Google Cloud
+    clientSecret: process.env.OAUTH2_CLIENT_SECRET, // From Google Cloud
+    refreshToken: process.env.OAUTH2_REFRESH_TOKEN, // From OAuth Playground
+  },
 });
 
 // Standardized Response Helper

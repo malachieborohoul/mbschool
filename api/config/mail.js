@@ -11,11 +11,12 @@ oAuth2Client.setCredentials({ refresh_token: process.env.OAUTH2_REFRESH_TOKEN })
 
 const sendEmail = async (options) => {
   try {
-    // This is the magic part: it gets a token via HTTPS (Port 443)
     const { token: accessToken } = await oAuth2Client.getAccessToken();
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail', // Use 'service' instead of 'host'
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // Use STARTTLS
       auth: {
         type: 'OAuth2',
         user: process.env.AUTH_EMAIL,
@@ -24,6 +25,11 @@ const sendEmail = async (options) => {
         refreshToken: process.env.OAUTH2_REFRESH_TOKEN,
         accessToken: accessToken,
       },
+      // CRITICAL: This stops the ENETUNREACH error by forcing IPv4
+      family: 4, 
+      tls: {
+        rejectUnauthorized: false
+      }
     });
 
     const mailOptions = {
@@ -36,7 +42,7 @@ const sendEmail = async (options) => {
 
     return await transporter.sendMail(mailOptions);
   } catch (error) {
-    console.error("Gmail API Error:", error);
+    console.error("Gmail API/SMTP Error:", error);
     throw error;
   }
 };

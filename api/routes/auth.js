@@ -1,7 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const crypto = require('crypto');
-
+const sendEmail = require('../config/mail');
 require("dotenv").config();
 const User = require("../models/user");
 const auth = require("../middlewares/auth")
@@ -15,16 +15,16 @@ const queries = require("../queries")
 const JWT_SECRET = process.env.JWT_SECRET || "super_secret_key_2026";
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "super_refresh_secret_key_2026";
 
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.AUTH_EMAIL,              // Your Gmail address
-    clientId: process.env.OAUTH2_CLIENT_ID,         // From Google Cloud
-    clientSecret: process.env.OAUTH2_CLIENT_SECRET, // From Google Cloud
-    refreshToken: process.env.OAUTH2_REFRESH_TOKEN, // From OAuth Playground
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     type: 'OAuth2',
+//     user: process.env.AUTH_EMAIL,              // Your Gmail address
+//     clientId: process.env.OAUTH2_CLIENT_ID,         // From Google Cloud
+//     clientSecret: process.env.OAUTH2_CLIENT_SECRET, // From Google Cloud
+//     refreshToken: process.env.OAUTH2_REFRESH_TOKEN, // From OAuth Playground
+//   },
+// });
   
 // Standardized Response Helper
 const sendResponse = (res, { status, code, message, data = null }) => {
@@ -313,14 +313,13 @@ authRouter.post("/api/v1/auth/resend-code", async (req, res) => {
         // Update the code in the DB (assuming you have a query for this)
          await pool.query(queries.updateVerifyCode, [newCode, user.id]);
 
-        const mailOptions = {
-            from: `"MBSchool" <${process.env.AUTH_EMAIL}>`,
-            to: email,
-            subject: "Nouveau code de vérification",
-            text: `Votre nouveau code est: ${newCode}`
-        };
+        await sendEmail({
+            email: email,
+            subject: "Your MbSchool Verification Code",
+            message: `Your code is ${newCode}`,
+            html: `<b>Your code is ${newCode}</b>`,
+            });
 
-        await transporter.sendMail(mailOptions);
 
         return sendResponse(res, { 
             status: 200, 
